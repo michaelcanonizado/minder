@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 
 import { fontSans } from '@/styles/fonts';
 import '@/styles/globals.css';
+import Navbar from '@/components/sections/navbar';
 
 export const metadata: Metadata = {
   title: 'Minder',
@@ -19,10 +20,11 @@ export default function RootLayout({
     <html lang='en'>
       <body
         className={cn(
-          'min-h-screen bg-background font-sans antialiased',
+          'dark min-h-screen bg-background font-sans antialiased',
           fontSans.variable
         )}
       >
+        <Navbar />
         {children}
       </body>
     </html>
