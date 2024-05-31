@@ -5,6 +5,7 @@ import Balance from '@/components/sections/demo/balance';
 import Wallets from '@/components/sections/demo/wallets';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import TableExpenses from '@/components/sections/demo/table-expenses';
+import TableIncomes from '@/components/sections/demo/table-incomes';
 
 import {
   UsersCollection,
@@ -42,12 +43,12 @@ export default function Demo() {
       title: 'Expense',
       value: 'expense',
       component: <TableExpenses data={userExpenses} />
+    },
+    {
+      title: 'Income',
+      value: 'income',
+      component: <TableIncomes data={userIncomes} />
     }
-    // {
-    //   title: 'Income',
-    //   value: 'income',
-    //   component: <DataTable collection={userIncomes} />
-    // },
     // {
     //   title: 'Transfer',
     //   value: 'transfer',
