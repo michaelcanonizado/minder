@@ -1,9 +1,16 @@
 import Balance from '@/components/sections/demo/balance';
 import Wallets from '@/components/sections/demo/wallets';
+import { screenBreakpoints } from '@/helpers/screen-breakpoints';
+import { cn } from '@/lib/utils';
 
 export default function Demo() {
   return (
-    <div className='mt-20 grid grid-cols-12 gap-4 px-10'>
+    <div
+      className={cn(
+        'mx-auto mt-20 grid w-full grid-cols-12 gap-4 px-10',
+        screenBreakpoints
+      )}
+    >
       <Balance className='col-span-4'>
         <Balance.Header>Balance</Balance.Header>
         <Balance.Amount amount={1234} />
