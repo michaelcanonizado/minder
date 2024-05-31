@@ -37,7 +37,9 @@ export const tabLinks = [
 export default function Demo() {
   const user = getUser(UsersCollection, '123456789');
 
-  console.log(user);
+  if (!user) {
+    return <h1 className='mt-20 text-center text-4xl'>User not found</h1>;
+  }
 
   return (
     <div
@@ -48,7 +50,7 @@ export default function Demo() {
     >
       <Balance className='col-span-4'>
         <Balance.Header>Balance</Balance.Header>
-        <Balance.Amount amount={1234} />
+        <Balance.Amount amount={user.balance} />
       </Balance>
 
       <Wallets className='col-span-8'>
