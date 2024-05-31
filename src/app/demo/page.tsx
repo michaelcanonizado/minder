@@ -6,25 +6,23 @@ import Wallets from '@/components/sections/demo/wallets';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import FormExpense from '@/components/sections/demo/form-expense';
-import FormIncome from '@/components/sections/demo/form-income';
-import FormTransfer from '@/components/sections/demo/form-transfer';
+import DataTable from '@/components/sections/demo/data-table';
 
 export const tabLinks = [
   {
     title: 'Expense',
     value: 'expense',
-    component: <FormExpense />
+    component: <DataTable />
   },
   {
     title: 'Income',
     value: 'income',
-    component: <FormIncome />
+    component: <DataTable />
   },
   {
     title: 'Transfer',
     value: 'transfer',
-    component: <FormTransfer />
+    component: <DataTable />
   }
 ];
 
