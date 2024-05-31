@@ -14,6 +14,7 @@ import {
   IncomesCollection,
   WalletTransfersCollection
 } from './data';
+import { getUser } from './helpers/getUser';
 
 export const tabLinks = [
   {
@@ -34,6 +35,10 @@ export const tabLinks = [
 ];
 
 export default function Demo() {
+  const user = getUser(UsersCollection, '123456789');
+
+  console.log(user);
+
   return (
     <div
       className={cn(
