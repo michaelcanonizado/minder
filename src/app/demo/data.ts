@@ -161,6 +161,69 @@ const ExpensesCollection = [
     description: 'lorem ipsum',
     transactionDate: new Date(),
     createdAt: new Date()
+  },
+  {
+    userId: '123456789',
+    transactionId: '123509481238905611',
+    amount: 200,
+    description: 'Total exp on food',
+    transactionDate: new Date(),
+    createdAt: new Date(),
+    wallet: {
+      id: '1',
+      name: 'Cash',
+      color: '#7C3AED',
+      balance: 0,
+      createdAt: new Date(),
+      transactionCount: 0
+    },
+    category: {
+      id: '1',
+      name: 'Food',
+      createdAt: new Date()
+    }
+  },
+  {
+    userId: '123456789',
+    transactionId: '776168253838905611',
+    amount: 115,
+    description: 'Total exp on transportation',
+    transactionDate: new Date(),
+    createdAt: new Date(),
+    wallet: {
+      id: '1',
+      name: 'Cash',
+      color: '#7C3AED',
+      balance: 0,
+      createdAt: new Date(),
+      transactionCount: 0
+    },
+    category: {
+      id: '2',
+      name: 'Transportation',
+      createdAt: new Date()
+    }
+  },
+  {
+    userId: '123456789',
+    transactionId: '90412768253838905611',
+    amount: 375,
+    description: 'Pokemon Cards',
+    transactionDate: new Date(),
+    createdAt: new Date(),
+    wallet: {
+      id: '1',
+      name: 'Cash',
+      color: '#7C3AED',
+      balance: 0,
+      createdAt: new Date(),
+      transactionCount: 0
+    },
+    category: {
+      id: '3',
+      name: 'Shopping',
+      createdAt: new Date()
+    }
   }
 ];
 
