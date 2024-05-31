@@ -3,22 +3,11 @@ import React from 'react';
 
 const Balance = ({
   className,
-  balance
+  children
 }: {
   className?: string;
-  balance?: number;
+  children: React.ReactNode;
 }) => {
-  let formattedBalance;
-
-  if (balance) {
-    formattedBalance = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'PHP',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(balance);
-  }
-
   return (
     <section
       className={cn(
@@ -26,14 +15,51 @@ const Balance = ({
         className
       )}
     >
-      <div className=''>
-        <h3 className='text-xl'>Balance</h3>
-      </div>
-      <div className=''>
-        <p className='text-2xl font-bold tracking-wide'>{formattedBalance}</p>
-      </div>
+      {children}
     </section>
   );
 };
+
+const Header = ({
+  className,
+  children
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) => {
+  return (
+    <div className={cn('text-xl', className)}>
+      <h3>{children}</h3>
+    </div>
+  );
+};
+
+const Amount = ({
+  className,
+  amount
+}: {
+  className?: string;
+  amount: number;
+}) => {
+  let formattedAmount;
+
+  if (amount) {
+    formattedAmount = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'PHP',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount);
+  }
+
+  return (
+    <div className={cn('text-2xl font-bold tracking-wide', className)}>
+      <p>{formattedAmount}</p>
+    </div>
+  );
+};
+
+Balance.Header = Header;
+Balance.Amount = Amount;
 
 export default Balance;

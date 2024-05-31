@@ -5,7 +5,10 @@ export default function Demo() {
 
   return (
     <div className='mt-20 px-10'>
-      <Balance balance={1234} />
+      <Balance>
+        <Balance.Header>Balance</Balance.Header>
+        <Balance.Amount amount={1234} />
+      </Balance>
     </div>
   );
 }
