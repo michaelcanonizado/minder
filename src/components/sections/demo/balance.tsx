@@ -53,7 +53,7 @@ const Amount = ({
   }
 
   return (
-    <div className={cn('text-2xl font-bold tracking-wide', className)}>
+    <div className={cn('text-4xl font-bold tracking-wide', className)}>
       <p>{formattedAmount}</p>
     </div>
   );
