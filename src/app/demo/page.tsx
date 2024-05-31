@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import TableExpenses from '@/components/sections/demo/table-expenses';
 import TableIncomes from '@/components/sections/demo/table-incomes';
 import TableWalletTransfers from '@/components/sections/demo/table-wallet-transfers';
+import FormExpense from '@/components/sections/demo/form-expense';
 
 import {
   UsersCollection,
@@ -45,7 +46,7 @@ export default function Demo() {
       value: 'expense',
       component: {
         table: <TableExpenses data={userExpenses} />,
-        form: ''
+        form: <FormExpense />
       }
     },
     {
@@ -94,6 +95,28 @@ export default function Demo() {
           );
         })}
       </Wallets>
+
+      <Tabs
+        defaultValue={tabLinks[0].value}
+        className='col-span-full min-w-[400px] rounded-xl border'
+      >
+        <TabsList className='grid w-full grid-cols-3 rounded-b-none'>
+          {tabLinks.map(tab => {
+            return (
+              <TabsTrigger className='rounded-md' value={tab.value}>
+                {tab.title}
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+        {tabLinks.map(tab => {
+          return (
+            <TabsContent className='mt-0' value={tab.value}>
+              {tab.component.form}
+            </TabsContent>
+          );
+        })}
+      </Tabs>
 
       <Tabs
         defaultValue={tabLinks[0].value}
