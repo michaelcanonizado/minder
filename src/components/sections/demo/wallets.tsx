@@ -65,7 +65,7 @@ const Amount = ({
 }) => {
   let formattedAmount;
 
-  if (amount) {
+  if (amount || amount == 0) {
     formattedAmount = new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'PHP',
