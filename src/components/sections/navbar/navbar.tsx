@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 const Navbar = () => {
@@ -5,7 +6,9 @@ const Navbar = () => {
     <header className='sticky top-0 w-full'>
       <nav className='flex justify-between border border-b-gray-900 px-10 py-6'>
         <div>
-          <h1 className='text-2xl font-bold tracking-wide'>Minder</h1>
+          <Link href='/'>
+            <h1 className='text-2xl font-bold tracking-wide'>Minder</h1>
+          </Link>
         </div>
       </nav>
     </header>
