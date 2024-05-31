@@ -80,6 +80,9 @@ export default function Demo() {
         screenBreakpoints
       )}
     >
+      <div className='col-span-12 mb-10 flex justify-center'>
+        <h1 className='text-base'>Section to test the core functionalities</h1>
+      </div>
       <Balance className='col-span-4'>
         <Balance.Header>Balance</Balance.Header>
         <Balance.Amount amount={user.balance} />
