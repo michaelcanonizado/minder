@@ -15,7 +15,7 @@ const UsersCollection = [
       hexCode: '&#x20B1;',
       uniCode: 'U+020B1'
     },
-    balance: 0,
+    balance: 6700,
     categories: {
       expense: [
         {
@@ -168,6 +168,10 @@ const IncomesCollection = [
   {
     userId: '987654321',
     transactionId: '998877665544332211',
+    amount: 100,
+    description: 'lorem ipsum',
+    transactionDate: new Date(),
+    createdAt: new Date(),
 
     // Necessary wallet and category details will be embedded just in case that particular wallet/category will be deleted
     wallet: {
@@ -181,12 +185,87 @@ const IncomesCollection = [
       name: 'Salary',
       createdAt: new Date(),
       icon: ''
-    },
-
-    amount: 100,
+    }
+  },
+  {
+    userId: '123456789',
+    transactionId: '12385610123712384',
+    amount: 2500,
     description: 'lorem ipsum',
     transactionDate: new Date(),
-    createdAt: new Date()
+    createdAt: new Date(),
+    wallet: {
+      id: '1',
+      name: 'Cash',
+      color: '#7C3AED',
+      createdAt: new Date()
+    },
+    category: {
+      id: '2',
+      name: 'Salary',
+      createdAt: new Date(),
+      icon: ''
+    }
+  },
+  {
+    userId: '123456789',
+    transactionId: '1238513483712194',
+    amount: 500,
+    description: 'lorem ipsum',
+    transactionDate: new Date(),
+    createdAt: new Date(),
+    wallet: {
+      id: '2',
+      name: 'GCash',
+      color: '#2994FC',
+      createdAt: new Date()
+    },
+    category: {
+      id: '2',
+      name: 'Salary',
+      createdAt: new Date(),
+      icon: ''
+    }
+  },
+  {
+    userId: '123456789',
+    transactionId: '1238134890912194',
+    amount: 3000,
+    description: 'lorem ipsum',
+    transactionDate: new Date(),
+    createdAt: new Date(),
+    wallet: {
+      id: '3',
+      name: 'Savings',
+      color: '#21C5E0',
+      createdAt: new Date()
+    },
+    category: {
+      id: '2',
+      name: 'Salary',
+      createdAt: new Date(),
+      icon: ''
+    }
+  },
+  {
+    userId: '123456789',
+    transactionId: '124569012339912194',
+    amount: 700,
+    description: 'lorem ipsum',
+    transactionDate: new Date(),
+    createdAt: new Date(),
+    wallet: {
+      id: '4',
+      name: 'Paypal',
+      color: '#F23E94',
+      createdAt: new Date()
+    },
+    category: {
+      id: '2',
+      name: 'Salary',
+      createdAt: new Date(),
+      icon: ''
+    }
   }
 ];
 

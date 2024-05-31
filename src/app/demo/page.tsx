@@ -57,7 +57,7 @@ export default function Demo() {
     targetUserId
   ) as WalletTransfer[];
 
-  console.log(userExpenses);
+  console.log(userIncomes);
 
   if (!user) {
     return <h1 className='mt-20 text-center text-4xl'>User not found</h1>;
