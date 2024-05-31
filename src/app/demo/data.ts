@@ -15,7 +15,7 @@ const UsersCollection = [
       hexCode: '&#x20B1;',
       uniCode: 'U+020B1'
     },
-    balance: 6700,
+    balance: 6010,
     categories: {
       expense: [
         {
@@ -105,15 +105,15 @@ const UsersCollection = [
         id: '1',
         name: 'Cash',
         color: '#7C3AED',
-        balance: 0,
+        balance: 1810,
         createdAt: new Date(),
-        transactionCount: 0
+        transactionCount: 3
       },
       {
         id: '2',
         name: 'GCash',
         color: '#2994FC',
-        balance: 0,
+        balance: 500,
         createdAt: new Date(),
         transactionCount: 0
       },
@@ -121,7 +121,7 @@ const UsersCollection = [
         id: '3',
         name: 'Savings',
         color: '#21C5E0',
-        balance: 0,
+        balance: 3000,
         createdAt: new Date(),
         transactionCount: 0
       },
@@ -129,7 +129,7 @@ const UsersCollection = [
         id: '4',
         name: 'Paypal',
         color: '#F23E94',
-        balance: 0,
+        balance: 700,
         createdAt: new Date(),
         transactionCount: 0
       }
