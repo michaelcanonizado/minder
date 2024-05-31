@@ -3,10 +3,8 @@ import { screenBreakpoints } from '@/helpers/screen-breakpoints';
 
 import Balance from '@/components/sections/demo/balance';
 import Wallets from '@/components/sections/demo/wallets';
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
-import DataTable from '@/components/sections/demo/data-table';
+import TableExpenses from '@/components/sections/demo/table-expenses';
 
 import {
   UsersCollection,
@@ -20,24 +18,6 @@ import {
 } from './data';
 import { getUser } from './helpers/get-user';
 import { getTransactions } from './helpers/get-transactions';
-
-export const tabLinks = [
-  {
-    title: 'Expense',
-    value: 'expense',
-    component: <DataTable />
-  },
-  {
-    title: 'Income',
-    value: 'income',
-    component: <DataTable />
-  },
-  {
-    title: 'Transfer',
-    value: 'transfer',
-    component: <DataTable />
-  }
-];
 
 export default function Demo() {
   const targetUserId = '123456789';
@@ -57,7 +37,25 @@ export default function Demo() {
     targetUserId
   ) as WalletTransfer[];
 
-  console.log(userIncomes);
+  const tabLinks = [
+    {
+      title: 'Expense',
+      value: 'expense',
+      component: <TableExpenses data={userExpenses} />
+    }
+    // {
+    //   title: 'Income',
+    //   value: 'income',
+    //   component: <DataTable collection={userIncomes} />
+    // },
+    // {
+    //   title: 'Transfer',
+    //   value: 'transfer',
+    //   component: <DataTable collection={userWalletTransfers} />
+    // }
+  ];
+
+  // console.log(userIncomes);
 
   if (!user) {
     return <h1 className='mt-20 text-center text-4xl'>User not found</h1>;
