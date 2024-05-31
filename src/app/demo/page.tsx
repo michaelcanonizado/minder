@@ -6,6 +6,7 @@ import Wallets from '@/components/sections/demo/wallets';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import TableExpenses from '@/components/sections/demo/table-expenses';
 import TableIncomes from '@/components/sections/demo/table-incomes';
+import TableWalletTransfers from '@/components/sections/demo/table-wallet-transfers';
 
 import {
   UsersCollection,
@@ -48,15 +49,13 @@ export default function Demo() {
       title: 'Income',
       value: 'income',
       component: <TableIncomes data={userIncomes} />
+    },
+    {
+      title: 'Transfer',
+      value: 'transfer',
+      component: <TableWalletTransfers data={userWalletTransfers} />
     }
-    // {
-    //   title: 'Transfer',
-    //   value: 'transfer',
-    //   component: <DataTable collection={userWalletTransfers} />
-    // }
   ];
-
-  // console.log(userIncomes);
 
   if (!user) {
     return <h1 className='mt-20 text-center text-4xl'>User not found</h1>;
