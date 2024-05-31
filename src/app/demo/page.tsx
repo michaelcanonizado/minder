@@ -5,7 +5,7 @@ export default function Demo() {
 
   return (
     <div className='mt-20 px-10'>
-      <Balance />
+      <Balance balance={1234} />
     </div>
   );
 }
