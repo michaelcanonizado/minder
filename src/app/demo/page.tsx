@@ -14,7 +14,7 @@ import {
   IncomesCollection,
   WalletTransfersCollection
 } from './data';
-import { getUser } from './helpers/getUser';
+import { getUser } from './helpers/get-user';
 
 export const tabLinks = [
   {
