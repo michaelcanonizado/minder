@@ -54,30 +54,16 @@ export default function Demo() {
       </Balance>
 
       <Wallets className='col-span-8'>
-        <Wallets.Wallet>
-          <Wallets.Wallet.Header iconColor='#7C3AED'>
-            Cash
-          </Wallets.Wallet.Header>
-          <Wallets.Wallet.Amount amount={1234} />
-        </Wallets.Wallet>
-        <Wallets.Wallet>
-          <Wallets.Wallet.Header iconColor='#7C3AED'>
-            GCash
-          </Wallets.Wallet.Header>
-          <Wallets.Wallet.Amount amount={1234} />
-        </Wallets.Wallet>
-        <Wallets.Wallet>
-          <Wallets.Wallet.Header iconColor='#7C3AED'>
-            Paypal
-          </Wallets.Wallet.Header>
-          <Wallets.Wallet.Amount amount={1234} />
-        </Wallets.Wallet>
-        <Wallets.Wallet>
-          <Wallets.Wallet.Header iconColor='#7C3AED'>
-            Savings
-          </Wallets.Wallet.Header>
-          <Wallets.Wallet.Amount amount={1234} />
-        </Wallets.Wallet>
+        {user.wallets.map(wallet => {
+          return (
+            <Wallets.Wallet key={wallet.id}>
+              <Wallets.Wallet.Header iconColor={wallet.color}>
+                {wallet.name}
+              </Wallets.Wallet.Header>
+              <Wallets.Wallet.Amount amount={wallet.balance} />
+            </Wallets.Wallet>
+          );
+        })}
       </Wallets>
 
       <Tabs
