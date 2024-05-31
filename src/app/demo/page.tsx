@@ -8,6 +8,7 @@ import TableExpenses from '@/components/sections/demo/table-expenses';
 import TableIncomes from '@/components/sections/demo/table-incomes';
 import TableWalletTransfers from '@/components/sections/demo/table-wallet-transfers';
 import FormExpense from '@/components/sections/demo/form-expense';
+import FormIncome from '@/components/sections/demo/form-income';
 
 import {
   UsersCollection,
@@ -54,7 +55,7 @@ export default function Demo() {
       value: 'income',
       component: {
         table: <TableIncomes data={userIncomes} />,
-        form: ''
+        form: <FormIncome />
       }
     },
     {
