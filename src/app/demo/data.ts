@@ -1,4 +1,4 @@
-const usersCollection = [
+const UsersCollection = [
   {
     id: '123456789',
     firstName: 'michael',
@@ -137,7 +137,7 @@ const usersCollection = [
   }
 ];
 
-const expensesCollection = [
+const ExpensesCollection = [
   {
     userId: '987654321',
     transactionId: '998877665544332211',
@@ -164,7 +164,7 @@ const expensesCollection = [
   }
 ];
 
-const incomesCollection = [
+const IncomesCollection = [
   {
     userId: '987654321',
     transactionId: '998877665544332211',
@@ -190,7 +190,7 @@ const incomesCollection = [
   }
 ];
 
-const walletTransfersCollection = [
+const WalletTransfersCollection = [
   {
     userId: '987654321',
     transferId: '998877665544332211',
@@ -213,3 +213,17 @@ const walletTransfersCollection = [
     }
   }
 ];
+
+export {
+  UsersCollection,
+  ExpensesCollection,
+  IncomesCollection,
+  WalletTransfersCollection
+};
+
+type User = (typeof UsersCollection)[number];
+type Expense = (typeof ExpensesCollection)[number];
+type Income = (typeof IncomesCollection)[number];
+type WalletTransfer = (typeof WalletTransfersCollection)[number];
+
+export type { User, Expense, Income, WalletTransfer };

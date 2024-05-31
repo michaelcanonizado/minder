@@ -8,6 +8,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import DataTable from '@/components/sections/demo/data-table';
 
+import {
+  UsersCollection,
+  ExpensesCollection,
+  IncomesCollection,
+  WalletTransfersCollection
+} from './data';
+
 export const tabLinks = [
   {
     title: 'Expense',
