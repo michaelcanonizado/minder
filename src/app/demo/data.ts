@@ -142,7 +142,7 @@ const expensesCollection = [
     userId: '987654321',
     transactionId: '998877665544332211',
 
-    // Necessary wallet and category details will be embedded just in case that wallet/category will be deleted
+    // Necessary wallet and category details will be embedded just in case that particular wallet/category will be deleted
     wallet: {
       id: '1',
       name: 'Cash',
@@ -169,7 +169,7 @@ const incomesCollection = [
     userId: '987654321',
     transactionId: '998877665544332211',
 
-    // Necessary wallet and category details will be embedded just in case that wallet/category will be deleted
+    // Necessary wallet and category details will be embedded just in case that particular wallet/category will be deleted
     wallet: {
       id: '1',
       name: 'Cash',
