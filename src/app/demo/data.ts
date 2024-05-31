@@ -105,7 +105,7 @@ const UsersCollection = [
         id: '1',
         name: 'Cash',
         color: '#7C3AED',
-        balance: 1810,
+        balance: 2810,
         createdAt: new Date(),
         transactionCount: 3
       },
@@ -121,7 +121,7 @@ const UsersCollection = [
         id: '3',
         name: 'Savings',
         color: '#21C5E0',
-        balance: 3000,
+        balance: 2000,
         createdAt: new Date(),
         transactionCount: 0
       },
@@ -350,6 +350,25 @@ const WalletTransfersCollection = [
     toWallet: {
       id: '2',
       name: 'GCash',
+      color: '#2994FC',
+      createdAt: new Date()
+    }
+  },
+  {
+    userId: '123456789',
+    transferId: '998877665544332211',
+    amount: 1000,
+    transferDate: new Date(),
+    createdAt: new Date(),
+    fromWallet: {
+      id: '3',
+      name: 'Savings',
+      color: '#21C5E0',
+      createdAt: new Date()
+    },
+    toWallet: {
+      id: '1',
+      name: 'Cash',
       color: '#2994FC',
       createdAt: new Date()
     }
