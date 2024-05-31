@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 
 import { fontSans } from '@/styles/fonts';
 import '@/styles/globals.css';
-import Navbar from '@/components/sections/navbar';
+import Navbar from '@/components/sections/navbar/navbar';
 
 export const metadata: Metadata = {
   title: 'Minder',
@@ -25,7 +25,7 @@ export default function RootLayout({
         )}
       >
         <Navbar />
-        {children}
+        <main>{children}</main>
       </body>
     </html>
   );
