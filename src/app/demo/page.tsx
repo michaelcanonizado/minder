@@ -12,9 +12,14 @@ import {
   UsersCollection,
   ExpensesCollection,
   IncomesCollection,
-  WalletTransfersCollection
+  WalletTransfersCollection,
+  User,
+  Expense,
+  Income,
+  WalletTransfer
 } from './data';
 import { getUser } from './helpers/get-user';
+import { getTransactions } from './helpers/get-transactions';
 
 export const tabLinks = [
   {
@@ -35,7 +40,24 @@ export const tabLinks = [
 ];
 
 export default function Demo() {
-  const user = getUser(UsersCollection, '123456789');
+  const targetUserId = '123456789';
+
+  const user = getUser(UsersCollection, targetUserId);
+
+  const userExpenses = getTransactions(
+    ExpensesCollection,
+    targetUserId
+  ) as Expense[];
+  const userIncomes = getTransactions(
+    IncomesCollection,
+    targetUserId
+  ) as Income[];
+  const userWalletTransfers = getTransactions(
+    WalletTransfersCollection,
+    targetUserId
+  ) as WalletTransfer[];
+
+  console.log(userExpenses);
 
   if (!user) {
     return <h1 className='mt-20 text-center text-4xl'>User not found</h1>;
