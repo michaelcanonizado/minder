@@ -43,17 +43,26 @@ export default function Demo() {
     {
       title: 'Expense',
       value: 'expense',
-      component: <TableExpenses data={userExpenses} />
+      component: {
+        table: <TableExpenses data={userExpenses} />,
+        form: ''
+      }
     },
     {
       title: 'Income',
       value: 'income',
-      component: <TableIncomes data={userIncomes} />
+      component: {
+        table: <TableIncomes data={userIncomes} />,
+        form: ''
+      }
     },
     {
       title: 'Transfer',
       value: 'transfer',
-      component: <TableWalletTransfers data={userWalletTransfers} />
+      component: {
+        table: <TableWalletTransfers data={userWalletTransfers} />,
+        form: ''
+      }
     }
   ];
 
@@ -102,7 +111,7 @@ export default function Demo() {
         {tabLinks.map(tab => {
           return (
             <TabsContent className='mt-0' value={tab.value}>
-              {tab.component}
+              {tab.component.table}
             </TabsContent>
           );
         })}
