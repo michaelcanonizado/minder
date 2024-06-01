@@ -28,49 +28,81 @@ const UsersCollection = [
           id: '1',
           name: 'Food',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '2',
           name: 'Transportation',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '3',
           name: 'Shopping',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '4',
           name: 'Phone',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '5',
           name: 'Housing',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '6',
           name: 'Education',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '7',
           name: 'Entertainment',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '8',
           name: 'Other',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         }
       ],
       income: [
