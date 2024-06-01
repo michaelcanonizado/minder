@@ -220,12 +220,7 @@ const ExpensesCollection = [
     userId: '987654321',
     transactionId: '998877665544332211',
     walletId: '1',
-    category: {
-      id: '4',
-      name: 'Phone',
-      createdAt: new Date()
-    },
-
+    categoryId: '4',
     amount: 100,
     description: 'lorem ipsum',
     transactionDate: new Date(),
@@ -239,11 +234,7 @@ const ExpensesCollection = [
     transactionDate: new Date(),
     createdAt: new Date(),
     walletId: '1',
-    category: {
-      id: '1',
-      name: 'Food',
-      createdAt: new Date()
-    }
+    categoryId: '1'
   },
   {
     userId: '123456789',
@@ -253,11 +244,7 @@ const ExpensesCollection = [
     transactionDate: new Date(),
     createdAt: new Date(),
     walletId: '1',
-    category: {
-      id: '2',
-      name: 'Transportation',
-      createdAt: new Date()
-    }
+    categoryId: '2'
   },
   {
     userId: '123456789',
@@ -267,11 +254,7 @@ const ExpensesCollection = [
     transactionDate: new Date(),
     createdAt: new Date(),
     walletId: '1',
-    category: {
-      id: '3',
-      name: 'Shopping',
-      createdAt: new Date()
-    }
+    categoryId: '3'
   }
 ];
 
@@ -279,77 +262,52 @@ const IncomesCollection = [
   {
     userId: '987654321',
     transactionId: '998877665544332211',
+    walletId: '1',
+    categoryId: '2',
     amount: 100,
     description: 'lorem ipsum',
     transactionDate: new Date(),
-    createdAt: new Date(),
-    walletId: '1',
-    category: {
-      id: '2',
-      name: 'Salary',
-      createdAt: new Date(),
-      icon: ''
-    }
+    createdAt: new Date()
   },
   {
     userId: '123456789',
     transactionId: '12385610123712384',
+    walletId: '1',
+    categoryId: '2',
     amount: 2500,
     description: 'lorem ipsum',
     transactionDate: new Date(),
-    createdAt: new Date(),
-    walletId: '1',
-    category: {
-      id: '2',
-      name: 'Salary',
-      createdAt: new Date(),
-      icon: ''
-    }
+    createdAt: new Date()
   },
   {
     userId: '123456789',
     transactionId: '1238513483712194',
+    walletId: '2',
+    categoryId: '2',
     amount: 500,
     description: 'lorem ipsum',
     transactionDate: new Date(),
-    createdAt: new Date(),
-    walletId: '2',
-    category: {
-      id: '2',
-      name: 'Salary',
-      createdAt: new Date(),
-      icon: ''
-    }
+    createdAt: new Date()
   },
   {
     userId: '123456789',
     transactionId: '1238134890912194',
+    walletId: '3',
+    categoryId: '2',
     amount: 3000,
     description: 'lorem ipsum',
     transactionDate: new Date(),
-    createdAt: new Date(),
-    walletId: '3',
-    category: {
-      id: '2',
-      name: 'Salary',
-      createdAt: new Date(),
-      icon: ''
-    }
+    createdAt: new Date()
   },
   {
     userId: '123456789',
     transactionId: '124569012339912194',
+    walletId: '4',
+    categoryId: '2',
     amount: 700,
     description: 'lorem ipsum',
     transactionDate: new Date(),
-    createdAt: new Date(),
-    walletId: '4',
-    category: {
-      id: '2',
-      name: 'Salary',
-      createdAt: new Date(),
-      icon: ''
-    }
+    createdAt: new Date()
   }
 ];
 
