@@ -110,31 +110,51 @@ const UsersCollection = [
           id: '1',
           name: 'Salary',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '2',
           name: 'Allowance',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '3',
           name: 'Investments',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '4',
           name: 'Business',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         },
         {
           id: '5',
           name: 'Other',
           createdAt: new Date(),
-          icon: ''
+          icon: '',
+          isDeleted: {
+            status: false,
+            deletedAt: new Date()
+          }
         }
       ]
     },
