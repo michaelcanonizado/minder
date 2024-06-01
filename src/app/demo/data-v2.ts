@@ -3,19 +3,25 @@ const UsersCollection = [
     id: '123456789',
     firstName: 'michael',
     lastName: 'canonizado',
+    username: 'mikey',
     email: 'michael@gmail.com',
     phone: '0123456789',
     gender: '',
     createdAt: new Date(),
     lastLogin: new Date(),
     timezone: {},
-    currency: {
-      name: 'PHP',
+    primaryCurrency: {
+      code: 'PHP',
+      name: 'Philippine Peso',
       htmlCode: '&#8369',
       hexCode: '&#x20B1;',
       uniCode: 'U+020B1'
     },
-    balance: 6010,
+    balance: {
+      totalIncome: 1234,
+      totalExpense: 1234,
+      currentBalance: 6010
+    },
     categories: {
       expense: [
         {
@@ -105,33 +111,53 @@ const UsersCollection = [
         id: '1',
         name: 'Cash',
         color: '#7C3AED',
+        description: '',
         balance: 2810,
         createdAt: new Date(),
-        transactionCount: 3
+        transactionCount: 3,
+        isDeleted: {
+          status: false,
+          deletedAt: new Date()
+        }
       },
       {
         id: '2',
         name: 'GCash',
         color: '#2994FC',
+        description: '',
         balance: 500,
         createdAt: new Date(),
-        transactionCount: 0
+        transactionCount: 0,
+        isDeleted: {
+          status: false,
+          deletedAt: new Date()
+        }
       },
       {
         id: '3',
         name: 'Savings',
         color: '#21C5E0',
+        description: '',
         balance: 2000,
         createdAt: new Date(),
-        transactionCount: 0
+        transactionCount: 0,
+        isDeleted: {
+          status: false,
+          deletedAt: new Date()
+        }
       },
       {
         id: '4',
         name: 'Paypal',
         color: '#F23E94',
+        description: '',
         balance: 700,
         createdAt: new Date(),
-        transactionCount: 0
+        transactionCount: 0,
+        isDeleted: {
+          status: false,
+          deletedAt: new Date()
+        }
       }
     ]
   }
@@ -141,16 +167,7 @@ const ExpensesCollection = [
   {
     userId: '987654321',
     transactionId: '998877665544332211',
-
-    // Necessary wallet and category details will be embedded just in case that particular wallet/category will be deleted
-    wallet: {
-      id: '1',
-      name: 'Cash',
-      color: '#7C3AED',
-      balance: 0,
-      createdAt: new Date(),
-      transactionCount: 0
-    },
+    walletId: '1',
     category: {
       id: '4',
       name: 'Phone',
@@ -169,14 +186,7 @@ const ExpensesCollection = [
     description: 'Total exp on food',
     transactionDate: new Date(),
     createdAt: new Date(),
-    wallet: {
-      id: '1',
-      name: 'Cash',
-      color: '#7C3AED',
-      balance: 0,
-      createdAt: new Date(),
-      transactionCount: 0
-    },
+    walletId: '1',
     category: {
       id: '1',
       name: 'Food',
@@ -190,14 +200,7 @@ const ExpensesCollection = [
     description: 'Total exp on transportation',
     transactionDate: new Date(),
     createdAt: new Date(),
-    wallet: {
-      id: '1',
-      name: 'Cash',
-      color: '#7C3AED',
-      balance: 0,
-      createdAt: new Date(),
-      transactionCount: 0
-    },
+    walletId: '1',
     category: {
       id: '2',
       name: 'Transportation',
@@ -211,14 +214,7 @@ const ExpensesCollection = [
     description: 'Pokemon Cards',
     transactionDate: new Date(),
     createdAt: new Date(),
-    wallet: {
-      id: '1',
-      name: 'Cash',
-      color: '#7C3AED',
-      balance: 0,
-      createdAt: new Date(),
-      transactionCount: 0
-    },
+    walletId: '1',
     category: {
       id: '3',
       name: 'Shopping',
@@ -235,14 +231,7 @@ const IncomesCollection = [
     description: 'lorem ipsum',
     transactionDate: new Date(),
     createdAt: new Date(),
-
-    // Necessary wallet and category details will be embedded just in case that particular wallet/category will be deleted
-    wallet: {
-      id: '1',
-      name: 'Cash',
-      color: '#7C3AED',
-      createdAt: new Date()
-    },
+    walletId: '1',
     category: {
       id: '2',
       name: 'Salary',
@@ -257,12 +246,7 @@ const IncomesCollection = [
     description: 'lorem ipsum',
     transactionDate: new Date(),
     createdAt: new Date(),
-    wallet: {
-      id: '1',
-      name: 'Cash',
-      color: '#7C3AED',
-      createdAt: new Date()
-    },
+    walletId: '1',
     category: {
       id: '2',
       name: 'Salary',
@@ -277,12 +261,7 @@ const IncomesCollection = [
     description: 'lorem ipsum',
     transactionDate: new Date(),
     createdAt: new Date(),
-    wallet: {
-      id: '2',
-      name: 'GCash',
-      color: '#2994FC',
-      createdAt: new Date()
-    },
+    walletId: '2',
     category: {
       id: '2',
       name: 'Salary',
@@ -297,12 +276,7 @@ const IncomesCollection = [
     description: 'lorem ipsum',
     transactionDate: new Date(),
     createdAt: new Date(),
-    wallet: {
-      id: '3',
-      name: 'Savings',
-      color: '#21C5E0',
-      createdAt: new Date()
-    },
+    walletId: '3',
     category: {
       id: '2',
       name: 'Salary',
@@ -317,12 +291,7 @@ const IncomesCollection = [
     description: 'lorem ipsum',
     transactionDate: new Date(),
     createdAt: new Date(),
-    wallet: {
-      id: '4',
-      name: 'Paypal',
-      color: '#F23E94',
-      createdAt: new Date()
-    },
+    walletId: '4',
     category: {
       id: '2',
       name: 'Salary',
