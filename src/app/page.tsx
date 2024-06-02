@@ -2,7 +2,7 @@ import Navbar from '@/components/sections/navbar/navbar';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-const links = [
+const guestLinks = [
   {
     name: 'Demo',
     path: '/demo'
@@ -10,7 +10,10 @@ const links = [
   {
     name: 'Styles Test',
     path: '/test'
-  },
+  }
+];
+
+const userLinks = [
   {
     name: 'Dashboard',
     path: '/dashboard'
@@ -45,7 +48,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div className='mt-20 flex flex-col items-center'>
+      <div className='mt-20 flex flex-col items-center pb-20'>
         <div className='text-center'>
           <div className=''>
             <h1 className='text-4xl'>Links</h1>
@@ -57,13 +60,25 @@ export default function Home() {
             </p>
           </div>
         </div>
-        <section className='mt-20 flex flex-col items-center justify-center gap-4 px-10 '>
-          {links.map((link, index) => {
+        <section className='mt-10 flex w-full  flex-col items-center justify-center gap-4 px-10'>
+          <div className=''>
+            <h2 className=''>Guest Routes</h2>
+          </div>
+          {guestLinks.map((link, index) => {
             return (
-              <Button
-                variant='outline'
-                className={`w-full max-w-[250px] ${index == 1 ? 'mb-10' : ''}`}
-              >
+              <Button variant='outline' className={`w-full max-w-[250px]`}>
+                <Link href={link.path}>{link.name}</Link>
+              </Button>
+            );
+          })}
+        </section>
+        <section className='mt-10 flex w-full  flex-col items-center justify-center gap-4 px-10'>
+          <div className=''>
+            <h2 className=''>User Routes</h2>
+          </div>
+          {userLinks.map((link, index) => {
+            return (
+              <Button variant='outline' className={`w-full max-w-[250px]`}>
                 <Link href={link.path}>{link.name}</Link>
               </Button>
             );
