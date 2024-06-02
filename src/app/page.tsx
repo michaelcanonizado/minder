@@ -1,4 +1,4 @@
-import Navbar from '@/components/sections/navigation/navbar';
+import Navbar from '@/components/sections/navigation/guest-navbar';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
