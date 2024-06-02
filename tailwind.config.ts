@@ -23,6 +23,7 @@ const config = {
         sans: ['var(--font-sans)', ...fontFamily.sans]
       },
       colors: {
+        brand: 'hsl(var(--brand))',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -46,7 +47,9 @@ const config = {
         },
         accent: {
           DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))'
+          foreground: 'hsl(var(--accent-foreground))',
+          '100': 'hsl(var(--accent-100))',
+          '200': 'hsl(var(--accent-200))'
         },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
