@@ -6,11 +6,11 @@ const Test = () => {
   return (
     <section
       className={cn(
-        'mx-auto mt-20 flex w-full flex-col items-center gap-10 px-8',
+        'mx-auto mt-20 flex w-full flex-col items-center gap-8 px-8',
         screenBreakpoints
       )}
     >
-      <div className='flex w-full max-w-[500px] flex-col items-center gap-5 text-center text-foreground'>
+      <div className='flex w-full max-w-[500px] flex-col items-center gap-2 text-center text-foreground'>
         <div className=''>
           <h1 className='text-5xl font-bold '>Display</h1>
         </div>
