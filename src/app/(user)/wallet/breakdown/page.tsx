@@ -1,7 +1,7 @@
 import React from 'react';
 
 const WalletBreakdown = () => {
-  return <div>Wallet Breakdown</div>;
+  return <div className='px-8'>Wallet Breakdown</div>;
 };
 
 export default WalletBreakdown;

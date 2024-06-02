@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ExpenseTrack = () => {
-  return <div>Expense Track</div>;
+  return <div className='px-8'>Track Expense</div>;
 };
 
 export default ExpenseTrack;
