@@ -1,3 +1,4 @@
+import Navbar from '@/components/sections/navbar/navbar';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -42,30 +43,33 @@ const links = [
 
 export default function Home() {
   return (
-    <div className='mt-20 flex flex-col items-center'>
-      <div className='text-center'>
-        <div className=''>
-          <h1 className='text-4xl'>Links</h1>
+    <>
+      <Navbar />
+      <div className='mt-20 flex flex-col items-center'>
+        <div className='text-center'>
+          <div className=''>
+            <h1 className='text-4xl'>Links</h1>
+          </div>
+          <div className='mt-2 max-w-[300px]'>
+            <p className='text- text-sm'>
+              Temporary page to quickly access pages. Landing page will be built
+              here soon
+            </p>
+          </div>
         </div>
-        <div className='mt-2 max-w-[300px]'>
-          <p className='text- text-sm'>
-            Temporary page to quickly access pages. Landing page will be built
-            here soon
-          </p>
-        </div>
+        <section className='mt-20 flex flex-col items-center justify-center gap-4 px-10 '>
+          {links.map((link, index) => {
+            return (
+              <Button
+                variant='outline'
+                className={`w-full max-w-[250px] ${index == 1 ? 'mb-10' : ''}`}
+              >
+                <Link href={link.path}>{link.name}</Link>
+              </Button>
+            );
+          })}
+        </section>
       </div>
-      <section className='mt-20 flex flex-col items-center justify-center gap-4 px-10 '>
-        {links.map((link, index) => {
-          return (
-            <Button
-              variant='outline'
-              className={`w-full max-w-[250px] ${index == 1 ? 'mb-10' : ''}`}
-            >
-              <Link href={link.path}>{link.name}</Link>
-            </Button>
-          );
-        })}
-      </section>
-    </div>
+    </>
   );
 }
