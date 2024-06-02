@@ -64,24 +64,24 @@ const breakdownLinks: Links = [
 ];
 
 import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
-const Sidebar = () => {
+const Sidebar = ({ className }: { className?: string }) => {
   const currentPathname = usePathname();
   console.log(currentPathname);
 
   return (
     <nav
-      className={`hidden min-h-screen min-w-[300px] flex-col items-stretch justify-start gap-8 border-r-[1px] p-8 sm:flex`}
+      className={cn(
+        'flex min-h-screen flex-col items-stretch justify-start gap-8 p-8 sm:border-r-[1px]',
+        className
+      )}
     >
-      <div className='flex flex-row items-center justify-between'>
-        <div className=''>
-          <Link href='/'>
-            <h2 className='text-heading-100'>minder</h2>
-          </Link>
-        </div>
-        <div className='bg-brand h-fit rounded-full p-1 hover:cursor-pointer'>
-          <User />
-        </div>
+      <div className='flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between'>
+        <Link href='/'>
+          <h2 className='text-heading-100'>minder</h2>
+        </Link>
+        <UserProfilePicture className='hidden sm:block' />
       </div>
       <div className='flex flex-col gap-4'>
         <div className='flex flex-col gap-2'>
@@ -146,6 +146,19 @@ const Sidebar = () => {
         </div>
       </div>
     </nav>
+  );
+};
+
+const UserProfilePicture = ({ className }: { className?: string }) => {
+  return (
+    <div
+      className={cn(
+        'bg-brand h-fit w-fit rounded-full p-1 hover:cursor-pointer',
+        className
+      )}
+    >
+      <User />
+    </div>
   );
 };
 
