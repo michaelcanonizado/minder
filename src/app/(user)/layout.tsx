@@ -1,4 +1,4 @@
-import Sidebar from '@/components/sections/navigation/sidebar';
+import Sidebar from '@/components/sections/navigation/user-sidebar';
 import React from 'react';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
