@@ -12,16 +12,16 @@ const Test = () => {
     >
       <div className='flex w-full max-w-[500px] flex-col items-center gap-2 text-center text-foreground'>
         <div className=''>
-          <h1 className='text-5xl font-bold '>Display</h1>
+          <h1 className='text-display'>Welcome to minder!</h1>
         </div>
         <div className=''>
-          <h2 className='text-2xl font-semibold'>Heading</h2>
+          <h2 className='text-heading-100'>Heading</h2>
         </div>
         <div className=''>
-          <h3 className='text-xl font-medium'>Sub Heading</h3>
+          <h3 className='text-heading-200'>Sub Heading</h3>
         </div>
         <div className=''>
-          <p className='text-base'>
+          <p className='text-body-100'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et
             fermentum ipsum. Sed quis neque eu ligula bibendum pharetra. Donec
             mollis at augue vel aliquet. Nulla id tincidunt dolor. Curabitur
@@ -30,7 +30,7 @@ const Test = () => {
           </p>
         </div>
         <div className=''>
-          <p className='text-xs text-muted-foreground'>
+          <p className='text-body-200 text-muted-foreground'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et
             fermentum ipsum.
           </p>

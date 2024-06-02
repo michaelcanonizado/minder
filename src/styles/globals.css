@@ -104,6 +104,29 @@
   }
 }
 
+/* 
+Custom tailwind classes group. Avoids repetitive uses of classes and promotes uniformity. Only font size, font weight, letter spacing, and line height classes will be included, other classes such as text color will have to be specified as a different color might be used. 
+
+If any changes are to be done to the typography, do them here.
+*/
+@layer components {
+  .text-display {
+    @apply text-5xl font-bold leading-normal tracking-tighter;
+  }
+  .text-heading-100 {
+    @apply text-2xl font-semibold leading-normal tracking-tight;
+  }
+  .text-heading-200 {
+    @apply text-xl font-medium leading-normal tracking-normal;
+  }
+  .text-body-100 {
+    @apply text-base font-normal leading-normal tracking-wide;
+  }
+  .text-body-200 {
+    @apply text-xs font-normal leading-normal tracking-wider;
+  }
+}
+
 @layer base {
   * {
     @apply border-border;
