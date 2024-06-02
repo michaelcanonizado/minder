@@ -7,6 +7,10 @@ const links = [
     path: '/demo'
   },
   {
+    name: 'Styles Test',
+    path: '/test'
+  },
+  {
     name: 'Dashboard',
     path: '/dashboard'
   },
@@ -51,11 +55,11 @@ export default function Home() {
         </div>
       </div>
       <section className='mt-20 flex flex-col items-center justify-center gap-4 px-10 '>
-        {links.map(link => {
+        {links.map((link, index) => {
           return (
             <Button
               variant='outline'
-              className='w-full max-w-[250px] first:mb-10'
+              className={`w-full max-w-[250px] ${index == 1 ? 'mb-10' : ''}`}
             >
               <Link href={link.path}>{link.name}</Link>
             </Button>
