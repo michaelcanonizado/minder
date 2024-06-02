@@ -36,7 +36,39 @@ const Test = () => {
           </p>
         </div>
       </div>
+      <div className=''>
+        <div className='flex gap-5'>
+          <CardBalance trend='up' />
+          <CardBalance trend='down' />
+        </div>
+      </div>
     </section>
+  );
+};
+
+const CardBalance = ({ trend }: { trend: 'up' | 'down' }) => {
+  return (
+    <div className='rounded-lg border '>
+      <div className='p-4'>
+        <div className=''>
+          <p className='text-base text-muted'>Total Balance</p>
+        </div>
+        <div className=''>
+          <p className='text-xl'>$25,808.15</p>
+        </div>
+        <div className=''>
+          <p className='text-xs text-muted'>
+            <span
+              className={trend == 'up' ? 'text-[#4CDA64]' : 'text-[#FF3B2F]'}
+            >
+              +$1,539 (↑0.9%){' '}
+            </span>
+            vs last month
+          </p>
+        </div>
+      </div>
+      <div className='h-[50px] w-full bg-muted'></div>
+    </div>
   );
 };
 
