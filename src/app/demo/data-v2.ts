@@ -318,8 +318,20 @@ const WalletTransfersCollection = [
     amount: 500,
     transferDate: new Date(),
     createdAt: new Date(),
-    fromWalletId: '1',
-    toWallet: '2'
+
+    // Necessary wallet details will also be embedded just in case that particular wallet will be deleted
+    fromWallet: {
+      id: '1',
+      name: 'Cash',
+      color: '#7C3AED',
+      createdAt: new Date()
+    },
+    toWallet: {
+      id: '2',
+      name: 'GCash',
+      color: '#2994FC',
+      createdAt: new Date()
+    }
   },
   {
     userId: '123456789',
@@ -327,8 +339,18 @@ const WalletTransfersCollection = [
     amount: 1000,
     transferDate: new Date(),
     createdAt: new Date(),
-    fromWalletId: '3',
-    toWallet: '1'
+    fromWallet: {
+      id: '3',
+      name: 'Savings',
+      color: '#21C5E0',
+      createdAt: new Date()
+    },
+    toWallet: {
+      id: '1',
+      name: 'Cash',
+      color: '#2994FC',
+      createdAt: new Date()
+    }
   }
 ];
 
