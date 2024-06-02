@@ -5,7 +5,7 @@ import React from 'react';
 
 const Navbar = () => {
   return (
-    <header className='sticky top-0 w-full border border-b-gray-900'>
+    <header className='sticky top-0 w-full border border-muted'>
       <nav
         className={cn(
           'mx-auto flex w-full justify-between  px-8 py-6',
