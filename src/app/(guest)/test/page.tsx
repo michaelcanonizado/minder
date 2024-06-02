@@ -30,7 +30,7 @@ const Test = () => {
           </p>
         </div>
         <div className=''>
-          <p className='text-xs text-muted'>
+          <p className='text-xs text-muted-foreground'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et
             fermentum ipsum.
           </p>
@@ -48,18 +48,18 @@ const Test = () => {
 
 const CardBalance = ({ trend }: { trend: 'up' | 'down' }) => {
   return (
-    <div className='rounded-lg border '>
+    <div className='rounded-lg border hover:cursor-pointer hover:bg-muted/50'>
       <div className='p-4'>
         <div className=''>
-          <p className='text-base text-muted'>Total Balance</p>
+          <p className='text-base text-muted-foreground'>Total Balance</p>
         </div>
         <div className=''>
           <p className='text-xl'>$25,808.15</p>
         </div>
         <div className=''>
-          <p className='text-xs text-muted'>
+          <p className='text-xs text-muted-foreground'>
             <span
-              className={trend == 'up' ? 'text-[#4CDA64]' : 'text-[#FF3B2F]'}
+              className={trend == 'up' ? 'text-accent-100' : 'text-accent-200'}
             >
               +$1,539 (↑0.9%){' '}
             </span>
