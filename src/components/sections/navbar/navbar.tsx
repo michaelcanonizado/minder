@@ -8,7 +8,7 @@ const Navbar = () => {
     <header className='sticky top-0 w-full border border-b-gray-900'>
       <nav
         className={cn(
-          'mx-auto flex w-full justify-between  px-10 py-6',
+          'mx-auto flex w-full justify-between  px-8 py-6',
           screenBreakpoints
         )}
       >
