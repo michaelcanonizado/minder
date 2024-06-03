@@ -7,7 +7,15 @@ import Graph from '@/components/sections/graph';
 const Dashboard = () => {
   return (
     <div className='px-8'>
-      <Bento>
+      <Bento className='grid-cols-3'>
+        <Bento.Box>
+          <Bento.Box.Header>
+            <Balance.Compact variant='total' />
+          </Bento.Box.Header>
+          <Bento.Box.Content>
+            <Graph.Minimal />
+          </Bento.Box.Content>
+        </Bento.Box>
         <Bento.Box>
           <Bento.Box.Header>
             <Balance.Compact variant='total' />
