@@ -48,6 +48,22 @@ const Header = ({
   );
 };
 
+const Content = ({
+  className,
+  children,
+  ...props
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) => {
+  return (
+    <div className={cn('px-4 py-4', className)} {...props}>
+      {children}
+    </div>
+  );
+};
+
 Bento.Box = Box;
 Box.Header = Header;
+Box.Content = Content;
 export default Bento;

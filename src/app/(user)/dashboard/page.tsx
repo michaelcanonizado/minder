@@ -12,13 +12,17 @@ const Dashboard = () => {
           <Bento.Box.Header>
             <Balance.Compact variant='total' />
           </Bento.Box.Header>
-          <Graph.Minimal />
+          <Bento.Box.Content>
+            <Graph.Minimal />
+          </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box>
           <Bento.Box.Header>
             <Balance.Compact variant='total' />
           </Bento.Box.Header>
-          <Graph.Minimal />
+          <Bento.Box.Content>
+            <Graph.Minimal />
+          </Bento.Box.Content>
         </Bento.Box>
       </Bento>
     </div>
