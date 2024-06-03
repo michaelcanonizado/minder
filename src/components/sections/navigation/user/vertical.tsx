@@ -1,6 +1,12 @@
 'use client';
 
-import { Links } from '@/types';
+import React from 'react';
+import { usePathname } from 'next/navigation';
+
+import { LinkItem, LinkItems } from '@/types';
+import { cn } from '@/lib/utils';
+
+import { SheetClose, Sheet } from '@/components/ui/sheet';
 
 import {
   BarChart4,
@@ -14,9 +20,8 @@ import {
   Wallet
 } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
 
-const mainMenuLinks: Links = [
+const mainMenuLinks: LinkItems = [
   {
     name: 'Dashboard',
     href: '/dashboard',
@@ -28,7 +33,7 @@ const mainMenuLinks: Links = [
     icon: <BarChart4 />
   }
 ];
-const trackLinks: Links = [
+const trackLinks: LinkItems = [
   {
     name: 'Income',
     href: '/income/track',
@@ -45,7 +50,7 @@ const trackLinks: Links = [
     icon: <Wallet />
   }
 ];
-const breakdownLinks: Links = [
+const breakdownLinks: LinkItems = [
   {
     name: 'Income',
     href: '/income/breakdown',
@@ -63,10 +68,13 @@ const breakdownLinks: Links = [
   }
 ];
 
-import { usePathname } from 'next/navigation';
-import { cn } from '@/lib/utils';
-
-const Vertical = ({ className }: { className?: string }) => {
+const Vertical = ({
+  className,
+  setOpen
+}: {
+  className?: string;
+  setOpen: (value: boolean) => void;
+}) => {
   const currentPathname = usePathname();
   console.log(currentPathname);
 
@@ -91,15 +99,12 @@ const Vertical = ({ className }: { className?: string }) => {
           <ul className='flex flex-col gap-2 pl-4'>
             {mainMenuLinks.map(link => {
               return (
-                <li
+                <VerticalLink
                   key={link.href}
-                  className={`transition-color rounded-lg p-2 duration-200 ease-in  ${currentPathname == link.href ? 'bg-accent' : 'hover:bg-accent'}`}
-                >
-                  <Link className='flex flex-row gap-2' href={link.href}>
-                    <div className='w-[24px]'>{link.icon}</div>
-                    <span className=''>{link.name}</span>
-                  </Link>
-                </li>
+                  link={link}
+                  currentPathname={currentPathname}
+                  setOpen={setOpen}
+                />
               );
             })}
           </ul>
@@ -111,15 +116,12 @@ const Vertical = ({ className }: { className?: string }) => {
           <ul className='flex flex-col gap-2 pl-4'>
             {trackLinks.map(link => {
               return (
-                <li
+                <VerticalLink
                   key={link.href}
-                  className={`transition-color rounded-lg p-2 duration-200 ease-in  ${currentPathname == link.href ? 'bg-accent' : 'hover:bg-accent'}`}
-                >
-                  <Link className='flex flex-row gap-2' href={link.href}>
-                    <div className='w-[24px]'>{link.icon}</div>
-                    <span className=''>{link.name}</span>
-                  </Link>
-                </li>
+                  link={link}
+                  currentPathname={currentPathname}
+                  setOpen={setOpen}
+                />
               );
             })}
           </ul>
@@ -131,15 +133,12 @@ const Vertical = ({ className }: { className?: string }) => {
           <ul className='flex flex-col gap-2 pl-4'>
             {breakdownLinks.map(link => {
               return (
-                <li
+                <VerticalLink
                   key={link.href}
-                  className={`transition-color rounded-lg p-2 duration-200 ease-in  ${currentPathname == link.href ? 'bg-accent' : 'hover:bg-accent'}`}
-                >
-                  <Link className='flex flex-row gap-2' href={link.href}>
-                    <div className='w-[24px]'>{link.icon}</div>
-                    <span className=''>{link.name}</span>
-                  </Link>
-                </li>
+                  link={link}
+                  currentPathname={currentPathname}
+                  setOpen={setOpen}
+                />
               );
             })}
           </ul>
@@ -159,6 +158,34 @@ const UserProfilePicture = ({ className }: { className?: string }) => {
     >
       <User />
     </div>
+  );
+};
+
+const VerticalLink = ({
+  link,
+  currentPathname,
+  setOpen,
+  ...props
+}: {
+  link: LinkItem;
+  currentPathname: string;
+  setOpen: (value: boolean) => void;
+}) => {
+  return (
+    <li
+      key={link.href}
+      className={`transition-color rounded-lg p-2 duration-200 ease-in  ${currentPathname == link.href ? 'bg-accent' : 'hover:bg-accent'}`}
+      {...props}
+    >
+      <Link
+        className='flex flex-row gap-2'
+        href={link.href}
+        onClick={() => setOpen(false)}
+      >
+        <div className='w-[24px]'>{link.icon}</div>
+        <span className=''>{link.name}</span>
+      </Link>
+    </li>
   );
 };
 
