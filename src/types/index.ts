@@ -1,6 +1,6 @@
-export type Link = {
+export type LinkItem = {
   name: string;
   href: string;
   icon?: React.ReactNode;
 };
-export type Links = Link[];
+export type LinkItems = LinkItem[];
