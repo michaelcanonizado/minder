@@ -20,7 +20,7 @@ const Navbar = () => {
     <header className='flex w-full gap-4 p-8'>
       <div className='block sm:hidden'>
         <Sheet>
-          <SheetTrigger>
+          <SheetTrigger asChild>
             <Button variant='outline' className='h-fit p-2'>
               <Menu />
             </Button>
