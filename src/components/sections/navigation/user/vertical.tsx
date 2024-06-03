@@ -73,7 +73,7 @@ const Vertical = ({
   setOpen
 }: {
   className?: string;
-  setOpen: (value: boolean) => void;
+  setOpen?: (value: boolean) => void;
 }) => {
   const currentPathname = usePathname();
   console.log(currentPathname);
@@ -99,7 +99,7 @@ const Vertical = ({
           <ul className='flex flex-col gap-2 pl-4'>
             {mainMenuLinks.map(link => {
               return (
-                <VerticalLink
+                <NavbarLink
                   key={link.href}
                   link={link}
                   currentPathname={currentPathname}
@@ -116,7 +116,7 @@ const Vertical = ({
           <ul className='flex flex-col gap-2 pl-4'>
             {trackLinks.map(link => {
               return (
-                <VerticalLink
+                <NavbarLink
                   key={link.href}
                   link={link}
                   currentPathname={currentPathname}
@@ -133,7 +133,7 @@ const Vertical = ({
           <ul className='flex flex-col gap-2 pl-4'>
             {breakdownLinks.map(link => {
               return (
-                <VerticalLink
+                <NavbarLink
                   key={link.href}
                   link={link}
                   currentPathname={currentPathname}
@@ -161,7 +161,7 @@ const UserProfilePicture = ({ className }: { className?: string }) => {
   );
 };
 
-const VerticalLink = ({
+const NavbarLink = ({
   link,
   currentPathname,
   setOpen,
@@ -169,7 +169,7 @@ const VerticalLink = ({
 }: {
   link: LinkItem;
   currentPathname: string;
-  setOpen: (value: boolean) => void;
+  setOpen?: (value: boolean) => void;
 }) => {
   return (
     <li
@@ -180,7 +180,7 @@ const VerticalLink = ({
       <Link
         className='flex flex-row gap-2'
         href={link.href}
-        onClick={() => setOpen(false)}
+        onClick={setOpen ? () => setOpen(false) : () => {}}
       >
         <div className='w-[24px]'>{link.icon}</div>
         <span className=''>{link.name}</span>
