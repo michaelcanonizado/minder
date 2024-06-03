@@ -1,4 +1,4 @@
-import Navbar from '@/components/sections/navigation/guest-navbar';
+import Navbar from '@/components/sections/navigation';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -47,7 +47,7 @@ const userLinks = [
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <Navbar.Guest.Horizontal />
       <main className='mt-20 flex flex-col items-center pb-20'>
         <div className='text-center'>
           <div className=''>

@@ -1,10 +1,10 @@
 import React from 'react';
-import Navbar from '@/components/sections/navigation/guest-navbar';
+import Navbar from '@/components/sections/navigation';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <Navbar />
+      <Navbar.Guest.Horizontal />
       <main>{children}</main>
     </>
   );

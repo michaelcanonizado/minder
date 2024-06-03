@@ -1,21 +1,12 @@
 import React from 'react';
 
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 
-import Sidebar from './user-sidebar';
+import Navbar from '..';
 import { Menu } from 'lucide-react';
 
-const Navbar = () => {
+const Horizontal = () => {
   return (
     <header className='flex w-full gap-4 p-8'>
       <div className='block sm:hidden'>
@@ -26,7 +17,7 @@ const Navbar = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side='left' className='w-[75%] p-0 pt-8'>
-            <Sidebar />
+            <Navbar.User.Vertical />
           </SheetContent>
         </Sheet>
       </div>
@@ -37,4 +28,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Horizontal;

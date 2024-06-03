@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import React from 'react';
 
-const Navbar = () => {
+const Horizontal = () => {
   return (
     <header className='sticky top-0 w-full border border-muted'>
       <nav
@@ -22,4 +22,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Horizontal;

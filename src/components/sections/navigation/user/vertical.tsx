@@ -66,7 +66,7 @@ const breakdownLinks: Links = [
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
-const Sidebar = ({ className }: { className?: string }) => {
+const Vertical = ({ className }: { className?: string }) => {
   const currentPathname = usePathname();
   console.log(currentPathname);
 
@@ -153,7 +153,7 @@ const UserProfilePicture = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        'bg-brand h-fit w-fit rounded-full p-1 hover:cursor-pointer',
+        'h-fit w-fit rounded-full bg-brand p-1 hover:cursor-pointer',
         className
       )}
     >
@@ -162,4 +162,4 @@ const UserProfilePicture = ({ className }: { className?: string }) => {
   );
 };
 
-export default Sidebar;
+export default Vertical;
