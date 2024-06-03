@@ -15,9 +15,39 @@ const Bento = ({
   );
 };
 
-const Box = ({ children }: { children: React.ReactNode }) => {
-  return <div className='rounded-lg border px-4 py-8'>{children}</div>;
+const Box = ({
+  className,
+  children,
+  ...props
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) => {
+  return (
+    <div
+      className={cn('box-border overflow-hidden rounded-lg border', className)}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+
+const Header = ({
+  className,
+  children,
+  ...props
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) => {
+  return (
+    <div className={cn('border-b-[1px] px-4 py-8', className)} {...props}>
+      {children}
+    </div>
+  );
 };
 
 Bento.Box = Box;
+Box.Header = Header;
 export default Bento;

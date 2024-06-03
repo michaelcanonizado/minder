@@ -9,11 +9,15 @@ const Dashboard = () => {
     <div className='px-8'>
       <Bento>
         <Bento.Box>
-          <Balance.Compact variant='total' />
+          <Bento.Box.Header>
+            <Balance.Compact variant='total' />
+          </Bento.Box.Header>
           <Graph.Minimal />
         </Bento.Box>
         <Bento.Box>
-          <Balance.Compact variant='total' />
+          <Bento.Box.Header>
+            <Balance.Compact variant='total' />
+          </Bento.Box.Header>
           <Graph.Minimal />
         </Bento.Box>
       </Bento>
