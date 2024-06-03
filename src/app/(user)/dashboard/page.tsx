@@ -1,17 +1,20 @@
-import Bento from '@/components/sections/bento';
 import React from 'react';
+
+import Balance from '@/components/sections/balance';
+import Bento from '@/components/sections/bento';
+import Graph from '@/components/sections/graph';
 
 const Dashboard = () => {
   return (
     <div className='px-8'>
       <Bento>
         <Bento.Box>
-          <Bento.Balance variant='total' />
-          <Bento.Graph />
+          <Balance.Compact variant='total' />
+          <Graph.Minimal />
         </Bento.Box>
         <Bento.Box>
-          <Bento.Balance variant='income' />
-          <Bento.Graph />
+          <Balance.Compact variant='total' />
+          <Graph.Minimal />
         </Bento.Box>
       </Bento>
     </div>

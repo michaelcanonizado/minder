@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import React from 'react';
 
-const Balance = ({ variant }: { variant: 'total' | 'expense' | 'income' }) => {
+const Compact = ({ variant }: { variant: 'total' | 'expense' | 'income' }) => {
   const title = 'Total Balance';
   const amount = '$25,808.15';
   const percentageChange: {
@@ -53,4 +53,4 @@ const Balance = ({ variant }: { variant: 'total' | 'expense' | 'income' }) => {
   );
 };
 
-export default Balance;
+export default Compact;

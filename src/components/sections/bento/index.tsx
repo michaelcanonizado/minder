@@ -1,6 +1,4 @@
 import { cn } from '@/lib/utils';
-import Balance from './balance';
-import Graph from './graph';
 
 const Bento = ({
   className,
@@ -22,6 +20,4 @@ const Box = ({ children }: { children: React.ReactNode }) => {
 };
 
 Bento.Box = Box;
-Bento.Balance = Balance;
-Bento.Graph = Graph;
 export default Bento;
