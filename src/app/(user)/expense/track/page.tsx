@@ -8,7 +8,9 @@ const ExpenseTrack = () => {
       <div className=''></div>
       <Bento className='grid-cols-1 lg:grid-cols-2'>
         <Bento.Box>
-          <Bento.Box.Header></Bento.Box.Header>
+          <Bento.Box.Header>
+            <p className='text-display'>Track Expense</p>
+          </Bento.Box.Header>
           <Bento.Box.Content>
             <Form.Transaction.Expense />
           </Bento.Box.Content>
