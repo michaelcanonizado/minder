@@ -34,7 +34,7 @@ const Dashboard = () => {
         </Bento.Box>
         <Bento.Box className='col-span-3'>
           <Bento.Box.Header>
-            <Balance.Compact variant='total' />
+            <Balance.Compact variant='weekly' />
           </Bento.Box.Header>
           <Bento.Box.Content>
             <Chart.Progress />

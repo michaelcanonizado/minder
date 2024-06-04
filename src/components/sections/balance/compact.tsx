@@ -1,7 +1,11 @@
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import React from 'react';
 
-const Compact = ({ variant }: { variant: 'total' | 'expense' | 'income' }) => {
+const Compact = ({
+  variant
+}: {
+  variant: 'total' | 'weekly' | 'monthly' | 'expense' | 'income';
+}) => {
   const title = 'Total Balance';
   const amount = '$25,808.15';
   const percentageChange: {
