@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import Box from './box';
+import Box from './box/box';
 
 const Bento = ({
   className,

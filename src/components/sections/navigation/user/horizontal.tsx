@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 
-import Vertical from './user-vertical';
+import Vertical from './vertical';
 import { Menu } from 'lucide-react';
 
 const Horizontal = () => {

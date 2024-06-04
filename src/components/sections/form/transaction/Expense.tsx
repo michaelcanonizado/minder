@@ -73,7 +73,7 @@ const wallets = [
   }
 ];
 
-const Transaction = () => {
+const Expense = () => {
   const form = useForm();
 
   return (
@@ -109,4 +109,4 @@ const Amount = ({ className, form }: { className?: string; form: any }) => {
   );
 };
 
-export default Transaction;
+export default Expense;

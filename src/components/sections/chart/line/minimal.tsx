@@ -1,7 +1,7 @@
 import React from 'react';
 
-const LineMinimal = () => {
+const Minimal = () => {
   return <div>Minimal Line Chart</div>;
 };
 
-export default LineMinimal;
+export default Minimal;

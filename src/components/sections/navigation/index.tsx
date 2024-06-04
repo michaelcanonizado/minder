@@ -1,15 +1,9 @@
-import { default as UserHorizontal } from './user-horizontal';
-import { default as UserVertical } from './user-vertical';
-import { default as GuestHorizontal } from './guest-horizontal';
+import Guest from './guest';
+import User from './user';
 
 const Navbar = {
-  User: {
-    Horizontal: UserHorizontal,
-    Vertical: UserVertical
-  },
-  Guest: {
-    Horizontal: GuestHorizontal
-  }
+  User: User,
+  Guest: Guest
 };
 
 export default Navbar;

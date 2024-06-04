@@ -13,7 +13,7 @@ const Dashboard = () => {
             <Balance.Compact variant='total' />
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Chart.LineMinimal />
+            <Chart.Line.Minimal />
           </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box>
@@ -21,7 +21,7 @@ const Dashboard = () => {
             <Balance.Compact variant='total' />
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Chart.LineMinimal />
+            <Chart.Line.Minimal />
           </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box>
@@ -29,7 +29,7 @@ const Dashboard = () => {
             <Balance.Compact variant='total' />
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Chart.LineMinimal />
+            <Chart.Line.Minimal />
           </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box className='col-span-3'>

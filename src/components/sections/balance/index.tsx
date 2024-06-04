@@ -1,4 +1,4 @@
-import Compact from './compact';
+import Compact from './compact/compact';
 
 const Balance = {
   Compact: Compact

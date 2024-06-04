@@ -10,7 +10,7 @@ const ExpenseTrack = () => {
         <Bento.Box>
           <Bento.Box.Header></Bento.Box.Header>
           <Bento.Box.Content>
-            <Form.Transaction />
+            <Form.Transaction.Expense />
           </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box>

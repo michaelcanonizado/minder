@@ -1,8 +1,8 @@
-import LineMinimal from './line-minimal';
-import Progress from './progress';
+import Line from './line';
+import Progress from './progress/progress';
 
 const Chart = {
-  LineMinimal: LineMinimal,
+  Line: Line,
   Progress: Progress
 };
 export default Chart;
