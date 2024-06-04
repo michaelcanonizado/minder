@@ -1,5 +1,5 @@
-import Balance from '@/components/sections/balance';
 import Bento from '@/components/sections/bento';
+import Form from '@/components/sections/form';
 import React from 'react';
 
 const ExpenseTrack = () => {
@@ -7,7 +7,12 @@ const ExpenseTrack = () => {
     <div className='px-8'>
       <div className=''></div>
       <Bento>
-        <Bento.Box></Bento.Box>
+        <Bento.Box>
+          <Bento.Box.Header></Bento.Box.Header>
+          <Bento.Box.Content>
+            <Form.Transaction />
+          </Bento.Box.Content>
+        </Bento.Box>
         <Bento.Box>
           <Bento.Box.Placeholder />
         </Bento.Box>
