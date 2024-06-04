@@ -6,7 +6,7 @@ const ExpenseTrack = () => {
   return (
     <div className='px-8'>
       <div className=''></div>
-      <Bento>
+      <Bento className='grid-cols-1 lg:grid-cols-2'>
         <Bento.Box>
           <Bento.Box.Header></Bento.Box.Header>
           <Bento.Box.Content>
