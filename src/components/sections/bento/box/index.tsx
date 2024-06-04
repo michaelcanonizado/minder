@@ -48,7 +48,31 @@ const Content = ({
   );
 };
 
+const Placeholder = ({
+  className,
+  children,
+  ...props
+}: {
+  className?: string;
+  children?: React.ReactNode;
+}) => {
+  return (
+    <div
+      className={cn(
+        'grid h-full w-full place-items-center px-4 py-4',
+        className
+      )}
+      {...props}
+    >
+      <div className=''>
+        <p className=''>Placeholder</p>
+      </div>
+    </div>
+  );
+};
+
 Box.Header = Header;
 Box.Content = Content;
+Box.Placeholder = Placeholder;
 
 export default Box;

@@ -8,7 +8,9 @@ const ExpenseTrack = () => {
       <div className=''></div>
       <Bento>
         <Bento.Box></Bento.Box>
-        <Bento.Box></Bento.Box>
+        <Bento.Box>
+          <Bento.Box.Placeholder />
+        </Bento.Box>
       </Bento>
     </div>
   );
