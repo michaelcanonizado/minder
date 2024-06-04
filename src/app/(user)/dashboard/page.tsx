@@ -32,6 +32,14 @@ const Dashboard = () => {
             <Chart.LineMinimal />
           </Bento.Box.Content>
         </Bento.Box>
+        <Bento.Box className='col-span-3'>
+          <Bento.Box.Header>
+            <Balance.Compact variant='total' />
+          </Bento.Box.Header>
+          <Bento.Box.Content>
+            <Chart.Progress />
+          </Bento.Box.Content>
+        </Bento.Box>
       </Bento>
     </div>
   );
