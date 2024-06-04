@@ -2,7 +2,7 @@ import React from 'react';
 
 import Balance from '@/components/sections/balance';
 import Bento from '@/components/sections/bento';
-import Graph from '@/components/sections/graph';
+import Chart from '@/components/sections/chart';
 
 const Dashboard = () => {
   return (
@@ -13,7 +13,7 @@ const Dashboard = () => {
             <Balance.Compact variant='total' />
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Graph.Minimal />
+            <Chart.LineMinimal />
           </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box>
@@ -21,7 +21,7 @@ const Dashboard = () => {
             <Balance.Compact variant='total' />
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Graph.Minimal />
+            <Chart.LineMinimal />
           </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box>
@@ -29,7 +29,7 @@ const Dashboard = () => {
             <Balance.Compact variant='total' />
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Graph.Minimal />
+            <Chart.LineMinimal />
           </Bento.Box.Content>
         </Bento.Box>
       </Bento>
