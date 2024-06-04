@@ -32,7 +32,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '2',
@@ -42,7 +43,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '3',
@@ -52,7 +54,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '4',
@@ -62,7 +65,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '5',
@@ -72,7 +76,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '6',
@@ -82,7 +87,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '7',
@@ -92,7 +98,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '8',
@@ -102,7 +109,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         }
       ],
       income: [
@@ -114,7 +122,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '2',
@@ -124,7 +133,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '3',
@@ -134,7 +144,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '4',
@@ -144,7 +155,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         },
         {
           id: '5',
@@ -154,7 +166,8 @@ const UsersCollection = [
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          }
+          },
+          color: ''
         }
       ]
     },
