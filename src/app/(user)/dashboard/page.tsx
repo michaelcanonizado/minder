@@ -36,7 +36,10 @@ const Dashboard = () => {
           <Bento.Box.Header>
             <Balance.Compact variant='weekly' />
           </Bento.Box.Header>
-          <Bento.Box.Content>
+          <Bento.Box.Content className='flex flex-col gap-2'>
+            <Chart.Progress />
+            <Chart.Progress />
+            <Chart.Progress />
             <Chart.Progress />
           </Bento.Box.Content>
         </Bento.Box>
