@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 
-import Navbar from '..';
+import Vertical from './vertical';
 import { Menu } from 'lucide-react';
 
 const Horizontal = () => {
@@ -21,7 +21,8 @@ const Horizontal = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side='left' className='w-[75%] p-0 pt-8'>
-            <Navbar.User.Vertical setOpen={setSheetOpen} />
+            {/* Use <Vertical/> directly instead of using <Navbar.User.Vertical/> to not get the "Uncaught ReferenceError: Cannot access '__WEBPACK_DEFAULT_EXPORT__' before initialization" error */}
+            <Vertical setOpen={setSheetOpen} />
           </SheetContent>
         </Sheet>
       </div>
