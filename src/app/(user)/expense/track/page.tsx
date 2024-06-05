@@ -1,6 +1,5 @@
 import Bento from '@/components/sections/bento';
 import Form from '@/components/sections/form';
-import React from 'react';
 
 const ExpenseTrack = () => {
   return (
