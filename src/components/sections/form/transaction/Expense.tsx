@@ -104,7 +104,7 @@ const Expense = () => {
             <FormItem className=''>
               <FormLabel>Deduct from:</FormLabel>
               <FormControl>
-                <RadioGroup className=''>
+                <RadioGroup className='' defaultValue={wallets[0].id}>
                   <ScrollArea className='h-[100px] w-full '>
                     <div className='flex flex-row gap-2 pr-2 pt-2'>
                       {wallets.map(wallet => {
