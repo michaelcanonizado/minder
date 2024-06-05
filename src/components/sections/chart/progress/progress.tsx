@@ -36,7 +36,7 @@ const Progress = () => {
   //   console.log(data.budget);
 
   // Props
-  const header = 'Food';
+  const title = '🍕Food';
   // Might change category icons to be emojis
   const icon = <Utensils />;
   const value = 75;
@@ -47,7 +47,7 @@ const Progress = () => {
     <div className='w-full space-y-2'>
       <div className='flex flex-row justify-between'>
         <div className='flex'>
-          <p className=''>{header}</p>
+          <p className=''>{title}</p>
         </div>
         <div
           className={`${value >= 100 ? 'bg-accent-200' : 'bg-accent-100'} w-fit rounded-full pl-[14px] pr-[16px] pt-[2px]`}

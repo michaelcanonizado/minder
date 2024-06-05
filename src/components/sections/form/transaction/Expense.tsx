@@ -168,7 +168,14 @@ const Wallet = ({
   );
 };
 
-const Amount = ({ className, form }: { className?: string; form: any }) => {
+const Amount = ({
+  className,
+  form,
+  title
+}: {
+  className?: string;
+  form: any;
+}) => {
   return (
     <FormField
       control={form.control}
