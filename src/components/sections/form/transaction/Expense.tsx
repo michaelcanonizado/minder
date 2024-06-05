@@ -193,20 +193,42 @@ const Expense = () => {
         />
 
         <div className='flex flex-col gap-2'>
-          <FormInput form={form} title='Amount' type='text' placeholder='125' />
+          <FormField
+            control={form.control}
+            name='...'
+            render={() => (
+              <FormItem className=''>
+                <FormLabel>Amount</FormLabel>
+                <FormControl>
+                  <Input type='text' placeholder='125' />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name='...'
             render={({ field }) => (
-              <FormSelect title='Category' data={categories} field={field} />
+              <FormItem>
+                <FormLabel>Category</FormLabel>
+                <FormSelect data={categories} field={field} />
+                <FormMessage />
+              </FormItem>
             )}
           />
 
-          <FormInput
-            form={form}
-            title='Description'
-            type='text'
-            placeholder='Total expense on food'
+          <FormField
+            control={form.control}
+            name='...'
+            render={() => (
+              <FormItem className=''>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Input type='text' placeholder='Total expense on food' />
+                </FormControl>
+              </FormItem>
+            )}
           />
         </div>
         <Button type='submit' className='mt-4 w-full'>
@@ -219,8 +241,6 @@ const Expense = () => {
 
 const FormSelect = ({
   data,
-  title,
-  className,
   field
 }: {
   data: {
@@ -232,27 +252,25 @@ const FormSelect = ({
     };
     [key: string]: any;
   }[];
-  title: string;
-  className?: string;
   field: any;
 }) => {
   return (
-    <FormItem>
-      <FormLabel>{title}</FormLabel>
-      <Select onValueChange={field.onChange} defaultValue={field.value}>
-        <FormControl>
-          <SelectTrigger>
-            <SelectValue placeholder='Expense category' />
-          </SelectTrigger>
-        </FormControl>
-        <SelectContent>
-          {data.map(item => {
-            return <SelectItem value={item.id}>{item.name}</SelectItem>;
-          })}
-        </SelectContent>
-      </Select>
-      <FormMessage />
-    </FormItem>
+    <Select onValueChange={field.onChange} defaultValue={field.value}>
+      <FormControl>
+        <SelectTrigger>
+          <SelectValue placeholder='Expense category' />
+        </SelectTrigger>
+      </FormControl>
+      <SelectContent>
+        {data.map(item => {
+          return (
+            <SelectItem value={item.id} key={item.id}>
+              {item.name}
+            </SelectItem>
+          );
+        })}
+      </SelectContent>
+    </Select>
   );
 };
 
@@ -275,12 +293,13 @@ const FormRadioCardGroup = ({
         <div
           className={`flex ${orientation == 'vertical' ? 'flex-col' : 'flex-row'} gap-2 pr-2 pt-2`}
         >
-          {data.map(wallet => {
+          {data.map(item => {
             return (
               <FormRadioCard
-                name={wallet.name}
-                value={wallet.id}
-                id={wallet.id}
+                name={item.name}
+                value={item.id}
+                id={item.id}
+                key={item.id}
               />
             );
           })}
@@ -294,7 +313,8 @@ const FormRadioCard = ({
   name,
   value,
   id,
-  className
+  className,
+  ...props
 }: {
   name: string;
   value: string;
@@ -302,7 +322,7 @@ const FormRadioCard = ({
   className?: string;
 }) => {
   return (
-    <div className='flex items-center space-x-2'>
+    <div className='flex items-center space-x-2' {...props}>
       <RadioGroupItem value={value} id={id} className='peer sr-only' />
       <Label
         htmlFor={id}
@@ -314,35 +334,6 @@ const FormRadioCard = ({
         <p className=''>{name}</p>
       </Label>
     </div>
-  );
-};
-
-const FormInput = ({
-  className,
-  form,
-  title,
-  type,
-  placeholder
-}: {
-  className?: string;
-  form: any;
-  title: string;
-  type: React.HTMLInputTypeAttribute;
-  placeholder?: string;
-}) => {
-  return (
-    <FormField
-      control={form.control}
-      name='...'
-      render={() => (
-        <FormItem className={cn('', className)}>
-          <FormLabel>{title}</FormLabel>
-          <FormControl>
-            <Input type={type} placeholder={placeholder} />
-          </FormControl>
-        </FormItem>
-      )}
-    />
   );
 };
 
