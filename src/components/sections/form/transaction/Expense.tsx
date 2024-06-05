@@ -288,7 +288,7 @@ const FormSelect = ({
           <SelectValue placeholder='Choose' />
         </SelectTrigger>
       </FormControl>
-      <SelectContent>
+      <SelectContent className='max-h-[300px]'>
         {data.map(item => {
           return (
             <SelectItem value={item.id} key={item.id}>
