@@ -375,6 +375,7 @@ const FormRadioCardGroup = ({
   data: {
     id: string;
     name: string;
+    balance?: number;
     [key: string]: any;
   }[];
   className?: string;
@@ -394,7 +395,8 @@ const FormRadioCardGroup = ({
           {data.map(item => {
             return (
               <FormRadioCard
-                name={item.name}
+                title={item.name}
+                subtitle={item.balance}
                 value={item.id}
                 id={item.id}
                 key={item.id}
@@ -408,17 +410,30 @@ const FormRadioCardGroup = ({
   );
 };
 const FormRadioCard = ({
-  name,
+  title,
+  subtitle,
   value,
   id,
   className,
   ...props
 }: {
-  name: string;
+  title: string;
+  subtitle?: number;
   value: string;
   id: string;
   className?: string;
 }) => {
+  const detail = subtitle ? (
+    <p className='text-body-200 mt-1 text-muted-foreground'>
+      {subtitle.toLocaleString('en-US', {
+        notation: 'compact',
+        maximumFractionDigits: 2
+      })}
+    </p>
+  ) : (
+    ''
+  );
+
   return (
     <FormItem className='flex items-center space-x-2' {...props}>
       <FormControl>
@@ -427,12 +442,24 @@ const FormRadioCard = ({
       <Label
         htmlFor={id}
         className={cn(
-          'grid h-[75px] w-[75px] place-items-center rounded-lg text-center ring ring-muted hover:cursor-pointer peer-data-[state=checked]:ring-foreground',
+          'size-[75px] rounded-lg ring ring-muted hover:cursor-pointer peer-data-[state=checked]:ring-foreground',
+          className
+        )}
+      >
+        <div className='flex h-full w-full flex-col items-center justify-center'>
+          <p className=''>{title}</p>
+          {detail}
+        </div>
+      </Label>
+      {/* <Label
+        htmlFor={id}
+        className={cn(
+          'grid size-[75px] place-items-center rounded-lg text-center ring ring-muted hover:cursor-pointer peer-data-[state=checked]:ring-foreground',
           className
         )}
       >
         {name}
-      </Label>
+      </Label> */}
     </FormItem>
   );
 };
