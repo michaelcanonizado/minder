@@ -179,7 +179,10 @@ const categories = [
 
 const Expense = () => {
   const form = useForm<z.infer<typeof trackExpenseSchema>>({
-    resolver: zodResolver(trackExpenseSchema)
+    resolver: zodResolver(trackExpenseSchema),
+    defaultValues: {
+      walletId: categories[0].id
+    }
   });
 
   const onSubmit = (data: z.infer<typeof trackExpenseSchema>) => {
@@ -192,18 +195,23 @@ const Expense = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className='flex flex-col gap-4'
       >
-        {/* <FormField
+        <FormField
           control={form.control}
-          name='...'
-          render={() => (
+          name='walletId'
+          render={({ field }) => (
             <FormItem className=''>
               <FormLabel>Deduct from:</FormLabel>
               <FormControl>
-                <FormRadioCardGroup data={wallets} orientation='horizontal' />
+                <FormRadioCardGroup
+                  data={wallets}
+                  orientation='horizontal'
+                  field={field}
+                />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
-        /> */}
+        />
 
         <div className='flex flex-col gap-1'>
           <FormField
@@ -296,7 +304,8 @@ const FormSelect = ({
 const FormRadioCardGroup = ({
   data,
   className,
-  orientation
+  orientation,
+  field
 }: {
   data: {
     id: string;
@@ -305,10 +314,15 @@ const FormRadioCardGroup = ({
   }[];
   className?: string;
   orientation: 'horizontal' | 'vertical';
+  field: any;
 }) => {
   return (
-    <RadioGroup className='' defaultValue={data[0].id}>
-      <ScrollArea className={cn('h-[100px] w-full', className)}>
+    <RadioGroup
+      className=''
+      defaultValue={field.value}
+      onValueChange={field.onChange}
+    >
+      <ScrollArea className={cn('h-[96px] w-full', className)}>
         <div
           className={`flex ${orientation == 'vertical' ? 'flex-col' : 'flex-row'} gap-2 pr-2 pt-2`}
         >
@@ -341,18 +355,20 @@ const FormRadioCard = ({
   className?: string;
 }) => {
   return (
-    <div className='flex items-center space-x-2' {...props}>
-      <RadioGroupItem value={value} id={id} className='peer sr-only' />
+    <FormItem className='flex items-center space-x-2' {...props}>
+      <FormControl>
+        <RadioGroupItem value={value} id={id} className='peer sr-only' />
+      </FormControl>
       <Label
         htmlFor={id}
         className={cn(
-          'grid h-[75px] w-[75px] place-items-center rounded-lg ring ring-muted hover:cursor-pointer peer-data-[state=checked]:ring-foreground',
+          'grid h-[75px] w-[75px] place-items-center rounded-lg text-center ring ring-muted hover:cursor-pointer peer-data-[state=checked]:ring-foreground',
           className
         )}
       >
-        <p className=''>{name}</p>
+        {name}
       </Label>
-    </div>
+    </FormItem>
   );
 };
 
