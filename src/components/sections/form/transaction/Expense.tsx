@@ -285,7 +285,7 @@ const FormSelect = ({
     <Select onValueChange={field.onChange} defaultValue={field.value}>
       <FormControl>
         <SelectTrigger>
-          <SelectValue placeholder='Expense category' />
+          <SelectValue placeholder='Choose' />
         </SelectTrigger>
       </FormControl>
       <SelectContent>
