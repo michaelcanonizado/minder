@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
 import { cn } from '@/lib/utils';
@@ -26,6 +28,8 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+
+import trackExpenseSchema from '@/schemas/track-expense';
 
 const wallets = [
   {
@@ -174,11 +178,20 @@ const categories = [
 ];
 
 const Expense = () => {
-  const form = useForm();
+  const form = useForm<z.infer<typeof trackExpenseSchema>>({
+    resolver: zodResolver(trackExpenseSchema)
+  });
+
+  const onSubmit = (data: z.infer<typeof trackExpenseSchema>) => {
+    console.log(data);
+  };
 
   return (
     <Form {...form}>
-      <div className='flex flex-col gap-4'>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className='flex flex-col gap-4'
+      >
         {/* <FormField
           control={form.control}
           name='...'
@@ -195,13 +208,14 @@ const Expense = () => {
         <div className='flex flex-col gap-2'>
           <FormField
             control={form.control}
-            name='...'
-            render={() => (
+            name='amount'
+            render={({ field }) => (
               <FormItem className=''>
                 <FormLabel>Amount</FormLabel>
                 <FormControl>
-                  <Input type='text' placeholder='125' />
+                  <Input type='text' placeholder='125' {...field} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -220,13 +234,18 @@ const Expense = () => {
 
           <FormField
             control={form.control}
-            name='...'
-            render={() => (
+            name='description'
+            render={({ field }) => (
               <FormItem className=''>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Input type='text' placeholder='Total expense on food' />
+                  <Input
+                    type='text'
+                    placeholder='Total expense on food'
+                    {...field}
+                  />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -234,7 +253,7 @@ const Expense = () => {
         <Button type='submit' className='mt-4 w-full'>
           Submit
         </Button>
-      </div>
+      </form>
     </Form>
   );
 };
