@@ -220,9 +220,9 @@ const Expense = () => {
             )}
           />
 
-          {/* <FormField
+          <FormField
             control={form.control}
-            name='...'
+            name='categoryId'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Category</FormLabel>
@@ -230,7 +230,7 @@ const Expense = () => {
                 <FormMessage />
               </FormItem>
             )}
-          /> */}
+          />
 
           <FormField
             control={form.control}
