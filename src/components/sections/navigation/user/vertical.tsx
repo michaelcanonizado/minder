@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { LinkItem, LinkItems } from '@/types';
 import { cn } from '@/lib/utils';
 
-import { SheetClose, Sheet } from '@/components/ui/sheet';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 import {
   BarChart4,
@@ -150,14 +150,12 @@ const Vertical = ({
 
 const UserProfilePicture = ({ className }: { className?: string }) => {
   return (
-    <div
-      className={cn(
-        'h-fit w-fit rounded-full bg-brand p-1 hover:cursor-pointer',
-        className
-      )}
-    >
-      <User />
-    </div>
+    <Avatar className={cn('hover:cursor-pointer', className)}>
+      <AvatarImage src='https://avatars.githubusercontent.com/u/100785846?s=400&u=e54fbdc8f83049ca47296d0117a18b5e5b1ef1ce&v=4' />
+      <AvatarFallback>
+        <User />
+      </AvatarFallback>
+    </Avatar>
   );
 };
 
