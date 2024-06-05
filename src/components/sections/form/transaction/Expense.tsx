@@ -4,6 +4,8 @@ import React from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { format } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
@@ -12,7 +14,6 @@ import {
   FormField,
   FormItem,
   FormControl,
-  FormDescription,
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
@@ -23,6 +24,12 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -228,17 +235,31 @@ const Expense = () => {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name='categoryId'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-                <FormSelect data={categories} field={field} />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          <div className='grid grid-cols-2 gap-4'>
+            <FormField
+              control={form.control}
+              name='categoryId'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category</FormLabel>
+                  <FormSelect data={categories} field={field} />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='date'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Date</FormLabel>
+                  <FormDatePicker field={field} />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
 
           <FormField
             control={form.control}
@@ -263,6 +284,46 @@ const Expense = () => {
         </Button>
       </form>
     </Form>
+  );
+};
+
+const FormDatePicker = ({
+  className,
+  field
+}: {
+  className?: string;
+  field: any;
+}) => {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <FormControl>
+          <Button
+            variant='outline'
+            className={cn(
+              'w-full pl-3 text-left font-normal hover:bg-background hover:text-muted-foreground ',
+              !field.value && 'text-muted-foreground ',
+              className
+            )}
+          >
+            {field.value ? (
+              format(field.value, 'PPPP')
+            ) : (
+              <span>Pick a date</span>
+            )}
+            <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+          </Button>
+        </FormControl>
+      </PopoverTrigger>
+      <PopoverContent className='w-auto p-0' align='end'>
+        <Calendar
+          mode='single'
+          selected={field.value}
+          onSelect={field.onChange}
+          initialFocus
+        />
+      </PopoverContent>
+    </Popover>
   );
 };
 

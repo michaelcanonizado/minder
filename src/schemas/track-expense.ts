@@ -4,6 +4,9 @@ const trackExpenseSchema = z.object({
   amount: z.coerce.number({ message: 'Please enter a valid amount' }).min(1, {
     message: 'Please enter the amount'
   }),
+  date: z.date({
+    message: 'Please enter the date'
+  }),
   walletId: z
     .string({ message: 'Please choose where to deduct' })
     .min(1, { message: 'Please choose where to deduct' }),
