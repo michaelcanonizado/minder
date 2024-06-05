@@ -188,7 +188,11 @@ const Expense = () => {
   const form = useForm<z.infer<typeof trackExpenseSchema>>({
     resolver: zodResolver(trackExpenseSchema),
     defaultValues: {
-      walletId: categories[0].id
+      amount: 0,
+      walletId: categories[0].id,
+      categoryId: '',
+      date: undefined,
+      description: ''
     }
   });
 
