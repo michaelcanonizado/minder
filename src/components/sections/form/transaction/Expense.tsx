@@ -193,27 +193,27 @@ const Expense = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className='flex flex-col gap-4'
+        className='mt-4 flex flex-col gap-4'
       >
-        <FormField
-          control={form.control}
-          name='walletId'
-          render={({ field }) => (
-            <FormItem className=''>
-              <FormLabel>Deduct from:</FormLabel>
-              <FormControl>
-                <FormRadioCardGroup
-                  data={wallets}
-                  orientation='horizontal'
-                  field={field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <div className='flex flex-col gap-1'>
+          <FormField
+            control={form.control}
+            name='walletId'
+            render={({ field }) => (
+              <FormItem className=''>
+                <FormLabel>Deduct from:</FormLabel>
+                <FormControl>
+                  <FormRadioCardGroup
+                    data={wallets}
+                    orientation='horizontal'
+                    field={field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name='amount'
@@ -258,7 +258,7 @@ const Expense = () => {
             )}
           />
         </div>
-        <Button type='submit' className='mt-4 w-full'>
+        <Button type='submit' className='w-full'>
           Submit
         </Button>
       </form>
