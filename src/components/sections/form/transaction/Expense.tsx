@@ -127,10 +127,14 @@ const Expense = () => {
         />
 
         <div className='flex flex-col gap-2'>
-          <Amount form={form} />
-          <Amount form={form} />
-          <Amount form={form} />
-          <Amount form={form} />
+          <FormInput form={form} title='Amount' type='text' placeholder='125' />
+          <FormInput
+            form={form}
+            title='Description'
+            type='text'
+            placeholder='Total expense on food'
+          />
+          <FormInput form={form} title='Input' type='text' placeholder='123' />
         </div>
 
         <Button type='submit' className='mt-4 w-full'>
@@ -168,13 +172,18 @@ const Wallet = ({
   );
 };
 
-const Amount = ({
+const FormInput = ({
   className,
   form,
-  title
+  title,
+  type,
+  placeholder
 }: {
   className?: string;
   form: any;
+  title: string;
+  type: React.HTMLInputTypeAttribute;
+  placeholder?: string;
 }) => {
   return (
     <FormField
@@ -182,9 +191,9 @@ const Amount = ({
       name='...'
       render={() => (
         <FormItem className={cn('', className)}>
-          <FormLabel>Amount</FormLabel>
+          <FormLabel>{title}</FormLabel>
           <FormControl>
-            <Input type='text' placeholder='1234' />
+            <Input type={type} placeholder={placeholder} />
           </FormControl>
         </FormItem>
       )}
