@@ -97,7 +97,9 @@
     --accent: 240 4% 14%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    /* Original shadcn destructive style. Changed it to match --accent-200 */
+    /* --destructive: 0 62.8% 30.6%; */
+    --destructive: 3 100% 59%;
     --destructive-foreground: 210 40% 98%;
 
     --input: 240 4% 14%;
