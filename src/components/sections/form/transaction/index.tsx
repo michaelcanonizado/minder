@@ -1,8 +1,10 @@
-import Expense from './Expense';
 import Income from './Income';
+import Expense from './Expense';
+import Transfer from './transfer';
 
 const Transaction = {
+  Income: Income,
   Expense: Expense,
-  Income: Income
+  Transfer: Transfer
 };
 export default Transaction;
