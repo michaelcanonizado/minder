@@ -179,7 +179,7 @@ const Expense = () => {
   return (
     <Form {...form}>
       <div className='flex flex-col gap-4'>
-        <FormField
+        {/* <FormField
           control={form.control}
           name='...'
           render={() => (
@@ -190,7 +190,7 @@ const Expense = () => {
               </FormControl>
             </FormItem>
           )}
-        />
+        /> */}
 
         <div className='flex flex-col gap-2'>
           <FormField
@@ -206,7 +206,7 @@ const Expense = () => {
             )}
           />
 
-          <FormField
+          {/* <FormField
             control={form.control}
             name='...'
             render={({ field }) => (
@@ -216,7 +216,7 @@ const Expense = () => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
 
           <FormField
             control={form.control}
@@ -288,7 +288,7 @@ const FormRadioCardGroup = ({
   orientation: 'horizontal' | 'vertical';
 }) => {
   return (
-    <RadioGroup className='' defaultValue={wallets[0].id}>
+    <RadioGroup className='' defaultValue={data[0].id}>
       <ScrollArea className={cn('h-[100px] w-full', className)}>
         <div
           className={`flex ${orientation == 'vertical' ? 'flex-col' : 'flex-row'} gap-2 pr-2 pt-2`}
