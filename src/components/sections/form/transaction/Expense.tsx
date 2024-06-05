@@ -128,6 +128,22 @@ const Expense = () => {
   );
 };
 
+const FormSelect = ({
+  data,
+  className,
+  orientation
+}: {
+  data: {
+    id: string;
+    name: string;
+    [key: string]: any;
+  }[];
+  className?: string;
+  orientation: 'horizontal' | 'vertical';
+}) => {
+  return <div className=''></div>;
+};
+
 const FormRadioCardGroup = ({
   data,
   className,
