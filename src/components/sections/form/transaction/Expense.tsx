@@ -104,23 +104,7 @@ const Expense = () => {
             <FormItem className=''>
               <FormLabel>Deduct from:</FormLabel>
               <FormControl>
-                <RadioGroup className='' defaultValue={wallets[0].id}>
-                  <ScrollArea className='h-[100px] w-full '>
-                    <div className='flex flex-row gap-2 pr-2 pt-2'>
-                      {wallets.map(wallet => {
-                        return (
-                          <Wallet
-                            name={wallet.name}
-                            value={wallet.id}
-                            id={wallet.id}
-                          />
-                        );
-                      })}
-                    </div>
-
-                    <ScrollBar orientation='horizontal' />
-                  </ScrollArea>
-                </RadioGroup>
+                <FormRadioCardGroup data={wallets} orientation='horizontal' />
               </FormControl>
             </FormItem>
           )}
@@ -136,7 +120,6 @@ const Expense = () => {
           />
           <FormInput form={form} title='Input' type='text' placeholder='123' />
         </div>
-
         <Button type='submit' className='mt-4 w-full'>
           Submit
         </Button>
@@ -145,7 +128,41 @@ const Expense = () => {
   );
 };
 
-const Wallet = ({
+const FormRadioCardGroup = ({
+  data,
+  className,
+  orientation
+}: {
+  data: {
+    id: string;
+    name: string;
+    [key: string]: any;
+  }[];
+  className?: string;
+  orientation: 'horizontal' | 'vertical';
+}) => {
+  return (
+    <RadioGroup className='' defaultValue={wallets[0].id}>
+      <ScrollArea className={cn('h-[100px] w-full', className)}>
+        <div
+          className={`flex ${orientation == 'vertical' ? 'flex-col' : 'flex-row'} gap-2 pr-2 pt-2`}
+        >
+          {data.map(wallet => {
+            return (
+              <FormRadioCard
+                name={wallet.name}
+                value={wallet.id}
+                id={wallet.id}
+              />
+            );
+          })}
+        </div>
+        <ScrollBar orientation={orientation} />
+      </ScrollArea>
+    </RadioGroup>
+  );
+};
+const FormRadioCard = ({
   name,
   value,
   id,
