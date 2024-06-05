@@ -1,5 +1,5 @@
-import Income from './Income';
-import Expense from './Expense';
+import Income from './income';
+import Expense from './expense';
 import Transfer from './transfer';
 
 const Transaction = {
