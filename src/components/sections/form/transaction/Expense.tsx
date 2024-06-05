@@ -14,6 +14,13 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -75,21 +82,96 @@ const wallets = [
   }
 ];
 
-{
-  /* <div className='flex items-center space-x-2'>
-                  <RadioGroupItem
-                    value='option-two'
-                    id='option-two'
-                    className='peer sr-only aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
-                  />
-                  <Label
-                    htmlFor='option-two'
-                    className='flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-4 text-sm font-medium leading-none hover:bg-accent hover:text-accent-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70 peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary'
-                  >
-                    <p className=''>Cash</p>
-                  </Label>
-                </div> */
-}
+const categories = [
+  {
+    id: '1',
+    name: 'Food',
+    createdAt: new Date(),
+    icon: '',
+    isDeleted: {
+      status: false,
+      deletedAt: new Date()
+    },
+    color: ''
+  },
+  {
+    id: '2',
+    name: 'Transportation',
+    createdAt: new Date(),
+    icon: '',
+    isDeleted: {
+      status: false,
+      deletedAt: new Date()
+    },
+    color: ''
+  },
+  {
+    id: '3',
+    name: 'Shopping',
+    createdAt: new Date(),
+    icon: '',
+    isDeleted: {
+      status: false,
+      deletedAt: new Date()
+    },
+    color: ''
+  },
+  {
+    id: '4',
+    name: 'Phone',
+    createdAt: new Date(),
+    icon: '',
+    isDeleted: {
+      status: false,
+      deletedAt: new Date()
+    },
+    color: ''
+  },
+  {
+    id: '5',
+    name: 'Housing',
+    createdAt: new Date(),
+    icon: '',
+    isDeleted: {
+      status: false,
+      deletedAt: new Date()
+    },
+    color: ''
+  },
+  {
+    id: '6',
+    name: 'Education',
+    createdAt: new Date(),
+    icon: '',
+    isDeleted: {
+      status: false,
+      deletedAt: new Date()
+    },
+    color: ''
+  },
+  {
+    id: '7',
+    name: 'Entertainment',
+    createdAt: new Date(),
+    icon: '',
+    isDeleted: {
+      status: false,
+      deletedAt: new Date()
+    },
+    color: ''
+  },
+  {
+    id: '8',
+    name: 'Other',
+    createdAt: new Date(),
+    icon: '',
+    isDeleted: {
+      status: false,
+      deletedAt: new Date()
+    },
+    color: ''
+  }
+];
 
 const Expense = () => {
   const form = useForm();
@@ -112,13 +194,20 @@ const Expense = () => {
 
         <div className='flex flex-col gap-2'>
           <FormInput form={form} title='Amount' type='text' placeholder='125' />
+          <FormField
+            control={form.control}
+            name='...'
+            render={({ field }) => (
+              <FormSelect title='Category' data={categories} field={field} />
+            )}
+          />
+
           <FormInput
             form={form}
             title='Description'
             type='text'
             placeholder='Total expense on food'
           />
-          <FormInput form={form} title='Input' type='text' placeholder='123' />
         </div>
         <Button type='submit' className='mt-4 w-full'>
           Submit
@@ -130,18 +219,41 @@ const Expense = () => {
 
 const FormSelect = ({
   data,
+  title,
   className,
-  orientation
+  field
 }: {
   data: {
     id: string;
     name: string;
+    isDeleted: {
+      status: boolean;
+      [key: string]: any;
+    };
     [key: string]: any;
   }[];
+  title: string;
   className?: string;
-  orientation: 'horizontal' | 'vertical';
+  field: any;
 }) => {
-  return <div className=''></div>;
+  return (
+    <FormItem>
+      <FormLabel>{title}</FormLabel>
+      <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <FormControl>
+          <SelectTrigger>
+            <SelectValue placeholder='Expense category' />
+          </SelectTrigger>
+        </FormControl>
+        <SelectContent>
+          {data.map(item => {
+            return <SelectItem value={item.id}>{item.name}</SelectItem>;
+          })}
+        </SelectContent>
+      </Select>
+      <FormMessage />
+    </FormItem>
+  );
 };
 
 const FormRadioCardGroup = ({
