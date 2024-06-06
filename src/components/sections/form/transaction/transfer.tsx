@@ -81,6 +81,19 @@ const wallets = [
   }
 ];
 
+// Temporary fix to unsolved shadcn bug: https://github.com/shadcn-ui/ui/issues/3745
+// The wallets object is being used to seed data into the two radio groups: sourceWalletId and destinationWalletID. Since both radio groups are referencing the same object, they will have same values and ids, which causes some conflict, even after putting the 'name' prop to <input type="radio" name={name}/>.
+// Temporary solution is to encode the wallet id to prevent the conflict, and decode it back at the onSubmit function
+const walletsModified = wallets.map(wallet => {
+  return {
+    ...wallet,
+    id: wallet.id + 'a'
+  };
+});
+const decodeModifiedWalletId = (id: string) => {
+  return id.slice(0, -1);
+};
+
 const Transfer = () => {
   const form = useForm<z.infer<typeof trackTransferSchema>>({
     resolver: zodResolver(trackTransferSchema),
@@ -89,7 +102,8 @@ const Transfer = () => {
       // @ts-ignore
       amount: '',
       sourceWalletId: wallets[0].id,
-      destinationWalletId: wallets[0].id,
+      destinationWalletId: walletsModified[0].id,
+      // destinationWalletId: wallets[0].id,
       categoryId: '',
       date: undefined,
       description: ''
@@ -97,6 +111,8 @@ const Transfer = () => {
   });
 
   const onSubmit = (data: z.infer<typeof trackTransferSchema>) => {
+    data.destinationWalletId = decodeModifiedWalletId(data.destinationWalletId);
+
     console.log(data);
   };
 
@@ -134,7 +150,8 @@ const Transfer = () => {
                 <FormLabel>To:</FormLabel>
                 <FormControl>
                   <FormRadioCardGroup
-                    data={wallets}
+                    data={walletsModified}
+                    // data={wallets}
                     orientation='horizontal'
                     field={field}
                     name='destination'
