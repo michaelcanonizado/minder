@@ -107,7 +107,9 @@ export const FormRadioCardGroup = ({
   data,
   className,
   orientation,
-  field
+  field,
+  name,
+  ...props
 }: {
   data: {
     id: string;
@@ -118,12 +120,15 @@ export const FormRadioCardGroup = ({
   className?: string;
   orientation: 'horizontal' | 'vertical';
   field: any;
+  name: string;
 }) => {
   return (
     <RadioGroup
       className=''
       defaultValue={field.value}
       onValueChange={field.onChange}
+      name={name}
+      {...props}
     >
       <ScrollArea className={cn('h-[96px] w-full', className)}>
         <div

@@ -175,6 +175,7 @@ const Income = () => {
                     data={wallets}
                     orientation='horizontal'
                     field={field}
+                    name='wallets'
                   />
                 </FormControl>
                 <FormMessage />

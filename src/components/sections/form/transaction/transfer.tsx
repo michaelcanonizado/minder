@@ -118,6 +118,7 @@ const Transfer = () => {
                     data={wallets}
                     orientation='horizontal'
                     field={field}
+                    name='source'
                   />
                 </FormControl>
                 <FormMessage />
@@ -136,6 +137,7 @@ const Transfer = () => {
                     data={wallets}
                     orientation='horizontal'
                     field={field}
+                    name='destination'
                   />
                 </FormControl>
                 <FormMessage />
