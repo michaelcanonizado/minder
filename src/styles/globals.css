@@ -113,19 +113,19 @@ If any changes are to be done to the typography, do them here.
 */
 @layer components {
   .text-display {
-    @apply text-5xl font-bold leading-normal tracking-tighter;
+    @apply text-5xl font-bold leading-[1] tracking-tighter;
   }
   .text-heading-100 {
-    @apply text-2xl font-semibold leading-normal tracking-tight;
+    @apply text-2xl font-semibold leading-tight tracking-tight;
   }
   .text-heading-200 {
-    @apply text-xl font-medium leading-normal tracking-normal;
+    @apply text-xl font-medium leading-snug tracking-normal;
   }
   .text-body-100 {
     @apply text-base font-normal leading-normal tracking-wide;
   }
   .text-body-200 {
-    @apply text-xs font-normal leading-normal tracking-wider;
+    @apply text-xs font-normal leading-tight tracking-wider;
   }
 }
 
