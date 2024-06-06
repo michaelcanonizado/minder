@@ -7,15 +7,45 @@ import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 
 const Dashboard = () => {
-  const balances = [
+  const balances: {
+    name: string;
+    amount: number;
+    percentageChange: {
+      isPositive: boolean;
+      timePeriod: 'weekly' | 'montly';
+      percentage: number;
+      difference: number;
+    };
+  }[] = [
     {
-      name: 'Total'
+      name: 'Total',
+      amount: 25808,
+      percentageChange: {
+        isPositive: true,
+        timePeriod: 'weekly',
+        percentage: 0.3,
+        difference: 1539
+      }
     },
     {
-      name: 'Income'
+      name: 'Income',
+      amount: 91273,
+      percentageChange: {
+        isPositive: true,
+        timePeriod: 'weekly',
+        percentage: 0.9,
+        difference: 1539
+      }
     },
     {
-      name: 'Expense'
+      name: 'Expense',
+      amount: 12839,
+      percentageChange: {
+        isPositive: true,
+        timePeriod: 'weekly',
+        percentage: 0.1,
+        difference: 1539
+      }
     }
   ];
 
@@ -37,7 +67,11 @@ const Dashboard = () => {
               return (
                 <TabsContent value={item.name}>
                   <Bento.Box.Header>
-                    <Balance.Compact variant='total' />
+                    <Balance.Compact
+                      title={item.name}
+                      amount={item.amount}
+                      percentageChange={item.percentageChange}
+                    />
                   </Bento.Box.Header>
                   <Bento.Box.Content>
                     <Chart.Line.Minimal />
@@ -49,7 +83,11 @@ const Dashboard = () => {
         </Bento.Box>
         <Bento.Box className=''>
           <Bento.Box.Header>
-            <Balance.Compact variant='weekly' />
+            <Balance.Compact
+              title={balances[0].name}
+              amount={balances[0].amount}
+              percentageChange={balances[0].percentageChange}
+            />
           </Bento.Box.Header>
           <Bento.Box.Content className='flex flex-col gap-2'>
             <Chart.Progress />

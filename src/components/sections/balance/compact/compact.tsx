@@ -2,24 +2,19 @@ import { ArrowDown, ArrowUp } from 'lucide-react';
 import React from 'react';
 
 const Compact = ({
-  variant
+  title,
+  amount,
+  percentageChange
 }: {
-  variant: 'total' | 'weekly' | 'monthly' | 'expense' | 'income';
-}) => {
-  const title = 'Total Balance';
-  const amount = '$25,808.15';
-  const percentageChange: {
+  title: string;
+  amount: number;
+  percentageChange: {
     isPositive: boolean;
     timePeriod: 'weekly' | 'montly';
     percentage: number;
     difference: number;
-  } = {
-    isPositive: true,
-    timePeriod: 'weekly',
-    percentage: 0.9,
-    difference: 1539
   };
-
+}) => {
   const arrowIconClasses = 'w-[16px] h-fit';
 
   const BalancePercentageChange = () => {
