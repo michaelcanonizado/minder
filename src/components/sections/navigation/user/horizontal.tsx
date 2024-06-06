@@ -13,7 +13,7 @@ const Horizontal = () => {
 
   return (
     <header className='flex w-full gap-4 p-8'>
-      <div className='block sm:hidden'>
+      <div className='block md:hidden'>
         <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
           <SheetTrigger asChild>
             <Button variant='outline' className='h-fit p-2'>
