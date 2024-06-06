@@ -32,7 +32,7 @@ const Compact = ({
           )}
           {percentageChange.percentage}%)
         </span>
-        &nbsp;vs last month
+        &nbsp;vs last week
       </p>
     );
   };
@@ -43,7 +43,12 @@ const Compact = ({
         <p className='text-body-100 text-muted-foreground'>{title}</p>
       </div>
       <div className=''>
-        <h3 className='text-heading-100'>{amount}</h3>
+        <h3 className='text-heading-100'>
+          $
+          {amount.toLocaleString('en-US', {
+            maximumFractionDigits: 2
+          })}
+        </h3>
       </div>
       <div className=''>
         <BalancePercentageChange />

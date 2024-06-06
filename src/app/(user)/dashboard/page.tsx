@@ -41,7 +41,7 @@ const Dashboard = () => {
       name: 'Expense',
       amount: 12839,
       percentageChange: {
-        isPositive: true,
+        isPositive: false,
         timePeriod: 'weekly',
         percentage: 0.1,
         difference: 1539
