@@ -28,89 +28,73 @@ const UsersCollection = [
           id: '1',
           name: 'Food',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '2',
           name: 'Transportation',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '3',
           name: 'Shopping',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '4',
           name: 'Phone',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '5',
           name: 'Housing',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '6',
           name: 'Education',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '7',
           name: 'Entertainment',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '8',
           name: 'Other',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         }
       ],
       income: [
@@ -118,56 +102,46 @@ const UsersCollection = [
           id: '1',
           name: 'Salary',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '2',
           name: 'Allowance',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '3',
           name: 'Investments',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '4',
           name: 'Business',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         },
         {
           id: '5',
           name: 'Other',
           createdAt: new Date(),
-          icon: '',
           isDeleted: {
             status: false,
             deletedAt: new Date()
-          },
-          color: ''
+          }
         }
       ]
     },
@@ -176,7 +150,6 @@ const UsersCollection = [
         id: '1',
         name: 'Cash',
         color: '#7C3AED',
-        description: '',
         balance: 2810,
         createdAt: new Date(),
         transactionCount: 3,
@@ -189,7 +162,6 @@ const UsersCollection = [
         id: '2',
         name: 'GCash',
         color: '#2994FC',
-        description: '',
         balance: 500,
         createdAt: new Date(),
         transactionCount: 0,
@@ -202,7 +174,6 @@ const UsersCollection = [
         id: '3',
         name: 'Savings',
         color: '#21C5E0',
-        description: '',
         balance: 2000,
         createdAt: new Date(),
         transactionCount: 0,
@@ -215,7 +186,6 @@ const UsersCollection = [
         id: '4',
         name: 'Paypal',
         color: '#F23E94',
-        description: '',
         balance: 700,
         createdAt: new Date(),
         transactionCount: 0,
@@ -331,20 +301,8 @@ const WalletTransfersCollection = [
     amount: 500,
     transferDate: new Date(),
     createdAt: new Date(),
-
-    // Necessary wallet details will also be embedded just in case that particular wallet will be deleted
-    fromWallet: {
-      id: '1',
-      name: 'Cash',
-      color: '#7C3AED',
-      createdAt: new Date()
-    },
-    toWallet: {
-      id: '2',
-      name: 'GCash',
-      color: '#2994FC',
-      createdAt: new Date()
-    }
+    sourceWalletId: '1',
+    destinationWalletId: '2'
   },
   {
     userId: '123456789',
@@ -352,18 +310,8 @@ const WalletTransfersCollection = [
     amount: 1000,
     transferDate: new Date(),
     createdAt: new Date(),
-    fromWallet: {
-      id: '3',
-      name: 'Savings',
-      color: '#21C5E0',
-      createdAt: new Date()
-    },
-    toWallet: {
-      id: '1',
-      name: 'Cash',
-      color: '#2994FC',
-      createdAt: new Date()
-    }
+    sourceWalletId: '3',
+    destinationWalletId: '1'
   }
 ];
 
