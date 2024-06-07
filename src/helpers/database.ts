@@ -11,3 +11,8 @@ export const databaseConnect = async () => {
       console.log(error);
     });
 };
+
+export const databaseClose = () => {
+  mongoose.connection.close();
+  console.log('Mongo connection closed!');
+};
