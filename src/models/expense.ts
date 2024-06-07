@@ -3,7 +3,7 @@ import mongoose, { InferSchemaType } from 'mongoose';
 const expenseSchema = new mongoose.Schema(
   {
     userId: {
-      type: mongoose.SchemaTypes.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
     amount: {
