@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed-user": "tsx ./src/seeds/user.ts "
+    "seed-user": "tsx ./src/seeds/user.ts",
+    "seed-expenses": "tsx ./src/seeds/expense.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
