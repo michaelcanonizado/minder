@@ -1,28 +1,34 @@
 import mongoose, { InferSchemaType } from 'mongoose';
 
-const profileSchema = new mongoose.Schema({
-  // Future properties:
-  // firstName: 'michael',
-  // lastName: 'canonizado',
-  // username: 'mikey',
-  // email: 'michael@gmail.com',
-  // phone: '0123456789'
-  username: {
-    type: String,
-    required: true
-  }
-});
-
-const currencySchema = new mongoose.Schema({
-  code: {
-    type: String,
-    required: true
+const profileSchema = new mongoose.Schema(
+  {
+    // Future properties:
+    // firstName: 'michael',
+    // lastName: 'canonizado',
+    // username: 'mikey',
+    // email: 'michael@gmail.com',
+    // phone: '0123456789'
+    username: {
+      type: String,
+      required: true
+    }
   },
-  name: {
-    type: String,
-    required: true
-  }
-});
+  { _id: false }
+);
+
+const currencySchema = new mongoose.Schema(
+  {
+    code: {
+      type: String,
+      required: true
+    },
+    name: {
+      type: String,
+      required: true
+    }
+  },
+  { _id: false }
+);
 
 const categorySchema = new mongoose.Schema(
   {
