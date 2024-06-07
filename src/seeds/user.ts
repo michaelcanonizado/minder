@@ -192,6 +192,9 @@ user
   .then(async () => {
     const foundUser = await User.findOne({});
     console.log(foundUser);
+    if (foundUser) {
+      console.log(`User ID: ${foundUser._id}`);
+    }
     databaseClose();
   })
   .catch(error => {
