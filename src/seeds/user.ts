@@ -18,98 +18,64 @@ const seedUser = async () => {
     categories: {
       expense: [
         {
-          id: '1',
-          name: 'Food',
-          createdAt: new Date()
+          name: 'Food'
         },
         {
-          id: '2',
-          name: 'Transportation',
-          createdAt: new Date()
+          name: 'Transportation'
         },
         {
-          id: '3',
-          name: 'Shopping',
-          createdAt: new Date()
+          name: 'Shopping'
         },
         {
-          id: '4',
-          name: 'Phone',
-          createdAt: new Date()
+          name: 'Phone'
         },
         {
-          id: '5',
-          name: 'Housing',
-          createdAt: new Date()
+          name: 'Housing'
         },
         {
-          id: '6',
-          name: 'Education',
-          createdAt: new Date()
+          name: 'Education'
         },
         {
-          id: '7',
-          name: 'Entertainment',
-          createdAt: new Date()
+          name: 'Entertainment'
         },
         {
-          id: '8',
-          name: 'Other',
-          createdAt: new Date()
+          name: 'Other'
         }
       ],
       income: [
         {
-          id: '1',
-          name: 'Salary',
-          createdAt: new Date()
+          name: 'Salary'
         },
         {
-          id: '2',
-          name: 'Allowance',
-          createdAt: new Date()
+          name: 'Allowance'
         },
         {
-          id: '3',
-          name: 'Investments',
-          createdAt: new Date()
+          name: 'Investments'
         },
         {
-          id: '4',
-          name: 'Business',
-          createdAt: new Date()
+          name: 'Business'
         },
         {
-          id: '5',
-          name: 'Other',
-          createdAt: new Date()
+          name: 'Other'
         }
       ]
     },
     wallets: [
       {
-        id: '1',
         name: 'Cash',
-        color: '#7C3AED',
-        createdAt: new Date()
+        color: '#7C3AED'
       },
       {
-        id: '2',
         name: 'GCash',
-        color: '#2994FC',
-        createdAt: new Date()
+        color: '#2994FC'
       },
       {
-        id: '3',
         name: 'Savings',
-        color: '#21C5E0',
-        createdAt: new Date()
+        color: '#21C5E0'
       },
       {
-        id: '4',
         name: 'Paypal',
-        color: '#F23E94',
-        createdAt: new Date()
+        color: '#F23E94'
       }
     ]
   });
@@ -117,7 +83,7 @@ const seedUser = async () => {
   await user.save();
 
   console.log('User generated:');
-  console.log(user);
+  console.log(user.categories);
   databaseClose();
 };
 seedUser();
