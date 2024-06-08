@@ -17,6 +17,7 @@ const seedIncome = async () => {
   await Income.deleteMany({});
   console.log('Deleted all incomes!');
 
+  let totalAmount = 0;
   const incomeLogs = [];
   const descriptions = [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo scelerisque venenatis.',
@@ -33,6 +34,8 @@ const seedIncome = async () => {
     const randCategory = Math.floor(Math.random() * numOfCategories);
     const randDescription = Math.floor(Math.random() * numOfDescriptions);
 
+    totalAmount += randAmount;
+
     incomeLogs.push({
       userId: user._id,
       walletId: user.wallets[i]._id,
@@ -44,9 +47,14 @@ const seedIncome = async () => {
   }
 
   const incomes = await Income.insertMany(incomeLogs);
-
   console.log('Incomes generated:');
   console.log(incomes);
+
+  user.balance.totalBalance = totalAmount;
+  user.balance.totalIncome += totalAmount;
+  await user.save();
+  console.log(`User's total balance: ${user.balance.totalBalance}`);
+
   databaseClose();
 };
 seedIncome();
