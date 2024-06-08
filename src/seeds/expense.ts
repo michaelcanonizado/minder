@@ -6,7 +6,7 @@ import User from '@/models/user';
 databaseConnect();
 
 const seedExpense = async () => {
-  const user = await User.findById('666323b5fb1a3011bdc3ec1b');
+  const user = await User.findOne({ profile: { username: 'mikey' } });
 
   if (!user) {
     console.log('User not found!');
@@ -17,38 +17,61 @@ const seedExpense = async () => {
   await Expense.deleteMany({});
   console.log('Deleted all expenses!');
 
-  const expenses = await Expense.insertMany([
-    {
-      userId: user._id,
-      walletId: user.wallets[0]._id,
-      categoryId: user.categories?.expense[0]._id,
-      transactionId: '123509481238905611',
-      amount: 200,
-      description: 'Total exp on food',
-      transactionDate: new Date()
-    },
-    {
-      userId: user._id,
-      walletId: user.wallets[0]._id,
-      categoryId: user.categories?.expense[0]._id,
-      transactionId: '776168253838905611',
-      amount: 115,
-      description: 'Total exp on transportation',
-      transactionDate: new Date()
-    },
-    {
-      userId: user._id,
-      walletId: user.wallets[0]._id,
-      categoryId: user.categories?.expense[0]._id,
-      transactionId: '90412768253838905611',
-      amount: 375,
-      description: 'Pokemon Cards',
-      transactionDate: new Date()
-    }
-  ]);
+  let totalAmount = 0;
+  const expenseLogs = [];
+  const descriptions = [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo scelerisque venenatis.',
+    'Lorem ipsum dolor sit amet',
+    'Vestibulum commodo scelerisque venenatis.',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+  ];
+  const numOfDescriptions = descriptions.length;
+  const numOfWallets = user.wallets.length;
+  const numOfCategories = user.categories ? user.categories?.income.length : 0;
 
-  const foundExpenses = await Expense.find();
-  console.log(foundExpenses);
+  for (let i = 0; i < numOfWallets; i++) {
+    const randNumofExpenses = Math.floor(Math.random() * (15 - 3 + 1) + 3);
+
+    for (let j = 0; j < randNumofExpenses; j++) {
+      let randAmount =
+        Math.floor(
+          Math.random() * (Math.floor(user.wallets[i].balance / 3) - 100 + 1)
+        ) + 100;
+      const randCategory = Math.floor(Math.random() * numOfCategories);
+      const randDescription = Math.floor(Math.random() * numOfDescriptions);
+
+      if (randAmount < 0) {
+        randAmount = 0;
+      }
+
+      totalAmount += randAmount;
+
+      expenseLogs.push({
+        userId: user._id,
+        walletId: user.wallets[i]._id,
+        categoryId: user.categories?.income[randCategory]._id,
+        amount: randAmount,
+        description: descriptions[randDescription],
+        transactionDate: new Date()
+      });
+
+      for (const wallet of user.wallets) {
+        if (wallet._id == user.wallets[i]._id) {
+          wallet.balance -= randAmount;
+        }
+      }
+    }
+  }
+
+  const expenses = await Expense.insertMany(expenseLogs);
+  console.log('Expenses generated:');
+  console.log(expenses);
+
+  user.balance.totalBalance -= totalAmount;
+  user.balance.totalExpense = totalAmount;
+  await user.save();
+  console.log(`User's total balance: ${user.balance.totalBalance}`);
+
   databaseClose();
 };
 seedExpense();
