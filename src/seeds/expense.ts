@@ -9,14 +9,15 @@ databaseConnect();
 // This function does not automatically call seedIncome (npm run seed-income), where the income collection is cleared, new incomes are made, and the wallets are updated. Therefore, calling this function multiple times can cause an overflow and mismatch between the expenses and incomes
 // To avoid this, always run 'npm run seed-income' before running this file(npm run seed-expense), or seedIncome can be imported from ./income.ts and be called before the function below runs.
 const seedExpense = async () => {
+  // Get user
   const user = await User.findOne({ profile: { username: 'mikey' } });
-
   if (!user) {
     console.log('User not found!');
     return;
   }
   console.log('User found!');
 
+  // Delete contents of Expense collection
   await Expense.deleteMany({});
   console.log('Deleted all expenses!');
 
@@ -32,6 +33,7 @@ const seedExpense = async () => {
   const numOfWallets = user.wallets.length;
   const numOfCategories = user.categories ? user.categories?.income.length : 0;
 
+  // Seed 3-15 expense logs for each wallet
   for (let i = 0; i < numOfWallets; i++) {
     const randNumofExpenses = Math.floor(Math.random() * (15 - 3 + 1) + 3);
 
@@ -66,10 +68,12 @@ const seedExpense = async () => {
     }
   }
 
+  // Push data to database
   const expenses = await Expense.insertMany(expenseLogs);
   console.log('Expenses generated:');
   console.log(expenses);
 
+  // Update user's balances
   user.balance.totalBalance -= totalAmount;
   user.balance.totalExpense = totalAmount;
   await user.save();
