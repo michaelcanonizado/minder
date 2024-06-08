@@ -39,11 +39,11 @@ const categorySchema = new mongoose.Schema(
     isDeleted: {
       status: {
         type: Boolean,
-        required: true
+        default: false
       },
       deletedAt: {
         type: Date,
-        required: true
+        default: null
       }
     }
   },
@@ -62,20 +62,20 @@ const walletSchema = new mongoose.Schema(
     },
     balance: {
       type: Number,
-      required: true
+      default: 0
     },
     transactionCount: {
       type: Number,
-      required: true
+      default: 0
     },
     isDeleted: {
       status: {
         type: Boolean,
-        required: true
+        default: null
       },
       deletedAt: {
         type: Date,
-        required: true
+        default: null
       }
     }
   },
@@ -107,7 +107,7 @@ const userSchema = new mongoose.Schema(
     },
     lastLogin: {
       type: Date,
-      required: true
+      default: new Date()
     },
     currency: {
       type: currencySchema
