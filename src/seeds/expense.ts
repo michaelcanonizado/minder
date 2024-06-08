@@ -5,6 +5,9 @@ import User from '@/models/user';
 
 databaseConnect();
 
+// WARNING
+// This function does not automatically call seedIncome (npm run seed-income), where the income collection is cleared, new incomes are made, and the wallets are updated. Therefore, calling this function multiple times can cause an overflow and mismatch between the expenses and incomes
+// To avoid this, always run 'npm run seed-income' before running this file(npm run seed-expense), or seedIncome can be imported from ./income.ts and be called before the function below runs.
 const seedExpense = async () => {
   const user = await User.findOne({ profile: { username: 'mikey' } });
 
