@@ -17,38 +17,36 @@ const seedIncome = async () => {
   await Income.deleteMany({});
   console.log('Deleted all incomes!');
 
-  const incomes = await Income.insertMany([
-    {
-      userId: user._id,
-      walletId: user.wallets[0]._id,
-      categoryId: user.categories?.expense[0]._id,
-      transactionId: '123509481238905611',
-      amount: 200,
-      description: 'Total exp on food',
-      transactionDate: new Date()
-    },
-    {
-      userId: user._id,
-      walletId: user.wallets[0]._id,
-      categoryId: user.categories?.expense[0]._id,
-      transactionId: '776168253838905611',
-      amount: 115,
-      description: 'Total exp on transportation',
-      transactionDate: new Date()
-    },
-    {
-      userId: user._id,
-      walletId: user.wallets[0]._id,
-      categoryId: user.categories?.expense[0]._id,
-      transactionId: '90412768253838905611',
-      amount: 375,
-      description: 'Pokemon Cards',
-      transactionDate: new Date()
-    }
-  ]);
+  const incomeLogs = [];
+  const descriptions = [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum commodo scelerisque venenatis.',
+    'Lorem ipsum dolor sit amet',
+    'Vestibulum commodo scelerisque venenatis.',
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+  ];
+  const numOfDescriptions = descriptions.length;
+  const numOfWallets = user.wallets.length;
+  const numOfCategories = user.categories ? user.categories?.income.length : 0;
 
-  const foundIncomes = await Income.find();
-  console.log(foundIncomes);
+  for (let i = 0; i < numOfWallets; i++) {
+    const randAmount = Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000;
+    const randCategory = Math.floor(Math.random() * numOfCategories);
+    const randDescription = Math.floor(Math.random() * numOfDescriptions);
+
+    incomeLogs.push({
+      userId: user._id,
+      walletId: user.wallets[i]._id,
+      categoryId: user.categories?.income[randCategory]._id,
+      amount: randAmount,
+      description: descriptions[randDescription],
+      transactionDate: new Date()
+    });
+  }
+
+  const incomes = await Income.insertMany(incomeLogs);
+
+  console.log('Incomes generated:');
+  console.log(incomes);
   databaseClose();
 };
 seedIncome();
