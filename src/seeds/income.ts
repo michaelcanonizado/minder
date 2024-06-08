@@ -6,14 +6,15 @@ import User from '@/models/user';
 databaseConnect();
 
 const seedIncome = async () => {
+  // Get user
   const user = await User.findOne({ profile: { username: 'mikey' } });
-
   if (!user) {
     console.log('User not found!');
     return;
   }
   console.log('User found!');
 
+  // Delete contents of Income collection
   await Income.deleteMany({});
   console.log('Deleted all incomes!');
 
@@ -29,6 +30,7 @@ const seedIncome = async () => {
   const numOfWallets = user.wallets.length;
   const numOfCategories = user.categories ? user.categories?.income.length : 0;
 
+  // Seed income for each wallet
   for (let i = 0; i < numOfWallets; i++) {
     const randAmount = Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000;
     const randCategory = Math.floor(Math.random() * numOfCategories);
@@ -52,10 +54,12 @@ const seedIncome = async () => {
     }
   }
 
+  // Push data to database
   const incomes = await Income.insertMany(incomeLogs);
   console.log('Incomes generated:');
   console.log(incomes);
 
+  // Update user's balances
   user.balance.totalBalance = totalAmount;
   user.balance.totalIncome = totalAmount;
   await user.save();
