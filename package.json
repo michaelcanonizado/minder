@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "seed-user": "tsx ./src/seeds/user.ts",
-    "seed-expenses": "tsx ./src/seeds/expense.ts",
-    "seed-incomes": "tsx ./src/seeds/income.ts"
+    "seed-expense": "tsx ./src/seeds/expense.ts",
+    "seed-income": "tsx ./src/seeds/income.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
