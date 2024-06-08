@@ -44,6 +44,12 @@ const seedIncome = async () => {
       description: descriptions[randDescription],
       transactionDate: new Date()
     });
+
+    for (const wallet of user.wallets) {
+      if (wallet._id == user.wallets[i]._id) {
+        wallet.balance += randAmount;
+      }
+    }
   }
 
   const incomes = await Income.insertMany(incomeLogs);
