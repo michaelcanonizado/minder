@@ -3,6 +3,8 @@ import User from '@/models/user';
 
 databaseConnect();
 
+// WARNING
+// This function deletes all the users in the Users collection and generates a new one. Therefore, after executing this function(npm run seed-user), you must change all code that depends on the properties of the user such as its _id property
 const seedUser = async () => {
   await User.deleteMany({});
   console.log('Deleted all users!');
