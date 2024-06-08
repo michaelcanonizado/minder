@@ -47,7 +47,7 @@ const seedIncome = async () => {
 
     for (const wallet of user.wallets) {
       if (wallet._id == user.wallets[i]._id) {
-        wallet.balance += randAmount;
+        wallet.balance = randAmount;
       }
     }
   }
@@ -57,7 +57,7 @@ const seedIncome = async () => {
   console.log(incomes);
 
   user.balance.totalBalance = totalAmount;
-  user.balance.totalIncome += totalAmount;
+  user.balance.totalIncome = totalAmount;
   await user.save();
   console.log(`User's total balance: ${user.balance.totalBalance}`);
 
