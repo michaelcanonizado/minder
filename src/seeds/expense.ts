@@ -14,6 +14,9 @@ const seedExpense = async () => {
   }
   console.log('User found!');
 
+  await Expense.deleteMany({});
+  console.log('Deleted all expenses!');
+
   const expenses = await Expense.insertMany([
     {
       userId: user._id,
