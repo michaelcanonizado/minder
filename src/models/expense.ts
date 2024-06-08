@@ -4,7 +4,16 @@ const expenseSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      required: true
+    },
+    walletId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true
+    },
+    categoryId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true
     },
     amount: {
       type: Number,

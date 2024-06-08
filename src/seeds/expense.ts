@@ -20,6 +20,8 @@ const seedExpense = async () => {
   const expenses = await Expense.insertMany([
     {
       userId: user._id,
+      walletId: user.wallets[0]._id,
+      categoryId: user.categories?.expense[0]._id,
       transactionId: '123509481238905611',
       amount: 200,
       description: 'Total exp on food',
@@ -27,6 +29,8 @@ const seedExpense = async () => {
     },
     {
       userId: user._id,
+      walletId: user.wallets[0]._id,
+      categoryId: user.categories?.expense[0]._id,
       transactionId: '776168253838905611',
       amount: 115,
       description: 'Total exp on transportation',
@@ -34,6 +38,8 @@ const seedExpense = async () => {
     },
     {
       userId: user._id,
+      walletId: user.wallets[0]._id,
+      categoryId: user.categories?.expense[0]._id,
       transactionId: '90412768253838905611',
       amount: 375,
       description: 'Pokemon Cards',
@@ -41,7 +47,7 @@ const seedExpense = async () => {
     }
   ]);
 
-  const foundExpenses = await Expense.find().populate('userId');
+  const foundExpenses = await Expense.find();
   console.log(foundExpenses);
   databaseClose();
 };
