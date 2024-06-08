@@ -3,8 +3,6 @@ import User from '@/models/user';
 
 databaseConnect();
 
-// WARNING:
-// When you run this file it deletes all contents of the User collection. Thus, you need to update the hardcoded _id at ./income, and ./expense. Avoid rerunning this file (npm run seed-user)!
 const seedUser = async () => {
   await User.deleteMany({});
   console.log('Deleted all users!');

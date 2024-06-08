@@ -6,7 +6,7 @@ import User from '@/models/user';
 databaseConnect();
 
 const seedIncome = async () => {
-  const user = await User.findById('666323b5fb1a3011bdc3ec1b');
+  const user = await User.findOne({ profile: { username: 'mikey' } });
 
   if (!user) {
     console.log('User not found!');
