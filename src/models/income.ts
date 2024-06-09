@@ -2,16 +2,16 @@ import mongoose, { InferSchemaType } from 'mongoose';
 
 const incomeSchema = new mongoose.Schema(
   {
-    userId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true
     },
-    walletId: {
+    wallet: {
       type: mongoose.Schema.Types.ObjectId,
       required: true
     },
-    categoryId: {
+    category: {
       type: mongoose.Schema.Types.ObjectId,
       required: true
     },
