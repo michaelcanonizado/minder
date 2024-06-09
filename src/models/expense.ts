@@ -31,8 +31,10 @@ const expenseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Expense = mongoose.model<InferSchemaType<typeof expenseSchema>>(
-  'Expense',
-  expenseSchema
-);
+const Expense =
+  mongoose.models.Expense ||
+  mongoose.model<InferSchemaType<typeof expenseSchema>>(
+    'Expense',
+    expenseSchema
+  );
 export default Expense;

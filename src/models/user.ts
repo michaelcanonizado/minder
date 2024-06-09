@@ -134,8 +134,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model<InferSchemaType<typeof userSchema>>(
-  'User',
-  userSchema
-);
+const User =
+  mongoose.models.User ||
+  mongoose.model<InferSchemaType<typeof userSchema>>('User', userSchema);
 export default User;

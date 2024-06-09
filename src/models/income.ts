@@ -31,8 +31,7 @@ const incomeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Income = mongoose.model<InferSchemaType<typeof incomeSchema>>(
-  'Income',
-  incomeSchema
-);
+const Income =
+  mongoose.models.Income ||
+  mongoose.model<InferSchemaType<typeof incomeSchema>>('Income', incomeSchema);
 export default Income;
