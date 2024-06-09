@@ -54,7 +54,7 @@ const seedExpense = async () => {
       expenseLogs.push({
         user: user._id,
         wallet: user.wallets[i]._id,
-        category: user.categories?.income[randCategory]._id,
+        category: user.categories?.expense[randCategory]._id,
         amount: randAmount,
         description: descriptions[randDescription],
         transactionDate: new Date()

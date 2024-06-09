@@ -55,6 +55,22 @@ export const getExpensesData = async ({
     {
       // Turn the new array into just an object
       $unwind: '$wallet'
+    },
+    {
+      $set: {
+        category: {
+          $filter: {
+            input: '$user.categories.expense',
+            as: 'expense',
+            cond: {
+              $eq: ['$$expense._id', '$category']
+            }
+          }
+        }
+      }
+    },
+    {
+      $unwind: '$category'
     }
   ]);
 
