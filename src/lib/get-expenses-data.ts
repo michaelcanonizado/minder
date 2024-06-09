@@ -35,11 +35,11 @@ export const getExpensesData = async ({
       }
     },
     {
-      // Turn the new userId array field into just an object
+      // Turn the new user array field into just an object
       $unwind: '$user'
     },
     {
-      // Filter the wallets array to just get the one that matches walletId
+      // Filter the user.wallets array to just get the one that matches wallet
       $set: {
         wallet: {
           $filter: {
@@ -57,6 +57,7 @@ export const getExpensesData = async ({
       $unwind: '$wallet'
     },
     {
+      // Filter the user.categories.expense array to just get the one that matches category
       $set: {
         category: {
           $filter: {
@@ -70,6 +71,7 @@ export const getExpensesData = async ({
       }
     },
     {
+      // Turn the new array into just an object
       $unwind: '$category'
     }
   ]);
