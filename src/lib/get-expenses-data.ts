@@ -1,7 +1,6 @@
 import { databaseClose, databaseConnect } from '@/helpers/database';
 
-import Expense from '@/models/expense';
-import { InferRawDocType } from 'mongoose';
+import Expense, { ExpenseType } from '@/models/expense';
 
 export const getExpensesData = async ({
   page = 1,
@@ -14,7 +13,7 @@ export const getExpensesData = async ({
 
   const skip = (page - 1) * limit;
 
-  const data = await Expense.aggregate([
+  const data: unknown = await Expense.aggregate([
     {
       $sort: {
         amount: -1
@@ -78,5 +77,5 @@ export const getExpensesData = async ({
   ]);
 
   await databaseClose();
-  return data;
+  return data as ExpenseType[];
 };
