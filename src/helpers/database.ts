@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export const databaseConnect = async () => {
-  mongoose
+  return mongoose
     .connect('mongodb://localhost:27017/minder-finance')
     .then(() => {
       console.log('Mongo connected!');
@@ -12,7 +12,8 @@ export const databaseConnect = async () => {
     });
 };
 
-export const databaseClose = () => {
-  mongoose.connection.close();
+export const databaseClose = async () => {
+  await mongoose.connection.close();
   console.log('Mongo connection closed!');
+  return;
 };
