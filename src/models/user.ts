@@ -71,7 +71,7 @@ const walletSchema = new mongoose.Schema(
     isDeleted: {
       status: {
         type: Boolean,
-        default: null
+        default: false
       },
       deletedAt: {
         type: Date,
@@ -133,6 +133,59 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+export interface UserProfileType {
+  username: string;
+}
+export interface UserCurrencyType {
+  code: string;
+  name: string;
+}
+export interface UserBalanceType {
+  totalBalance: number;
+  totalIncome: number;
+  totalExpense: number;
+}
+export interface UserCategoryType {
+  name: string;
+  _id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  isDeleted: {
+    status: boolean;
+    deletedAt: Date | null;
+  };
+  __v?: number;
+}
+export interface UserWalletType {
+  name: string;
+  color: string;
+  balance: number;
+  transactionCount: number;
+  _id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  isDeleted: {
+    status: boolean;
+    deletedAt: Date | null;
+  };
+  __v?: number;
+}
+export interface UserType {
+  _id: string;
+  profile: UserProfileType;
+  lastLogin: Date;
+  currency: UserCurrencyType;
+  balance: UserBalanceType;
+  categories: {
+    expense: UserCategoryType;
+    income: UserCategoryType;
+  };
+  wallets: UserWalletType[];
+  createdAt: Date;
+  updatedAt: Date;
+  __v?: number;
+}
 
 const User =
   mongoose.models.User ||
