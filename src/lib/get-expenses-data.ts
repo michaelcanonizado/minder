@@ -1,6 +1,7 @@
 import { databaseClose, databaseConnect } from '@/helpers/database';
 
 import Expense from '@/models/expense';
+import { InferRawDocType } from 'mongoose';
 
 export const getExpensesData = async ({
   page = 1,
@@ -76,12 +77,6 @@ export const getExpensesData = async ({
     }
   ]);
 
-  console.log(data);
-  const documentCount = await Expense.countDocuments();
-  console.log(`total documents: ${documentCount}`);
-  console.log(`Page: ${page}, Skipped: ${skip}, Limit: ${limit}`);
-  console.log(`total retrieved: ${data.length}`);
-
   await databaseClose();
-  return;
+  return data;
 };
