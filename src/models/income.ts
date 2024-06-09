@@ -1,4 +1,5 @@
 import mongoose, { InferSchemaType } from 'mongoose';
+import { UserCategoryType, UserType, UserWalletType } from './user';
 
 const incomeSchema = new mongoose.Schema(
   {
@@ -30,6 +31,18 @@ const incomeSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+export interface IncomeType {
+  user: UserType;
+  wallet: UserWalletType;
+  category: UserCategoryType;
+  amount: number;
+  description: number;
+  transactionDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  __v?: number;
+}
 
 const Income =
   mongoose.models.Income ||
