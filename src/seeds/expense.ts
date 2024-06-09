@@ -52,9 +52,9 @@ const seedExpense = async () => {
       totalAmount += randAmount;
 
       expenseLogs.push({
-        userId: user._id,
-        walletId: user.wallets[i]._id,
-        categoryId: user.categories?.income[randCategory]._id,
+        user: user._id,
+        wallet: user.wallets[i]._id,
+        category: user.categories?.income[randCategory]._id,
         amount: randAmount,
         description: descriptions[randDescription],
         transactionDate: new Date()
