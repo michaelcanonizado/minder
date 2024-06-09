@@ -29,24 +29,24 @@ export const getExpensesData = async ({
       //Populate the expenses document with user details
       $lookup: {
         from: 'users',
-        localField: 'userId',
+        localField: 'user',
         foreignField: '_id',
-        as: 'userId'
+        as: 'user'
       }
     },
     {
       // Turn the new userId array field into just an object
-      $unwind: '$userId'
+      $unwind: '$user'
     },
     {
       // Filter the wallets array to just get the one that matches walletId
       $set: {
-        walletId: {
+        wallet: {
           $filter: {
-            input: '$userId.wallets',
+            input: '$user.wallets',
             as: 'wallet',
             cond: {
-              $eq: ['$$wallet._id', '$walletId']
+              $eq: ['$$wallet._id', '$wallet']
             }
           }
         }
@@ -54,7 +54,7 @@ export const getExpensesData = async ({
     },
     {
       // Turn the new array into just an object
-      $unwind: '$walletId'
+      $unwind: '$wallet'
     }
   ]);
 
