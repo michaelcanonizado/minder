@@ -76,7 +76,6 @@ const Vertical = ({
   setOpen?: (value: boolean) => void;
 }) => {
   const currentPathname = usePathname();
-  console.log(currentPathname);
 
   return (
     <nav
