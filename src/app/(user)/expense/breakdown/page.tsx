@@ -5,14 +5,17 @@ import Bento from '@/components/sections/bento';
 import Table from '@/components/sections/table';
 import { Button } from '@/components/ui/button';
 import { columns } from './columns';
+import Link from 'next/link';
 
-const ExpenseBreakdown = async () => {
-  const page: number = 1;
-  const limit: number = 10;
+const Page = async ({
+  searchParams
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+  const page =
+    typeof searchParams.page == 'string' ? Number(searchParams.page) : 1;
+  const limit = 2;
   const data = await getExpensesData({ page, limit });
-
-  console.log(data);
-  console.log(`Data count: ${data.length}`);
 
   return (
     <div className='px-8'>
@@ -25,21 +28,15 @@ const ExpenseBreakdown = async () => {
             <Bento.Box.Content className='p-0'>
               <Table.DataTable.Scroll columns={columns} data={data} />
               <div className='mr-4 flex items-center justify-end space-x-2 py-4'>
-                <Button
-                  variant='outline'
-                  size='sm'
-                  // onClick={() => table.previousPage()}
-                  // disabled={!table.getCanPreviousPage()}
-                >
-                  Previous
+                <Button variant='outline' size='sm' disabled={page <= 1}>
+                  <Link
+                    href={`/expense/breakdown?page=${page > 1 ? page - 1 : 1}`}
+                  >
+                    Previous
+                  </Link>
                 </Button>
-                <Button
-                  variant='outline'
-                  size='sm'
-                  // onClick={() => table.nextPage()}
-                  // disabled={!table.getCanNextPage()}
-                >
-                  Next
+                <Button variant='outline' size='sm'>
+                  <Link href={`/expense/breakdown?page=${page + 1}`}>Next</Link>
                 </Button>
               </div>
             </Bento.Box.Content>
@@ -50,4 +47,4 @@ const ExpenseBreakdown = async () => {
   );
 };
 
-export default ExpenseBreakdown;
+export default Page;
