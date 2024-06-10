@@ -16,7 +16,7 @@ export const getIncomesData = async ({
   const data: unknown = await Income.aggregate([
     {
       $sort: {
-        amount: -1
+        createdAt: -1
       }
     },
     {

@@ -16,7 +16,7 @@ export const getExpensesData = async ({
   const data: unknown = await Expense.aggregate([
     {
       $sort: {
-        amount: -1
+        createdAt: -1
       }
     },
     {
