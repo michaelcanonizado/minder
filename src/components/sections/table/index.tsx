@@ -1,4 +1,4 @@
-import DataTable from './data-table/data-table';
+import DataTable from './data-table';
 
 const Table = {
   DataTable: DataTable

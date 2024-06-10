@@ -50,11 +50,6 @@ export const columns: ColumnDef<IncomeType>[] = [
   },
   {
     accessorKey: 'description',
-    header: () => <div className=''>Description</div>,
-    cell: ({ row }) => {
-      const description: string = row.getValue('description');
-
-      return <div className='max-w-[500px] md:max-w-max'>{description}</div>;
-    }
+    header: 'Description'
   }
 ];

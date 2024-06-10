@@ -15,14 +15,16 @@ const IncomeBreakdown = async () => {
 
   return (
     <div className='px-8'>
-      <Bento className='min-w-max grid-cols-1'>
-        <Bento.Box>
-          <Bento.Box.Header>Income Breakdown</Bento.Box.Header>
-          <Bento.Box.Content>
-            <Table.DataTable columns={columns} data={data} />
-          </Bento.Box.Content>
-        </Bento.Box>
-      </Bento>
+      <div className=''>
+        <Bento className='grid-cols-1'>
+          <Bento.Box>
+            <Bento.Box.Header>Income Breakdown</Bento.Box.Header>
+            <Bento.Box.Content className='p-0'>
+              <Table.DataTable.Scroll columns={columns} data={data} />
+            </Bento.Box.Content>
+          </Bento.Box>
+        </Bento>
+      </div>
     </div>
   );
 };
