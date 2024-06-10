@@ -74,7 +74,7 @@ export const getExpensesData = async ({
       // Turn the new array into just an object
       $unwind: '$category'
     }
-  ]);
+  ]).exec();
 
   await databaseClose();
   return data as ExpenseType[];
