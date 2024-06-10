@@ -3,10 +3,11 @@ import React from 'react';
 import { getExpensesData } from '@/lib/get-expenses-data';
 import Bento from '@/components/sections/bento';
 import Table from '@/components/sections/table';
+import { Button } from '@/components/ui/button';
 import { columns } from './columns';
 
 const ExpenseBreakdown = async () => {
-  const page: number = 3;
+  const page: number = 1;
   const limit: number = 10;
   const data = await getExpensesData({ page, limit });
 
@@ -23,6 +24,24 @@ const ExpenseBreakdown = async () => {
             </Bento.Box.Header>
             <Bento.Box.Content className='p-0'>
               <Table.DataTable.Scroll columns={columns} data={data} />
+              <div className='mr-4 flex items-center justify-end space-x-2 py-4'>
+                <Button
+                  variant='outline'
+                  size='sm'
+                  // onClick={() => table.previousPage()}
+                  // disabled={!table.getCanPreviousPage()}
+                >
+                  Previous
+                </Button>
+                <Button
+                  variant='outline'
+                  size='sm'
+                  // onClick={() => table.nextPage()}
+                  // disabled={!table.getCanNextPage()}
+                >
+                  Next
+                </Button>
+              </div>
             </Bento.Box.Content>
           </Bento.Box>
         </Bento>
