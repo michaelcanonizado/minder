@@ -68,7 +68,7 @@ export const getIncomesData = async ({
     {
       $unwind: '$category'
     }
-  ]);
+  ]).exec();
 
   await databaseClose();
   return data as IncomeType[];
