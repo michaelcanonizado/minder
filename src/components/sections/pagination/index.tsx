@@ -55,7 +55,7 @@ const Pagination = ({
         linkSequence.push(
           <PaginationItem>
             <PaginationLink
-              href={`${pathname}?page=${currentPage}`}
+              href={`${pathname}?page=${currentPage + offset}`}
               isActive={i == midPoint - 1 ? true : false}
             >
               {currentPage + offset}
