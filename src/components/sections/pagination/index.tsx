@@ -21,15 +21,30 @@ const Pagination = ({
   const isPreviousDisabled = currentPage <= 1;
   const isNextDisabled = currentPage >= pagesCount;
 
+  /*
+  Renders the sequence of page links. The links must 
+  follow 3 rules:
+    1) The current page link must be at the center 
+    and have the outline (have the isActive prop). 
+    Unless:
+    2) The current page is in between page 1 and 
+    the midpoint. E.g:
+        1, [2], 3, 4, 5, 6, 7, ...
+        |          |        
+       min       mid
+    3) And at the opposite end, where the current 
+    page is between the last page and the midpoint. 
+    E.g:
+       ..., 7, 8, 9, 10, 11, [12], 13
+                     |             |
+                    mid          max
+  */
   const renderPaginationLinkSequence = () => {
     const linkSequence = [];
     const numOfLinks = 5;
     const midPoint = Math.floor((numOfLinks + 1) / 2);
 
-    console.log('midpoint', midPoint);
-    console.log('curpage', currentPage);
-    console.log('max', pagesCount);
-
+    // Case (1)
     if (
       currentPage > midPoint - 1 &&
       currentPage < pagesCount - (midPoint - 2)
@@ -52,7 +67,10 @@ const Pagination = ({
       }
 
       return linkSequence;
-    } else if (
+    }
+
+    // Case (2)
+    else if (
       currentPage < pagesCount - (midPoint - 2) &&
       !(currentPage > midPoint - 1)
     ) {
@@ -69,7 +87,10 @@ const Pagination = ({
         );
       }
       return linkSequence;
-    } else if (
+    }
+
+    // Case (3)
+    else if (
       currentPage > midPoint - 1 &&
       !(currentPage < pagesCount - (midPoint - 2))
     ) {
