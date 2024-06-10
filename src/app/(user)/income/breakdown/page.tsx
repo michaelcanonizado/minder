@@ -18,7 +18,9 @@ const IncomeBreakdown = async () => {
       <div className=''>
         <Bento className='grid-cols-1'>
           <Bento.Box>
-            <Bento.Box.Header>Income Breakdown</Bento.Box.Header>
+            <Bento.Box.Header className='text-display'>
+              Income Breakdown
+            </Bento.Box.Header>
             <Bento.Box.Content className='p-0'>
               <Table.DataTable.Scroll columns={columns} data={data} />
             </Bento.Box.Content>
