@@ -3,6 +3,7 @@ import React from 'react';
 import { getIncomesData } from '@/lib/get-incomes-data';
 import Bento from '@/components/sections/bento';
 import Table from '@/components/sections/table';
+import { columns } from './columns';
 
 const IncomeBreakdown = async () => {
   const page: number = 1;
@@ -18,7 +19,7 @@ const IncomeBreakdown = async () => {
         <Bento.Box>
           <Bento.Box.Header>Income Breakdown</Bento.Box.Header>
           <Bento.Box.Content>
-            <Table.DataTable />
+            <Table.DataTable columns={columns} data={data} />
           </Bento.Box.Content>
         </Bento.Box>
       </Bento>
