@@ -15,7 +15,7 @@ const IncomeBreakdown = async () => {
 
   return (
     <div className='px-8'>
-      <Bento className='grid-cols-1'>
+      <Bento className='min-w-max grid-cols-1'>
         <Bento.Box>
           <Bento.Box.Header>Income Breakdown</Bento.Box.Header>
           <Bento.Box.Content>
