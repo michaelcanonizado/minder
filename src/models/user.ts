@@ -178,8 +178,8 @@ export interface UserType {
   currency: UserCurrencyType;
   balance: UserBalanceType;
   categories: {
-    expense: UserCategoryType;
-    income: UserCategoryType;
+    expense: UserCategoryType[];
+    income: UserCategoryType[];
   };
   wallets: UserWalletType[];
   createdAt: Date;
