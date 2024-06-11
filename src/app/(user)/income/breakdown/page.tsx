@@ -4,10 +4,18 @@ import { getIncomesData } from '@/lib/get-incomes-data';
 import Bento from '@/components/sections/bento';
 import Table from '@/components/sections/table';
 import { columns } from './columns';
+import Pagination from '@/components/sections/pagination';
 
-const IncomeBreakdown = async () => {
-  const page: number = 1;
-  const limit: number = 10;
+const IncomeBreakdown = async ({
+  searchParams
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
+  let page =
+    typeof searchParams.page == 'string' ? Number(searchParams.page) : 1;
+  page = page < 1 ? 1 : page;
+  const limit = 10;
+
   const incomes = await getIncomesData({ page, limit });
 
   console.log(incomes);
@@ -23,6 +31,11 @@ const IncomeBreakdown = async () => {
             </Bento.Box.Header>
             <Bento.Box.Content className='p-0'>
               <Table.DataTable.Scroll columns={columns} data={incomes.data} />
+              <Pagination
+                pathname='/income/breakdown'
+                currentPage={page}
+                pagesCount={incomes.pages.max}
+              />
             </Bento.Box.Content>
           </Bento.Box>
         </Bento>
