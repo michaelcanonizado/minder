@@ -15,8 +15,10 @@ const Page = async ({
     typeof searchParams.page == 'string' ? Number(searchParams.page) : 1;
   page = page < 1 ? 1 : page;
   const limit = 10;
-  
+
   const expenses = await getExpensesData({ page, limit });
+
+  console.log(expenses);
 
   return (
     <div className='px-8'>

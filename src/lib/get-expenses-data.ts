@@ -89,7 +89,7 @@ export const getExpensesData = async ({
   await databaseClose();
 
   return {
-    data: data as ExpenseType[],
+    data: JSON.parse(JSON.stringify(data)) as ExpenseType[],
     pages: {
       current: page,
       max: Math.ceil(totalDocuments / limit)
