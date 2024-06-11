@@ -79,7 +79,7 @@ export const getIncomesData = async ({
   await databaseClose();
 
   return {
-    data: data as IncomeType[],
+    data: JSON.parse(JSON.stringify(data)) as IncomeType[],
     pages: {
       current: page,
       max: Math.ceil(totalDocuments / limit)
