@@ -12,7 +12,7 @@ export const getWalletsAndCategoriesData = async (userId: string) => {
   await databaseClose();
 
   return {
-    wallets: data.wallets,
-    categories: data.categories
+    wallets: JSON.parse(JSON.stringify(data.wallets)),
+    categories: JSON.parse(JSON.stringify(data.categories))
   };
 };
