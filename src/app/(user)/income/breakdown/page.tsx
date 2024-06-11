@@ -7,11 +7,11 @@ import { columns } from './columns';
 
 const IncomeBreakdown = async () => {
   const page: number = 1;
-  const limit: number = 4;
-  const data = await getIncomesData({ page, limit });
+  const limit: number = 10;
+  const incomes = await getIncomesData({ page, limit });
 
-  console.log(data);
-  console.log(`Data count: ${data.length}`);
+  console.log(incomes);
+  console.log(`Data count: ${incomes.data.length}`);
 
   return (
     <div className='px-8'>
@@ -22,7 +22,7 @@ const IncomeBreakdown = async () => {
               Income Breakdown
             </Bento.Box.Header>
             <Bento.Box.Content className='p-0'>
-              <Table.DataTable.Scroll columns={columns} data={data} />
+              <Table.DataTable.Scroll columns={columns} data={incomes.data} />
             </Bento.Box.Content>
           </Bento.Box>
         </Bento>

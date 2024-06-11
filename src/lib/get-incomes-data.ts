@@ -13,6 +13,7 @@ export const getIncomesData = async ({
 
   const skip = (page - 1) * limit;
 
+  // Currently this doesn't match the userId, it fetches all documents in the collection!
   const data: unknown = await Income.aggregate([
     {
       $sort: {
@@ -70,6 +71,17 @@ export const getIncomesData = async ({
     }
   ]).exec();
 
+  const totalDocuments = await Income.countDocuments({
+    user: process.env.TEMP_USER_ID
+  });
+
   await databaseClose();
-  return data as IncomeType[];
+
+  return {
+    data: data as IncomeType[],
+    pages: {
+      current: page,
+      max: Math.ceil(totalDocuments / limit)
+    }
+  };
 };
