@@ -13,8 +13,8 @@ const Page = async ({
 }) => {
   const page =
     typeof searchParams.page == 'string' ? Number(searchParams.page) : 1;
-  const limit = 5;
-  const data = await getExpensesData({ page, limit });
+  const limit = 10;
+  const expenses = await getExpensesData({ page, limit });
 
   return (
     <div className='px-8'>
@@ -25,11 +25,11 @@ const Page = async ({
               Expenses Breakdown
             </Bento.Box.Header>
             <Bento.Box.Content className='space-y-4 p-0 pb-4'>
-              <Table.DataTable.Scroll columns={columns} data={data} />
+              <Table.DataTable.Scroll columns={columns} data={expenses.data} />
               <Pagination
                 pathname='/expense/breakdown'
                 currentPage={page}
-                pagesCount={10}
+                pagesCount={expenses.pages.max}
               />
             </Bento.Box.Content>
           </Bento.Box>

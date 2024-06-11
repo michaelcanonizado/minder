@@ -13,6 +13,7 @@ export const getExpensesData = async ({
 
   const skip = (page - 1) * limit;
 
+  // Currently this doesn't match the userId, it fetches all documents in the collection!
   const data: unknown = await Expense.aggregate([
     {
       $sort: {
@@ -76,6 +77,17 @@ export const getExpensesData = async ({
     }
   ]).exec();
 
+  const totalDocuments = await Expense.countDocuments({
+    user: process.env.TEMP_USER_ID
+  });
+
   await databaseClose();
-  return data as ExpenseType[];
+
+  return {
+    data: data as ExpenseType[],
+    pages: {
+      current: page,
+      max: Math.ceil(totalDocuments / limit)
+    }
+  };
 };
