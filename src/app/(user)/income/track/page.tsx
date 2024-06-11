@@ -1,7 +1,13 @@
 import Bento from '@/components/sections/bento';
 import Form from '@/components/sections/form';
+import { getWalletsAndCategoriesData } from '@/lib/get-wallets-and-categories-data';
 
-const IncomeTrack = () => {
+const IncomeTrack = async () => {
+  //Get user id from cookie before fetching data
+  const data = await getWalletsAndCategoriesData(process.env.TEMP_USER_ID!);
+
+  console.log(data);
+
   return (
     <div className='px-8'>
       <div className=''></div>
