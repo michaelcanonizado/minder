@@ -11,8 +11,9 @@ const Page = async ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const page =
+  let page =
     typeof searchParams.page == 'string' ? Number(searchParams.page) : 1;
+  page = page < 1 ? 1 : page;
   const limit = 10;
   const expenses = await getExpensesData({ page, limit });
 
