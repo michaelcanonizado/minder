@@ -26,7 +26,6 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { FC } from 'react';
 
 export const FormDatePicker = ({
   className,
@@ -73,7 +72,7 @@ export const FormSelect = ({
   field
 }: {
   data: {
-    id: string;
+    _id: string;
     name: string;
     isDeleted: {
       status: boolean;
@@ -93,7 +92,7 @@ export const FormSelect = ({
       <SelectContent className='max-h-[300px]'>
         {data.map(item => {
           return (
-            <SelectItem value={item.id} key={item.id}>
+            <SelectItem value={item._id} key={item._id}>
               {item.name}
             </SelectItem>
           );
@@ -112,7 +111,7 @@ export const FormRadioCardGroup = ({
   ...props
 }: {
   data: {
-    id: string;
+    _id: string;
     name: string;
     balance?: number;
     [key: string]: any;
@@ -139,9 +138,9 @@ export const FormRadioCardGroup = ({
               <FormRadioCard
                 title={item.name}
                 subtitle={item.balance}
-                value={item.id}
-                id={item.id}
-                key={item.id}
+                value={item._id}
+                id={item._id}
+                key={item._id}
               />
             );
           })}

@@ -6,7 +6,7 @@ const IncomeTrack = async () => {
   //Get user id from cookie before fetching data
   const data = await getWalletsAndCategoriesData(process.env.TEMP_USER_ID!);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className='px-8'>
@@ -17,7 +17,10 @@ const IncomeTrack = async () => {
             <p className='text-display'>Track Income</p>
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Form.Transaction.Income />
+            <Form.Transaction.Income
+              wallets={data.wallets}
+              categories={data.categories.income}
+            />
           </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box>
