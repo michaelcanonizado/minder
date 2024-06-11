@@ -53,7 +53,7 @@ const Pagination = ({
 
       for (let i = 0; i < numOfLinks; i++) {
         linkSequence.push(
-          <PaginationItem>
+          <PaginationItem key={currentPage + offset}>
             <PaginationLink
               href={`${pathname}?page=${currentPage + offset}`}
               isActive={i == midPoint - 1 ? true : false}
@@ -76,7 +76,7 @@ const Pagination = ({
     ) {
       for (let i = 1; i <= numOfLinks; i++) {
         linkSequence.push(
-          <PaginationItem>
+          <PaginationItem key={i}>
             <PaginationLink
               href={`${pathname}?page=${i}`}
               isActive={i == currentPage}
@@ -96,7 +96,7 @@ const Pagination = ({
     ) {
       for (let i = pagesCount - numOfLinks + 1; i <= pagesCount; i++) {
         linkSequence.push(
-          <PaginationItem>
+          <PaginationItem key={i}>
             <PaginationLink
               href={`${pathname}?page=${i}`}
               isActive={i == currentPage}
