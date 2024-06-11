@@ -1,6 +1,7 @@
 import { databaseClose, databaseConnect } from '@/helpers/database';
 
 import Expense, { ExpenseType } from '@/models/expense';
+import mongoose from 'mongoose';
 
 export const getExpensesData = async ({
   page = 1,
@@ -13,8 +14,12 @@ export const getExpensesData = async ({
 
   const skip = (page - 1) * limit;
 
-  // Currently this doesn't match the userId, it fetches all documents in the collection!
   const data: unknown = await Expense.aggregate([
+    {
+      $match: {
+        user: new mongoose.Types.ObjectId(process.env.TEMP_USER_ID)
+      }
+    },
     {
       $sort: {
         createdAt: -1
@@ -78,7 +83,7 @@ export const getExpensesData = async ({
   ]).exec();
 
   const totalDocuments = await Expense.countDocuments({
-    user: process.env.TEMP_USER_ID
+    user: new mongoose.Types.ObjectId(process.env.TEMP_USER_ID)
   });
 
   await databaseClose();
