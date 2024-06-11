@@ -25,161 +25,22 @@ import {
 } from '../components';
 
 import trackExpenseSchema from '@/schemas/track-expense';
+import { UserCategoryType, UserWalletType } from '@/models/user';
 
-const wallets = [
-  {
-    id: '1',
-    name: 'Cash',
-    color: '#7C3AED',
-    description: '',
-    balance: 2810,
-    createdAt: new Date(),
-    transactionCount: 3,
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    }
-  },
-  {
-    id: '2',
-    name: 'GCash',
-    color: '#2994FC',
-    description: '',
-    balance: 500,
-    createdAt: new Date(),
-    transactionCount: 0,
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    }
-  },
-  {
-    id: '3',
-    name: 'Savings',
-    color: '#21C5E0',
-    description: '',
-    balance: 2000,
-    createdAt: new Date(),
-    transactionCount: 0,
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    }
-  },
-  {
-    id: '4',
-    name: 'Paypal',
-    color: '#F23E94',
-    description: '',
-    balance: 700,
-    createdAt: new Date(),
-    transactionCount: 0,
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    }
-  }
-];
-
-const categories = [
-  {
-    id: '1',
-    name: 'Food',
-    createdAt: new Date(),
-    icon: '',
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    },
-    color: ''
-  },
-  {
-    id: '2',
-    name: 'Transportation',
-    createdAt: new Date(),
-    icon: '',
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    },
-    color: ''
-  },
-  {
-    id: '3',
-    name: 'Shopping',
-    createdAt: new Date(),
-    icon: '',
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    },
-    color: ''
-  },
-  {
-    id: '4',
-    name: 'Phone',
-    createdAt: new Date(),
-    icon: '',
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    },
-    color: ''
-  },
-  {
-    id: '5',
-    name: 'Housing',
-    createdAt: new Date(),
-    icon: '',
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    },
-    color: ''
-  },
-  {
-    id: '6',
-    name: 'Education',
-    createdAt: new Date(),
-    icon: '',
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    },
-    color: ''
-  },
-  {
-    id: '7',
-    name: 'Entertainment',
-    createdAt: new Date(),
-    icon: '',
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    },
-    color: ''
-  },
-  {
-    id: '8',
-    name: 'Other',
-    createdAt: new Date(),
-    icon: '',
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    },
-    color: ''
-  }
-];
-
-const Expense = () => {
+const Expense = ({
+  wallets,
+  categories
+}: {
+  wallets: UserWalletType[];
+  categories: UserCategoryType[];
+}) => {
   const form = useForm<z.infer<typeof trackExpenseSchema>>({
     resolver: zodResolver(trackExpenseSchema),
     defaultValues: {
       // I need to set each value a default value to remove the 'Warning: A component is changing an uncontrolled input to be controlled.' error from the <Input/> components. Amount is of type number, but i dont want to set its default value to 0 as i only want the placeholder to show, not prefill the <Input/> component. If you know a solution to this, feel free to pull request or commentat the repo.
       // @ts-ignore
       amount: '',
-      walletId: categories[0].id,
+      walletId: wallets[0]._id,
       categoryId: '',
       date: undefined,
       description: ''

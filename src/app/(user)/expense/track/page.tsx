@@ -1,7 +1,13 @@
 import Bento from '@/components/sections/bento';
 import Form from '@/components/sections/form';
+import { getWalletsAndCategoriesData } from '@/lib/get-wallets-and-categories-data';
 
-const ExpenseTrack = () => {
+const ExpenseTrack = async () => {
+  //Get user id from cookie before fetching data
+  const data = await getWalletsAndCategoriesData(process.env.TEMP_USER_ID!);
+
+  // console.log(data);
+
   return (
     <div className='px-8'>
       <div className=''></div>
@@ -11,7 +17,10 @@ const ExpenseTrack = () => {
             <p className='text-display'>Track Expense</p>
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Form.Transaction.Expense />
+            <Form.Transaction.Expense
+              wallets={data.wallets}
+              categories={data.categories.income}
+            />
           </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box>
