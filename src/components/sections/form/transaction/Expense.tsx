@@ -83,7 +83,7 @@ const Expense = ({
             render={({ field }) => (
               <FormItem className=''>
                 <FormLabel>Deduct from:</FormLabel>
-                <FormControl>
+                <FormControl className='mt-[-6px]'>
                   <FormRadioCardGroup
                     data={wallets}
                     orientation='horizontal'

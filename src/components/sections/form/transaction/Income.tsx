@@ -87,7 +87,7 @@ const Income = ({
             render={({ field }) => (
               <FormItem className=''>
                 <FormLabel>Add to:</FormLabel>
-                <FormControl>
+                <FormControl className='mt-[-6px]'>
                   <FormRadioCardGroup
                     data={wallets}
                     orientation='horizontal'
