@@ -24,85 +24,38 @@ import {
   FormInput
 } from '../components';
 
+import { UserCategoryType, UserWalletType } from '@/models/user';
 import trackTransferSchema from '@/schemas/track-transfer';
 
-const wallets = [
-  {
-    id: '1',
-    name: 'Cash',
-    color: '#7C3AED',
-    description: '',
-    balance: 2810,
-    createdAt: new Date(),
-    transactionCount: 3,
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    }
-  },
-  {
-    id: '2',
-    name: 'GCash',
-    color: '#2994FC',
-    description: '',
-    balance: 500,
-    createdAt: new Date(),
-    transactionCount: 0,
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    }
-  },
-  {
-    id: '3',
-    name: 'Savings',
-    color: '#21C5E0',
-    description: '',
-    balance: 2000,
-    createdAt: new Date(),
-    transactionCount: 0,
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    }
-  },
-  {
-    id: '4',
-    name: 'Paypal',
-    color: '#F23E94',
-    description: '',
-    balance: 700,
-    createdAt: new Date(),
-    transactionCount: 0,
-    isDeleted: {
-      status: false,
-      deletedAt: new Date()
-    }
-  }
-];
-
-// Temporary fix to unsolved shadcn bug: https://github.com/shadcn-ui/ui/issues/3745
-// The wallets object is being used to seed data into the two radio groups: sourceWalletId and destinationWalletID. Since both radio groups are referencing the same object, they will have same values and ids, which causes some conflict, even after putting the 'name' prop to <input type="radio" name={name}/>.
-// Temporary solution is to encode the wallet id to prevent the conflict, and decode it back at the onSubmit function
-const walletsModified = wallets.map(wallet => {
-  return {
-    ...wallet,
-    id: wallet.id + 'a'
-  };
-});
 const decodeModifiedWalletId = (id: string) => {
   return id.slice(0, -1);
 };
 
-const Transfer = () => {
+const Transfer = ({
+  wallets,
+  userId
+}: {
+  wallets: UserWalletType[];
+  userId: string;
+}) => {
+  // Temporary fix to unsolved shadcn bug: https://github.com/shadcn-ui/ui/issues/3745
+  // The wallets object is being used to seed data into the two radio groups: sourceWalletId and destinationWalletID. Since both radio groups are referencing the same object, they will have same values and ids, which causes some conflict, even after putting the 'name' prop to <input type="radio" name={name}/>.
+  // Temporary solution is to encode the wallet id to prevent the conflict, and decode it back at the onSubmit function
+  const walletsModified = wallets.map(wallet => {
+    return {
+      ...wallet,
+      id: wallet._id + 'a'
+    };
+  });
+
   const form = useForm<z.infer<typeof trackTransferSchema>>({
     resolver: zodResolver(trackTransferSchema),
     defaultValues: {
       // I need to set each value a default value to remove the 'Warning: A component is changing an uncontrolled input to be controlled.' error from the <Input/> components. Amount is of type number, but i dont want to set its default value to 0 as i only want the placeholder to show, not prefill the <Input/> component. If you know a solution to this, feel free to pull request or commentat the repo.
       // @ts-ignore
       amount: '',
-      sourceWalletId: wallets[0].id,
-      destinationWalletId: walletsModified[0].id,
+      sourceWalletId: wallets[0]._id,
+      destinationWalletId: walletsModified[1]._id,
       // destinationWalletId: wallets[0].id,
       categoryId: '',
       date: undefined,
