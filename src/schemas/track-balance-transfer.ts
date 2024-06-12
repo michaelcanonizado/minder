@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const trackTransferSchema = z.object({
+const trackBalanceTransferSchema = z.object({
   amount: z.coerce.number({ message: 'Please enter a valid amount' }).min(1, {
     message: 'Please enter the amount'
   }),
@@ -18,4 +18,4 @@ const trackTransferSchema = z.object({
     .min(1, { message: 'Please describe the income' })
 });
 
-export default trackTransferSchema;
+export default trackBalanceTransferSchema;
