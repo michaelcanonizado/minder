@@ -7,8 +7,7 @@ import trackIncomeSchema from '@/schemas/track-income';
 import mongoose from 'mongoose';
 
 export const addIncomeTransaction = async (data: unknown) => {
-  console.log('SS: Adding income to database...');
-
+  // Validate data coming from the client
   const result = trackIncomeSchema.safeParse(data);
   if (!result.success) {
     console.log(result.error);
@@ -20,6 +19,7 @@ export const addIncomeTransaction = async (data: unknown) => {
 
   await databaseConnect();
 
+  // Get user document
   const user = await User.findById(result.data.userId);
   if (user === null) {
     return {
@@ -28,6 +28,7 @@ export const addIncomeTransaction = async (data: unknown) => {
     };
   }
 
+  // Create new income document
   const income = new Income({
     user: new mongoose.Types.ObjectId(result.data.userId),
     wallet: new mongoose.Types.ObjectId(result.data.walletId),
@@ -53,6 +54,7 @@ export const addIncomeTransaction = async (data: unknown) => {
   console.log('User: ', user);
   console.log('Income: ', income);
 
+  // Save user and income document
   await user.save();
   await income.save();
 
