@@ -18,7 +18,10 @@ const trackIncomeSchema = z.object({
     .min(1, { message: 'Please choose the income category' }),
   description: z
     .string({ message: 'Please describe the income' })
-    .min(1, { message: 'Please describe the income' })
+    .min(1, { message: 'Please describe the income' }),
+  formPath: z
+    .string({ message: 'UserId missing please restart page!' })
+    .min(1, { message: 'UserId missing please restart page!' })
 });
 
 export default trackIncomeSchema;

@@ -5,6 +5,7 @@ import Income from '@/models/income';
 import User, { UserType } from '@/models/user';
 import trackIncomeSchema from '@/schemas/track-income';
 import mongoose from 'mongoose';
+import { revalidatePath } from 'next/cache';
 
 export const addIncomeTransaction = async (data: unknown) => {
   // Validate data coming from the client
@@ -59,6 +60,8 @@ export const addIncomeTransaction = async (data: unknown) => {
   await income.save();
 
   await databaseClose();
+
+  revalidatePath(result.data.formPath);
 
   return {
     isSuccessful: true,

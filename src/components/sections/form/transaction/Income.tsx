@@ -27,6 +27,7 @@ import {
 import trackIncomeSchema from '@/schemas/track-income';
 import { UserCategoryType, UserWalletType } from '@/models/user';
 import { addIncomeTransaction } from '@/lib/add-income-transaction';
+import { usePathname } from 'next/navigation';
 
 const Income = ({
   wallets,
@@ -37,6 +38,9 @@ const Income = ({
   categories: UserCategoryType[];
   userId: string;
 }) => {
+  const currentPathname = usePathname();
+  console.log(currentPathname);
+
   const form = useForm<z.infer<typeof trackIncomeSchema>>({
     resolver: zodResolver(trackIncomeSchema),
     defaultValues: {
@@ -47,7 +51,8 @@ const Income = ({
       walletId: wallets[0]._id,
       categoryId: '',
       date: undefined,
-      description: ''
+      description: '',
+      formPath: currentPathname
     }
   });
 
