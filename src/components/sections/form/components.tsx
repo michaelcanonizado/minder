@@ -121,6 +121,10 @@ export const FormRadioCardGroup = ({
   field: any;
   name: string;
 }) => {
+  /*
+  !!!NOTE!!!
+  Further improvements can be made to this component to make it more compound. I.e: allowing <FormRadioCard/> to be exported and have the loop outside
+  */
   return (
     <RadioGroup
       className=''
