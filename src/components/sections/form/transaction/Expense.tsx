@@ -5,8 +5,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { cn } from '@/lib/utils';
-
 import {
   Form,
   FormField,
@@ -69,8 +67,6 @@ const Expense = ({
       return;
     }
 
-    console.log(response);
-    console.log(form);
     form.reset();
   };
 
