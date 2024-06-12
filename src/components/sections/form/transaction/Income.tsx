@@ -26,6 +26,7 @@ import {
 
 import trackIncomeSchema from '@/schemas/track-expense';
 import { UserCategoryType, UserWalletType } from '@/models/user';
+import { addIncomeTransaction } from '@/lib/add-income-transaction';
 
 const Income = ({
   wallets,
@@ -47,14 +48,24 @@ const Income = ({
     }
   });
 
-  const onSubmit = (data: z.infer<typeof trackIncomeSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof trackIncomeSchema>) => {
+    const response = await addIncomeTransaction(data);
+
+    if (!response.isSuccessful) {
+      console.log('Error adding income!');
+      console.log(response);
+      return;
+    }
+
+    console.log(response);
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
+        // onSubmit={form.handleSubmit(onSubmit)}
+        action={addIncomeTransaction}
         className='mt-4 flex flex-col gap-4'
       >
         <div className='flex flex-col gap-1'>
