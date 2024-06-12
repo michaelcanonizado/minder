@@ -27,6 +27,7 @@ import {
 import { UserWalletType } from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
 import { usePathname } from 'next/navigation';
+import { addBalanceTransfer } from '@/lib/add-balance-transfer';
 
 const decodeModifiedWalletId = (id: string) => {
   return id.slice(0, -1);
@@ -68,7 +69,7 @@ const Transfer = ({
     }
   });
 
-  const onSubmit = (data: z.infer<typeof trackBalanceTransferSchema>) => {
+  const onSubmit = async (data: z.infer<typeof trackBalanceTransferSchema>) => {
     // Coerce the data.userId to match the passed userId incase it was changed
     if (data.userId !== userId) {
       data.userId = userId;
@@ -76,7 +77,9 @@ const Transfer = ({
 
     data.destinationWalletId = decodeModifiedWalletId(data.destinationWalletId);
 
-    console.log(data);
+    const response = await addBalanceTransfer(data);
+
+    console.log(response);
   };
 
   return (
