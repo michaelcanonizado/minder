@@ -11,6 +11,7 @@ import { FormItem, FormControl } from '@/components/ui/form';
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue
@@ -82,21 +83,40 @@ export const FormSelect = ({
   }[];
   field: any;
 }) => {
+  // Manually set the selected value as the component doesn't reset back to the placeholder even when form.reset() is called and field.value is == ''
+  const getSelectedItem = () => {
+    if (field.value === '') {
+      return 'Choose';
+    }
+
+    const selectedItem = data.find(item => {
+      if (item._id == field.value) {
+        return field.value;
+      }
+    });
+
+    console.log(selectedItem);
+
+    return selectedItem?.name;
+  };
+
   return (
-    <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <Select onValueChange={field.onChange} defaultValue={field.defaultValue}>
       <FormControl>
         <SelectTrigger>
-          <SelectValue placeholder='Choose' />
+          <SelectValue placeholder='Choose'>{getSelectedItem()}</SelectValue>
         </SelectTrigger>
       </FormControl>
       <SelectContent className='max-h-[300px]'>
-        {data.map(item => {
-          return (
-            <SelectItem value={item._id} key={item._id}>
-              {item.name}
-            </SelectItem>
-          );
-        })}
+        <SelectGroup>
+          {data.map(item => {
+            return (
+              <SelectItem value={item._id} key={item._id}>
+                {item.name}
+              </SelectItem>
+            );
+          })}
+        </SelectGroup>
       </SelectContent>
     </Select>
   );
