@@ -84,29 +84,34 @@ export const FormSelect = ({
   field: any;
 }) => {
   // Manually set the selected value as the component doesn't reset back to the placeholder even when form.reset() is called and field.value is == ''
+  // As of the moment, shadcn doesn't provide a way to have the select placeholder to be text-muted-foreground. So this function is also used to set the text color to text-muted-foreground when no item is selected.
   const getSelectedItem = () => {
-    if (field.value === '') {
-      return 'Choose';
+    // If no item is selected
+    if (field.value.length === 0) {
+      return (
+        <SelectTrigger className='text-muted-foreground'>
+          <SelectValue placeholder='Choose'>Choose</SelectValue>
+        </SelectTrigger>
+      );
     }
 
+    // Find the selected item in the passed data prop and render the <SelectValue/>
     const selectedItem = data.find(item => {
       if (item._id == field.value) {
         return field.value;
       }
     });
 
-    console.log(selectedItem);
-
-    return selectedItem?.name;
+    return (
+      <SelectTrigger className='text-foreground'>
+        <SelectValue>{selectedItem?.name}</SelectValue>
+      </SelectTrigger>
+    );
   };
 
   return (
     <Select onValueChange={field.onChange} defaultValue={field.defaultValue}>
-      <FormControl>
-        <SelectTrigger>
-          <SelectValue placeholder='Choose'>{getSelectedItem()}</SelectValue>
-        </SelectTrigger>
-      </FormControl>
+      <FormControl>{getSelectedItem()}</FormControl>
       <SelectContent className='max-h-[300px]'>
         <SelectGroup>
           {data.map(item => {
