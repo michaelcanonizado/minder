@@ -19,7 +19,7 @@ const ExpenseTrack = async () => {
           <Bento.Box.Content>
             <Form.Transaction.Expense
               wallets={data.wallets}
-              categories={data.categories.income}
+              categories={data.categories.expense}
               userId={userId}
             />
           </Bento.Box.Content>
