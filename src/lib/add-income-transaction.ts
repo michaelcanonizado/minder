@@ -1,7 +1,10 @@
 'use server';
 
 import { databaseClose, databaseConnect } from '@/helpers/database';
+import Income from '@/models/income';
+import User, { UserType } from '@/models/user';
 import trackIncomeSchema from '@/schemas/track-income';
+import mongoose from 'mongoose';
 
 export const addIncomeTransaction = async (data: unknown) => {
   console.log('SS: Adding income to database...');
@@ -15,12 +18,43 @@ export const addIncomeTransaction = async (data: unknown) => {
     };
   }
 
-  console.log(result);
-
   await databaseConnect();
 
-  console.log('data sent...!');
-  console.log('Returning...!');
+  const user = await User.findById(result.data.userId);
+  if (user === null) {
+    return {
+      isSuccessful: false,
+      message: 'Failed to add income! Please try again'
+    };
+  }
+
+  const income = new Income({
+    user: new mongoose.Types.ObjectId(result.data.userId),
+    wallet: new mongoose.Types.ObjectId(result.data.walletId),
+    category: new mongoose.Types.ObjectId(result.data.categoryId),
+    amount: result.data.amount,
+    description: result.data.description,
+    transactionDate: result.data.date
+  });
+
+  // Update user's corresponding wallet balance
+  for (const wallet of user.wallets) {
+    if (wallet._id == result.data.walletId) {
+      wallet.balance += result.data.amount;
+    }
+  }
+
+  // Update user's total balance
+  user.balance.totalBalance += result.data.amount;
+
+  // Update user's income balance
+  user.balance.totalIncome += result.data.amount;
+
+  console.log('User: ', user);
+  console.log('Income: ', income);
+
+  await user.save();
+  await income.save();
 
   await databaseClose();
 
