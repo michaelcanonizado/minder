@@ -24,16 +24,18 @@ import {
   FormInput
 } from '../components';
 
-import trackIncomeSchema from '@/schemas/track-expense';
+import trackIncomeSchema from '@/schemas/track-income';
 import { UserCategoryType, UserWalletType } from '@/models/user';
 import { addIncomeTransaction } from '@/lib/add-income-transaction';
 
 const Income = ({
   wallets,
-  categories
+  categories,
+  userId
 }: {
   wallets: UserWalletType[];
   categories: UserCategoryType[];
+  userId: string;
 }) => {
   const form = useForm<z.infer<typeof trackIncomeSchema>>({
     resolver: zodResolver(trackIncomeSchema),
@@ -41,6 +43,7 @@ const Income = ({
       // I need to set each value a default value to remove the 'Warning: A component is changing an uncontrolled input to be controlled.' error from the <Input/> components. Amount is of type number, but i dont want to set its default value to 0 as i only want the placeholder to show, not prefill the <Input/> component. If you know a solution to this, feel free to pull request or commentat the repo.
       // @ts-ignore
       amount: '',
+      userId: userId,
       walletId: wallets[0]._id,
       categoryId: '',
       date: undefined,
@@ -49,6 +52,11 @@ const Income = ({
   });
 
   const onSubmit = async (data: z.infer<typeof trackIncomeSchema>) => {
+    // Coerce the data.userId to match the passed userId incase it was changed
+    if (data.userId !== userId) {
+      data.userId = userId;
+    }
+
     const response = await addIncomeTransaction(data);
 
     if (!response.isSuccessful) {

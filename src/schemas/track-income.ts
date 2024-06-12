@@ -7,6 +7,9 @@ const trackIncomeSchema = z.object({
   date: z.date({
     message: 'Please enter the date'
   }),
+  userId: z
+    .string({ message: 'UserId missing please restart page!' })
+    .min(1, { message: 'UserId missing please restart page!' }),
   walletId: z
     .string({ message: 'Please choose where to add' })
     .min(1, { message: 'Please choose where to add' }),

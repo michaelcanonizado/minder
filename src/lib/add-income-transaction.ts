@@ -8,6 +8,7 @@ export const addIncomeTransaction = async (data: unknown) => {
 
   const result = trackIncomeSchema.safeParse(data);
   if (!result.success) {
+    console.log(result.error);
     return {
       isSuccessful: false,
       message: 'Failed to add income! Please try again'

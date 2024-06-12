@@ -4,7 +4,9 @@ import { getWalletsAndCategoriesData } from '@/lib/get-wallets-and-categories-da
 
 const IncomeTrack = async () => {
   //Get user id from cookie before fetching data
-  const data = await getWalletsAndCategoriesData(process.env.TEMP_USER_ID!);
+  const userId = process.env.TEMP_USER_ID!;
+
+  const data = await getWalletsAndCategoriesData(userId);
 
   // console.log(data);
 
@@ -20,6 +22,7 @@ const IncomeTrack = async () => {
             <Form.Transaction.Income
               wallets={data.wallets}
               categories={data.categories.income}
+              userId={userId}
             />
           </Bento.Box.Content>
         </Bento.Box>
