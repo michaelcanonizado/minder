@@ -27,6 +27,7 @@ import {
 import trackExpenseSchema from '@/schemas/track-expense';
 import { UserCategoryType, UserWalletType } from '@/models/user';
 import { usePathname } from 'next/navigation';
+import { addExpenseTransaction } from '@/lib/add-expense-transaction';
 
 const Expense = ({
   wallets,
@@ -54,14 +55,23 @@ const Expense = ({
     }
   });
 
-  const onSubmit = (data: z.infer<typeof trackExpenseSchema>) => {
+  const onSubmit = async (data: z.infer<typeof trackExpenseSchema>) => {
     // Coerce the data.userId to match the passed userId incase it was changed
     if (data.userId !== userId) {
       data.userId = userId;
     }
 
-    console.log('Adding expense');
-    console.log(data);
+    const response = await addExpenseTransaction(data);
+
+    if (!response.isSuccessful) {
+      console.log('Error adding income!');
+      console.log(response);
+      return;
+    }
+
+    console.log(response);
+    console.log(form);
+    form.reset();
   };
 
   return (
