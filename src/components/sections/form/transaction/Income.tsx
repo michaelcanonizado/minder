@@ -39,7 +39,6 @@ const Income = ({
   userId: string;
 }) => {
   const currentPathname = usePathname();
-  console.log(currentPathname);
 
   const form = useForm<z.infer<typeof trackIncomeSchema>>({
     resolver: zodResolver(trackIncomeSchema),
