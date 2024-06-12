@@ -71,7 +71,11 @@ const Income = ({
     }
 
     console.log(response);
+    console.log(form);
+    form.reset();
   };
+
+  console.log(form);
 
   return (
     <Form {...form}>
