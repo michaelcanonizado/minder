@@ -10,7 +10,8 @@
     "seed-user": "tsx ./src/seeds/user.ts",
     "seed-expense": "tsx ./src/seeds/expense.ts",
     "seed-income": "tsx ./src/seeds/income.ts",
-    "seed-person": "tsx ./src/seeds/person.ts"
+    "seed-person": "tsx ./src/seeds/person.ts",
+    "seed-incomeV2": "tsx ./src/seeds/income-v2.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
