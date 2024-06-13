@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema<UserType>(
   { timestamps: true }
 );
 
-const User =
-  mongoose.models.User ||
+const Person =
+  mongoose.models.Person ||
   mongoose.model<InferSchemaType<typeof userSchema>>('Person', userSchema);
-export default User;
+export default Person;
