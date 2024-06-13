@@ -40,7 +40,6 @@ const Transfer = ({
   wallets: UserWalletType[];
   userId: string;
 }) => {
-  console.log(wallets);
   // Temporary fix to unsolved shadcn bug: https://github.com/shadcn-ui/ui/issues/3745
   // The wallets object is being used to seed data into the two radio groups: sourceWalletId and destinationWalletID. Since both radio groups are referencing the same object, they will have same values and ids, which causes some conflict, even after putting the 'name' prop to <input type="radio" name={name}/>.
   // Temporary solution is to encode the wallet id to prevent the conflict, and decode it back at the onSubmit function
@@ -77,8 +76,6 @@ const Transfer = ({
     }
 
     data.destinationWalletId = decodeModifiedWalletId(data.destinationWalletId);
-
-    console.log(data);
 
     const response = await addBalanceTransfer(data);
 

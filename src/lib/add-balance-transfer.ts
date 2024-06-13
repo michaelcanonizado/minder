@@ -1,10 +1,12 @@
 'use server';
 
 import { databaseClose, databaseConnect } from '@/helpers/database';
-import BalanceTransfer, { IBalanceTransfer } from '@/models/balance-transfer';
+import BalanceTransfer, {
+  BalanceTransferType
+} from '@/models/balance-transfer';
 import User from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
-import mongoose, { HydratedDocument } from 'mongoose';
+import mongoose from 'mongoose';
 
 export const addBalanceTransfer = async (data: unknown) => {
   // Validate data coming from the client
@@ -28,18 +30,16 @@ export const addBalanceTransfer = async (data: unknown) => {
     };
   }
 
-  const balanceTransfer: HydratedDocument<IBalanceTransfer> =
-    new BalanceTransfer({
-      user: result.data.userId,
-      sourceWallet: result.data.sourceWalletId,
-      // destinationWallet: result.data.destinationWalletId,
-      destinationWallet: new mongoose.Types.ObjectId(
-        result.data.destinationWalletId
-      ),
-      amount: result.data.amount,
-      description: result.data.description,
-      transactionDate: result.data.date
-    });
+  const balanceTransfer = new BalanceTransfer({
+    user: new mongoose.Types.ObjectId(result.data.userId),
+    sourceWallet: new mongoose.Types.ObjectId(result.data.sourceWalletId),
+    destinationWallet: new mongoose.Types.ObjectId(
+      result.data.destinationWalletId
+    ),
+    amount: result.data.amount,
+    description: result.data.description,
+    transactionDate: result.data.date
+  });
 
   await balanceTransfer.save();
 
