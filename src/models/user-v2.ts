@@ -21,6 +21,9 @@ export interface UserCategoryType {
     status: boolean;
     deletedAt: Date | null;
   };
+  createdAt: Date;
+  updatedAt: Date;
+  _id: mongoose.Types.ObjectId;
 }
 
 export interface UserWalletType {
@@ -30,6 +33,9 @@ export interface UserWalletType {
     status: boolean;
     deletedAt: Date | null;
   };
+  createdAt: Date;
+  updatedAt: Date;
+  _id: mongoose.Types.ObjectId;
 }
 
 export interface UserType {
@@ -40,6 +46,8 @@ export interface UserType {
     expense: UserCategoryType[];
     income: UserCategoryType[];
   };
+  createdAt: Date;
+  updatedAt: Date;
   wallets: UserWalletType[];
 }
 
