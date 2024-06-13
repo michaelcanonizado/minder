@@ -110,7 +110,7 @@ const getIncome = async () => {
 
   const res = JSON.parse(JSON.stringify(data)) as Merged[];
 
-  console.log(res[0]);
+  console.log(typeof res[0]._id);
 
   await databaseClose();
 };

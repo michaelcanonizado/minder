@@ -1,6 +1,76 @@
-import mongoose, { InferSchemaType } from 'mongoose';
+import mongoose, {
+  Types,
+  HydratedDocument,
+  HydratedArraySubdocument,
+  Model,
+  Schema
+} from 'mongoose';
 
-const profileSchema = new mongoose.Schema(
+export interface UserProfileType {
+  username: string;
+}
+export interface UserCurrencyType {
+  code: string;
+  name: string;
+}
+export interface UserBalanceType {
+  totalBalance: number;
+  totalIncome: number;
+  totalExpense: number;
+}
+export interface UserCategoryType {
+  name: string;
+  _id: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+  isDeleted: {
+    status: boolean;
+    deletedAt: Date | null;
+  };
+  __v?: number;
+}
+export interface UserWalletType {
+  name: string;
+  balance: number;
+  transactionCount: number;
+  _id: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+  isDeleted: {
+    status: boolean;
+    deletedAt: Date | null;
+  };
+  __v?: number;
+}
+export interface UserType {
+  _id: Types.ObjectId;
+  profile: UserProfileType;
+  lastLogin: Date;
+  currency: UserCurrencyType;
+  balance: UserBalanceType;
+  categories: {
+    expense: UserCategoryType[];
+    income: UserCategoryType[];
+  };
+  wallets: UserWalletType[];
+  createdAt: Date;
+  updatedAt: Date;
+  __v?: number;
+}
+
+type UserHydratedDocument = HydratedDocument<
+  UserType,
+  {
+    wallets: HydratedArraySubdocument<UserWalletType[]>;
+    categories: {
+      expense: HydratedArraySubdocument<UserCategoryType[]>;
+      income: HydratedArraySubdocument<UserCategoryType[]>;
+    };
+  }
+>;
+type UserModelType = Model<UserType, {}, {}, {}, UserHydratedDocument>;
+
+const profileSchema = new Schema<UserProfileType>(
   {
     // Future properties:
     // firstName: 'michael',
@@ -16,7 +86,7 @@ const profileSchema = new mongoose.Schema(
   { _id: false }
 );
 
-const currencySchema = new mongoose.Schema(
+const currencySchema = new Schema<UserCurrencyType>(
   {
     code: {
       type: String,
@@ -30,7 +100,7 @@ const currencySchema = new mongoose.Schema(
   { _id: false }
 );
 
-const categorySchema = new mongoose.Schema(
+const categorySchema = new Schema<UserCategoryType>(
   {
     name: {
       type: String,
@@ -50,13 +120,9 @@ const categorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const walletSchema = new mongoose.Schema(
+const walletSchema = new Schema<UserWalletType>(
   {
     name: {
-      type: String,
-      required: true
-    },
-    color: {
       type: String,
       required: true
     },
@@ -82,7 +148,7 @@ const walletSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const balanceSchema = new mongoose.Schema(
+const balanceSchema = new Schema<UserBalanceType>(
   {
     totalBalance: {
       type: Number,
@@ -100,7 +166,7 @@ const balanceSchema = new mongoose.Schema(
   { _id: false }
 );
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema<UserType>(
   {
     profile: {
       type: profileSchema
@@ -134,60 +200,5 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export interface UserProfileType {
-  username: string;
-}
-export interface UserCurrencyType {
-  code: string;
-  name: string;
-}
-export interface UserBalanceType {
-  totalBalance: number;
-  totalIncome: number;
-  totalExpense: number;
-}
-export interface UserCategoryType {
-  name: string;
-  _id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  isDeleted: {
-    status: boolean;
-    deletedAt: Date | null;
-  };
-  __v?: number;
-}
-export interface UserWalletType {
-  name: string;
-  color: string;
-  balance: number;
-  transactionCount: number;
-  _id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  isDeleted: {
-    status: boolean;
-    deletedAt: Date | null;
-  };
-  __v?: number;
-}
-export interface UserType {
-  _id: string;
-  profile: UserProfileType;
-  lastLogin: Date;
-  currency: UserCurrencyType;
-  balance: UserBalanceType;
-  categories: {
-    expense: UserCategoryType[];
-    income: UserCategoryType[];
-  };
-  wallets: UserWalletType[];
-  createdAt: Date;
-  updatedAt: Date;
-  __v?: number;
-}
-
-const User =
-  mongoose.models.User ||
-  mongoose.model<InferSchemaType<typeof userSchema>>('User', userSchema);
+const User = mongoose.model<UserType, UserModelType>('User', userSchema);
 export default User;
