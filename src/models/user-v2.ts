@@ -9,6 +9,12 @@ export interface UserCurrencyType {
   name: string;
 }
 
+export interface UserBalanceType {
+  totalBalance: number;
+  totalIncome: number;
+  totalExpense: number;
+}
+
 export interface UserWalletType {
   name: string;
   balance: number;
@@ -21,6 +27,7 @@ export interface UserWalletType {
 export interface UserType {
   profile: UserProfileType;
   currency: UserCurrencyType;
+  balance: UserBalanceType;
   wallets: Array<UserWalletType>;
 }
 
@@ -58,6 +65,24 @@ const currencySchema = new mongoose.Schema<UserCurrencyType>(
   { _id: false }
 );
 
+const balanceSchema = new mongoose.Schema<UserBalanceType>(
+  {
+    totalBalance: {
+      type: Number,
+      default: 0
+    },
+    totalIncome: {
+      type: Number,
+      default: 0
+    },
+    totalExpense: {
+      type: Number,
+      default: 0
+    }
+  },
+  { _id: false }
+);
+
 const walletSchema = new mongoose.Schema<UserWalletType>(
   {
     name: {
@@ -86,6 +111,7 @@ const userSchema = new mongoose.Schema<UserType, UserModelType>(
   {
     profile: profileSchema,
     currency: currencySchema,
+    balance: balanceSchema,
     wallets: {
       type: [walletSchema],
       required: true,

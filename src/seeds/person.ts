@@ -31,6 +31,11 @@ const seedPerson = async () => {
       code: 'PHP',
       name: 'Philippine Peso'
     },
+    balance: {
+      totalBalance: 0,
+      totalIncome: 0,
+      totalExpense: 0
+    },
     wallets: wallets
   });
   //   await user.save();
