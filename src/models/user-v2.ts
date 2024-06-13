@@ -51,7 +51,7 @@ export interface UserType {
   wallets: UserWalletType[];
 }
 
-type UserHydratedDocument = mongoose.HydratedDocument<
+export type UserHydratedDocument = mongoose.HydratedDocument<
   UserType,
   {
     wallets: mongoose.HydratedArraySubdocument<UserWalletType[]>;

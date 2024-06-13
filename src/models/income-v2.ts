@@ -1,5 +1,4 @@
-import mongoose, { InferSchemaType } from 'mongoose';
-import { UserCategoryType, UserType, UserWalletType } from './user';
+import mongoose from 'mongoose';
 
 export interface IncomeType {
   user: mongoose.Types.ObjectId;
@@ -10,7 +9,7 @@ export interface IncomeType {
   transactionDate: Date;
 }
 
-type IncomeHydratedDocument = mongoose.HydratedDocument<IncomeType>;
+export type IncomeHydratedDocument = mongoose.HydratedDocument<IncomeType>;
 type IncomeModelType = mongoose.Model<
   IncomeType,
   {},

@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 import { databaseConnect, databaseClose } from '@/helpers/database';
 import User from '@/models/user';
-import Person from '@/models/user-v2';
-import Income from '@/models/income-v2';
+import Person, { UserHydratedDocument } from '@/models/user-v2';
+import Income, { IncomeHydratedDocument } from '@/models/income-v2';
+import { UserType } from '@/models/user-v2';
 
 const seedIncome = async () => {
   databaseConnect();
@@ -31,6 +32,10 @@ const seedIncome = async () => {
   databaseClose();
 };
 
+type Merged = Omit<IncomeHydratedDocument, 'user'> & {
+  user: UserHydratedDocument;
+};
+
 const getIncome = async () => {
   await databaseConnect();
 
@@ -39,8 +44,73 @@ const getIncome = async () => {
     console.log('User not found!');
     return;
   }
-  console.log(user);
-  console.log('User found!');
+  await databaseConnect();
+
+  const page = 1;
+  const limit = 10;
+  const skip = (page - 1) * limit;
+
+  const data: unknown = await Income.aggregate([
+    { $match: { user: user._id } },
+    {
+      $sort: {
+        createdAt: -1
+      }
+    },
+    {
+      $skip: skip
+    },
+    {
+      $limit: limit
+    },
+    {
+      $lookup: {
+        from: 'people',
+        localField: 'user',
+        foreignField: '_id',
+        as: 'user'
+      }
+    },
+    {
+      $unwind: '$user'
+    },
+    {
+      $set: {
+        wallet: {
+          $filter: {
+            input: '$user.wallets',
+            as: 'wallet',
+            cond: {
+              $eq: ['$$wallet._id', '$wallet']
+            }
+          }
+        }
+      }
+    },
+    {
+      $unwind: '$wallet'
+    },
+    {
+      $set: {
+        category: {
+          $filter: {
+            input: '$user.categories.income',
+            as: 'income',
+            cond: {
+              $eq: ['$$income._id', '$category']
+            }
+          }
+        }
+      }
+    },
+    {
+      $unwind: '$category'
+    }
+  ]).exec();
+
+  const res = JSON.parse(JSON.stringify(data)) as Merged[];
+
+  console.log(res[0]);
 
   await databaseClose();
 };
