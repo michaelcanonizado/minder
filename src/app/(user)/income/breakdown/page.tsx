@@ -16,7 +16,9 @@ const IncomeBreakdown = async ({
   page = page < 1 ? 1 : page;
   const limit = 10;
 
-  const incomes = await getIncomesData({ page, limit });
+  const userId = process.env.TEMP_USER_ID!;
+
+  const incomes = await getIncomesData({ page, limit, userId });
 
   console.log(incomes);
   console.log(`Data count: ${incomes.data.length}`);

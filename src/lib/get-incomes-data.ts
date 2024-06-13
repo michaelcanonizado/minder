@@ -4,10 +4,12 @@ import Income, { IncomeType } from '@/models/income';
 
 export const getIncomesData = async ({
   page = 1,
-  limit = 10
+  limit = 10,
+  userId
 }: {
   page: number;
   limit: number;
+  userId: string;
 }) => {
   await databaseConnect();
 
@@ -15,7 +17,7 @@ export const getIncomesData = async ({
 
   // Currently this doesn't match the userId, it fetches all documents in the collection!
   const data: unknown = await Income.aggregate([
-    { $match: { user: new mongoose.Types.ObjectId(process.env.TEMP_USER_ID) } },
+    { $match: { user: new mongoose.Types.ObjectId(userId) } },
     {
       $sort: {
         createdAt: -1
