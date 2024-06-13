@@ -4,9 +4,8 @@ import User from '@/models/user';
 import Person from '@/models/user-v2';
 import Income from '@/models/income-v2';
 
-databaseConnect();
-
 const seedIncome = async () => {
+  databaseConnect();
   // Get user
   const user = await Person.findOne({ profile: { username: 'Mikey' } });
   if (!user) {
@@ -31,4 +30,20 @@ const seedIncome = async () => {
 
   databaseClose();
 };
-seedIncome();
+
+const getIncome = async () => {
+  await databaseConnect();
+
+  const user = await Person.findOne({ profile: { username: 'Mikey' } });
+  if (!user) {
+    console.log('User not found!');
+    return;
+  }
+  console.log(user);
+  console.log('User found!');
+
+  await databaseClose();
+};
+
+// seedIncome();
+getIncome();
