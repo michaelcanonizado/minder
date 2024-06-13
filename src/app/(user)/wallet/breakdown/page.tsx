@@ -17,7 +17,13 @@ const WalletBreakdown = async ({
   page = page < 1 ? 1 : page;
   const limit = 10;
 
-  const balanceTransfers = await getBalanceTransfersData({ page, limit });
+  const userId = process.env.TEMP_USER_ID!;
+
+  const balanceTransfers = await getBalanceTransfersData({
+    page,
+    limit,
+    userId
+  });
 
   console.log(balanceTransfers);
 

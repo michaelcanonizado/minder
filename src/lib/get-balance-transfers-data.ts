@@ -6,17 +6,19 @@ import BalanceTransfer, {
 
 export const getBalanceTransfersData = async ({
   page = 1,
-  limit = 10
+  limit = 10,
+  userId
 }: {
   page: number;
   limit: number;
+  userId: string;
 }) => {
   await databaseConnect();
 
   const skip = (page - 1) * limit;
 
   const data: unknown = await BalanceTransfer.aggregate([
-    { $match: { user: new mongoose.Types.ObjectId(process.env.TEMP_USER_ID) } },
+    { $match: { user: new mongoose.Types.ObjectId(userId) } },
     {
       $sort: {
         createdAt: -1
