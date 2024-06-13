@@ -15,6 +15,14 @@ export interface UserBalanceType {
   totalExpense: number;
 }
 
+export interface UserCategoryType {
+  name: string;
+  isDeleted: {
+    status: boolean;
+    deletedAt: Date | null;
+  };
+}
+
 export interface UserWalletType {
   name: string;
   balance: number;
@@ -28,13 +36,21 @@ export interface UserType {
   profile: UserProfileType;
   currency: UserCurrencyType;
   balance: UserBalanceType;
-  wallets: Array<UserWalletType>;
+  categories: {
+    expense: UserCategoryType[];
+    income: UserCategoryType[];
+  };
+  wallets: UserWalletType[];
 }
 
 type UserHydratedDocument = mongoose.HydratedDocument<
   UserType,
   {
     wallets: mongoose.HydratedArraySubdocument<UserWalletType[]>;
+    categories: {
+      expense: mongoose.HydratedArraySubdocument<UserCategoryType[]>;
+      income: mongoose.HydratedArraySubdocument<UserCategoryType[]>;
+    };
   }
 >;
 type UserModelType = mongoose.Model<UserType, {}, {}, {}, UserHydratedDocument>;
@@ -83,6 +99,26 @@ const balanceSchema = new mongoose.Schema<UserBalanceType>(
   { _id: false }
 );
 
+const categorySchema = new mongoose.Schema<UserCategoryType>(
+  {
+    name: {
+      type: String,
+      required: true
+    },
+    isDeleted: {
+      status: {
+        type: Boolean,
+        default: false
+      },
+      deletedAt: {
+        type: Date,
+        default: null
+      }
+    }
+  },
+  { timestamps: true }
+);
+
 const walletSchema = new mongoose.Schema<UserWalletType>(
   {
     name: {
@@ -112,6 +148,18 @@ const userSchema = new mongoose.Schema<UserType, UserModelType>(
     profile: profileSchema,
     currency: currencySchema,
     balance: balanceSchema,
+    categories: {
+      expense: {
+        type: [categorySchema],
+        required: true,
+        default: []
+      },
+      income: {
+        type: [categorySchema],
+        required: true,
+        default: []
+      }
+    },
     wallets: {
       type: [walletSchema],
       required: true,

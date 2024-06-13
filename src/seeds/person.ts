@@ -20,6 +20,51 @@ const wallets = [
   }
 ];
 
+const expenses = [
+  {
+    name: 'Food'
+  },
+  {
+    name: 'Transportation'
+  },
+  {
+    name: 'Shopping'
+  },
+  {
+    name: 'Phone'
+  },
+  {
+    name: 'Housing'
+  },
+  {
+    name: 'Education'
+  },
+  {
+    name: 'Entertainment'
+  },
+  {
+    name: 'Other'
+  }
+];
+
+const incomes = [
+  {
+    name: 'Salary'
+  },
+  {
+    name: 'Allowance'
+  },
+  {
+    name: 'Investments'
+  },
+  {
+    name: 'Business'
+  },
+  {
+    name: 'Other'
+  }
+];
+
 const seedPerson = async () => {
   await databaseConnect();
 
@@ -36,9 +81,13 @@ const seedPerson = async () => {
       totalIncome: 0,
       totalExpense: 0
     },
+    categories: {
+      expense: expenses,
+      income: incomes
+    },
     wallets: wallets
   });
-  //   await user.save();
+  await user.save();
   console.log(user);
 
   await databaseClose();
