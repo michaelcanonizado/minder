@@ -1,83 +1,73 @@
-import mongoose, {
-  Types,
-  HydratedDocument,
-  HydratedArraySubdocument,
-  Model,
-  Schema
-} from 'mongoose';
+import mongoose, { InferRawDocType, InferSchemaType, mongo } from 'mongoose';
 
 export interface UserProfileType {
   username: string;
 }
+
 export interface UserCurrencyType {
   code: string;
   name: string;
 }
+
 export interface UserBalanceType {
   totalBalance: number;
   totalIncome: number;
   totalExpense: number;
 }
+
 export interface UserCategoryType {
+  _id: mongoose.Types.ObjectId;
   name: string;
-  _id: Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
   isDeleted: {
     status: boolean;
     deletedAt: Date | null;
   };
-  __v?: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
+
 export interface UserWalletType {
+  _id: mongoose.Types.ObjectId;
   name: string;
   balance: number;
-  transactionCount: number;
-  _id: Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
   isDeleted: {
     status: boolean;
     deletedAt: Date | null;
   };
-  __v?: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
+
 export interface UserType {
-  _id: Types.ObjectId;
+  _id: mongoose.Types.ObjectId;
   profile: UserProfileType;
-  lastLogin: Date;
   currency: UserCurrencyType;
   balance: UserBalanceType;
   categories: {
     expense: UserCategoryType[];
     income: UserCategoryType[];
   };
-  wallets: UserWalletType[];
   createdAt: Date;
   updatedAt: Date;
-  __v?: number;
+  wallets: UserWalletType[];
 }
 
-type UserHydratedDocument = HydratedDocument<
+type UserHydratedDocument = mongoose.HydratedDocument<
   UserType,
   {
-    wallets: HydratedArraySubdocument<UserWalletType[]>;
+    wallets: mongoose.HydratedArraySubdocument<UserWalletType[]>;
     categories: {
-      expense: HydratedArraySubdocument<UserCategoryType[]>;
-      income: HydratedArraySubdocument<UserCategoryType[]>;
+      expense: mongoose.HydratedArraySubdocument<UserCategoryType[]>;
+      income: mongoose.HydratedArraySubdocument<UserCategoryType[]>;
     };
   }
 >;
-type UserModelType = Model<UserType, {}, {}, {}, UserHydratedDocument>;
+type UserModelType = mongoose.Model<UserType, {}, {}, {}, UserHydratedDocument>;
 
-const profileSchema = new Schema<UserProfileType>(
+// -----------------------------------------------------
+
+const profileSchema = new mongoose.Schema<UserProfileType>(
   {
-    // Future properties:
-    // firstName: 'michael',
-    // lastName: 'canonizado',
-    // username: 'mikey',
-    // email: 'michael@gmail.com',
-    // phone: '0123456789'
     username: {
       type: String,
       required: true
@@ -86,7 +76,7 @@ const profileSchema = new Schema<UserProfileType>(
   { _id: false }
 );
 
-const currencySchema = new Schema<UserCurrencyType>(
+const currencySchema = new mongoose.Schema<UserCurrencyType>(
   {
     code: {
       type: String,
@@ -100,55 +90,7 @@ const currencySchema = new Schema<UserCurrencyType>(
   { _id: false }
 );
 
-const categorySchema = new Schema<UserCategoryType>(
-  {
-    name: {
-      type: String,
-      required: true
-    },
-    isDeleted: {
-      status: {
-        type: Boolean,
-        default: false
-      },
-      deletedAt: {
-        type: Date,
-        default: null
-      }
-    }
-  },
-  { timestamps: true }
-);
-
-const walletSchema = new Schema<UserWalletType>(
-  {
-    name: {
-      type: String,
-      required: true
-    },
-    balance: {
-      type: Number,
-      default: 0
-    },
-    transactionCount: {
-      type: Number,
-      default: 0
-    },
-    isDeleted: {
-      status: {
-        type: Boolean,
-        default: false
-      },
-      deletedAt: {
-        type: Date,
-        default: null
-      }
-    }
-  },
-  { timestamps: true }
-);
-
-const balanceSchema = new Schema<UserBalanceType>(
+const balanceSchema = new mongoose.Schema<UserBalanceType>(
   {
     totalBalance: {
       type: Number,
@@ -166,41 +108,75 @@ const balanceSchema = new Schema<UserBalanceType>(
   { _id: false }
 );
 
-const userSchema = new Schema<UserType>(
+const categorySchema = new mongoose.Schema<UserCategoryType>(
   {
-    profile: {
-      type: profileSchema
+    name: {
+      type: String,
+      required: true
     },
-    lastLogin: {
-      type: Date,
-      default: new Date()
-    },
-    currency: {
-      type: currencySchema
+    isDeleted: {
+      status: {
+        type: Boolean,
+        default: false
+      },
+      deletedAt: {
+        type: Date,
+        default: null
+      }
+    }
+  },
+  { timestamps: true }
+);
+
+const walletSchema = new mongoose.Schema<UserWalletType>(
+  {
+    name: {
+      type: String,
+      required: true
     },
     balance: {
-      type: balanceSchema,
-      default: {}
+      type: Number,
+      default: 0
     },
+    isDeleted: {
+      status: {
+        type: Boolean,
+        default: false
+      },
+      deletedAt: {
+        type: Date,
+        default: null
+      }
+    }
+  },
+  { timestamps: true }
+);
+
+const userSchema = new mongoose.Schema<UserType, UserModelType>(
+  {
+    profile: profileSchema,
+    currency: currencySchema,
+    balance: balanceSchema,
     categories: {
       expense: {
         type: [categorySchema],
+        required: true,
         default: []
       },
       income: {
         type: [categorySchema],
+        required: true,
         default: []
       }
     },
     wallets: {
       type: [walletSchema],
+      required: true,
       default: []
     }
   },
   { timestamps: true }
 );
 
-const User =
-  (mongoose.models.User as UserModelType) ||
-  mongoose.model<UserType, UserModelType>('User', userSchema);
-export default User;
+const Person = mongoose.model<UserType, UserModelType>('Person', userSchema);
+export default Person;

@@ -1,11 +1,11 @@
 import { databaseConnect, databaseClose } from '@/helpers/database';
 import User from '@/models/user';
 
-databaseConnect();
-
 // WARNING
-// This function deletes all the users in the Users collection and generates a new one. Therefore, after executing this function(npm run seed-user), you must change all code that depends on the properties of the user such as its _id property
+// This function deletes all the users in the Users collection and generates a new one. Therefore, after executing this function(npm run seed-user), you must change all code that depends on the properties of the user such as in .env.local
 const seedUser = async () => {
+  databaseConnect();
+
   await User.deleteMany({});
   console.log('Deleted all users!');
 
@@ -64,20 +64,16 @@ const seedUser = async () => {
     },
     wallets: [
       {
-        name: 'Cash',
-        color: '#7C3AED'
+        name: 'Cash'
       },
       {
-        name: 'GCash',
-        color: '#2994FC'
+        name: 'GCash'
       },
       {
-        name: 'Savings',
-        color: '#21C5E0'
+        name: 'Savings'
       },
       {
-        name: 'Paypal',
-        color: '#F23E94'
+        name: 'Paypal'
       }
     ]
   });
@@ -85,7 +81,7 @@ const seedUser = async () => {
   await user.save();
 
   console.log('User generated:');
-  console.log(user.categories);
+  console.log(user);
   databaseClose();
 };
 seedUser();

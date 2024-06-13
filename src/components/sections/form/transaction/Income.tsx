@@ -5,8 +5,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { cn } from '@/lib/utils';
-
 import {
   Form,
   FormField,
@@ -39,7 +37,6 @@ const Income = ({
   userId: string;
 }) => {
   const currentPathname = usePathname();
-  console.log(currentPathname);
 
   const form = useForm<z.infer<typeof trackIncomeSchema>>({
     resolver: zodResolver(trackIncomeSchema),
@@ -70,8 +67,6 @@ const Income = ({
       return;
     }
 
-    console.log(response);
-    console.log(form);
     form.reset();
   };
 
@@ -92,7 +87,7 @@ const Income = ({
             render={({ field }) => (
               <FormItem className=''>
                 <FormLabel>Add to:</FormLabel>
-                <FormControl>
+                <FormControl className='mt-[-6px]'>
                   <FormRadioCardGroup
                     data={wallets}
                     orientation='horizontal'

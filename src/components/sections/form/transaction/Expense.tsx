@@ -5,8 +5,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
-import { cn } from '@/lib/utils';
-
 import {
   Form,
   FormField,
@@ -26,29 +24,50 @@ import {
 
 import trackExpenseSchema from '@/schemas/track-expense';
 import { UserCategoryType, UserWalletType } from '@/models/user';
+import { usePathname } from 'next/navigation';
+import { addExpenseTransaction } from '@/lib/add-expense-transaction';
 
 const Expense = ({
   wallets,
-  categories
+  categories,
+  userId
 }: {
   wallets: UserWalletType[];
   categories: UserCategoryType[];
+  userId: string;
 }) => {
+  const currentPathname = usePathname();
+
   const form = useForm<z.infer<typeof trackExpenseSchema>>({
     resolver: zodResolver(trackExpenseSchema),
     defaultValues: {
       // I need to set each value a default value to remove the 'Warning: A component is changing an uncontrolled input to be controlled.' error from the <Input/> components. Amount is of type number, but i dont want to set its default value to 0 as i only want the placeholder to show, not prefill the <Input/> component. If you know a solution to this, feel free to pull request or commentat the repo.
       // @ts-ignore
       amount: '',
+      userId: userId,
       walletId: wallets[0]._id,
       categoryId: '',
       date: undefined,
-      description: ''
+      description: '',
+      formPath: currentPathname
     }
   });
 
-  const onSubmit = (data: z.infer<typeof trackExpenseSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof trackExpenseSchema>) => {
+    // Coerce the data.userId to match the passed userId incase it was changed
+    if (data.userId !== userId) {
+      data.userId = userId;
+    }
+
+    const response = await addExpenseTransaction(data);
+
+    if (!response.isSuccessful) {
+      console.log('Error adding income!');
+      console.log(response);
+      return;
+    }
+
+    form.reset();
   };
 
   return (
@@ -64,7 +83,7 @@ const Expense = ({
             render={({ field }) => (
               <FormItem className=''>
                 <FormLabel>Deduct from:</FormLabel>
-                <FormControl>
+                <FormControl className='mt-[-6px]'>
                   <FormRadioCardGroup
                     data={wallets}
                     orientation='horizontal'

@@ -1,7 +1,23 @@
-import mongoose, { InferSchemaType } from 'mongoose';
+import mongoose, { Types, Schema, HydratedDocument, Model } from 'mongoose';
 import { UserCategoryType, UserType, UserWalletType } from './user';
 
-const incomeSchema = new mongoose.Schema(
+export interface IncomeType {
+  _id: Types.ObjectId;
+  user: Types.ObjectId & UserType;
+  wallet: Types.ObjectId & UserWalletType;
+  category: Types.ObjectId & UserCategoryType;
+  amount: number;
+  description: string;
+  transactionDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  __v?: number;
+}
+
+type IncomeHydratedDocument = HydratedDocument<IncomeType>;
+type IncomeModelType = Model<IncomeType, {}, {}, {}, IncomeHydratedDocument>;
+
+const incomeSchema = new Schema<IncomeType>(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -32,19 +48,7 @@ const incomeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export interface IncomeType {
-  user: UserType;
-  wallet: UserWalletType;
-  category: UserCategoryType;
-  amount: number;
-  description: number;
-  transactionDate: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  __v?: number;
-}
-
 const Income =
-  mongoose.models.Income ||
-  mongoose.model<InferSchemaType<typeof incomeSchema>>('Income', incomeSchema);
+  (mongoose.models.Income as IncomeModelType) ||
+  mongoose.model<IncomeType, IncomeModelType>('Income', incomeSchema);
 export default Income;

@@ -1,19 +1,35 @@
-import mongoose, { InferSchemaType } from 'mongoose';
+import mongoose, { Types, HydratedDocument, Model, Schema } from 'mongoose';
 import { UserCategoryType, UserType, UserWalletType } from './user';
 
-const expenseSchema = new mongoose.Schema(
+export interface ExpenseType {
+  _id: Types.ObjectId;
+  user: Types.ObjectId & UserType;
+  wallet: Types.ObjectId & UserWalletType;
+  category: Types.ObjectId & UserCategoryType;
+  amount: number;
+  description: string;
+  transactionDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  __v?: number;
+}
+
+type ExpenseHydratedDocument = HydratedDocument<ExpenseType>;
+type ExpenseModelType = Model<ExpenseType, {}, {}, {}, ExpenseHydratedDocument>;
+
+const expenseSchema = new Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
       required: true
     },
     wallet: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true
     },
     amount: {
@@ -32,22 +48,7 @@ const expenseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export interface ExpenseType {
-  user: UserType;
-  wallet: UserWalletType;
-  category: UserCategoryType;
-  amount: number;
-  description: number;
-  transactionDate: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  __v?: number;
-}
-
 const Expense =
-  mongoose.models.Expense ||
-  mongoose.model<InferSchemaType<typeof expenseSchema>>(
-    'Expense',
-    expenseSchema
-  );
+  (mongoose.models.Expense as ExpenseModelType) ||
+  mongoose.model<ExpenseType, ExpenseModelType>('Expense', expenseSchema);
 export default Expense;

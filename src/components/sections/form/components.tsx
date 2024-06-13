@@ -160,7 +160,7 @@ export const FormRadioCardGroup = ({
     >
       <ScrollArea className={cn('h-[96px] w-full', className)}>
         <div
-          className={`flex ${orientation == 'vertical' ? 'flex-col' : 'flex-row'} gap-2 pr-2 pt-2`}
+          className={`flex ${orientation == 'vertical' ? 'flex-col' : 'flex-row'} gap-2 pr-2`}
         >
           {data.map(item => {
             return (
