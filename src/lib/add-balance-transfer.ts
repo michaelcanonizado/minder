@@ -1,9 +1,7 @@
 'use server';
 
 import { databaseClose, databaseConnect } from '@/helpers/database';
-import BalanceTransfer, {
-  BalanceTransferType
-} from '@/models/balance-transfer';
+import BalanceTransfer from '@/models/balance-transfer';
 import User from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
 import mongoose from 'mongoose';
@@ -42,9 +40,14 @@ export const addBalanceTransfer = async (data: unknown) => {
     transactionDate: result.data.date
   });
 
-  await balanceTransfer.save();
+  const sourceWallet = user.wallets.id(result.data.sourceWalletId);
+  const destinationWallet = user.wallets.id(result.data.destinationWalletId);
 
-  console.log('Balance Transfer: ', balanceTransfer);
+  sourceWallet.balance -= result.data.amount;
+  destinationWallet.balance += result.data.amount;
+
+  await balanceTransfer.save();
+  await user.save();
 
   await databaseClose();
 
