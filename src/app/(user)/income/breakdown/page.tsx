@@ -29,7 +29,7 @@ const IncomeBreakdown = async ({
             <Bento.Box.Header className='text-display'>
               Income Breakdown
             </Bento.Box.Header>
-            <Bento.Box.Content className='p-0'>
+            <Bento.Box.Content className='space-y-4 p-0 pb-4'>
               <Table.DataTable.Scroll columns={columns} data={incomes.data} />
               <Pagination
                 pathname='/income/breakdown'
