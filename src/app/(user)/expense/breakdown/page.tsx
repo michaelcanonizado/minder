@@ -16,7 +16,9 @@ const Page = async ({
   page = page < 1 ? 1 : page;
   const limit = 10;
 
-  const expenses = await getExpensesData({ page, limit });
+  const userId = process.env.TEMP_USER_ID!;
+
+  const expenses = await getExpensesData({ page, limit, userId });
 
   console.log(expenses);
 

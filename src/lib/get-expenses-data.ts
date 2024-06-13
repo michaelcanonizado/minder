@@ -5,10 +5,12 @@ import mongoose from 'mongoose';
 
 export const getExpensesData = async ({
   page = 1,
-  limit = 10
+  limit = 10,
+  userId
 }: {
   page: number;
   limit: number;
+  userId: string;
 }) => {
   await databaseConnect();
 
@@ -17,7 +19,7 @@ export const getExpensesData = async ({
   const data: unknown = await Expense.aggregate([
     {
       $match: {
-        user: new mongoose.Types.ObjectId(process.env.TEMP_USER_ID)
+        user: new mongoose.Types.ObjectId(userId)
       }
     },
     {
