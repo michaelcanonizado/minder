@@ -27,6 +27,10 @@ const seedPerson = async () => {
     profile: {
       username: 'Mikey'
     },
+    currency: {
+      code: 'PHP',
+      name: 'Philippine Peso'
+    },
     wallets: wallets
   });
   //   await user.save();
