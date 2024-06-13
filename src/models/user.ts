@@ -1,9 +1,11 @@
-import mongoose, {
+import {
   Types,
   HydratedDocument,
   HydratedArraySubdocument,
+  Schema,
   Model,
-  Schema
+  model,
+  models
 } from 'mongoose';
 
 export interface UserProfileType {
@@ -201,6 +203,6 @@ const userSchema = new Schema<UserType>(
 );
 
 const User =
-  (mongoose.models.User as UserModelType) ||
-  mongoose.model<UserType, UserModelType>('User', userSchema);
+  (models.User as UserModelType) ||
+  model<UserType, UserModelType>('User', userSchema);
 export default User;

@@ -1,4 +1,11 @@
-import mongoose, { Types, HydratedDocument, Model, Schema } from 'mongoose';
+import {
+  Types,
+  HydratedDocument,
+  Schema,
+  Model,
+  model,
+  models
+} from 'mongoose';
 import { UserCategoryType, UserType, UserWalletType } from './user';
 
 export interface ExpenseType {
@@ -49,6 +56,6 @@ const expenseSchema = new Schema<ExpenseType>(
 );
 
 const Expense =
-  (mongoose.models.Expense as ExpenseModelType) ||
-  mongoose.model<ExpenseType, ExpenseModelType>('Expense', expenseSchema);
+  (models.Expense as ExpenseModelType) ||
+  model<ExpenseType, ExpenseModelType>('Expense', expenseSchema);
 export default Expense;

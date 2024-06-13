@@ -1,4 +1,11 @@
-import mongoose, { Types, Schema, HydratedDocument, Model } from 'mongoose';
+import {
+  Types,
+  Schema,
+  HydratedDocument,
+  Model,
+  model,
+  models
+} from 'mongoose';
 import { UserCategoryType, UserType, UserWalletType } from './user';
 
 export interface IncomeType {
@@ -20,16 +27,16 @@ type IncomeModelType = Model<IncomeType, {}, {}, {}, IncomeHydratedDocument>;
 const incomeSchema = new Schema<IncomeType>(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
       required: true
     },
     wallet: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true
     },
     amount: {
@@ -49,6 +56,6 @@ const incomeSchema = new Schema<IncomeType>(
 );
 
 const Income =
-  (mongoose.models.Income as IncomeModelType) ||
-  mongoose.model<IncomeType, IncomeModelType>('Income', incomeSchema);
+  (models.Income as IncomeModelType) ||
+  model<IncomeType, IncomeModelType>('Income', incomeSchema);
 export default Income;

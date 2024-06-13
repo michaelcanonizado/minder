@@ -1,4 +1,11 @@
-import mongoose, { Types, Schema, HydratedDocument, Model } from 'mongoose';
+import {
+  Types,
+  Schema,
+  HydratedDocument,
+  Model,
+  model,
+  models
+} from 'mongoose';
 import { UserType, UserWalletType } from './user';
 
 export interface BalanceTransferType {
@@ -55,8 +62,8 @@ const balanceTransferSchema = new Schema<BalanceTransferType>(
 );
 
 const BalanceTransfer =
-  (mongoose.models.BalanceTransfer as BalanceTransferModelType) ||
-  mongoose.model<BalanceTransferType, BalanceTransferModelType>(
+  (models.BalanceTransfer as BalanceTransferModelType) ||
+  model<BalanceTransferType, BalanceTransferModelType>(
     'BalanceTransfer',
     balanceTransferSchema
   );
