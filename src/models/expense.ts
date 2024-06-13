@@ -17,7 +17,7 @@ export interface ExpenseType {
 type ExpenseHydratedDocument = HydratedDocument<ExpenseType>;
 type ExpenseModelType = Model<ExpenseType, {}, {}, {}, ExpenseHydratedDocument>;
 
-const expenseSchema = new Schema(
+const expenseSchema = new Schema<ExpenseType>(
   {
     user: {
       type: Schema.Types.ObjectId,
