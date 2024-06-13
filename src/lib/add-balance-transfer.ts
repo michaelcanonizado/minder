@@ -29,6 +29,7 @@ export const addBalanceTransfer = async (data: unknown) => {
     };
   }
 
+  // Create new balance transfer document
   const balanceTransfer = new BalanceTransfer({
     user: new mongoose.Types.ObjectId(result.data.userId),
     sourceWallet: new mongoose.Types.ObjectId(result.data.sourceWalletId),
@@ -40,12 +41,16 @@ export const addBalanceTransfer = async (data: unknown) => {
     transactionDate: result.data.date
   });
 
+  // Find wallets in user's wallets
   const sourceWallet = user.wallets.id(result.data.sourceWalletId);
   const destinationWallet = user.wallets.id(result.data.destinationWalletId);
 
+  // Update user's wallets (transfer the balance)
   sourceWallet.balance -= result.data.amount;
   destinationWallet.balance += result.data.amount;
 
+  // Save documents
+  // NOTE: add error catch here incase documents fail to save, as well as in other places that use document.save()
   await balanceTransfer.save();
   await user.save();
 
