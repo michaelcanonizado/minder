@@ -1,18 +1,24 @@
 import { databaseClose, databaseConnect } from '@/helpers/database';
-import User, { UserType } from '@/models/user';
-import mongoose from 'mongoose';
+import User, { UserCategoryType, UserWalletType } from '@/models/user';
 
 export const getWalletsAndCategoriesData = async (userId: string) => {
   await databaseConnect();
 
-  const data = (await User.findById(
-    new mongoose.Types.ObjectId(userId)
-  )) as UserType;
+  const data = await User.findById(userId);
+
+  if (!data) {
+    return {
+      wallets: [],
+      categories: []
+    };
+  }
 
   await databaseClose();
 
   return {
-    wallets: JSON.parse(JSON.stringify(data.wallets)),
-    categories: JSON.parse(JSON.stringify(data.categories))
+    wallets: JSON.parse(JSON.stringify(data.wallets)) as UserWalletType[],
+    categories: JSON.parse(
+      JSON.stringify(data.categories)
+    ) as UserCategoryType[]
   };
 };
