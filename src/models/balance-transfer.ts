@@ -9,7 +9,7 @@ import {
 import { UserType, UserWalletType } from './user';
 
 export interface BalanceTransferType {
-  _id: Types.ObjectId;
+  _id: Types.ObjectId & string;
   user: Types.ObjectId & UserType;
   sourceWallet: Types.ObjectId & UserWalletType;
   destinationWallet: Types.ObjectId & UserWalletType;

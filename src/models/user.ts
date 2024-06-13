@@ -22,7 +22,7 @@ export interface UserBalanceType {
 }
 export interface UserCategoryType {
   name: string;
-  _id: Types.ObjectId;
+  _id: Types.ObjectId & string;
   createdAt: Date;
   updatedAt: Date;
   isDeleted: {
@@ -32,10 +32,10 @@ export interface UserCategoryType {
   __v?: number;
 }
 export interface UserWalletType {
+  _id: Types.ObjectId & string;
   name: string;
   balance: number;
   transactionCount: number;
-  _id: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
   isDeleted: {
@@ -45,7 +45,7 @@ export interface UserWalletType {
   __v?: number;
 }
 export interface UserType {
-  _id: Types.ObjectId;
+  _id: Types.ObjectId & string;
   profile: UserProfileType;
   lastLogin: Date;
   currency: UserCurrencyType;

@@ -9,7 +9,7 @@ import {
 import { UserCategoryType, UserType, UserWalletType } from './user';
 
 export interface ExpenseType {
-  _id: Types.ObjectId;
+  _id: Types.ObjectId & string;
   user: Types.ObjectId & UserType;
   wallet: Types.ObjectId & UserWalletType;
   category: Types.ObjectId & UserCategoryType;
