@@ -1,4 +1,4 @@
-import mongoose, { Types, Schema } from 'mongoose';
+import mongoose, { Types, Schema, HydratedDocument, Model } from 'mongoose';
 import { UserCategoryType, UserType, UserWalletType } from './user';
 
 export interface IncomeType {
@@ -14,14 +14,8 @@ export interface IncomeType {
   __v?: number;
 }
 
-type IncomeHydratedDocument = mongoose.HydratedDocument<IncomeType>;
-type IncomeModelType = mongoose.Model<
-  IncomeType,
-  {},
-  {},
-  {},
-  IncomeHydratedDocument
->;
+type IncomeHydratedDocument = HydratedDocument<IncomeType>;
+type IncomeModelType = Model<IncomeType, {}, {}, {}, IncomeHydratedDocument>;
 
 const incomeSchema = new Schema<IncomeType>(
   {

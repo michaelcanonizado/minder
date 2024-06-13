@@ -3,9 +3,9 @@ import { databaseConnect, databaseClose } from '@/helpers/database';
 import Income from '@/models/income';
 import User from '@/models/user';
 
-databaseConnect();
-
 const seedIncome = async () => {
+  databaseConnect();
+
   // Get user
   const user = await User.findOne({ profile: { username: 'mikey' } });
   if (!user) {
