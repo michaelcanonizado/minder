@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import { databaseConnect, databaseClose } from '@/helpers/database';
 import User from '@/models/user';
-import Person, { UserHydratedDocument } from '@/models/user-v2';
-import Income, { IncomeHydratedDocument } from '@/models/income-v2';
+import Person from '@/models/user-v2';
+import Income, { IncomeType } from '@/models/income-v2';
 import { UserType } from '@/models/user-v2';
 
 const seedIncome = async () => {
@@ -32,8 +32,8 @@ const seedIncome = async () => {
   databaseClose();
 };
 
-type Merged = Omit<IncomeHydratedDocument, 'user'> & {
-  user: UserHydratedDocument;
+type Merged = Omit<IncomeType, 'user'> & {
+  user: UserType;
 };
 
 const getIncome = async () => {

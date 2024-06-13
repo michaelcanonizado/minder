@@ -7,9 +7,10 @@ export interface IncomeType {
   amount: number;
   description: string;
   transactionDate: Date;
+  _id: mongoose.Types.ObjectId;
 }
 
-export type IncomeHydratedDocument = mongoose.HydratedDocument<IncomeType>;
+type IncomeHydratedDocument = mongoose.HydratedDocument<IncomeType>;
 type IncomeModelType = mongoose.Model<
   IncomeType,
   {},

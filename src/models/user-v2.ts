@@ -16,6 +16,7 @@ export interface UserBalanceType {
 }
 
 export interface UserCategoryType {
+  _id: mongoose.Types.ObjectId;
   name: string;
   isDeleted: {
     status: boolean;
@@ -23,10 +24,10 @@ export interface UserCategoryType {
   };
   createdAt: Date;
   updatedAt: Date;
-  _id: mongoose.Types.ObjectId;
 }
 
 export interface UserWalletType {
+  _id: mongoose.Types.ObjectId;
   name: string;
   balance: number;
   isDeleted: {
@@ -35,10 +36,10 @@ export interface UserWalletType {
   };
   createdAt: Date;
   updatedAt: Date;
-  _id: mongoose.Types.ObjectId;
 }
 
 export interface UserType {
+  _id: mongoose.Types.ObjectId;
   profile: UserProfileType;
   currency: UserCurrencyType;
   balance: UserBalanceType;
@@ -51,7 +52,7 @@ export interface UserType {
   wallets: UserWalletType[];
 }
 
-export type UserHydratedDocument = mongoose.HydratedDocument<
+type UserHydratedDocument = mongoose.HydratedDocument<
   UserType,
   {
     wallets: mongoose.HydratedArraySubdocument<UserWalletType[]>;
