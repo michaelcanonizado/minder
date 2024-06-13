@@ -48,8 +48,7 @@ const incomeSchema = new Schema<IncomeType>(
   { timestamps: true }
 );
 
-const Income = mongoose.model<IncomeType, IncomeModelType>(
-  'Income',
-  incomeSchema
-);
+const Income =
+  (mongoose.models.Income as IncomeModelType) ||
+  mongoose.model<IncomeType, IncomeModelType>('Income', incomeSchema);
 export default Income;
