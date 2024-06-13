@@ -79,7 +79,12 @@ const Transfer = ({
 
     const response = await addBalanceTransfer(data);
 
-    console.log(response);
+    if (!response.isSuccessful) {
+      console.log(response);
+      return;
+    }
+
+    form.reset();
   };
 
   return (

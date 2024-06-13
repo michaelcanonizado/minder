@@ -7,6 +7,7 @@ import BalanceTransfer, {
 import User from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
 import mongoose from 'mongoose';
+import { revalidatePath } from 'next/cache';
 
 export const addBalanceTransfer = async (data: unknown) => {
   // Validate data coming from the client
@@ -26,7 +27,7 @@ export const addBalanceTransfer = async (data: unknown) => {
   if (user === null) {
     return {
       isSuccessful: false,
-      message: 'Failed to add expense! Please try again'
+      message: 'Failed to transfer balance! Please try again'
     };
   }
 
@@ -47,8 +48,10 @@ export const addBalanceTransfer = async (data: unknown) => {
 
   await databaseClose();
 
+  revalidatePath(result.data.formPath);
+
   return {
     isSuccessful: true,
-    message: 'Successfully added expense'
+    message: 'Successfully transferred balance'
   };
 };
