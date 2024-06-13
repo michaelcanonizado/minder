@@ -1,37 +1,41 @@
-import mongoose, { InferSchemaType, HydratedDocument } from 'mongoose';
+import mongoose, { Types, Schema, HydratedDocument, Model } from 'mongoose';
 import { UserType, UserWalletType } from './user';
 
-export interface IBalanceTransfer {
-  user: mongoose.Types.ObjectId;
-  sourceWallet: mongoose.Types.ObjectId;
-  destinationWallet: mongoose.Types.ObjectId;
+export interface BalanceTransferType {
+  _id: Types.ObjectId;
+  user: Types.ObjectId & UserType;
+  sourceWallet: Types.ObjectId & UserWalletType;
+  destinationWallet: Types.ObjectId & UserWalletType;
   amount: number;
   description: string;
   transactionDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  __v?: number;
 }
-type BalanceTransferHydratedDocument = HydratedDocument<IBalanceTransfer>;
 
-const balanceTransferSchema = new mongoose.Schema<
-  IBalanceTransfer,
-  mongoose.Model<IBalanceTransfer, {}, {}, {}, BalanceTransferHydratedDocument>,
-  {},
+type BalanceTransferHydratedDocument = HydratedDocument<BalanceTransferType>;
+type BalanceTransferModelType = Model<
+  BalanceTransferType,
   {},
   {},
   {},
   BalanceTransferHydratedDocument
->(
+>;
+
+const balanceTransferSchema = new Schema<BalanceTransferType>(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
       required: true
     },
     sourceWallet: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true
     },
     destinationWallet: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true
     },
     amount: {
@@ -50,21 +54,9 @@ const balanceTransferSchema = new mongoose.Schema<
   { timestamps: true }
 );
 
-// export interface BalanceTransferType {
-//   user: UserType;
-//   sourceWallet: UserWalletType;
-//   destinationWallet: UserWalletType;
-//   amount: number;
-//   description: number;
-//   transactionDate: Date;
-//   createdAt: Date;
-//   updatedAt: Date;
-//   __v?: number;
-// }
-
 const BalanceTransfer =
-  mongoose.models.BalanceTransfer ||
-  mongoose.model<IBalanceTransfer, BalanceTransferHydratedDocument>(
+  (mongoose.models.BalanceTransfer as BalanceTransferModelType) ||
+  mongoose.model<BalanceTransferType, BalanceTransferModelType>(
     'BalanceTransfer',
     balanceTransferSchema
   );
