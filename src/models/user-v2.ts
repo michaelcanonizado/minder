@@ -1,13 +1,32 @@
-import mongoose, { InferSchemaType } from 'mongoose';
+import mongoose, { InferRawDocType, InferSchemaType, mongo } from 'mongoose';
 
 export interface UserProfileType {
   username: string;
 }
 
+export interface UserWalletType {
+  name: string;
+  balance: number;
+  isDeleted: {
+    status: boolean;
+    deletedAt: Date | null;
+  };
+}
+
 export interface UserType {
   profile: UserProfileType;
-  lastLogin: Date;
+  wallets: Array<UserWalletType>;
 }
+
+type UserHydratedDocument = mongoose.HydratedDocument<
+  UserType,
+  {
+    wallets: mongoose.HydratedArraySubdocument<UserWalletType[]>;
+  }
+>;
+type UserModelType = mongoose.Model<UserType, {}, {}, {}, UserHydratedDocument>;
+
+// -----------------------------------------------------
 
 const profileSchema = new mongoose.Schema<UserProfileType>(
   {
@@ -19,20 +38,41 @@ const profileSchema = new mongoose.Schema<UserProfileType>(
   { _id: false }
 );
 
-const userSchema = new mongoose.Schema<UserType>(
+const walletSchema = new mongoose.Schema<UserWalletType>(
   {
-    profile: {
-      type: profileSchema
+    name: {
+      type: String,
+      required: true
     },
-    lastLogin: {
-      type: Date,
-      default: new Date()
+    balance: {
+      type: Number,
+      default: 0
+    },
+    isDeleted: {
+      status: {
+        type: Boolean,
+        default: false
+      },
+      deletedAt: {
+        type: Date,
+        default: null
+      }
     }
   },
   { timestamps: true }
 );
 
-const Person =
-  mongoose.models.Person ||
-  mongoose.model<InferSchemaType<typeof userSchema>>('Person', userSchema);
+const userSchema = new mongoose.Schema<UserType, UserModelType>(
+  {
+    profile: profileSchema,
+    wallets: {
+      type: [walletSchema],
+      required: true,
+      default: []
+    }
+  },
+  { timestamps: true }
+);
+
+const Person = mongoose.model<UserType, UserModelType>('Person', userSchema);
 export default Person;
