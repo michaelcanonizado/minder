@@ -37,8 +37,6 @@ const Progress = () => {
 
   // Props
   const title = '🍕Food';
-  // Might change category icons to be emojis
-  const icon = <Utensils />;
   const value = 75;
   const pillText = 1234;
   const color = '#7C3AED';
