@@ -5,8 +5,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Balance from '@/components/sections/balance';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
+import { getBalanceData } from '@/lib/get-balance-data';
 
-const Dashboard = () => {
+const Dashboard = async () => {
   const balances: {
     name: string;
     amount: number;
@@ -22,7 +23,7 @@ const Dashboard = () => {
       amount: 25808,
       percentageChange: {
         isPositive: true,
-        timePeriod: 'weekly',
+        timePeriod: 'montly',
         percentage: 0.3,
         difference: 1539
       }
@@ -48,6 +49,14 @@ const Dashboard = () => {
       }
     }
   ];
+
+  const userId = process.env.TEMP_USER_ID!;
+
+  const data = await getBalanceData(userId);
+
+  console.log('---------------------------');
+  console.log(data);
+  console.log('---------------------------');
 
   return (
     <div className='px-8'>
