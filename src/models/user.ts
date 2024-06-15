@@ -47,7 +47,8 @@ export interface UserWalletType {
 export interface UserSnapshot {
   _id: Types.ObjectId & string;
   balance: UserBalanceType;
-  wallets: Pick<UserWalletType, '_id' | 'name' | 'balance' | 'isDeleted'>[];
+  // wallets: Pick<UserWalletType, '_id' | 'name' | 'balance' | 'isDeleted'>[];
+  snapshotDateLimit: Date;
   createdAt: Date;
   updatedAt: Date;
   __v?: number;
@@ -179,30 +180,33 @@ const balanceSchema = new Schema<UserBalanceType>(
 
 const snapshotSchema = new Schema<UserSnapshot>(
   {
-    balance: {
-      type: Number,
+    balance: balanceSchema,
+    // Up to where the snapshot was made.
+    // I.e: all data from the very start to this date
+    snapshotDateLimit: {
+      type: Date,
       required: true
-    },
-    wallets: {
-      name: {
-        type: String,
-        required: true
-      },
-      balance: {
-        type: Number,
-        required: true
-      },
-      isDeleted: {
-        status: {
-          type: Boolean,
-          default: false
-        },
-        deletedAt: {
-          type: Date,
-          default: null
-        }
-      }
     }
+    // wallets: {
+    //   name: {
+    //     type: String,
+    //     required: true
+    //   },
+    //   balance: {
+    //     type: Number,
+    //     required: true
+    //   },
+    //   isDeleted: {
+    //     status: {
+    //       type: Boolean,
+    //       default: false
+    //     },
+    //     deletedAt: {
+    //       type: Date,
+    //       default: null
+    //     }
+    //   }
+    // }
   },
   { timestamps: true }
 );
