@@ -60,8 +60,8 @@ const seedSnapshot = async () => {
   const expenseRes = await Expense.aggregate(pipeline);
   const incomeRes = await Income.aggregate(pipeline);
 
-  const totalExpense = expenseRes[0] ? expenseRes[0] : 0;
-  const totalIncome = incomeRes[0] ? incomeRes[0] : 0;
+  const totalExpense = expenseRes[0] ? expenseRes[0].totalAmount : 0;
+  const totalIncome = incomeRes[0] ? incomeRes[0].totalAmount : 0;
 
   // @ts-ignore
   user.snapshots.push({
