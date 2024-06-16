@@ -64,7 +64,9 @@ export interface UserType {
     income: UserCategoryType[];
   };
   wallets: UserWalletType[];
-  snapshots: UserSnapshot[];
+  snapshot: {
+    lastWeek: UserSnapshot;
+  };
   createdAt: Date;
   updatedAt: Date;
   __v?: number;
@@ -241,9 +243,11 @@ const userSchema = new Schema<UserType>(
       type: [walletSchema],
       default: []
     },
-    snapshots: {
-      type: [snapshotSchema],
-      default: []
+    snapshot: {
+      lastWeek: {
+        type: snapshotSchema,
+        default: null
+      }
     }
   },
   { timestamps: true }
