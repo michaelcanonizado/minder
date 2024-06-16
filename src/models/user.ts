@@ -65,7 +65,8 @@ export interface UserType {
   };
   wallets: UserWalletType[];
   snapshot: {
-    lastWeek: UserSnapshot;
+    lastWeek: UserSnapshot | null;
+    lastMonth: UserSnapshot | null;
   };
   createdAt: Date;
   updatedAt: Date;
@@ -183,34 +184,11 @@ const balanceSchema = new Schema<UserBalanceType>(
 const snapshotSchema = new Schema<UserSnapshot>(
   {
     balance: balanceSchema,
-    // Up to where the snapshot was made.
-    // I.e: all data from the very start to this date
     snapshotDateLimit: {
-      type: Date,
-      required: true
+      type: Date
     }
-    // wallets: {
-    //   name: {
-    //     type: String,
-    //     required: true
-    //   },
-    //   balance: {
-    //     type: Number,
-    //     required: true
-    //   },
-    //   isDeleted: {
-    //     status: {
-    //       type: Boolean,
-    //       default: false
-    //     },
-    //     deletedAt: {
-    //       type: Date,
-    //       default: null
-    //     }
-    //   }
-    // }
   },
-  { timestamps: true }
+  { timestamps: true, _id: false }
 );
 
 const userSchema = new Schema<UserType>(
@@ -245,6 +223,10 @@ const userSchema = new Schema<UserType>(
     },
     snapshot: {
       lastWeek: {
+        type: snapshotSchema,
+        default: null
+      },
+      lastMonth: {
         type: snapshotSchema,
         default: null
       }
