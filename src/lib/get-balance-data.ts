@@ -3,6 +3,7 @@
 import User from '@/models/user';
 import { getLastWeekSundayDate } from '@/helpers/getLastWeekSundayDate';
 import { databaseClose, databaseConnect } from '@/helpers/database';
+import { createUserSnapshot } from './create-user-snapshot';
 
 export const getBalanceData = async (userId: string) => {
   await databaseConnect();
@@ -16,15 +17,26 @@ export const getBalanceData = async (userId: string) => {
   }
   console.log('User found!');
 
-  const balanceSnapshot = user.snapshots.find(snapshot => {
+  let balanceSnapshot = user.snapshots.find(snapshot => {
     if (snapshot.snapshotDateLimit.getTime() === lastWeekSundayDate.getTime()) {
       return snapshot;
     }
   });
 
   if (!balanceSnapshot) {
-    console.log('No snapshot of last week!');
+    console.log('No snapshot of last week...');
     console.log('Creating new snapshot...');
+    await createUserSnapshot(userId);
+
+    balanceSnapshot = user.snapshots.find(snapshot => {
+      if (
+        snapshot.snapshotDateLimit.getTime() === lastWeekSundayDate.getTime()
+      ) {
+        return snapshot;
+      }
+    });
+
+    console.log('Snapshot created...');
   }
 
   console.log(user.snapshots);
