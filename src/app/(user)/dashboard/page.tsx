@@ -58,6 +58,9 @@ const Dashboard = async () => {
   console.log(data);
   ('---------------------------------------');
 
+  const amount = 3000;
+  const difference = 1500;
+
   return (
     <div className='px-8'>
       <Bento className='grid-cols-1'>
@@ -76,11 +79,25 @@ const Dashboard = async () => {
               return (
                 <TabsContent value={item.name}>
                   <Bento.Box.Header>
-                    <Balance.Compact
-                      title={item.name}
-                      amount={item.amount}
-                      percentageChange={item.percentageChange}
-                    />
+                    <Balance.Compact>
+                      <Balance.Compact.Header>
+                        Net Amount
+                      </Balance.Compact.Header>
+                      <Balance.Compact.Amount>
+                        {' '}
+                        $
+                        {amount.toLocaleString('en-US', {
+                          maximumFractionDigits: 2,
+                          minimumFractionDigits: 2
+                        })}
+                      </Balance.Compact.Amount>
+                      <Balance.Compact.SubHeader>
+                        <span className={`flex flex-row text-accent-100`}>
+                          {difference}
+                        </span>
+                        &nbsp;vs last week
+                      </Balance.Compact.SubHeader>
+                    </Balance.Compact>
                   </Bento.Box.Header>
                   <Bento.Box.Content>
                     <Chart.Line.Minimal />
@@ -92,11 +109,11 @@ const Dashboard = async () => {
         </Bento.Box>
         <Bento.Box className=''>
           <Bento.Box.Header>
-            <Balance.Compact
+            {/* <Balance.Compact
               title={balances[0].name}
               amount={balances[0].amount}
               percentageChange={balances[0].percentageChange}
-            />
+            /> */}
           </Bento.Box.Header>
           <Bento.Box.Content className='flex flex-col gap-2'>
             <Chart.Progress />
