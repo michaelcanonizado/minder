@@ -15,10 +15,58 @@ export interface UserCurrencyType {
   code: string;
   name: string;
 }
+interface UserBalanceTimeframeType {
+  startDate: Date | null;
+  endDate: Date | null;
+}
+interface UserBalanceTotalType {
+  current: {
+    amount: number;
+    timeframe: UserBalanceTimeframeType;
+  };
+  lastWeek: {
+    amount: number;
+    timeframe: UserBalanceTimeframeType;
+  };
+  lastMonth: {
+    amount: number;
+    timeframe: UserBalanceTimeframeType;
+  };
+}
+interface UserBalancePeriodType {
+  thisWeek: {
+    amount: number;
+    timeframe: UserBalanceTimeframeType;
+  };
+  thisMonth: {
+    amount: number;
+    timeframe: UserBalanceTimeframeType;
+  };
+  lastWeek: {
+    amount: number;
+    timeframe: UserBalanceTimeframeType;
+  };
+  lastMonth: {
+    amount: number;
+    timeframe: UserBalanceTimeframeType;
+  };
+}
 export interface UserBalanceType {
   netBalance: number;
   totalIncome: number;
   totalExpense: number;
+
+  net: {
+    total: UserBalanceTotalType;
+  };
+  income: {
+    total: UserBalanceTotalType;
+    period: UserBalancePeriodType;
+  };
+  expense: {
+    total: UserBalanceTotalType;
+    period: UserBalancePeriodType;
+  };
 }
 export interface UserCategoryType {
   name: string;
@@ -150,6 +198,99 @@ const walletSchema = new Schema<UserWalletType>(
   { timestamps: true }
 );
 
+const balanceTimeframeSchema = new Schema<UserBalanceTimeframeType>(
+  {
+    startDate: {
+      type: Date,
+      default: null
+    },
+    endDate: {
+      type: Date,
+      default: new Date()
+    }
+  },
+  { _id: false }
+);
+const balanceTotalSchema = new Schema<UserBalanceTotalType>(
+  {
+    current: {
+      amount: {
+        type: Number,
+        default: 0
+      },
+      timeframe: {
+        type: balanceTimeframeSchema,
+        default: {}
+      }
+    },
+    lastWeek: {
+      amount: {
+        type: Number,
+        default: 0
+      },
+      timeframe: {
+        type: balanceTimeframeSchema,
+        default: {}
+      }
+    },
+    lastMonth: {
+      amount: {
+        type: Number,
+        default: 0
+      },
+      timeframe: {
+        type: balanceTimeframeSchema,
+        default: {}
+      }
+    }
+  },
+  { _id: false }
+);
+const balancePeriodSchema = new Schema<UserBalancePeriodType>(
+  {
+    thisWeek: {
+      amount: {
+        type: Number,
+        default: 0
+      },
+      timeframe: {
+        type: balanceTimeframeSchema,
+        default: {}
+      }
+    },
+    thisMonth: {
+      amount: {
+        type: Number,
+        default: 0
+      },
+      timeframe: {
+        type: balanceTimeframeSchema,
+        default: {}
+      }
+    },
+    lastWeek: {
+      amount: {
+        type: Number,
+        default: 0
+      },
+      timeframe: {
+        type: balanceTimeframeSchema,
+        default: {}
+      }
+    },
+    lastMonth: {
+      amount: {
+        type: Number,
+        default: 0
+      },
+      timeframe: {
+        type: balanceTimeframeSchema,
+        default: {}
+      }
+    }
+  },
+  { _id: false }
+);
 const balanceSchema = new Schema<UserBalanceType>(
   {
     netBalance: {
@@ -163,6 +304,45 @@ const balanceSchema = new Schema<UserBalanceType>(
     totalExpense: {
       type: Number,
       default: 0
+    },
+
+    net: {
+      type: {
+        total: {
+          type: balanceTotalSchema,
+          default: {}
+        }
+      },
+      default: {},
+      _id: false
+    },
+    income: {
+      type: {
+        total: {
+          type: balanceTotalSchema,
+          default: {}
+        },
+        period: {
+          type: balancePeriodSchema,
+          default: {}
+        }
+      },
+      default: {},
+      _id: false
+    },
+    expense: {
+      type: {
+        total: {
+          type: balanceTotalSchema,
+          default: {}
+        },
+        period: {
+          type: balancePeriodSchema,
+          default: {}
+        }
+      },
+      default: {},
+      _id: false
     }
   },
   { _id: false }
