@@ -2,54 +2,26 @@ import React from 'react';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
+import { ArrowDown, ArrowUp } from 'lucide-react';
 import Balance from '@/components/sections/balance';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import { getBalanceData } from '@/lib/get-balance-data';
+import { getPercentageChange } from '@/helpers/get-percentage-change';
+
+type BalanceType = {
+  tabName: string;
+  header: string;
+  amount: number;
+  percentageChange: {
+    percentage: number;
+    difference: number;
+    isPositive: boolean;
+    timePeriod: 'weekly' | 'monthly';
+  };
+};
 
 const Dashboard = async () => {
-  const balances: {
-    name: string;
-    amount: number;
-    percentageChange: {
-      isPositive: boolean;
-      timePeriod: 'weekly' | 'montly';
-      percentage: number;
-      difference: number;
-    };
-  }[] = [
-    {
-      name: 'Total',
-      amount: 25808,
-      percentageChange: {
-        isPositive: true,
-        timePeriod: 'montly',
-        percentage: 0.3,
-        difference: 1539
-      }
-    },
-    {
-      name: 'Income',
-      amount: 91273,
-      percentageChange: {
-        isPositive: true,
-        timePeriod: 'weekly',
-        percentage: 0.9,
-        difference: 1539
-      }
-    },
-    {
-      name: 'Expense',
-      amount: 12839,
-      percentageChange: {
-        isPositive: false,
-        timePeriod: 'weekly',
-        percentage: 0.1,
-        difference: 1539
-      }
-    }
-  ];
-
   const userId = process.env.TEMP_USER_ID!;
 
   const data = await getBalanceData(userId);
@@ -57,6 +29,66 @@ const Dashboard = async () => {
   console.log('---------------------------------------');
   console.log(data);
   ('---------------------------------------');
+
+  // {
+  //   name: 'Expense',
+  //   amount: 12839,
+  //   percentageChange: {
+  //     isPositive: false,
+  //     timePeriod: 'weekly',
+  //     percentage: 0.1,
+  //     difference: 1539
+  //   }
+  // }
+
+  if (!data) {
+    return <h1 className='text-display'>User was not found!</h1>;
+  }
+
+  const netAmountPercentageChange = getPercentageChange(
+    data.net.total.lastWeek,
+    data.net.total.current
+  );
+  const incomeThisWeekPercentageChange = getPercentageChange(
+    data.income.total.lastWeek,
+    data.income.total.current
+  );
+
+  const balances: BalanceType[] = [
+    {
+      tabName: 'Net Amount',
+      header: 'Net Amount',
+      amount: data.net.total.current,
+      percentageChange: {
+        percentage: netAmountPercentageChange,
+        isPositive: netAmountPercentageChange > 0 ? true : false,
+        difference: data.net.total.current - data.net.total.lastWeek,
+        timePeriod: 'weekly'
+      }
+    },
+    {
+      tabName: 'Income (weekly)',
+      header: 'Income this week',
+      amount: data.income.total.current,
+      percentageChange: {
+        percentage: incomeThisWeekPercentageChange,
+        isPositive: incomeThisWeekPercentageChange > 0 ? true : false,
+        difference: data.income.total.current - data.income.total.lastWeek,
+        timePeriod: 'weekly'
+      }
+    },
+    {
+      tabName: 'Expense (weekly)',
+      header: 'Expenses this week',
+      amount: data.expense.total.current,
+      percentageChange: {
+        percentage: incomeThisWeekPercentageChange,
+        isPositive: incomeThisWeekPercentageChange > 0 ? false : true,
+        difference: data.expense.total.current - data.expense.total.lastWeek,
+        timePeriod: 'weekly'
+      }
+    }
+  ];
 
   const amount = 3000;
   const difference = 1500;
@@ -69,33 +101,50 @@ const Dashboard = async () => {
             <TabsList className='w-full rounded-b-none'>
               {balances.map(item => {
                 return (
-                  <TabsTrigger value={item.name} className='grow'>
-                    {item.name}
+                  <TabsTrigger value={item.tabName} className='grow'>
+                    {item.tabName}
                   </TabsTrigger>
                 );
               })}
             </TabsList>
             {balances.map(item => {
               return (
-                <TabsContent value={item.name}>
+                <TabsContent value={item.tabName}>
                   <Bento.Box.Header>
                     <Balance.Compact>
                       <Balance.Compact.Header>
-                        Net Amount
+                        {item.header}
                       </Balance.Compact.Header>
                       <Balance.Compact.Amount>
                         {' '}
                         $
-                        {amount.toLocaleString('en-US', {
+                        {item.amount.toLocaleString('en-US', {
                           maximumFractionDigits: 2,
                           minimumFractionDigits: 2
                         })}
                       </Balance.Compact.Amount>
                       <Balance.Compact.SubHeader>
-                        <span className={`flex flex-row text-accent-100`}>
-                          {difference}
+                        <span
+                          className={`flex flex-row ${item.percentageChange.isPositive ? 'text-accent-100' : 'text-accent-200'}`}
+                        >
+                          {item.percentageChange.difference.toLocaleString(
+                            'en-US',
+                            {
+                              signDisplay: 'always'
+                            }
+                          )}
+                          &nbsp; (
+                          {item.percentageChange.percentage > 0 ? (
+                            <ArrowUp className='h-fit w-[14px]' />
+                          ) : (
+                            <ArrowDown className='h-fit w-[14px]' />
+                          )}
+                          {` ${item.percentageChange.percentage}%`})
                         </span>
-                        &nbsp;vs last week
+                        &nbsp;
+                        {item.percentageChange.timePeriod === 'weekly'
+                          ? 'vs last week'
+                          : 'vs last month'}
                       </Balance.Compact.SubHeader>
                     </Balance.Compact>
                   </Bento.Box.Header>
@@ -109,11 +158,7 @@ const Dashboard = async () => {
         </Bento.Box>
         <Bento.Box className=''>
           <Bento.Box.Header>
-            {/* <Balance.Compact
-              title={balances[0].name}
-              amount={balances[0].amount}
-              percentageChange={balances[0].percentageChange}
-            /> */}
+            <p className='text-heading-100'>Expense Budget</p>
           </Bento.Box.Header>
           <Bento.Box.Content className='flex flex-col gap-2'>
             <Chart.Progress />
