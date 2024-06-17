@@ -16,7 +16,7 @@ export interface UserCurrencyType {
   name: string;
 }
 export interface UserBalanceType {
-  totalBalance: number;
+  netBalance: number;
   totalIncome: number;
   totalExpense: number;
 }
@@ -152,7 +152,7 @@ const walletSchema = new Schema<UserWalletType>(
 
 const balanceSchema = new Schema<UserBalanceType>(
   {
-    totalBalance: {
+    netBalance: {
       type: Number,
       default: 0
     },
