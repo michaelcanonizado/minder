@@ -95,7 +95,7 @@ export const getBalanceData = async (userId: string) => {
 
   if (!user) {
     console.log('User not found...');
-    return;
+    return null;
   }
   console.log('User found!');
 
