@@ -133,6 +133,27 @@ export const getBalanceData = async (userId: string) => {
     ? currentTotalIncomeRes[0].totalAmount
     : 0;
 
+  // LAST WEEK PERIOD
+  const lastWeekPeriodPipeline = generatePipeline({
+    userId: user._id,
+    startDate: lastWeekStartDate,
+    endDate: lastWeekEndDate
+  });
+
+  const lastWeekPeriodExpenseRes = await Expense.aggregate(
+    lastWeekPeriodPipeline
+  );
+  const alstWeekPeriodIncomeRes = await Income.aggregate(
+    lastWeekPeriodPipeline
+  );
+
+  const lastWeekPeriodExpense: number = lastWeekPeriodExpenseRes[0]
+    ? lastWeekPeriodExpenseRes[0].totalAmount
+    : 0;
+  const lastWeekPeriodIncome: number = alstWeekPeriodIncomeRes[0]
+    ? alstWeekPeriodIncomeRes[0].totalAmount
+    : 0;
+
   await databaseClose();
   return {
     net: {
@@ -146,14 +167,18 @@ export const getBalanceData = async (userId: string) => {
         current: currentTotalIncome,
         lastWeek: lastWeekTotalIncome
       },
-      period: {}
+      period: {
+        lastWeek: lastWeekPeriodIncome
+      }
     },
     expense: {
       total: {
         current: currentTotalExpense,
         lastWeek: lastWeekTotalExpense
       },
-      period: {}
+      period: {
+        lastWeek: lastWeekPeriodExpense
+      }
     }
   };
 };
