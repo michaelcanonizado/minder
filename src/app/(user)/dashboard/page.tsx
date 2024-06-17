@@ -55,7 +55,7 @@ const Dashboard = async () => {
   const data = await getBalanceData(userId);
 
   console.log('---------------------------');
-  console.log(data);
+  console.log(data?.expense);
   console.log('---------------------------');
 
   return (
