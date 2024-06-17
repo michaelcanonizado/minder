@@ -99,36 +99,60 @@ export const getBalanceData = async (userId: string) => {
   }
   console.log('User found!');
 
-  const lastWeekPipeline = generatePipeline({
+  // LAST WEEK TOTAL
+  const lastWeekTotalPipeline = generatePipeline({
     userId: user._id,
     endDate: lastWeekEndDate
   });
 
-  const expenseRes = await Expense.aggregate(lastWeekPipeline);
-  const incomeRes = await Income.aggregate(lastWeekPipeline);
-
-  const totalExpense: number = expenseRes[0] ? expenseRes[0].totalAmount : 0;
-  const totalIncome: number = incomeRes[0] ? incomeRes[0].totalAmount : 0;
-
-  console.log(
-    `From ${lastWeekStartDate.toLocaleString()} to ${lastWeekEndDate.toLocaleString()}`
+  const lastWeekTotalExpenseRes = await Expense.aggregate(
+    lastWeekTotalPipeline
   );
-  console.log('Total Income: ', totalIncome);
-  console.log('Total Expense: ', totalExpense);
+  const alstWeekTotalIncomeRes = await Income.aggregate(lastWeekTotalPipeline);
 
-  console.log(lastWeekPipeline[0]);
+  const lastWeekTotalExpense: number = lastWeekTotalExpenseRes[0]
+    ? lastWeekTotalExpenseRes[0].totalAmount
+    : 0;
+  const lastWeekTotalIncome: number = alstWeekTotalIncomeRes[0]
+    ? alstWeekTotalIncomeRes[0].totalAmount
+    : 0;
+
+  // CURRENT TOTAL
+  const currentTotalPipeline = generatePipeline({
+    userId: user._id,
+    endDate: new Date()
+  });
+
+  const currentTotalExpenseRes = await Expense.aggregate(currentTotalPipeline);
+  const currentTotalIncomeRes = await Income.aggregate(currentTotalPipeline);
+
+  const currentTotalExpense: number = currentTotalExpenseRes[0]
+    ? currentTotalExpenseRes[0].totalAmount
+    : 0;
+  const currentTotalIncome: number = currentTotalIncomeRes[0]
+    ? currentTotalIncomeRes[0].totalAmount
+    : 0;
 
   await databaseClose();
   return {
     net: {
-      total: {}
+      total: {
+        current: currentTotalIncome - currentTotalExpense,
+        lastWeek: lastWeekTotalIncome - lastWeekTotalExpense
+      }
     },
     income: {
-      total: {},
+      total: {
+        current: currentTotalIncome,
+        lastWeek: lastWeekTotalIncome
+      },
       period: {}
     },
     expense: {
-      total: {},
+      total: {
+        current: currentTotalExpense,
+        lastWeek: lastWeekTotalExpense
+      },
       period: {}
     }
   };

@@ -56,7 +56,7 @@ const Dashboard = async () => {
 
   console.log('---------------------------------------');
   console.log(data);
-  console.log('---------------------------------------');
+  ('---------------------------------------');
 
   return (
     <div className='px-8'>
