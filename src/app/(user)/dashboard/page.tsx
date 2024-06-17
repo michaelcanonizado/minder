@@ -6,6 +6,7 @@ import Balance from '@/components/sections/balance';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import { getBalanceData } from '@/lib/get-balance-data';
+import { getLastWeekStartAndEndDates } from '@/helpers/get-last-week-start-and-end-dates';
 
 const Dashboard = async () => {
   const balances: {
@@ -52,11 +53,7 @@ const Dashboard = async () => {
 
   const userId = process.env.TEMP_USER_ID!;
 
-  // const data = await getBalanceData(userId);
-
-  // console.log('---------------------------');
-  // console.log(data?.expense);
-  // console.log('---------------------------');
+  const { startDate, endDate } = getLastWeekStartAndEndDates();
 
   return (
     <div className='px-8'>
