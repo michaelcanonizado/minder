@@ -6,8 +6,8 @@ import Balance from '@/components/sections/balance';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import { getBalanceData } from '@/lib/get-balance-data';
-import { getLastWeekStartAndEndDates } from '@/helpers/get-last-week-start-and-end-dates';
-import { getLastMonthStartAndEndDates } from '@/helpers/get-last-month-start-and-end-dates';
+import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start-and-end-dates';
+import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-start-and-end-dates';
 
 const Dashboard = async () => {
   const balances: {
