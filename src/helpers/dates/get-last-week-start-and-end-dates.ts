@@ -1,7 +1,7 @@
 export const getLastWeekStartAndEndDates = () => {
   // Function will get the start and end dates of last week. Start of the week will be: Monday, 12:00AM, and the end of the week will be: Sunday, 11:59PM
 
-  const now = new Date('2024-06-01');
+  const now = new Date();
 
   // Get the current day of the week (0 for Sunday, 1 for Monday, etc.)
   const currentDayOfWeek = now.getDay();
