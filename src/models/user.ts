@@ -44,15 +44,6 @@ export interface UserWalletType {
   };
   __v?: number;
 }
-export interface UserSnapshot {
-  _id: Types.ObjectId & string;
-  balance: UserBalanceType;
-  // wallets: Pick<UserWalletType, '_id' | 'name' | 'balance' | 'isDeleted'>[];
-  snapshotDateLimit: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  __v?: number;
-}
 export interface UserType {
   _id: Types.ObjectId & string;
   profile: UserProfileType;
@@ -64,10 +55,6 @@ export interface UserType {
     income: UserCategoryType[];
   };
   wallets: UserWalletType[];
-  snapshot: {
-    lastWeek: UserSnapshot | null;
-    lastMonth: UserSnapshot | null;
-  };
   createdAt: Date;
   updatedAt: Date;
   __v?: number;
@@ -181,16 +168,6 @@ const balanceSchema = new Schema<UserBalanceType>(
   { _id: false }
 );
 
-const snapshotSchema = new Schema<UserSnapshot>(
-  {
-    balance: balanceSchema,
-    snapshotDateLimit: {
-      type: Date
-    }
-  },
-  { timestamps: true, _id: false }
-);
-
 const userSchema = new Schema<UserType>(
   {
     profile: {
@@ -220,16 +197,6 @@ const userSchema = new Schema<UserType>(
     wallets: {
       type: [walletSchema],
       default: []
-    },
-    snapshot: {
-      lastWeek: {
-        type: snapshotSchema,
-        default: null
-      },
-      lastMonth: {
-        type: snapshotSchema,
-        default: null
-      }
     }
   },
   { timestamps: true }
