@@ -7,6 +7,7 @@ import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import { getBalanceData } from '@/lib/get-balance-data';
 import { getLastWeekStartAndEndDates } from '@/helpers/get-last-week-start-and-end-dates';
+import { getLastMonthStartAndEndDates } from '@/helpers/get-last-month-start-and-end-dates';
 
 const Dashboard = async () => {
   const balances: {
@@ -53,7 +54,23 @@ const Dashboard = async () => {
 
   const userId = process.env.TEMP_USER_ID!;
 
-  const { startDate, endDate } = getLastWeekStartAndEndDates();
+  const { startDate: lastWeekStartDate, endDate: lastWeekEndDate } =
+    getLastWeekStartAndEndDates();
+
+  const { startDate: lastMonthStartDate, endDate: lastMonthEndDate } =
+    getLastMonthStartAndEndDates();
+
+  const dateNow = new Date();
+
+  console.log('---------------------------------------');
+  console.log('LW start: ', lastWeekStartDate.toLocaleString());
+  console.log('LW end: ', lastWeekEndDate.toLocaleString());
+  console.log('---------------------------------------');
+  console.log('LM start : ', lastMonthStartDate.toLocaleString());
+  console.log('LM end   : ', lastMonthEndDate.toLocaleString());
+  console.log('---------------------------------------');
+  console.log('Date now : ', dateNow.toLocaleString());
+  console.log('---------------------------------------');
 
   return (
     <div className='px-8'>
