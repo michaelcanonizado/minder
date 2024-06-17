@@ -8,6 +8,7 @@ import Chart from '@/components/sections/chart';
 import { getBalanceData } from '@/lib/get-balance-data';
 import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start-and-end-dates';
 import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-start-and-end-dates';
+import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';
 
 const Dashboard = async () => {
   const balances: {
@@ -60,6 +61,9 @@ const Dashboard = async () => {
   const { startDate: lastMonthStartDate, endDate: lastMonthEndDate } =
     getLastMonthStartAndEndDates();
 
+  const { startDate: thisWeekStartDate, endDate: thisWeekEndDate } =
+    getThisWeekStartAndEndDates();
+
   const dateNow = new Date();
 
   console.log('---------------------------------------');
@@ -68,6 +72,9 @@ const Dashboard = async () => {
   console.log('---------------------------------------');
   console.log('LM start : ', lastMonthStartDate.toLocaleString());
   console.log('LM end   : ', lastMonthEndDate.toLocaleString());
+  console.log('---------------------------------------');
+  console.log('TW start : ', thisWeekStartDate.toLocaleString());
+  console.log('TW end   : ', thisWeekEndDate.toLocaleString());
   console.log('---------------------------------------');
   console.log('Date now : ', dateNow.toLocaleString());
   console.log('---------------------------------------');
