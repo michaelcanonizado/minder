@@ -99,6 +99,10 @@ export const getBalanceData = async (userId: string) => {
   }
   console.log('User found!');
 
+  //
+  //
+  //
+  //
   // LAST WEEK TOTAL
   const lastWeekTotalPipeline = generatePipeline({
     userId: user._id,
@@ -117,6 +121,10 @@ export const getBalanceData = async (userId: string) => {
     ? alstWeekTotalIncomeRes[0].totalAmount
     : 0;
 
+  //
+  //
+  //
+  //
   // CURRENT TOTAL
   const currentTotalPipeline = generatePipeline({
     userId: user._id,
@@ -133,6 +141,10 @@ export const getBalanceData = async (userId: string) => {
     ? currentTotalIncomeRes[0].totalAmount
     : 0;
 
+  //
+  //
+  //
+  //
   // LAST WEEK PERIOD
   const lastWeekPeriodPipeline = generatePipeline({
     userId: user._id,
@@ -143,15 +155,40 @@ export const getBalanceData = async (userId: string) => {
   const lastWeekPeriodExpenseRes = await Expense.aggregate(
     lastWeekPeriodPipeline
   );
-  const alstWeekPeriodIncomeRes = await Income.aggregate(
+  const lastWeekPeriodIncomeRes = await Income.aggregate(
     lastWeekPeriodPipeline
   );
 
   const lastWeekPeriodExpense: number = lastWeekPeriodExpenseRes[0]
     ? lastWeekPeriodExpenseRes[0].totalAmount
     : 0;
-  const lastWeekPeriodIncome: number = alstWeekPeriodIncomeRes[0]
-    ? alstWeekPeriodIncomeRes[0].totalAmount
+  const lastWeekPeriodIncome: number = lastWeekPeriodIncomeRes[0]
+    ? lastWeekPeriodIncomeRes[0].totalAmount
+    : 0;
+
+  //
+  //
+  //
+  //
+  // THIS WEEK PERIOD
+  const thisWeekPeriodPipeline = generatePipeline({
+    userId: user._id,
+    startDate: thisWeekStartDate,
+    endDate: thisWeekEndDate
+  });
+
+  const thisWeekPeriodExpenseRes = await Expense.aggregate(
+    thisWeekPeriodPipeline
+  );
+  const thisWeekPeriodIncomeRes = await Income.aggregate(
+    thisWeekPeriodPipeline
+  );
+
+  const thisWeekPeriodExpense: number = thisWeekPeriodExpenseRes[0]
+    ? thisWeekPeriodExpenseRes[0].totalAmount
+    : 0;
+  const thisWeekPeriodIncome: number = thisWeekPeriodIncomeRes[0]
+    ? thisWeekPeriodIncomeRes[0].totalAmount
     : 0;
 
   await databaseClose();
@@ -168,6 +205,7 @@ export const getBalanceData = async (userId: string) => {
         lastWeek: lastWeekTotalIncome
       },
       period: {
+        thisWeek: thisWeekPeriodIncome,
         lastWeek: lastWeekPeriodIncome
       }
     },
@@ -177,6 +215,7 @@ export const getBalanceData = async (userId: string) => {
         lastWeek: lastWeekTotalExpense
       },
       period: {
+        thisWeek: thisWeekPeriodExpense,
         lastWeek: lastWeekPeriodExpense
       }
     }
