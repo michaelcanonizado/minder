@@ -64,7 +64,7 @@ const Amount = ({ children }: { children?: React.ReactNode }) => {
 
 const SubHeader = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <p className={'text-body-200 flex flex-row text-muted-foreground'}>
+    <p className={'text-body-200 mt-1 flex flex-row text-muted-foreground'}>
       {children}
     </p>
   );
