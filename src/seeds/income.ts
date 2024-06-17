@@ -60,10 +60,10 @@ const seedIncome = async () => {
   console.log(incomes);
 
   // Update user's balances
-  user.balance.totalBalance = totalAmount;
+  user.balance.netBalance = totalAmount;
   user.balance.totalIncome = totalAmount;
   await user.save();
-  console.log(`User's total balance: ${user.balance.totalBalance}`);
+  console.log(`User's total balance: ${user.balance.netBalance}`);
 
   databaseClose();
 };
