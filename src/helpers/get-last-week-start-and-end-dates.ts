@@ -22,9 +22,5 @@ export const getLastWeekStartAndEndDates = () => {
     endDate.setDate(endDate.getDate() - 7);
   }
 
-  console.log('Last Monday: ', startDate.toLocaleString());
-  console.log('Last Sunday: ', endDate.toLocaleString());
-  console.log('   Date Now: ', now.toLocaleString());
-
   return { startDate, endDate };
 };
