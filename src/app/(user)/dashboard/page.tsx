@@ -52,11 +52,11 @@ const Dashboard = async () => {
 
   const userId = process.env.TEMP_USER_ID!;
 
-  const data = await getBalanceData(userId);
+  // const data = await getBalanceData(userId);
 
-  console.log('---------------------------');
-  console.log(data?.expense);
-  console.log('---------------------------');
+  // console.log('---------------------------');
+  // console.log(data?.expense);
+  // console.log('---------------------------');
 
   return (
     <div className='px-8'>
