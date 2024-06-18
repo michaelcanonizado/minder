@@ -30,17 +30,6 @@ const Dashboard = async () => {
   console.log(data);
   ('---------------------------------------');
 
-  // {
-  //   name: 'Expense',
-  //   amount: 12839,
-  //   percentageChange: {
-  //     isPositive: false,
-  //     timePeriod: 'weekly',
-  //     percentage: 0.1,
-  //     difference: 1539
-  //   }
-  // }
-
   if (!data) {
     return <h1 className='text-display'>User was not found!</h1>;
   }
