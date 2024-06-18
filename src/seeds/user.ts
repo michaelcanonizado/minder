@@ -42,6 +42,9 @@ const seedUser = async () => {
         },
         {
           name: 'Other'
+        },
+        {
+          name: 'None'
         }
       ],
       income: [
@@ -70,10 +73,13 @@ const seedUser = async () => {
         name: 'GCash'
       },
       {
-        name: 'Savings'
+        name: 'Paymaya'
       },
       {
         name: 'Paypal'
+      },
+      {
+        name: 'Bank'
       }
     ]
   });
