@@ -83,9 +83,6 @@ const Dashboard = async () => {
     }
   ];
 
-  const amount = 3000;
-  const difference = 1500;
-
   return (
     <div className='px-8'>
       <Bento className='grid-cols-1'>
