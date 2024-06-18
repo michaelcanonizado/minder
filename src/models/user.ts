@@ -70,23 +70,23 @@ export interface UserBalanceType {
 }
 export interface UserCategoryType {
   name: string;
-  _id: Types.ObjectId & string;
-  createdAt: Date;
-  updatedAt: Date;
-  isDeleted: {
+  _id?: Types.ObjectId & string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  isDeleted?: {
     status: boolean;
     deletedAt: Date | null;
   };
   __v?: number;
 }
 export interface UserWalletType {
-  _id: Types.ObjectId & string;
+  _id?: Types.ObjectId & string;
   name: string;
-  balance: number;
-  transactionCount: number;
-  createdAt: Date;
-  updatedAt: Date;
-  isDeleted: {
+  balance?: number;
+  transactionCount?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  isDeleted?: {
     status: boolean;
     deletedAt: Date | null;
   };

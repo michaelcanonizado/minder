@@ -42,7 +42,7 @@ export const addExpenseTransaction = async (data: unknown) => {
   // Update user's corresponding wallet balance
   for (const wallet of user.wallets) {
     if (wallet._id == result.data.walletId) {
-      wallet.balance -= result.data.amount;
+      wallet.balance! -= result.data.amount;
     }
   }
 
