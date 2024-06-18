@@ -11,7 +11,7 @@
     "seed-expense": "tsx ./src/seeds/expense.ts",
     "seed-income": "tsx ./src/seeds/income.ts",
     "seed-snapshot": "tsx ./src/seeds/snapshot.ts",
-    "seed-from-google-sheets": "tsx ./src/seeds/from-google-sheets.ts"
+    "seed-from-google-sheets": "tsx --env-file .env.local ./src/seeds/from-google-sheets.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.2",
