@@ -4,6 +4,7 @@ import Income from '@/models/income';
 import User from '@/models/user';
 
 export const seedFromGoogleSheets = async () => {
+  // Authenticate Google API
   const [googleSheets, auth] = await authenticateGoogleAPI();
 
   await databaseConnect();
@@ -11,12 +12,14 @@ export const seedFromGoogleSheets = async () => {
   const spreadsheetId = process.env.GOOGLE_SHEET_ID;
   const userId = process.env.TEMP_USER_ID;
 
+  // Get User document
   const user = await User.findById(userId);
   if (!user) {
     console.log('User not found!');
     return;
   }
 
+  // Get income sheet rows
   const incomeRows = await googleSheets.spreadsheets.values.get({
     auth,
     spreadsheetId,
@@ -24,8 +27,11 @@ export const seedFromGoogleSheets = async () => {
   });
   const incomeSheetRows = incomeRows.data.values ? incomeRows.data.values : [];
 
+  // Delete all documents in the collection
   await Income.deleteMany({});
+  // Format income sheet rows and add to the incomes collection
   for (let i = 1; i < incomeSheetRows.length; i++) {
+    // Find corresponding wallet
     const wallet = user.wallets.find(wallet => {
       if (
         wallet.name.toLowerCase().includes(incomeSheetRows[i][5].toLowerCase())
@@ -34,6 +40,7 @@ export const seedFromGoogleSheets = async () => {
       }
     });
 
+    // Find corresponding category
     const category = user.categories.income.find(category => {
       if (
         category.name
@@ -49,6 +56,7 @@ export const seedFromGoogleSheets = async () => {
       ? incomeSheetRows[i][4]
       : '-';
 
+    // Create income document
     const res = new Income({
       user: userId,
       wallet: wallet ? wallet._id : null,
@@ -60,10 +68,10 @@ export const seedFromGoogleSheets = async () => {
       updatedAt: new Date(incomeSheetRows[i][0])
     });
 
+    // Update User's balance
     if (wallet) {
       wallet.balance += amount;
     }
-
     user.balance.netBalance += amount;
     user.balance.totalIncome += amount;
 
@@ -71,6 +79,7 @@ export const seedFromGoogleSheets = async () => {
     console.log(res);
   }
 
+  // Save changes to User document
   await user.save();
 
   await databaseClose();
