@@ -53,6 +53,10 @@ const Dashboard = async () => {
     data.income.period.lastWeek,
     data.income.period.thisWeek
   );
+  const expenseThisWeekPercentageChange = getPercentageChange(
+    data.expense.period.lastWeek,
+    data.expense.period.thisWeek
+  );
 
   const balances: BalanceType[] = [
     {
@@ -80,11 +84,11 @@ const Dashboard = async () => {
     {
       tabName: 'Expense (weekly)',
       header: 'Expenses this week',
-      amount: data.expense.total.current,
+      amount: data.expense.period.thisWeek,
       percentageChange: {
-        percentage: incomeThisWeekPercentageChange,
-        isPositive: incomeThisWeekPercentageChange > 0 ? false : true,
-        difference: data.expense.total.current - data.expense.total.lastWeek,
+        percentage: expenseThisWeekPercentageChange,
+        isPositive: expenseThisWeekPercentageChange >= 0 ? false : true,
+        difference: data.expense.period.thisWeek - data.expense.period.lastWeek,
         timePeriod: 'weekly'
       }
     }
