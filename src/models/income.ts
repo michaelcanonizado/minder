@@ -50,22 +50,22 @@ const incomeSchema = new Schema<IncomeType>(
     transactionDate: {
       type: Date,
       required: true
-    },
-    createdAt: {
-      type: Date,
-      default: new Date()
-    },
-    updatedAt: {
-      type: Date,
-      default: new Date()
-    },
-    __v: {
-      type: Number,
-      default: 0
     }
+    // createdAt: {
+    //   type: Date,
+    //   default: new Date()
+    // },
+    // updatedAt: {
+    //   type: Date,
+    //   default: new Date()
+    // },
+    // __v: {
+    //   type: Number,
+    //   default: 0
+    // }
   },
-  // { timestamps: true }
-  { timestamps: false }
+  { timestamps: true }
+  // { timestamps: false }
 );
 
 const Income =
