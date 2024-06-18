@@ -20,6 +20,11 @@ export const seedFromGoogleSheets = async () => {
     return;
   }
 
+  // Reset User's wallet balances
+  for (const wallet of user.wallets) {
+    wallet.balance = 0;
+  }
+
   // Get income sheet rows
   const incomeRows = await googleSheets.spreadsheets.values.get({
     auth,
