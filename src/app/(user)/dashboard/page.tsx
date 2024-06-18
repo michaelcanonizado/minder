@@ -90,7 +90,7 @@ const Dashboard = async () => {
     <div className='px-8'>
       <Bento className='grid-cols-1'>
         <Bento.Box>
-          <Tabs defaultValue='Total' className='w-full'>
+          <Tabs defaultValue={balances[0].tabName} className='w-full'>
             <TabsList className='w-full rounded-b-none'>
               {balances.map(item => {
                 return (
