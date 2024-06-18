@@ -79,6 +79,7 @@ export const seedFromGoogleSheets = async () => {
     await res.save();
   }
 
+  // Get expense sheet rows
   const expenseRows = await googleSheets.spreadsheets.values.get({
     auth,
     spreadsheetId,
@@ -88,8 +89,11 @@ export const seedFromGoogleSheets = async () => {
     ? expenseRows.data.values
     : [];
 
+  // Delete all documents in the collection
   await Expense.deleteMany({});
+  // Format expense sheet rows and add to the expenses collection
   for (let i = 1; i < expenseSheetRows.length; i++) {
+    // Find corresponding wallet
     const wallet = user.wallets.find(wallet => {
       if (
         wallet.name.toLowerCase().includes(expenseSheetRows[i][5].toLowerCase())
@@ -98,6 +102,7 @@ export const seedFromGoogleSheets = async () => {
       }
     });
 
+    // Find corresponding category
     const category = user.categories.expense.find(category => {
       if (
         category.name
@@ -113,6 +118,7 @@ export const seedFromGoogleSheets = async () => {
       ? expenseSheetRows[i][4]
       : '-';
 
+    // Create expense document
     const res = new Expense({
       user: userId,
       wallet: wallet ? wallet._id : null,
@@ -124,6 +130,7 @@ export const seedFromGoogleSheets = async () => {
       updatedAt: new Date(expenseSheetRows[i][0])
     });
 
+    // Update User's balance
     if (wallet) {
       wallet.balance -= amount;
     }
