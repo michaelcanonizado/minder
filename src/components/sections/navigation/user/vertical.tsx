@@ -50,7 +50,7 @@ const trackLinks: LinkItems = [
     icon: <Wallet />
   }
 ];
-const breakdownLinks: LinkItems = [
+const transactionsLinks: LinkItems = [
   {
     name: 'Income',
     href: '/income/breakdown',
@@ -62,7 +62,7 @@ const breakdownLinks: LinkItems = [
     icon: <TrendingDown />
   },
   {
-    name: 'Wallet',
+    name: 'Transfers',
     href: '/wallet/breakdown',
     icon: <Shuffle />
   }
@@ -127,10 +127,10 @@ const Vertical = ({
         </div>
         <div className='flex flex-col gap-2'>
           <div className=''>
-            <p className='text-muted-foreground'>Breakdown</p>
+            <p className='text-muted-foreground'>Transactions</p>
           </div>
           <ul className='flex flex-col gap-2 pl-4'>
-            {breakdownLinks.map(link => {
+            {transactionsLinks.map(link => {
               return (
                 <NavbarLink
                   key={link.href}
