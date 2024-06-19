@@ -1,6 +1,6 @@
 'use server';
 
-import { databaseClose, databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database';
 import Expense from '@/models/expense';
 import User from '@/models/user';
 import trackExpenseSchema from '@/schemas/track-expense';
@@ -55,8 +55,6 @@ export const addExpenseTransaction = async (data: unknown) => {
   // Save user and expense document
   await user.save();
   await expense.save();
-
-  await databaseClose();
 
   revalidatePath(result.data.formPath);
 

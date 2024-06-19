@@ -1,4 +1,4 @@
-import { databaseClose, databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database';
 
 import Expense, { ExpenseType } from '@/models/expense';
 import mongoose from 'mongoose';
@@ -87,8 +87,6 @@ export const getExpensesData = async ({
   const totalDocuments = await Expense.countDocuments({
     user: new mongoose.Types.ObjectId(process.env.TEMP_USER_ID)
   });
-
-  await databaseClose();
 
   return {
     data: JSON.parse(JSON.stringify(data)) as ExpenseType[],

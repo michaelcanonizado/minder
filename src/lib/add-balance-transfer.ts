@@ -1,6 +1,6 @@
 'use server';
 
-import { databaseClose, databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database';
 import BalanceTransfer from '@/models/balance-transfer';
 import User from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
@@ -53,8 +53,6 @@ export const addBalanceTransfer = async (data: unknown) => {
   // NOTE: add error catch here incase documents fail to save, as well as in other places that use document.save()
   await balanceTransfer.save();
   await user.save();
-
-  await databaseClose();
 
   revalidatePath(result.data.formPath);
 

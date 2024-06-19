@@ -1,4 +1,4 @@
-import { databaseClose, databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database';
 import User from '@/models/user';
 
 export const addNewCategory = async () => {
@@ -14,7 +14,5 @@ export const addNewCategory = async () => {
   user.categories.expense.push({ name: 'None' });
 
   // await user.save()
-
-  await databaseClose();
   return;
 };

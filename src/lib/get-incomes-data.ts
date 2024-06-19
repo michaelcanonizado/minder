@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { databaseClose, databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database';
 import Income, { IncomeType } from '@/models/income';
 
 export const getIncomesData = async ({
@@ -77,8 +77,6 @@ export const getIncomesData = async ({
   const totalDocuments = await Income.countDocuments({
     user: new mongoose.Types.ObjectId(process.env.TEMP_USER_ID)
   });
-
-  await databaseClose();
 
   return {
     data: JSON.parse(JSON.stringify(data)) as IncomeType[],

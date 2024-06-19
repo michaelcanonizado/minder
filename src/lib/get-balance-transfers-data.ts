@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { databaseClose, databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database';
 import BalanceTransfer, {
   BalanceTransferType
 } from '@/models/balance-transfer';
@@ -78,8 +78,6 @@ export const getBalanceTransfersData = async ({
   const totalDocuments = await BalanceTransfer.countDocuments({
     user: new mongoose.Types.ObjectId(process.env.TEMP_USER_ID)
   });
-
-  await databaseClose();
 
   return {
     data: JSON.parse(JSON.stringify(data)) as BalanceTransferType[],

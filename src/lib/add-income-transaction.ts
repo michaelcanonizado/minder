@@ -1,8 +1,8 @@
 'use server';
 
-import { databaseClose, databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database';
 import Income from '@/models/income';
-import User, { UserType } from '@/models/user';
+import User from '@/models/user';
 import trackIncomeSchema from '@/schemas/track-income';
 import mongoose from 'mongoose';
 import { revalidatePath } from 'next/cache';
@@ -58,8 +58,6 @@ export const addIncomeTransaction = async (data: unknown) => {
   // Save user and income document
   await user.save();
   await income.save();
-
-  await databaseClose();
 
   revalidatePath(result.data.formPath);
 

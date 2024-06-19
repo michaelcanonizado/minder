@@ -2,7 +2,7 @@ import { WalletsDataType, getWalletsData } from '@/lib/get-wallets-data';
 import { ChevronRight } from 'lucide-react';
 import Balance from '@/components/sections/balance';
 
-import { databaseClose, databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database';
 
 const WalletGroup = async () => {
   const userId = process.env.TEMP_USER_ID!;
@@ -10,8 +10,6 @@ const WalletGroup = async () => {
 
   console.log(userId);
   const data = await getWalletsData(userId);
-
-  await databaseClose();
 
   console.log(data);
 

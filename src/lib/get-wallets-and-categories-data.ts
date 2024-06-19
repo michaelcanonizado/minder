@@ -1,4 +1,4 @@
-import { databaseClose, databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database';
 import User, { UserType } from '@/models/user';
 
 export const getWalletsAndCategoriesData = async (userId: string) => {
@@ -9,8 +9,6 @@ export const getWalletsAndCategoriesData = async (userId: string) => {
   if (!user) {
     throw new Error('User not found!');
   }
-
-  await databaseClose();
 
   return {
     wallets: JSON.parse(JSON.stringify(user.wallets)) as Pick<
