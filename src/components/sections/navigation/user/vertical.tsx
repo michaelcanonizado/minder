@@ -45,7 +45,7 @@ const trackLinks: LinkItems = [
     icon: <DollarSign />
   },
   {
-    name: 'Wallet Transfer',
+    name: 'Transfer Balance',
     href: '/wallet/transfer',
     icon: <Wallet />
   }
