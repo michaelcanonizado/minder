@@ -10,14 +10,14 @@ const WalletGroup = async () => {
   return (
     <div className='flex flex-col gap-2'>
       <p className='text-muted-foreground'>Wallets</p>
-      <ul className='flex flex-col gap-2 pl-4'>
+      <ul className='flex flex-col gap-4 pl-4'>
         {wallets.data.map(wallet => {
           return (
             <div className='flex flex-row gap-4'>
               <ChevronRight />
               <Balance.Slim>
                 <Balance.Slim.Header>{wallet.name}</Balance.Slim.Header>
-                <div className=''>
+                <div className='flex flex-col items-end'>
                   <Balance.Slim.Amount>
                     $
                     {wallet.balance!.toLocaleString('en-US', {
