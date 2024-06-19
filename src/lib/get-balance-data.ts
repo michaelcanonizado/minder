@@ -103,28 +103,6 @@ export const getBalanceData = async (userId: string) => {
   //
   //
   //
-  // LAST WEEK TOTAL
-  const lastWeekTotalPipeline = generatePipeline({
-    userId: user._id,
-    endDate: lastWeekEndDate
-  });
-
-  const lastWeekTotalExpenseRes = await Expense.aggregate(
-    lastWeekTotalPipeline
-  );
-  const alstWeekTotalIncomeRes = await Income.aggregate(lastWeekTotalPipeline);
-
-  const lastWeekTotalExpense: number = lastWeekTotalExpenseRes[0]
-    ? lastWeekTotalExpenseRes[0].totalAmount
-    : 0;
-  const lastWeekTotalIncome: number = alstWeekTotalIncomeRes[0]
-    ? alstWeekTotalIncomeRes[0].totalAmount
-    : 0;
-
-  //
-  //
-  //
-  //
   // CURRENT TOTAL
   const currentTotalPipeline = generatePipeline({
     userId: user._id,
@@ -145,25 +123,22 @@ export const getBalanceData = async (userId: string) => {
   //
   //
   //
-  // LAST WEEK PERIOD
-  const lastWeekPeriodPipeline = generatePipeline({
+  // LAST WEEK TOTAL
+  const lastWeekTotalPipeline = generatePipeline({
     userId: user._id,
-    startDate: lastWeekStartDate,
     endDate: lastWeekEndDate
   });
 
-  const lastWeekPeriodExpenseRes = await Expense.aggregate(
-    lastWeekPeriodPipeline
+  const lastWeekTotalExpenseRes = await Expense.aggregate(
+    lastWeekTotalPipeline
   );
-  const lastWeekPeriodIncomeRes = await Income.aggregate(
-    lastWeekPeriodPipeline
-  );
+  const alstWeekTotalIncomeRes = await Income.aggregate(lastWeekTotalPipeline);
 
-  const lastWeekPeriodExpense: number = lastWeekPeriodExpenseRes[0]
-    ? lastWeekPeriodExpenseRes[0].totalAmount
+  const lastWeekTotalExpense: number = lastWeekTotalExpenseRes[0]
+    ? lastWeekTotalExpenseRes[0].totalAmount
     : 0;
-  const lastWeekPeriodIncome: number = lastWeekPeriodIncomeRes[0]
-    ? lastWeekPeriodIncomeRes[0].totalAmount
+  const lastWeekTotalIncome: number = alstWeekTotalIncomeRes[0]
+    ? alstWeekTotalIncomeRes[0].totalAmount
     : 0;
 
   //
@@ -189,6 +164,31 @@ export const getBalanceData = async (userId: string) => {
     : 0;
   const thisWeekPeriodIncome: number = thisWeekPeriodIncomeRes[0]
     ? thisWeekPeriodIncomeRes[0].totalAmount
+    : 0;
+
+  //
+  //
+  //
+  //
+  // LAST WEEK PERIOD
+  const lastWeekPeriodPipeline = generatePipeline({
+    userId: user._id,
+    startDate: lastWeekStartDate,
+    endDate: lastWeekEndDate
+  });
+
+  const lastWeekPeriodExpenseRes = await Expense.aggregate(
+    lastWeekPeriodPipeline
+  );
+  const lastWeekPeriodIncomeRes = await Income.aggregate(
+    lastWeekPeriodPipeline
+  );
+
+  const lastWeekPeriodExpense: number = lastWeekPeriodExpenseRes[0]
+    ? lastWeekPeriodExpenseRes[0].totalAmount
+    : 0;
+  const lastWeekPeriodIncome: number = lastWeekPeriodIncomeRes[0]
+    ? lastWeekPeriodIncomeRes[0].totalAmount
     : 0;
 
   await databaseClose();
