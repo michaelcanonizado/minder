@@ -1,24 +1,25 @@
 import { databaseClose, databaseConnect } from '@/helpers/database';
-import User, { UserCategoryType, UserWalletType } from '@/models/user';
+import User, { UserType } from '@/models/user';
 
 export const getWalletsAndCategoriesData = async (userId: string) => {
   await databaseConnect();
 
-  const data = await User.findById(userId);
+  const user = await User.findById(userId);
 
-  if (!data) {
-    return {
-      wallets: [],
-      categories: []
-    };
+  if (!user) {
+    throw new Error('User not found!');
   }
 
   await databaseClose();
 
   return {
-    wallets: JSON.parse(JSON.stringify(data.wallets)) as UserWalletType[],
-    categories: JSON.parse(
-      JSON.stringify(data.categories)
-    ) as UserCategoryType[]
+    wallets: JSON.parse(JSON.stringify(user.wallets)) as Pick<
+      UserType,
+      'wallets'
+    >['wallets'],
+    categories: JSON.parse(JSON.stringify(user.categories)) as Pick<
+      UserType,
+      'categories'
+    >['categories']
   };
 };
