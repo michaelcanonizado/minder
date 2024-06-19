@@ -58,7 +58,7 @@ const transactionsLinks: LinkItems = [
   },
   {
     name: 'Expense',
-    href: '/expense/breakdown',
+    href: '/expense/transactions',
     icon: <TrendingDown />
   },
   {
