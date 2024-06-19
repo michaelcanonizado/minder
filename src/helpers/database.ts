@@ -1,6 +1,11 @@
 import mongoose from 'mongoose';
 
 export const databaseConnect = async () => {
+  if (mongoose.connection.readyState) {
+    console.log('Databse already connected...');
+    return;
+  }
+
   try {
     await mongoose.connect('mongodb://localhost:27017/minder-finance');
     console.log('Database connected!');
