@@ -42,7 +42,9 @@ const Content = ({
   className?: string;
 }) => {
   return (
-    <DialogContent className={cn('', className)}>{children}</DialogContent>
+    <DialogContent className={cn('space-y-1', className)}>
+      {children}
+    </DialogContent>
   );
 };
 const Title = ({
