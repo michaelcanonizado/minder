@@ -8,6 +8,7 @@ import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import { getBalanceData } from '@/lib/get-balance-data';
 import { getPercentageChange } from '@/helpers/get-percentage-change';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 type BalanceType = {
   tabName: string;
@@ -119,15 +120,25 @@ const Dashboard = async () => {
       <Bento className='grid-cols-1'>
         <Bento.Box>
           <Tabs defaultValue={balances[0].tabName} className='w-full'>
-            <TabsList className='w-full rounded-b-none'>
-              {balances.map(item => {
-                return (
-                  <TabsTrigger value={item.tabName} className='grow'>
-                    {item.tabName}
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
+            <ScrollArea className='bg-muted py-1'>
+              <TabsList className='w-full rounded-b-none'>
+                {balances.map(item => {
+                  return (
+                    <TabsTrigger
+                      value={item.tabName}
+                      className='min-w-[150px] grow'
+                    >
+                      {item.tabName}
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
+              <ScrollBar
+                orientation='horizontal'
+                thumbClassName='bg-background/50'
+                className=''
+              />
+            </ScrollArea>
             {balances.map(item => {
               return (
                 <TabsContent value={item.tabName}>
