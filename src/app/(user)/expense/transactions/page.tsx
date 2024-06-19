@@ -6,7 +6,7 @@ import Table from '@/components/sections/table';
 import { columns } from './columns';
 import Pagination from '@/components/sections/pagination';
 
-const Page = async ({
+const expenseTransactions = async ({
   searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -28,12 +28,12 @@ const Page = async ({
         <Bento className='grid-cols-1'>
           <Bento.Box>
             <Bento.Box.Header className='text-display'>
-              Expenses Breakdown
+              Expenses Transaction
             </Bento.Box.Header>
             <Bento.Box.Content className='space-y-4 p-0 pb-4'>
               <Table.DataTable.Scroll columns={columns} data={expenses.data} />
               <Pagination
-                pathname='/expense/breakdown'
+                pathname='/expense/transactions'
                 currentPage={page}
                 pagesCount={expenses.pages.max}
               />
@@ -45,4 +45,4 @@ const Page = async ({
   );
 };
 
-export default Page;
+export default expenseTransactions;
