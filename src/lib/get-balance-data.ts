@@ -216,6 +216,31 @@ export const getBalanceData = async (userId: string) => {
     ? thisMonthPeriodIncomeRes[0].totalAmount
     : 0;
 
+  //
+  //
+  //
+  //
+  // LAST MONTH PERIOD
+  const lastMonthPeriodPipeline = generatePipeline({
+    userId: user._id,
+    startDate: lastMonthStartDate,
+    endDate: lastMonthEndDate
+  });
+
+  const lastMonthPeriodExpenseRes = await Expense.aggregate(
+    lastMonthPeriodPipeline
+  );
+  const lastMonthPeriodIncomeRes = await Income.aggregate(
+    lastMonthPeriodPipeline
+  );
+
+  const lastMonthPeriodExpense: number = lastMonthPeriodExpenseRes[0]
+    ? lastMonthPeriodExpenseRes[0].totalAmount
+    : 0;
+  const lastMonthPeriodIncome: number = lastMonthPeriodIncomeRes[0]
+    ? lastMonthPeriodIncomeRes[0].totalAmount
+    : 0;
+
   await databaseClose();
   return {
     net: {
@@ -232,7 +257,8 @@ export const getBalanceData = async (userId: string) => {
       period: {
         thisWeek: thisWeekPeriodIncome,
         lastWeek: lastWeekPeriodIncome,
-        thisMonth: thisMonthPeriodIncome
+        thisMonth: thisMonthPeriodIncome,
+        lastMonth: lastMonthPeriodIncome
       }
     },
     expense: {
@@ -243,7 +269,8 @@ export const getBalanceData = async (userId: string) => {
       period: {
         thisWeek: thisWeekPeriodExpense,
         lastWeek: lastWeekPeriodExpense,
-        thisMonth: thisMonthPeriodExpense
+        thisMonth: thisMonthPeriodExpense,
+        lastMonth: lastMonthPeriodExpense
       }
     }
   };
