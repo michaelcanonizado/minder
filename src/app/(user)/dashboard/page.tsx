@@ -135,7 +135,7 @@ const Dashboard = async () => {
               </TabsList>
               <ScrollBar
                 orientation='horizontal'
-                thumbClassName='bg-background/50'
+                thumbClassName='bg-background/80'
                 className=''
               />
             </ScrollArea>
