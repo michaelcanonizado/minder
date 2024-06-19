@@ -92,10 +92,8 @@ export const getBalanceData = async (userId: string) => {
   await databaseConnect();
 
   const user = await User.findById(userId);
-
   if (!user) {
-    console.log('User not found...');
-    return null;
+    throw new Error('User not found!');
   }
   console.log('User found!');
 

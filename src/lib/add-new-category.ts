@@ -8,8 +8,7 @@ export const addNewCategory = async () => {
 
   const user = await User.findById(userId);
   if (!user) {
-    console.log('User not found!');
-    return;
+    throw new Error('User not found!');
   }
 
   user.categories.expense.push({ name: 'None' });
