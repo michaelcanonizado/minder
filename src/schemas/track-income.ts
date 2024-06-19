@@ -7,9 +7,6 @@ const trackIncomeSchema = z.object({
   date: z.date({
     message: 'Please enter the date'
   }),
-  userId: z
-    .string({ message: 'UserId missing please restart page!' })
-    .min(1, { message: 'UserId missing please restart page!' }),
   walletId: z
     .string({ message: 'Please choose where to add' })
     .min(1, { message: 'Please choose where to add' }),
@@ -19,9 +16,13 @@ const trackIncomeSchema = z.object({
   description: z
     .string({ message: 'Please describe the income' })
     .min(1, { message: 'Please describe the income' }),
+
+  userId: z
+    .string({ message: 'Error! Please try again.' })
+    .min(1, { message: 'Error! Please try again.' }),
   formPath: z
-    .string({ message: 'UserId missing please restart page!' })
-    .min(1, { message: 'UserId missing please restart page!' })
+    .string({ message: 'Error! Please try again.' })
+    .min(1, { message: 'Error! Please try again.' })
 });
 
 export default trackIncomeSchema;
