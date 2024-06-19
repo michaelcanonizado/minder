@@ -20,7 +20,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               <Modal.Content>
                 <Modal.Content.Title>Add Wallet</Modal.Content.Title>
                 <Modal.Content.Description>
-                  Create a new wallet to your account
+                  Add new wallet to your account
                 </Modal.Content.Description>
                 <Form.Add.Wallet />
               </Modal.Content>
