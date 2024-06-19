@@ -1,3 +1,4 @@
+import Form from '@/components/sections/form';
 import Navbar from '@/components/sections/navigation';
 import Wallet from '@/components/sections/wallet';
 
@@ -7,6 +8,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Navbar.User.Vertical className='hidden min-w-[300px] md:flex'>
         <div className='flex flex-col gap-2'>
           <p className='text-muted-foreground'>Wallets</p>
+          <Form.Add.Wallet className='ml-4' />
           <Wallet.Group />
         </div>
       </Navbar.User.Vertical>
