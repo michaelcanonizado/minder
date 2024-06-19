@@ -6,7 +6,7 @@ import Table from '@/components/sections/table';
 import { columns } from './columns';
 import Pagination from '@/components/sections/pagination';
 
-const IncomeBreakdown = async ({
+const IncomeTransactions = async ({
   searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -29,12 +29,12 @@ const IncomeBreakdown = async ({
         <Bento className='grid-cols-1'>
           <Bento.Box>
             <Bento.Box.Header className='text-display'>
-              Income Breakdown
+              Income Transactions
             </Bento.Box.Header>
             <Bento.Box.Content className='space-y-4 p-0 pb-4'>
               <Table.DataTable.Scroll columns={columns} data={incomes.data} />
               <Pagination
-                pathname='/income/breakdown'
+                pathname='/income/transactions'
                 currentPage={page}
                 pagesCount={incomes.pages.max}
               />
@@ -46,4 +46,4 @@ const IncomeBreakdown = async ({
   );
 };
 
-export default IncomeBreakdown;
+export default IncomeTransactions;
