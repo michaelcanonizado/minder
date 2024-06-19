@@ -1,30 +1,17 @@
-import { WalletsDataType, getWalletsData } from '@/lib/get-wallets-data';
+import { getWalletsData } from '@/lib/get-wallets-data';
 import { ChevronRight } from 'lucide-react';
 import Balance from '@/components/sections/balance';
 
-import { databaseConnect } from '@/helpers/database';
-
 const WalletGroup = async () => {
   const userId = process.env.TEMP_USER_ID!;
-  await databaseConnect();
 
-  console.log(userId);
-  const data = await getWalletsData(userId);
-
-  console.log(data);
-
-  const wallets = [
-    {
-      name: 'Cash',
-      balance: 2500
-    }
-  ];
+  const wallets = await getWalletsData(userId);
 
   return (
     <div className='flex flex-col gap-2'>
       <p className='text-muted-foreground'>Wallets</p>
       <ul className='flex flex-col gap-2 pl-4'>
-        {wallets.map(wallet => {
+        {wallets.data.map(wallet => {
           return (
             <div className='flex flex-row gap-4'>
               <ChevronRight />
