@@ -1,14 +1,15 @@
 import { getWalletsData } from '@/lib/get-wallets-data';
 import { ChevronRight } from 'lucide-react';
 import Balance from '@/components/sections/balance';
+import { cn } from '@/lib/utils';
 
-const Group = async () => {
+const Group = async ({ className }: { className?: string }) => {
   const userId = process.env.TEMP_USER_ID!;
 
   const wallets = await getWalletsData(userId);
 
   return (
-    <ul className='flex flex-col gap-4 pl-4'>
+    <ul className={cn('flex flex-col gap-4', className)}>
       {wallets.data.map(wallet => {
         return (
           <div className='flex flex-row gap-4'>
