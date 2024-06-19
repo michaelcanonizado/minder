@@ -46,6 +46,10 @@ const Dashboard = async () => {
     data.expense.period.lastWeek,
     data.expense.period.thisWeek
   );
+  const incomeThisMonthPercentageChange = getPercentageChange(
+    data.income.period.lastMonth,
+    data.income.period.thisMonth
+  );
 
   const balances: BalanceType[] = [
     {
@@ -79,6 +83,17 @@ const Dashboard = async () => {
         isPositive: expenseThisWeekPercentageChange >= 0 ? false : true,
         difference: data.expense.period.thisWeek - data.expense.period.lastWeek,
         timePeriod: 'weekly'
+      }
+    },
+    {
+      tabName: 'Income (monthly)',
+      header: 'Income this month',
+      amount: data.income.period.thisMonth,
+      percentageChange: {
+        percentage: incomeThisMonthPercentageChange,
+        isPositive: incomeThisMonthPercentageChange > 0 ? true : false,
+        difference: data.income.period.thisMonth - data.income.period.lastMonth,
+        timePeriod: 'monthly'
       }
     }
   ];
