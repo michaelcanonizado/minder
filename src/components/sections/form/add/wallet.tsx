@@ -6,11 +6,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 
-import { FormInput } from '../components';
-
 import { usePathname } from 'next/navigation';
 import addWalletSchema from '@/schemas/add-wallet';
-import { Form } from '@/components/ui/form';
+
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormControl,
+  FormLabel,
+  FormMessage
+} from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
+import { FormInput } from '../components';
 
 const Wallet = ({ className }: { className?: string }) => {
   const userId = process.env.TEMP_USER_ID!;
@@ -27,12 +35,67 @@ const Wallet = ({ className }: { className?: string }) => {
   });
 
   const onSubmit = async (data: z.infer<typeof addWalletSchema>) => {
+    console.log('hello');
     console.log(data);
   };
 
   return (
     <Form {...form}>
-      <form className={cn('', className)}></form>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className={cn('flex flex-col', className)}
+      >
+        <div className='mt-8 flex flex-row gap-4'>
+          <FormField
+            control={form.control}
+            name='name'
+            render={({ field }) => (
+              <FormItem className='w-full'>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <FormInput type='text' placeholder='Paypal' {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='balance'
+            render={({ field }) => (
+              <FormItem className='w-full'>
+                <FormLabel>
+                  Balance{' '}
+                  <span className='text-body-200 text-muted-foreground'>
+                    {' '}
+                    (optional)
+                  </span>
+                </FormLabel>
+                <FormControl>
+                  <FormInput type='text' placeholder='5000' {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* <div className='flex flex-row justify-end gap-2'>
+          <Button type='button' className='w-fit' variant='outline'>
+            Cancel
+          </Button>
+        </div> */}
+        <div className='mt-4'>
+          <Button
+            type='submit'
+            className='w-fit px-8'
+            onClick={() => console.log('Submitting!')}
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
     </Form>
   );
 };
