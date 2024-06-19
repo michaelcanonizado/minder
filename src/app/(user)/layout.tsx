@@ -14,10 +14,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className='space-y-4 pl-4'>
             <Modal>
               <Modal.Trigger className='transition-color flex w-full flex-row gap-2 rounded-lg border p-2 duration-200 ease-in hover:bg-accent'>
-                <Plus className='w-[24px]' />
+                <Plus className='min-w-[24px]' />
                 <p className=''>Add Wallet</p>
               </Modal.Trigger>
-              <Modal.Content>hello</Modal.Content>
+              <Modal.Content>
+                <Form.Add.Wallet />
+              </Modal.Content>
             </Modal>
             <Wallet.Group className='gap-4' />
           </div>
