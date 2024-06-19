@@ -21,7 +21,7 @@ import { Button } from '@/components/ui/button';
 import { FormInput } from '../components';
 
 const Wallet = ({ className }: { className?: string }) => {
-  const userId = process.env.TEMP_USER_ID!;
+  const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
 
   const form = useForm<z.infer<typeof addWalletSchema>>({
@@ -81,17 +81,11 @@ const Wallet = ({ className }: { className?: string }) => {
           />
         </div>
 
-        {/* <div className='flex flex-row justify-end gap-2'>
+        <div className='flex flex-row justify-end gap-2'>
           <Button type='button' className='w-fit' variant='outline'>
             Cancel
           </Button>
-        </div> */}
-        <div className='mt-4'>
-          <Button
-            type='submit'
-            className='w-fit px-8'
-            onClick={() => console.log('Submitting!')}
-          >
+          <Button type='submit' className='w-fit px-8'>
             Submit
           </Button>
         </div>
