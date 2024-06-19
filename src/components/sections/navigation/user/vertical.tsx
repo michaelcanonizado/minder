@@ -21,6 +21,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+import Balance from '@/components/sections/balance';
+
 const mainMenuLinks: LinkItems = [
   {
     name: 'Dashboard',
@@ -141,6 +143,14 @@ const Vertical = ({
               );
             })}
           </ul>
+        </div>
+        <div className='flex flex-col gap-2'>
+          <div className=''>
+            <p className='text-muted-foreground'>Wallets</p>
+            <ul className='flex flex-col gap-2 pl-4'>
+              <Balance.Slim />
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
