@@ -53,7 +53,7 @@ const trackLinks: LinkItems = [
 const transactionsLinks: LinkItems = [
   {
     name: 'Income',
-    href: '/income/breakdown',
+    href: '/income/transactions',
     icon: <TrendingUp />
   },
   {
