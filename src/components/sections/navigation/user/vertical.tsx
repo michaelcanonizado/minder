@@ -17,7 +17,8 @@ import {
   TrendingDown,
   TrendingUp,
   User,
-  Wallet
+  Wallet,
+  ChevronRight
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -78,6 +79,13 @@ const Vertical = ({
   setOpen?: (value: boolean) => void;
 }) => {
   const currentPathname = usePathname();
+
+  const wallets = [
+    {
+      name: 'Cash',
+      balance: 2500
+    }
+  ];
 
   return (
     <nav
@@ -145,12 +153,31 @@ const Vertical = ({
           </ul>
         </div>
         <div className='flex flex-col gap-2'>
-          <div className=''>
-            <p className='text-muted-foreground'>Wallets</p>
-            <ul className='flex flex-col gap-2 pl-4'>
-              <Balance.Slim />
-            </ul>
-          </div>
+          <p className='text-muted-foreground'>Wallets</p>
+          <ul className='flex flex-col gap-2 pl-4'>
+            {wallets.map(wallet => {
+              return (
+                <div className='flex flex-row gap-4'>
+                  <ChevronRight />
+                  <Balance.Slim>
+                    <Balance.Slim.Header>{wallet.name}</Balance.Slim.Header>
+                    <div className=''>
+                      <Balance.Slim.Amount>
+                        $
+                        {wallet.balance.toLocaleString('en-US', {
+                          maximumFractionDigits: 2,
+                          minimumFractionDigits: 2
+                        })}
+                      </Balance.Slim.Amount>
+                      <Balance.Slim.SubHeader className='text-foreground'>
+                        Graph
+                      </Balance.Slim.SubHeader>
+                    </div>
+                  </Balance.Slim>
+                </div>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </nav>
