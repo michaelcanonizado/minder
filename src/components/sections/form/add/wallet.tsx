@@ -20,6 +20,7 @@ import {
 import { DialogClose, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { FormInput } from '../components';
+import { addNewWallet } from '@/lib/add-new-wallet';
 
 const Wallet = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -35,8 +36,22 @@ const Wallet = ({ className }: { className?: string }) => {
   });
 
   const onSubmit = async (data: z.infer<typeof addWalletSchema>) => {
-    console.log('hello');
-    console.log(data);
+    // Coerce the data.userId to match the passed userId incase it was changed
+    if (data.userId !== userId) {
+      data.userId = userId;
+    }
+
+    const response = await addNewWallet(data);
+
+    if (!response!.isSuccessful) {
+      console.log('Error adding income!');
+      console.log(response);
+      return;
+    }
+
+    console.log(response);
+
+    form.reset();
   };
 
   return (

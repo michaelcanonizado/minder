@@ -1,3 +1,5 @@
+'use server';
+
 import { databaseConnect } from '@/helpers/database';
 import User from '@/models/user';
 import addWalletSchema from '@/schemas/add-wallet';
@@ -15,9 +17,7 @@ export const addNewWallet = async (data: unknown) => {
 
   await databaseConnect();
 
-  const userId = process.env.TEMP_USER_ID;
-
-  const user = await User.findById(userId);
+  const user = await User.findById(result.data.userId);
   if (!user) {
     throw new Error('User not found!');
   }
@@ -26,7 +26,12 @@ export const addNewWallet = async (data: unknown) => {
 
   // await user.save()
 
-  // console.log(user.wallets);
+  console.log(user.wallets);
+
+  return {
+    isSuccessful: true,
+    message: 'Successfully added wallet'
+  };
 
   return;
 };
