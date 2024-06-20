@@ -205,14 +205,17 @@ const FormRadioCard = ({
   );
 
   return (
-    <FormItem className='flex items-center space-x-2' {...props}>
+    <FormItem
+      className='flex grow items-center justify-center space-x-2'
+      {...props}
+    >
       <FormControl>
         <RadioGroupItem value={value} id={id} className='peer sr-only' />
       </FormControl>
       <Label
         htmlFor={id}
         className={cn(
-          'size-[85px] rounded-lg ring ring-muted hover:cursor-pointer peer-data-[state=checked]:ring-foreground',
+          'flex min-h-[85px] w-full min-w-[85px] items-center rounded-lg ring ring-muted hover:cursor-pointer peer-data-[state=checked]:ring-foreground',
           className
         )}
       >
