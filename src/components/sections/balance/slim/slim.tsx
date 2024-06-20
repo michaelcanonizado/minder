@@ -9,7 +9,12 @@ const Slim = ({
   className?: string;
 }) => {
   return (
-    <div className={cn('flex w-full flex-row justify-between', className)}>
+    <div
+      className={cn(
+        'flex w-full max-w-full flex-col justify-between overflow-hidden',
+        className
+      )}
+    >
       {children}
     </div>
   );
@@ -23,8 +28,15 @@ const Header = ({
   className?: string;
 }) => {
   return (
-    <div className='text-body-100 text-foreground'>
-      <p className={cn('', className)}>{children}</p>
+    <div className='text-body-200 text-muted-foreground'>
+      <p
+        className={cn(
+          'line-clamp-1 overflow-hidden truncate  text-ellipsis',
+          className
+        )}
+      >
+        {children}
+      </p>
     </div>
   );
 };
