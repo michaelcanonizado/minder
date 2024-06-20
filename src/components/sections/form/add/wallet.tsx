@@ -17,6 +17,7 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
+import { DialogClose, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { FormInput } from '../components';
 
@@ -80,14 +81,16 @@ const Wallet = ({ className }: { className?: string }) => {
           />
         </div>
 
-        <div className='flex flex-row justify-end gap-2'>
-          <Button type='button' className='w-fit' variant='outline'>
-            Cancel
-          </Button>
+        <DialogFooter className='flex flex-row justify-end gap-2'>
+          <DialogClose asChild>
+            <Button type='button' variant='outline'>
+              Cancel
+            </Button>
+          </DialogClose>
           <Button type='submit' className='w-fit px-8'>
             Submit
           </Button>
-        </div>
+        </DialogFooter>
       </form>
     </Form>
   );
