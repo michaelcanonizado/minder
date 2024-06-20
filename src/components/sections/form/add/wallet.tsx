@@ -103,9 +103,11 @@ const Wallet = ({ className }: { className?: string }) => {
               Cancel
             </Button>
           </DialogClose>
-          <Button type='submit' className='w-fit px-8'>
-            Submit
-          </Button>
+          <DialogClose asChild>
+            <Button type='submit' className='w-fit px-8'>
+              Submit
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </form>
     </Form>
