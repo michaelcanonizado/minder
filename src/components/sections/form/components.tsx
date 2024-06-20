@@ -216,20 +216,11 @@ const FormRadioCard = ({
           className
         )}
       >
-        <div className='flex h-full w-full flex-col items-center justify-center'>
-          <p className=''>{title}</p>
+        <div className='flex h-full w-full flex-col items-center justify-center overflow-hidden text-center'>
+          <p className='overflow-hidden text-ellipsis'>{title}</p>
           {detail}
         </div>
       </Label>
-      {/* <Label
-          htmlFor={id}
-          className={cn(
-            'grid size-[75px] place-items-center rounded-lg text-center ring ring-muted hover:cursor-pointer peer-data-[state=checked]:ring-foreground',
-            className
-          )}
-        >
-          {name}
-        </Label> */}
     </FormItem>
   );
 };
