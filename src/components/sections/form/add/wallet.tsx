@@ -82,7 +82,7 @@ const Wallet = ({ className }: { className?: string }) => {
             render={({ field }) => (
               <FormItem className='w-full'>
                 <FormLabel>
-                  Balance{' '}
+                  Initial Balance{' '}
                   <span className='text-body-200 text-muted-foreground'>
                     {' '}
                     (optional)
