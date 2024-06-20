@@ -193,15 +193,15 @@ const FormRadioCard = ({
   id: string;
   className?: string;
 }) => {
-  const detail = subtitle ? (
+  const detail = (
     <p className='text-body-200 mt-1 text-muted-foreground'>
-      {subtitle.toLocaleString('en-US', {
-        notation: 'compact',
-        maximumFractionDigits: 2
-      })}
+      {subtitle
+        ? subtitle.toLocaleString('en-US', {
+            notation: 'compact',
+            maximumFractionDigits: 2
+          })
+        : 0}
     </p>
-  ) : (
-    ''
   );
 
   return (
