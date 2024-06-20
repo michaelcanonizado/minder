@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss';
 import { fontFamily } from 'tailwindcss/defaultTheme';
+import colors from 'tailwindcss/colors';
 
 const config = {
   darkMode: ['class'],
@@ -23,7 +24,52 @@ const config = {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans]
       },
+      borderRadius: {
+        'tremor-small': 'calc(var(--radius) - 2px)',
+        'tremor-default': 'var(--radius)',
+        'tremor-full': 'var(--radius)',
+
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)'
+      },
+      fontSize: {
+        'tremor-label': ['0.75rem', { lineHeight: '1.25' }],
+        'tremor-default': ['1rem', { lineHeight: '1.5' }],
+        'tremor-title': ['1.25rem', { lineHeight: '1.375' }],
+        'tremor-metric': ['1.5rem', { lineHeight: '1.25rem' }]
+      },
       colors: {
+        tremor: {
+          brand: {
+            faint: 'hsl(var(--foreground))',
+            muted: 'hsl(var(--foreground))',
+            subtle: 'hsl(var(--foreground))',
+            DEFAULT: 'hsl(var(--foreground))',
+            emphasis: 'hsl(var(--foreground))',
+            inverted: 'hsl(var(--foreground))'
+          },
+          background: {
+            muted: 'hsl(var(--background))',
+            subtle: 'hsl(var(--background))',
+            DEFAULT: 'hsl(var(--background))',
+            emphasis: 'hsl(var(--background))'
+          },
+          border: {
+            DEFAULT: 'hsl(var(--border))'
+          },
+          ring: {
+            DEFAULT: 'hsl(var(--ring))'
+          },
+          content: {
+            subtle: 'hsl(var(--foreground))',
+            DEFAULT: 'hsl(var(--foreground))',
+            emphasis: 'hsl(var(--foreground))',
+            strong: 'hsl(var(--foreground))',
+            inverted: 'hsl(var(--foreground))'
+          }
+        },
+
         brand: 'hsl(var(--brand))',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -61,11 +107,6 @@ const config = {
           foreground: 'hsl(var(--card-foreground))'
         }
       },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)'
-      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -86,7 +127,36 @@ const config = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  safelist: [
+    {
+      pattern:
+        /^(bg-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+      variants: ['hover', 'ui-selected']
+    },
+    {
+      pattern:
+        /^(text-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+      variants: ['hover', 'ui-selected']
+    },
+    {
+      pattern:
+        /^(border-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/,
+      variants: ['hover', 'ui-selected']
+    },
+    {
+      pattern:
+        /^(ring-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/
+    },
+    {
+      pattern:
+        /^(stroke-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/
+    },
+    {
+      pattern:
+        /^(fill-(?:slate|gray|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-(?:50|100|200|300|400|500|600|700|800|900|950))$/
+    }
+  ],
+  plugins: [require('tailwindcss-animate'), require('@headlessui/tailwindcss')]
 } satisfies Config;
 
 export default config;
