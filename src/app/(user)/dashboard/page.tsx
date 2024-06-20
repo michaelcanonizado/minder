@@ -31,44 +31,43 @@ type BalanceType = {
 const Dashboard = async () => {
   const userId = process.env.TEMP_USER_ID!;
 
-  const walletsBalanceData = await getBalanceData(userId);
+  const balanceData = await getBalanceData(userId);
 
-  if (!walletsBalanceData) {
+  if (!balanceData) {
     return <h1 className='text-display'>User was not found!</h1>;
   }
 
   const netAmountPercentageChange = getPercentageChange(
-    walletsBalanceData.net.total.lastWeek,
-    walletsBalanceData.net.total.current
+    balanceData.net.total.lastWeek,
+    balanceData.net.total.current
   );
   const incomeThisWeekPercentageChange = getPercentageChange(
-    walletsBalanceData.income.period.lastWeek,
-    walletsBalanceData.income.period.thisWeek
+    balanceData.income.period.lastWeek,
+    balanceData.income.period.thisWeek
   );
   const expenseThisWeekPercentageChange = getPercentageChange(
-    walletsBalanceData.expense.period.lastWeek,
-    walletsBalanceData.expense.period.thisWeek
+    balanceData.expense.period.lastWeek,
+    balanceData.expense.period.thisWeek
   );
   const incomeThisMonthPercentageChange = getPercentageChange(
-    walletsBalanceData.income.period.lastMonth,
-    walletsBalanceData.income.period.thisMonth
+    balanceData.income.period.lastMonth,
+    balanceData.income.period.thisMonth
   );
   const expenseThisMonthPercentageChange = getPercentageChange(
-    walletsBalanceData.expense.period.lastMonth,
-    walletsBalanceData.expense.period.thisMonth
+    balanceData.expense.period.lastMonth,
+    balanceData.expense.period.thisMonth
   );
 
   const balances: BalanceType[] = [
     {
       tabName: 'Net Amount',
       header: 'Net Amount',
-      amount: walletsBalanceData.net.total.current,
+      amount: balanceData.net.total.current,
       percentageChange: {
         percentage: netAmountPercentageChange,
         isPositive: netAmountPercentageChange > 0 ? true : false,
         difference:
-          walletsBalanceData.net.total.current -
-          walletsBalanceData.net.total.lastWeek,
+          balanceData.net.total.current - balanceData.net.total.lastWeek,
         timePeriod: 'weekly'
       },
       graph: <NetAmount />
@@ -76,13 +75,13 @@ const Dashboard = async () => {
     {
       tabName: 'Income (weekly)',
       header: 'Income this week',
-      amount: walletsBalanceData.income.period.thisWeek,
+      amount: balanceData.income.period.thisWeek,
       percentageChange: {
         percentage: incomeThisWeekPercentageChange,
         isPositive: incomeThisWeekPercentageChange > 0 ? true : false,
         difference:
-          walletsBalanceData.income.period.thisWeek -
-          walletsBalanceData.income.period.lastWeek,
+          balanceData.income.period.thisWeek -
+          balanceData.income.period.lastWeek,
         timePeriod: 'weekly'
       },
       graph: <WeeklyIncome />
@@ -90,13 +89,13 @@ const Dashboard = async () => {
     {
       tabName: 'Expense (weekly)',
       header: 'Expenses this week',
-      amount: walletsBalanceData.expense.period.thisWeek,
+      amount: balanceData.expense.period.thisWeek,
       percentageChange: {
         percentage: expenseThisWeekPercentageChange,
         isPositive: expenseThisWeekPercentageChange >= 0 ? false : true,
         difference:
-          walletsBalanceData.expense.period.thisWeek -
-          walletsBalanceData.expense.period.lastWeek,
+          balanceData.expense.period.thisWeek -
+          balanceData.expense.period.lastWeek,
         timePeriod: 'weekly'
       },
       graph: <WeeklyExpense />
@@ -104,13 +103,13 @@ const Dashboard = async () => {
     {
       tabName: 'Income (monthly)',
       header: 'Income this month',
-      amount: walletsBalanceData.income.period.thisMonth,
+      amount: balanceData.income.period.thisMonth,
       percentageChange: {
         percentage: incomeThisMonthPercentageChange,
         isPositive: incomeThisMonthPercentageChange > 0 ? true : false,
         difference:
-          walletsBalanceData.income.period.thisMonth -
-          walletsBalanceData.income.period.lastMonth,
+          balanceData.income.period.thisMonth -
+          balanceData.income.period.lastMonth,
         timePeriod: 'monthly'
       },
       graph: <MonthlyIncome />
@@ -118,13 +117,13 @@ const Dashboard = async () => {
     {
       tabName: 'Expense (monthly)',
       header: 'Expenses this month',
-      amount: walletsBalanceData.expense.period.thisMonth,
+      amount: balanceData.expense.period.thisMonth,
       percentageChange: {
         percentage: expenseThisMonthPercentageChange,
         isPositive: expenseThisMonthPercentageChange >= 0 ? false : true,
         difference:
-          walletsBalanceData.expense.period.thisMonth -
-          walletsBalanceData.expense.period.lastMonth,
+          balanceData.expense.period.thisMonth -
+          balanceData.expense.period.lastMonth,
         timePeriod: 'monthly'
       },
       graph: <MonthlyExpense />
