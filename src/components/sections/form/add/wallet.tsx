@@ -72,7 +72,7 @@ const Wallet = ({ className }: { className?: string }) => {
                   </span>
                 </FormLabel>
                 <FormControl>
-                  <FormInput type='text' placeholder='5000' {...field} />
+                  <FormInput type='text' placeholder='0' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
