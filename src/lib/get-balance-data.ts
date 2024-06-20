@@ -71,23 +71,23 @@ export const getBalanceData = async (userId: string) => {
     getThisWeekStartAndEndDates();
   const { startDate: thisMonthStartDate, endDate: thisMonthEndDate } =
     getThisMonthStartAndEndDates();
-  const dateNow = new Date();
 
-  console.log('---------------------------------------');
-  console.log('LW start: ', lastWeekStartDate.toLocaleString());
-  console.log('LW end: ', lastWeekEndDate.toLocaleString());
-  console.log('---------------------------------------');
-  console.log('LM start : ', lastMonthStartDate.toLocaleString());
-  console.log('LM end   : ', lastMonthEndDate.toLocaleString());
-  console.log('---------------------------------------');
-  console.log('TW start : ', thisWeekStartDate.toLocaleString());
-  console.log('TW end   : ', thisWeekEndDate.toLocaleString());
-  console.log('---------------------------------------');
-  console.log('TM start : ', thisMonthStartDate.toLocaleString());
-  console.log('TM end   : ', thisMonthEndDate.toLocaleString());
-  console.log('---------------------------------------');
-  console.log('Date now : ', dateNow.toLocaleString());
-  console.log('---------------------------------------');
+  // const dateNow = new Date();
+  // console.log('---------------------------------------');
+  // console.log('LW start: ', lastWeekStartDate.toLocaleString());
+  // console.log('LW end: ', lastWeekEndDate.toLocaleString());
+  // console.log('---------------------------------------');
+  // console.log('LM start : ', lastMonthStartDate.toLocaleString());
+  // console.log('LM end   : ', lastMonthEndDate.toLocaleString());
+  // console.log('---------------------------------------');
+  // console.log('TW start : ', thisWeekStartDate.toLocaleString());
+  // console.log('TW end   : ', thisWeekEndDate.toLocaleString());
+  // console.log('---------------------------------------');
+  // console.log('TM start : ', thisMonthStartDate.toLocaleString());
+  // console.log('TM end   : ', thisMonthEndDate.toLocaleString());
+  // console.log('---------------------------------------');
+  // console.log('Date now : ', dateNow.toLocaleString());
+  // console.log('---------------------------------------');
 
   await databaseConnect();
 
@@ -95,7 +95,6 @@ export const getBalanceData = async (userId: string) => {
   if (!user) {
     throw new Error('User not found!');
   }
-  console.log('User found!');
 
   //
   //

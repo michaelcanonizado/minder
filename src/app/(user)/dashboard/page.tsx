@@ -27,10 +27,6 @@ const Dashboard = async () => {
 
   const data = await getBalanceData(userId);
 
-  console.log('---------------------------------------');
-  console.log(data);
-  ('---------------------------------------');
-
   if (!data) {
     return <h1 className='text-display'>User was not found!</h1>;
   }
