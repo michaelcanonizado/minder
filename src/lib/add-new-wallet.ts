@@ -3,6 +3,7 @@
 import { databaseConnect } from '@/helpers/database';
 import User from '@/models/user';
 import addWalletSchema from '@/schemas/add-wallet';
+import { revalidatePath } from 'next/cache';
 
 export const addNewWallet = async (data: unknown) => {
   const result = addWalletSchema.safeParse(data);
@@ -30,6 +31,8 @@ export const addNewWallet = async (data: unknown) => {
   await user.save();
 
   console.log(user.wallets);
+
+  revalidatePath(result.data.formPath);
 
   return {
     isSuccessful: true,
