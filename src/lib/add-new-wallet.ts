@@ -22,9 +22,12 @@ export const addNewWallet = async (data: unknown) => {
     throw new Error('User not found!');
   }
 
-  // user.wallets.push({ name: 'None' });
+  user.wallets.push({
+    name: result.data.name,
+    balance: result.data.balance
+  });
 
-  // await user.save()
+  await user.save();
 
   console.log(user.wallets);
 
@@ -32,6 +35,4 @@ export const addNewWallet = async (data: unknown) => {
     isSuccessful: true,
     message: 'Successfully added wallet'
   };
-
-  return;
 };
