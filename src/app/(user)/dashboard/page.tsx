@@ -9,6 +9,11 @@ import Chart from '@/components/sections/chart';
 import { getBalanceData } from '@/lib/get-balance-data';
 import { getPercentageChange } from '@/helpers/get-percentage-change';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import NetAmount from './net-amount';
+import WeeklyIncome from './weekly-income';
+import WeeklyExpense from './weekly-expense';
+import MonthlyIncome from './monthly-income';
+import MonthlyExpense from './monthly-expense';
 
 type BalanceType = {
   tabName: string;
@@ -20,6 +25,7 @@ type BalanceType = {
     isPositive: boolean;
     timePeriod: 'weekly' | 'monthly';
   };
+  graph: React.ReactNode;
 };
 
 const Dashboard = async () => {
@@ -64,7 +70,8 @@ const Dashboard = async () => {
           walletsBalanceData.net.total.current -
           walletsBalanceData.net.total.lastWeek,
         timePeriod: 'weekly'
-      }
+      },
+      graph: <NetAmount />
     },
     {
       tabName: 'Income (weekly)',
@@ -77,7 +84,8 @@ const Dashboard = async () => {
           walletsBalanceData.income.period.thisWeek -
           walletsBalanceData.income.period.lastWeek,
         timePeriod: 'weekly'
-      }
+      },
+      graph: <WeeklyIncome />
     },
     {
       tabName: 'Expense (weekly)',
@@ -90,7 +98,8 @@ const Dashboard = async () => {
           walletsBalanceData.expense.period.thisWeek -
           walletsBalanceData.expense.period.lastWeek,
         timePeriod: 'weekly'
-      }
+      },
+      graph: <WeeklyExpense />
     },
     {
       tabName: 'Income (monthly)',
@@ -103,7 +112,8 @@ const Dashboard = async () => {
           walletsBalanceData.income.period.thisMonth -
           walletsBalanceData.income.period.lastMonth,
         timePeriod: 'monthly'
-      }
+      },
+      graph: <MonthlyIncome />
     },
     {
       tabName: 'Expense (monthly)',
@@ -116,7 +126,8 @@ const Dashboard = async () => {
           walletsBalanceData.expense.period.thisMonth -
           walletsBalanceData.expense.period.lastMonth,
         timePeriod: 'monthly'
-      }
+      },
+      graph: <MonthlyExpense />
     }
   ];
 
@@ -186,7 +197,8 @@ const Dashboard = async () => {
                     </Balance.Compact>
                   </Bento.Box.Header>
                   <Bento.Box.Content>
-                    <Chart.Line.Minimal />
+                    {item.graph}
+                    {/* <Chart.Line.Minimal /> */}
                   </Bento.Box.Content>
                 </TabsContent>
               );
