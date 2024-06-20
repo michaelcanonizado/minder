@@ -25,87 +25,96 @@ type BalanceType = {
 const Dashboard = async () => {
   const userId = process.env.TEMP_USER_ID!;
 
-  const data = await getBalanceData(userId);
+  const walletsBalanceData = await getBalanceData(userId);
 
-  if (!data) {
+  if (!walletsBalanceData) {
     return <h1 className='text-display'>User was not found!</h1>;
   }
 
   const netAmountPercentageChange = getPercentageChange(
-    data.net.total.lastWeek,
-    data.net.total.current
+    walletsBalanceData.net.total.lastWeek,
+    walletsBalanceData.net.total.current
   );
   const incomeThisWeekPercentageChange = getPercentageChange(
-    data.income.period.lastWeek,
-    data.income.period.thisWeek
+    walletsBalanceData.income.period.lastWeek,
+    walletsBalanceData.income.period.thisWeek
   );
   const expenseThisWeekPercentageChange = getPercentageChange(
-    data.expense.period.lastWeek,
-    data.expense.period.thisWeek
+    walletsBalanceData.expense.period.lastWeek,
+    walletsBalanceData.expense.period.thisWeek
   );
   const incomeThisMonthPercentageChange = getPercentageChange(
-    data.income.period.lastMonth,
-    data.income.period.thisMonth
+    walletsBalanceData.income.period.lastMonth,
+    walletsBalanceData.income.period.thisMonth
   );
   const expenseThisMonthPercentageChange = getPercentageChange(
-    data.expense.period.lastMonth,
-    data.expense.period.thisMonth
+    walletsBalanceData.expense.period.lastMonth,
+    walletsBalanceData.expense.period.thisMonth
   );
 
   const balances: BalanceType[] = [
     {
       tabName: 'Net Amount',
       header: 'Net Amount',
-      amount: data.net.total.current,
+      amount: walletsBalanceData.net.total.current,
       percentageChange: {
         percentage: netAmountPercentageChange,
         isPositive: netAmountPercentageChange > 0 ? true : false,
-        difference: data.net.total.current - data.net.total.lastWeek,
+        difference:
+          walletsBalanceData.net.total.current -
+          walletsBalanceData.net.total.lastWeek,
         timePeriod: 'weekly'
       }
     },
     {
       tabName: 'Income (weekly)',
       header: 'Income this week',
-      amount: data.income.period.thisWeek,
+      amount: walletsBalanceData.income.period.thisWeek,
       percentageChange: {
         percentage: incomeThisWeekPercentageChange,
         isPositive: incomeThisWeekPercentageChange > 0 ? true : false,
-        difference: data.income.period.thisWeek - data.income.period.lastWeek,
+        difference:
+          walletsBalanceData.income.period.thisWeek -
+          walletsBalanceData.income.period.lastWeek,
         timePeriod: 'weekly'
       }
     },
     {
       tabName: 'Expense (weekly)',
       header: 'Expenses this week',
-      amount: data.expense.period.thisWeek,
+      amount: walletsBalanceData.expense.period.thisWeek,
       percentageChange: {
         percentage: expenseThisWeekPercentageChange,
         isPositive: expenseThisWeekPercentageChange >= 0 ? false : true,
-        difference: data.expense.period.thisWeek - data.expense.period.lastWeek,
+        difference:
+          walletsBalanceData.expense.period.thisWeek -
+          walletsBalanceData.expense.period.lastWeek,
         timePeriod: 'weekly'
       }
     },
     {
       tabName: 'Income (monthly)',
       header: 'Income this month',
-      amount: data.income.period.thisMonth,
+      amount: walletsBalanceData.income.period.thisMonth,
       percentageChange: {
         percentage: incomeThisMonthPercentageChange,
         isPositive: incomeThisMonthPercentageChange > 0 ? true : false,
-        difference: data.income.period.thisMonth - data.income.period.lastMonth,
+        difference:
+          walletsBalanceData.income.period.thisMonth -
+          walletsBalanceData.income.period.lastMonth,
         timePeriod: 'monthly'
       }
     },
     {
       tabName: 'Expense (monthly)',
       header: 'Expenses this month',
-      amount: data.expense.period.thisMonth,
+      amount: walletsBalanceData.expense.period.thisMonth,
       percentageChange: {
         percentage: expenseThisMonthPercentageChange,
         isPositive: expenseThisMonthPercentageChange >= 0 ? false : true,
         difference:
-          data.expense.period.thisMonth - data.expense.period.lastMonth,
+          walletsBalanceData.expense.period.thisMonth -
+          walletsBalanceData.expense.period.lastMonth,
         timePeriod: 'monthly'
       }
     }
