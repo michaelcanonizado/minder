@@ -6,8 +6,7 @@ const addWalletSchema = z.object({
     .min(1, { message: 'Please name the wallet' }),
   balance: z.coerce
     .number({ message: 'Please enter a valid amount' })
-    .optional()
-    .default('' as unknown as number),
+    .optional(),
 
   userId: z
     .string({ message: 'Error! Please try again.' })

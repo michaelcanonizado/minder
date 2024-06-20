@@ -30,6 +30,7 @@ const Wallet = ({ className }: { className?: string }) => {
     resolver: zodResolver(addWalletSchema),
     defaultValues: {
       name: '',
+      balance: '' as unknown as number,
       userId: userId,
       formPath: currentPathname
     }
