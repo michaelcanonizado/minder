@@ -158,7 +158,7 @@ export const FormRadioCardGroup = ({
       name={name}
       {...props}
     >
-      <ScrollArea className={cn('h-[96px] w-full', className)}>
+      <ScrollArea className={cn('h-[105px] w-full', className)}>
         <div
           className={`flex ${orientation == 'vertical' ? 'flex-col' : 'flex-row'} gap-2 pr-2`}
         >
@@ -212,7 +212,7 @@ const FormRadioCard = ({
       <Label
         htmlFor={id}
         className={cn(
-          'size-[75px] rounded-lg ring ring-muted hover:cursor-pointer peer-data-[state=checked]:ring-foreground',
+          'size-[85px] rounded-lg ring ring-muted hover:cursor-pointer peer-data-[state=checked]:ring-foreground',
           className
         )}
       >
