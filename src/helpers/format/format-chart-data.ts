@@ -6,7 +6,7 @@ interface DataType {
   date: Date;
 }
 
-export const formatGraphData = (
+export const formatChartData = (
   data: DataType[],
   currency: UserCurrencyType
 ) => {
