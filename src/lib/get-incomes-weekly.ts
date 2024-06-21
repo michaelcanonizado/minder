@@ -47,71 +47,11 @@ export const getIncomesWeekly = async (userId: string) => {
     },
     {
       $sort: { transactionDate: 1 }
-    },
-
-    {
-      $addFields: {
-        dayOfWeek: {
-          $switch: {
-            branches: [
-              {
-                case: { $eq: [{ $dayOfWeek: '$transactionDate' }, 1] },
-                then: 'Sun'
-              },
-              {
-                case: { $eq: [{ $dayOfWeek: '$transactionDate' }, 2] },
-                then: 'Mon'
-              },
-              {
-                case: { $eq: [{ $dayOfWeek: '$transactionDate' }, 3] },
-                then: 'Tue'
-              },
-              {
-                case: { $eq: [{ $dayOfWeek: '$transactionDate' }, 4] },
-                then: 'Wed'
-              },
-              {
-                case: { $eq: [{ $dayOfWeek: '$transactionDate' }, 5] },
-                then: 'Thu'
-              },
-              {
-                case: { $eq: [{ $dayOfWeek: '$transactionDate' }, 6] },
-                then: 'Fri'
-              },
-              {
-                case: { $eq: [{ $dayOfWeek: '$transactionDate' }, 7] },
-                then: 'Sat'
-              }
-            ],
-            default: ''
-          }
-        },
-        formattedDate: {
-          $dateToString: {
-            format: '%b %d, %Y',
-            date: '$transactionDate',
-            timezone: 'Asia/Manila'
-          }
-        }
-      }
-    },
-    {
-      $addFields: {
-        transactionDate: {
-          $concat: ['$dayOfWeek', ', ', '$formattedDate']
-        }
-      }
-    },
-    {
-      $project: {
-        dayOfWeek: 0,
-        formattedDate: 0
-      }
     }
   ]).exec();
 
   return JSON.parse(JSON.stringify(data)) as {
     amount: number;
-    transactionDate: string;
+    transactionDate: Date;
   }[];
 };
