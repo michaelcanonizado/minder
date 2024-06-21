@@ -6,8 +6,6 @@ const WeeklyExpense = async () => {
 
   const data = await getExpensesGraphData(userId, 'weekly');
 
-  console.log(data);
-
   return (
     <Chart.Area data={data} index='transactionDate' categories={['amount']} />
   );

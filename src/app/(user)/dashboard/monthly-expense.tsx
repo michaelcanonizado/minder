@@ -6,8 +6,6 @@ const MonthlyExpense = async () => {
 
   const data = await getExpensesGraphData(userId, 'monthly');
 
-  console.log(data);
-
   return (
     <Chart.Area data={data} index='transactionDate' categories={['amount']} />
   );
