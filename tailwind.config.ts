@@ -62,8 +62,8 @@ const config = {
             DEFAULT: 'hsl(var(--ring))'
           },
           content: {
-            subtle: 'hsl(var(--foreground))',
-            DEFAULT: 'hsl(var(--foreground))',
+            subtle: 'hsl(var(--muted-foreground))',
+            DEFAULT: 'hsl(var(--muted-foreground))',
             emphasis: 'hsl(var(--foreground))',
             strong: 'hsl(var(--foreground))',
             inverted: 'hsl(var(--foreground))'
