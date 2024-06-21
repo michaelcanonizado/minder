@@ -5,7 +5,7 @@ import Income, { IncomeType } from '@/models/income';
 import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start-and-end-dates';
 import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';
 
-export const getIncomesWeekly = async (userId: string) => {
+export const getIncomesGraphData = async (userId: string) => {
   await databaseConnect();
 
   const { startDate: thisWeekStartDate, endDate: thisWeekEndDate } =
