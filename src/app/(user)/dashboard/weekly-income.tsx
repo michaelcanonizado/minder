@@ -1,5 +1,5 @@
 import Chart from '@/components/sections/chart';
-import { getIncomesWeekly } from '@/lib/get-incomes-weekly';
+import { getIncomesWeekly } from '@/lib/income/get-incomes-weekly';
 
 const WeeklyIncome = async () => {
   const userId = process.env.TEMP_USER_ID!;

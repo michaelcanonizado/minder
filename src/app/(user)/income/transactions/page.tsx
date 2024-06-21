@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getIncomesData } from '@/lib/get-incomes-data';
+import { getIncomesData } from '@/lib/income/get-incomes-data';
 import Bento from '@/components/sections/bento';
 import Table from '@/components/sections/table';
 import { columns } from './columns';

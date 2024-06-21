@@ -24,7 +24,7 @@ import {
 
 import trackIncomeSchema from '@/schemas/track-income';
 import { UserCategoryType, UserWalletType } from '@/models/user';
-import { addIncomeTransaction } from '@/lib/add-income-transaction';
+import { addIncomeTransaction } from '@/lib/income/add-income-transaction';
 import { usePathname } from 'next/navigation';
 
 const Income = ({
