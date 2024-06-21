@@ -1,12 +1,12 @@
 import Bento from '@/components/sections/bento';
 import Form from '@/components/sections/form';
-import { getWalletsAndCategoriesData } from '@/lib/get-wallets-and-categories-data';
+import { getWalletsData } from '@/lib/wallet/get-wallets-data';
 
 const WalletTransfer = async () => {
   //Get user id from cookie before fetching data
   const userId = process.env.TEMP_USER_ID!;
 
-  const data = await getWalletsAndCategoriesData(userId);
+  const wallets = await getWalletsData(userId);
 
   return (
     <div className='px-8'>
@@ -17,7 +17,7 @@ const WalletTransfer = async () => {
             <p className='text-display'>Transfer Balance</p>
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Form.Transaction.Transfer wallets={data.wallets} userId={userId} />
+            <Form.Transaction.Transfer wallets={wallets.data} userId={userId} />
           </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box>
