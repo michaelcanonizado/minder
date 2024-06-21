@@ -25,7 +25,7 @@ import {
 import trackExpenseSchema from '@/schemas/track-expense';
 import { UserCategoryType, UserWalletType } from '@/models/user';
 import { usePathname } from 'next/navigation';
-import { addExpenseTransaction } from '@/lib/add-expense-transaction';
+import { addExpenseTransaction } from '@/lib/expense/add-expense-transaction';
 
 const Expense = ({
   wallets,
