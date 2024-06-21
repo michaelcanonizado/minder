@@ -62,12 +62,18 @@ export const getExpensesChartData = async (
       }
     },
     {
-      $sort: { transactionDate: 1 }
+      $project: {
+        amount: 1,
+        date: '$transactionDate'
+      }
+    },
+    {
+      $sort: { date: 1 }
     }
   ]).exec();
 
   return JSON.parse(JSON.stringify(data)) as {
     amount: number;
-    transactionDate: Date;
+    date: Date;
   }[];
 };

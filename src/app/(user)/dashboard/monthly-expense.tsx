@@ -9,13 +9,11 @@ const MonthlyExpense = async () => {
 
   return (
     <>
-      <Chart.Area data={data} index='transactionDate' categories={['amount']} />
+      <Chart.Area data={data} index='date' categories={['amount']} />
       <div className='flex flex-row justify-between px-4 pb-4 pt-8'>
+        <Chart.Label>{format(data[0].date, 'E, MMM d, yyyy')}</Chart.Label>
         <Chart.Label>
-          {format(data[0].transactionDate, 'E, MMM d, yyyy')}
-        </Chart.Label>
-        <Chart.Label>
-          {format(data[data.length - 1].transactionDate, 'E, MMM d, yyyy')}
+          {format(data[data.length - 1].date, 'E, MMM d, yyyy')}
         </Chart.Label>
       </div>
     </>
