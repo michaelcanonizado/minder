@@ -195,7 +195,7 @@ const Dashboard = async () => {
                       </Balance.Compact.SubHeader>
                     </Balance.Compact>
                   </Bento.Box.Header>
-                  <Bento.Box.Content className='px-0 pt-0'>
+                  <Bento.Box.Content className='p-0'>
                     {item.graph}
                   </Bento.Box.Content>
                 </TabsContent>
