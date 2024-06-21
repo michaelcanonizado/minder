@@ -7,7 +7,7 @@ import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start
 import { getThisMonthStartAndEndDates } from '@/helpers/dates/get-this-month-start-and-end-dates';
 import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-start-and-end-dates';
 
-export const getExpensesGraphData = async (
+export const getExpensesChartData = async (
   userId: string,
   period: 'weekly' | 'monthly'
 ) => {

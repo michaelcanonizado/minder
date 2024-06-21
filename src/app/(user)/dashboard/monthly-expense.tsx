@@ -1,11 +1,11 @@
 import Chart from '@/components/sections/chart';
-import { getExpensesGraphData } from '@/lib/expense/get-expenses-graph-data';
+import { getExpensesChartData } from '@/lib/expense/get-expenses-chart-data';
 import { format } from 'date-fns';
 
 const MonthlyExpense = async () => {
   const userId = process.env.TEMP_USER_ID!;
 
-  const data = await getExpensesGraphData(userId, 'monthly');
+  const data = await getExpensesChartData(userId, 'monthly');
 
   return (
     <>
