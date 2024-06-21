@@ -11,7 +11,19 @@ const WeeklyIncome = async () => {
   console.log(data);
 
   return (
-    <AreaChart data={data} index='transactionDate' categories={['amount']} />
+    <AreaChart
+      data={data}
+      index='transactionDate'
+      categories={['amount']}
+      showAnimation={true}
+      showLegend={false}
+      showGridLines={false}
+      showYAxis={false}
+      curveType='natural'
+      yAxisWidth={10}
+      startEndOnly={true}
+      className='h-[250px]'
+    />
   );
 };
 
