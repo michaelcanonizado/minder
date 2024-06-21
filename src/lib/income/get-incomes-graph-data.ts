@@ -4,23 +4,39 @@ import Income, { IncomeType } from '@/models/income';
 
 import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start-and-end-dates';
 import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';
+import { getThisMonthStartAndEndDates } from '@/helpers/dates/get-this-month-start-and-end-dates';
+import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-start-and-end-dates';
 
-export const getIncomesGraphData = async (userId: string) => {
+export const getIncomesGraphData = async (
+  userId: string,
+  period: 'weekly' | 'monthly'
+) => {
   await databaseConnect();
 
-  const { startDate: thisWeekStartDate, endDate: thisWeekEndDate } =
-    getThisWeekStartAndEndDates();
+  let startDate: Date | null = null;
+  let endDate: Date | null = null;
 
-  const { startDate: lastWeekStartDate, endDate: lastWeekEndDate } =
-    getLastWeekStartAndEndDates();
+  if (period === 'weekly') {
+    const thisWeek = getThisWeekStartAndEndDates();
+    const lastWeek = getLastWeekStartAndEndDates();
+
+    startDate = lastWeek.startDate;
+    endDate = thisWeek.endDate;
+  } else if (period === 'monthly') {
+    const thisMonth = getThisMonthStartAndEndDates();
+    const lastMonth = getLastMonthStartAndEndDates();
+
+    startDate = lastMonth.startDate;
+    endDate = thisMonth.endDate;
+  }
 
   const data: unknown = await Income.aggregate([
     {
       $match: {
         user: new mongoose.Types.ObjectId(userId),
         transactionDate: {
-          $lte: thisWeekEndDate,
-          $gte: lastWeekStartDate
+          $lte: endDate,
+          $gte: startDate
         }
       }
     },

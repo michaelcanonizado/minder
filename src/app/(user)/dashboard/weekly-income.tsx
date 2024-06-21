@@ -4,7 +4,7 @@ import { getIncomesGraphData } from '@/lib/income/get-incomes-graph-data';
 const WeeklyIncome = async () => {
   const userId = process.env.TEMP_USER_ID!;
 
-  const data = await getIncomesGraphData(userId);
+  const data = await getIncomesGraphData(userId, 'weekly');
 
   console.log(data);
 
