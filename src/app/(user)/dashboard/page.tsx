@@ -157,7 +157,7 @@ const Dashboard = async () => {
             {balances.map(item => {
               return (
                 <TabsContent value={item.tabName}>
-                  <Bento.Box.Header>
+                  <Bento.Box.Header className='border-none'>
                     <Balance.Compact>
                       <Balance.Compact.Header>
                         {item.header}
@@ -195,7 +195,7 @@ const Dashboard = async () => {
                       </Balance.Compact.SubHeader>
                     </Balance.Compact>
                   </Bento.Box.Header>
-                  <Bento.Box.Content className='px-0'>
+                  <Bento.Box.Content className='px-0 pt-0'>
                     {item.graph}
                     {/* <Chart.Line.Minimal /> */}
                   </Bento.Box.Content>
