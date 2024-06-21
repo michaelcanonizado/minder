@@ -1,11 +1,11 @@
 import Chart from '@/components/sections/chart';
-import { getIncomesGraphData } from '@/lib/income/get-incomes-graph-data';
+import { getIncomesChartData } from '@/lib/income/get-incomes-chart-data';
 import { format } from 'date-fns';
 
 const MonthlyIncome = async () => {
   const userId = process.env.TEMP_USER_ID!;
 
-  const data = await getIncomesGraphData(userId, 'monthly');
+  const data = await getIncomesChartData(userId, 'monthly');
 
   return (
     <>
