@@ -6,7 +6,7 @@ import { ArrowDown, ArrowUp } from 'lucide-react';
 import Balance from '@/components/sections/balance';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
-import { getBalanceData } from '@/lib/get-balance-data';
+import { getBalanceData } from '@/lib/balance/get-balance-data';
 import { getPercentageChange } from '@/helpers/get-percentage-change';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import NetAmount from './net-amount';
