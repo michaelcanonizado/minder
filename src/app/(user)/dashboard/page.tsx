@@ -197,7 +197,6 @@ const Dashboard = async () => {
                   </Bento.Box.Header>
                   <Bento.Box.Content className='px-0 pt-0'>
                     {item.graph}
-                    {/* <Chart.Line.Minimal /> */}
                   </Bento.Box.Content>
                 </TabsContent>
               );
