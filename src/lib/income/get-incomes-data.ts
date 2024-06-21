@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 import Income, { IncomeType } from '@/models/income';
 
 export const getIncomesData = async ({

@@ -1,5 +1,5 @@
 import { authenticateGoogleAPI } from '@/helpers/authenticate-google-api';
-import { databaseClose, databaseConnect } from '@/helpers/database';
+import { databaseClose, databaseConnect } from '@/helpers/database/database';
 import Expense from '@/models/expense';
 import Income from '@/models/income';
 import User from '@/models/user';

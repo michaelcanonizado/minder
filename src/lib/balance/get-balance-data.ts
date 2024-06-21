@@ -3,7 +3,7 @@ import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-sta
 import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';
 import { getThisMonthStartAndEndDates } from '@/helpers/dates/get-this-month-start-and-end-dates';
 
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 import User from '@/models/user';
 import Income from '@/models/income';
 import Expense from '@/models/expense';

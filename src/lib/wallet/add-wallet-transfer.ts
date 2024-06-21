@@ -1,6 +1,6 @@
 'use server';
 
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 import BalanceTransfer from '@/models/balance-transfer';
 import User from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';

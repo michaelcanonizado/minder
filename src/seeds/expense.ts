@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { databaseConnect, databaseClose } from '@/helpers/database';
+import { databaseConnect, databaseClose } from '@/helpers/database/database';
 import Expense from '@/models/expense';
 import User from '@/models/user';
 

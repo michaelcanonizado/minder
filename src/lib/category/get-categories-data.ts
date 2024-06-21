@@ -1,4 +1,4 @@
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 import User, { UserType } from '@/models/user';
 
 export interface WalletsDataType {

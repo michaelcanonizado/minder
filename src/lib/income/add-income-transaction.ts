@@ -1,6 +1,6 @@
 'use server';
 
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 import Income from '@/models/income';
 import User from '@/models/user';
 import trackIncomeSchema from '@/schemas/track-income';

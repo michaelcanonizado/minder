@@ -1,4 +1,4 @@
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 import User from '@/models/user';
 
 export const addNewCategory = async () => {

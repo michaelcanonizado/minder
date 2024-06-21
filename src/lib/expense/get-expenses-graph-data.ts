@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 import Expense from '@/models/expense';
 
 import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start-and-end-dates';

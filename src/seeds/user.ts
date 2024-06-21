@@ -1,4 +1,4 @@
-import { databaseConnect, databaseClose } from '@/helpers/database';
+import { databaseConnect, databaseClose } from '@/helpers/database/database';
 import User from '@/models/user';
 
 // WARNING

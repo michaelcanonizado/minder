@@ -1,6 +1,6 @@
 'use server';
 
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 import Expense from '@/models/expense';
 import User from '@/models/user';
 import trackExpenseSchema from '@/schemas/track-expense';

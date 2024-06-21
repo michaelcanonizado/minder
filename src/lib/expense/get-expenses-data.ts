@@ -1,4 +1,4 @@
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 
 import Expense, { ExpenseType } from '@/models/expense';
 import mongoose from 'mongoose';

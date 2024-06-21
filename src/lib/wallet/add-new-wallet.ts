@@ -1,6 +1,6 @@
 'use server';
 
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 import User from '@/models/user';
 import addWalletSchema from '@/schemas/add-wallet';
 import { revalidatePath } from 'next/cache';

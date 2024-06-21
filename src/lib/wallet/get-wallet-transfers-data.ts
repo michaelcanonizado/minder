@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { databaseConnect } from '@/helpers/database';
+import { databaseConnect } from '@/helpers/database/database';
 import BalanceTransfer, {
   BalanceTransferType
 } from '@/models/balance-transfer';
