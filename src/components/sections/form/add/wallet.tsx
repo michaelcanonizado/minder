@@ -20,7 +20,7 @@ import {
 import { DialogClose, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { FormInput } from '../components';
-import { addNewWallet } from '@/lib/add-new-wallet';
+import { addNewWallet } from '@/lib/wallet/add-new-wallet';
 
 const Wallet = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;

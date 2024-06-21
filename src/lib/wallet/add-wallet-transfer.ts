@@ -7,7 +7,7 @@ import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
 import mongoose from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
-export const addBalanceTransfer = async (data: unknown) => {
+export const addWalletTransfer = async (data: unknown) => {
   // Validate data coming from the client
   const result = trackBalanceTransferSchema.safeParse(data);
   if (!result.success) {

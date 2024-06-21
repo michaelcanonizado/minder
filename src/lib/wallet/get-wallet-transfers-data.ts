@@ -4,7 +4,7 @@ import BalanceTransfer, {
   BalanceTransferType
 } from '@/models/balance-transfer';
 
-export const getBalanceTransfersData = async ({
+export const getWalletTransfersData = async ({
   page = 1,
   limit = 10,
   userId

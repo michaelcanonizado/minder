@@ -1,4 +1,4 @@
-import { getWalletsData } from '@/lib/get-wallets-data';
+import { getWalletsData } from '@/lib/wallet/get-wallets-data';
 import { ChevronRight } from 'lucide-react';
 import Balance from '@/components/sections/balance';
 import { cn } from '@/lib/utils';

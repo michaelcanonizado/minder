@@ -5,7 +5,7 @@ import Table from '@/components/sections/table';
 import { columns } from './columns';
 import Pagination from '@/components/sections/pagination';
 
-import { getBalanceTransfersData } from '@/lib/get-balance-transfers-data';
+import { getWalletTransfersData } from '@/lib/wallet/get-wallet-transfers-data';
 
 const WalletBreakdown = async ({
   searchParams
@@ -19,7 +19,7 @@ const WalletBreakdown = async ({
 
   const userId = process.env.TEMP_USER_ID!;
 
-  const balanceTransfers = await getBalanceTransfersData({
+  const balanceTransfers = await getWalletTransfersData({
     page,
     limit,
     userId

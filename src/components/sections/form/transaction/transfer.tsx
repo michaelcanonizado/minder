@@ -27,7 +27,7 @@ import {
 import { UserWalletType } from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
 import { usePathname } from 'next/navigation';
-import { addBalanceTransfer } from '@/lib/add-balance-transfer';
+import { addWalletTransfer } from '@/lib/wallet/add-wallet-transfer';
 
 const decodeModifiedWalletId = (_id: string) => {
   return _id.slice(0, -1);
@@ -77,7 +77,7 @@ const Transfer = ({
 
     data.destinationWalletId = decodeModifiedWalletId(data.destinationWalletId);
 
-    const response = await addBalanceTransfer(data);
+    const response = await addWalletTransfer(data);
 
     if (!response.isSuccessful) {
       console.log(response);
