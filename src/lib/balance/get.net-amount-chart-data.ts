@@ -95,12 +95,6 @@ export const getNetAmountChartData = async (
     : 0;
   const startingNetAmount = startingIncome - startingExpense;
 
-  console.log(startingIncome);
-  console.log(startingExpense);
-  console.log(
-    `Balance before: ${startDate?.toLocaleDateString()} is ${startingNetAmount}`
-  );
-
   const incomesWithinPeriod = await Income.aggregate([
     {
       $match: {
@@ -134,9 +128,6 @@ export const getNetAmountChartData = async (
     }
   ]);
 
-  console.log(incomesWithinPeriod.length);
-  console.log(expensesWithinPeriod.length);
-
   const result: {
     amount: number;
     date: Date;
@@ -158,9 +149,6 @@ export const getNetAmountChartData = async (
       dateIndex.getDate() ===
         incomesWithinPeriod[incomeIndex].transactionDate.getDate()
     ) {
-      console.log(
-        `Adding ${incomesWithinPeriod[incomeIndex].amount} to ${netAmountIndex} - ${incomesWithinPeriod[incomeIndex].transactionDate.toLocaleDateString()}`
-      );
       netAmountIndex += incomesWithinPeriod[incomeIndex].amount;
 
       incomeIndex++;
@@ -174,9 +162,6 @@ export const getNetAmountChartData = async (
       dateIndex.getDate() ===
         expensesWithinPeriod[expenseIndex].transactionDate.getDate()
     ) {
-      console.log(
-        `Deducting ${expensesWithinPeriod[expenseIndex].amount} to ${netAmountIndex} - ${expensesWithinPeriod[expenseIndex].transactionDate.toLocaleDateString()}`
-      );
       netAmountIndex -= expensesWithinPeriod[expenseIndex].amount;
 
       expenseIndex++;

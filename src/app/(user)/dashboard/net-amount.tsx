@@ -9,8 +9,6 @@ const NetAmount = async () => {
 
   const formattedData = formatChartDataDateProperties(data);
 
-  console.log(formattedData);
-
   return (
     <>
       <Chart.Area data={formattedData} index='date' categories={['amount']} />
