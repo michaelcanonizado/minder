@@ -181,5 +181,5 @@ export const getNetAmountChartData = async (
     });
   }
 
-  console.log(result);
+  return JSON.parse(JSON.stringify(result)) as typeof result;
 };

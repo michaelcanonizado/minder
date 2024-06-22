@@ -5,6 +5,8 @@ const NetAmount = async () => {
 
   const data = await getNetAmountChartData(userId, 'monthly');
 
+  console.log(data);
+
   return <div>NetAmount</div>;
 };
 
