@@ -142,6 +142,7 @@ export const getNetAmountChartData = async (
     date: Date;
   }[] = [];
   let netAmountIndex: number = startingNetAmount;
+  const dateNow = new Date();
 
   for (
     let dateIndex = startDate, incomeIndex = 0, expenseIndex = 0;
@@ -185,6 +186,14 @@ export const getNetAmountChartData = async (
       amount: netAmountIndex,
       date: new Date(dateIndex)
     });
+
+    if (
+      dateIndex.getFullYear() === dateNow.getFullYear() &&
+      dateIndex.getMonth() === dateNow.getMonth() &&
+      dateIndex.getDate() === dateNow.getDate()
+    ) {
+      break;
+    }
   }
 
   return JSON.parse(JSON.stringify(result)) as typeof result;
