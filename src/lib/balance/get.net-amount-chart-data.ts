@@ -138,28 +138,41 @@ export const getNetAmountChartData = async (
   let netAmountIndex: number = startingNetAmount;
 
   for (
-    let dateIndex = startDate, i = 0;
+    let dateIndex = startDate, incomeIndex = 0, expenseIndex = 0;
     dateIndex.valueOf() <= endDate.valueOf();
     dateIndex.setDate(dateIndex.getDate() + 1)
   ) {
     while (
-      i < incomesWithinPeriod.length &&
+      incomeIndex < incomesWithinPeriod.length &&
       dateIndex.getFullYear() ===
-        incomesWithinPeriod[i].transactionDate.getFullYear() &&
+        incomesWithinPeriod[incomeIndex].transactionDate.getFullYear() &&
       dateIndex.getMonth() ===
-        incomesWithinPeriod[i].transactionDate.getMonth() &&
-      dateIndex.getDate() === incomesWithinPeriod[i].transactionDate.getDate()
+        incomesWithinPeriod[incomeIndex].transactionDate.getMonth() &&
+      dateIndex.getDate() ===
+        incomesWithinPeriod[incomeIndex].transactionDate.getDate()
     ) {
       console.log(
-        `Adding ${incomesWithinPeriod[i].amount} to ${netAmountIndex} - ${incomesWithinPeriod[i].transactionDate.toLocaleDateString()}`
+        `Adding ${incomesWithinPeriod[incomeIndex].amount} to ${netAmountIndex} - ${incomesWithinPeriod[incomeIndex].transactionDate.toLocaleDateString()}`
       );
-      netAmountIndex += incomesWithinPeriod[i].amount;
+      netAmountIndex += incomesWithinPeriod[incomeIndex].amount;
 
-      result.push({
-        amount: netAmountIndex,
-        date: incomesWithinPeriod[i].transactionDate.toLocaleDateString()
-      });
-      i++;
+      incomeIndex++;
+    }
+    while (
+      expenseIndex < expensesWithinPeriod.length &&
+      dateIndex.getFullYear() ===
+        expensesWithinPeriod[expenseIndex].transactionDate.getFullYear() &&
+      dateIndex.getMonth() ===
+        expensesWithinPeriod[expenseIndex].transactionDate.getMonth() &&
+      dateIndex.getDate() ===
+        expensesWithinPeriod[expenseIndex].transactionDate.getDate()
+    ) {
+      console.log(
+        `Deducting ${expensesWithinPeriod[expenseIndex].amount} to ${netAmountIndex} - ${expensesWithinPeriod[expenseIndex].transactionDate.toLocaleDateString()}`
+      );
+      netAmountIndex -= expensesWithinPeriod[expenseIndex].amount;
+
+      expenseIndex++;
     }
 
     result.push({
