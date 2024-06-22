@@ -177,7 +177,7 @@ export const getNetAmountChartData = async (
 
     result.push({
       amount: netAmountIndex,
-      date: dateIndex
+      date: new Date(dateIndex)
     });
   }
 
