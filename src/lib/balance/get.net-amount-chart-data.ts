@@ -8,10 +8,11 @@ import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-sta
 import Income from '@/models/income';
 import Expense from '@/models/expense';
 import mongoose from 'mongoose';
+import { getThisYearStartAndEndDates } from '@/helpers/dates/get-this-year-start-and-end-dates';
 
 export const getNetAmountChartData = async (
   userId: string,
-  period: 'weekly' | 'monthly'
+  period: 'weekly' | 'monthly' | 'yearly'
 ) => {
   await databaseConnect();
 
@@ -30,6 +31,11 @@ export const getNetAmountChartData = async (
 
     startDate = lastMonth.startDate;
     endDate = thisMonth.endDate;
+  } else if (period === 'yearly') {
+    const thisYear = getThisYearStartAndEndDates();
+
+    startDate = thisYear.startDate;
+    endDate = thisYear.endDate;
   }
 
   if (!startDate || !endDate) {
