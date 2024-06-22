@@ -32,6 +32,10 @@ export const getNetAmountChartData = async (
     endDate = thisMonth.endDate;
   }
 
+  if (!startDate || !endDate) {
+    throw new Error('Date/s missing!');
+  }
+
   const startingExpenseTotalRes = await Expense.aggregate([
     {
       $match: {
@@ -90,4 +94,79 @@ export const getNetAmountChartData = async (
   console.log(
     `Balance before: ${startDate?.toLocaleDateString()} is ${startingNetAmount}`
   );
+
+  const incomesWithinPeriod = await Income.aggregate([
+    {
+      $match: {
+        user: new mongoose.Types.ObjectId(userId),
+        transactionDate: {
+          $gte: startDate,
+          $lte: endDate
+        }
+      }
+    },
+    {
+      $sort: {
+        transactionDate: 1
+      }
+    }
+  ]);
+  const expensesWithinPeriod = await Expense.aggregate([
+    {
+      $match: {
+        user: new mongoose.Types.ObjectId(userId),
+        transactionDate: {
+          $gte: startDate,
+          $lte: endDate
+        }
+      }
+    },
+    {
+      $sort: {
+        transactionDate: 1
+      }
+    }
+  ]);
+
+  console.log(incomesWithinPeriod.length);
+  console.log(expensesWithinPeriod.length);
+
+  const result: {
+    amount: number;
+    date: Date | string;
+  }[] = [];
+  let netAmountIndex: number = startingNetAmount;
+
+  for (
+    let dateIndex = startDate, i = 0;
+    dateIndex.valueOf() <= endDate.valueOf();
+    dateIndex.setDate(dateIndex.getDate() + 1)
+  ) {
+    while (
+      i < incomesWithinPeriod.length &&
+      dateIndex.getFullYear() ===
+        incomesWithinPeriod[i].transactionDate.getFullYear() &&
+      dateIndex.getMonth() ===
+        incomesWithinPeriod[i].transactionDate.getMonth() &&
+      dateIndex.getDate() === incomesWithinPeriod[i].transactionDate.getDate()
+    ) {
+      console.log(
+        `Adding ${incomesWithinPeriod[i].amount} to ${netAmountIndex} - ${incomesWithinPeriod[i].transactionDate.toLocaleDateString()}`
+      );
+      netAmountIndex += incomesWithinPeriod[i].amount;
+
+      result.push({
+        amount: netAmountIndex,
+        date: incomesWithinPeriod[i].transactionDate.toLocaleDateString()
+      });
+      i++;
+    }
+
+    result.push({
+      amount: netAmountIndex,
+      date: dateIndex.toLocaleDateString()
+    });
+  }
+
+  console.log(result);
 };
