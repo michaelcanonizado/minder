@@ -133,7 +133,7 @@ export const getNetAmountChartData = async (
 
   const result: {
     amount: number;
-    date: Date | string;
+    date: Date;
   }[] = [];
   let netAmountIndex: number = startingNetAmount;
 
@@ -177,7 +177,7 @@ export const getNetAmountChartData = async (
 
     result.push({
       amount: netAmountIndex,
-      date: dateIndex.toLocaleDateString()
+      date: dateIndex
     });
   }
 
