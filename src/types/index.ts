@@ -4,3 +4,5 @@ export type LinkItem = {
   icon?: React.ReactNode;
 };
 export type LinkItems = LinkItem[];
+
+export type Periods = 'weekly' | 'monthly' | 'yearly';
