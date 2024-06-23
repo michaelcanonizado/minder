@@ -1,14 +1,15 @@
 'use client';
 
-import { Periods } from '@/types';
+import { Period } from '@/types';
 import { createContext, useState, useContext, SetStateAction } from 'react';
 
 type Dashboard = {
-  period: Periods;
+  period: Period;
 };
 type DashboardContext = {
   dashboard: Dashboard;
   setDashboard: React.Dispatch<SetStateAction<Dashboard>>;
+  changeDashboardPeriod: (period: Period) => void;
 };
 
 const defaultValues: Dashboard = {
@@ -24,11 +25,18 @@ export const DashboardContextProvider = ({
 }) => {
   const [dashboard, setDashboard] = useState<Dashboard>(defaultValues);
 
+  const changeDashboardPeriod = (period: Period) => {
+    setDashboard(prevState => {
+      return { ...prevState, period: period };
+    });
+  };
+
   return (
     <dashboardContext.Provider
       value={{
         dashboard,
-        setDashboard
+        setDashboard,
+        changeDashboardPeriod
       }}
     >
       {children}
