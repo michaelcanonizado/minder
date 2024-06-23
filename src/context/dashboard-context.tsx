@@ -1,9 +1,10 @@
 'use client';
 
+import { Periods } from '@/types';
 import { createContext, useState, useContext, SetStateAction } from 'react';
 
 type Dashboard = {
-  period: 'weekly' | 'monthly' | 'yearly';
+  period: Periods;
 };
 type DashboardContext = {
   dashboard: Dashboard;
