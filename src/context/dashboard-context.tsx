@@ -37,5 +37,11 @@ export const DashboardContextProvider = ({
 };
 
 export const useDashboardContext = () => {
-  return useContext(dashboardContext);
+  const context = useContext(dashboardContext);
+  if (!context) {
+    throw new Error(
+      'useDashboardContext must be within a <DashboardContextProvider/>'
+    );
+  }
+  return context;
 };
