@@ -5,4 +5,4 @@ export type LinkItem = {
 };
 export type LinkItems = LinkItem[];
 
-export type Periods = 'weekly' | 'monthly' | 'yearly';
+export type Period = 'weekly' | 'monthly' | 'yearly';
