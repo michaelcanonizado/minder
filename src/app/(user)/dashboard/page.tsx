@@ -17,6 +17,8 @@ import MonthlyExpense from './monthly-expense';
 import { getBalanceData } from '@/lib/balance/get-balance-data';
 import { getPercentageChange } from '@/helpers/get-percentage-change';
 
+import { DashboardContextProvider } from '@/context/dashboard-context';
+
 type BalanceType = {
   tabName: string;
   header: string;
@@ -134,70 +136,72 @@ const Dashboard = async () => {
 
   return (
     <div className='px-8'>
-      <Bento className='grid-cols-1'>
-        <Bento.Box>
-          <Tabs defaultValue={balances[0].tabName} className='w-full'>
-            {balances.map(item => {
-              return (
-                <TabsContent value={item.tabName}>
-                  <Bento.Box.Header className='border-none'>
-                    <Balance.Compact>
-                      <Balance.Compact.Header>
-                        {item.header}
-                      </Balance.Compact.Header>
-                      <Balance.Compact.Amount>
-                        {' '}
-                        $
-                        {item.amount.toLocaleString('en-US', {
-                          maximumFractionDigits: 2,
-                          minimumFractionDigits: 2
-                        })}
-                      </Balance.Compact.Amount>
-                      <Balance.Compact.SubHeader>
-                        <span
-                          className={`flex flex-row ${item.percentageChange.isPositive ? 'text-accent-100' : 'text-accent-200'}`}
-                        >
-                          {item.percentageChange.difference.toLocaleString(
-                            'en-US',
-                            {
-                              signDisplay: 'always'
-                            }
-                          )}
-                          &nbsp; (
-                          {item.percentageChange.percentage > 0 ? (
-                            <ArrowUp className='h-fit w-[14px]' />
-                          ) : (
-                            <ArrowDown className='h-fit w-[14px]' />
-                          )}
-                          {` ${item.percentageChange.percentage}%`})
-                        </span>
-                        &nbsp;
-                        {item.percentageChange.timePeriod === 'weekly'
-                          ? 'vs last week'
-                          : 'vs last month'}
-                      </Balance.Compact.SubHeader>
-                    </Balance.Compact>
-                  </Bento.Box.Header>
-                  <Bento.Box.Content className='p-0'>
-                    {item.graph}
-                  </Bento.Box.Content>
-                </TabsContent>
-              );
-            })}
-          </Tabs>
-        </Bento.Box>
-        <Bento.Box className=''>
-          <Bento.Box.Header>
-            <p className='text-heading-100'>Expense Budget</p>
-          </Bento.Box.Header>
-          <Bento.Box.Content className='flex flex-col gap-2'>
-            <Chart.Progress />
-            <Chart.Progress />
-            <Chart.Progress />
-            <Chart.Progress />
-          </Bento.Box.Content>
-        </Bento.Box>
-      </Bento>
+      <DashboardContextProvider>
+        <Bento className='grid-cols-1'>
+          <Bento.Box>
+            <Tabs defaultValue={balances[0].tabName} className='w-full'>
+              {balances.map(item => {
+                return (
+                  <TabsContent value={item.tabName}>
+                    <Bento.Box.Header className='border-none'>
+                      <Balance.Compact>
+                        <Balance.Compact.Header>
+                          {item.header}
+                        </Balance.Compact.Header>
+                        <Balance.Compact.Amount>
+                          {' '}
+                          $
+                          {item.amount.toLocaleString('en-US', {
+                            maximumFractionDigits: 2,
+                            minimumFractionDigits: 2
+                          })}
+                        </Balance.Compact.Amount>
+                        <Balance.Compact.SubHeader>
+                          <span
+                            className={`flex flex-row ${item.percentageChange.isPositive ? 'text-accent-100' : 'text-accent-200'}`}
+                          >
+                            {item.percentageChange.difference.toLocaleString(
+                              'en-US',
+                              {
+                                signDisplay: 'always'
+                              }
+                            )}
+                            &nbsp; (
+                            {item.percentageChange.percentage > 0 ? (
+                              <ArrowUp className='h-fit w-[14px]' />
+                            ) : (
+                              <ArrowDown className='h-fit w-[14px]' />
+                            )}
+                            {` ${item.percentageChange.percentage}%`})
+                          </span>
+                          &nbsp;
+                          {item.percentageChange.timePeriod === 'weekly'
+                            ? 'vs last week'
+                            : 'vs last month'}
+                        </Balance.Compact.SubHeader>
+                      </Balance.Compact>
+                    </Bento.Box.Header>
+                    <Bento.Box.Content className='p-0'>
+                      {item.graph}
+                    </Bento.Box.Content>
+                  </TabsContent>
+                );
+              })}
+            </Tabs>
+          </Bento.Box>
+          <Bento.Box className=''>
+            <Bento.Box.Header>
+              <p className='text-heading-100'>Expense Budget</p>
+            </Bento.Box.Header>
+            <Bento.Box.Content className='flex flex-col gap-2'>
+              <Chart.Progress />
+              <Chart.Progress />
+              <Chart.Progress />
+              <Chart.Progress />
+            </Bento.Box.Content>
+          </Bento.Box>
+        </Bento>
+      </DashboardContextProvider>
     </div>
   );
 };
