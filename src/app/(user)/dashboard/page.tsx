@@ -3,17 +3,19 @@ import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { ArrowDown, ArrowUp } from 'lucide-react';
+
 import Balance from '@/components/sections/balance';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
-import { getBalanceData } from '@/lib/balance/get-balance-data';
-import { getPercentageChange } from '@/helpers/get-percentage-change';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+
 import NetAmount from './net-amount';
 import WeeklyIncome from './weekly-income';
 import WeeklyExpense from './weekly-expense';
 import MonthlyIncome from './monthly-income';
 import MonthlyExpense from './monthly-expense';
+
+import { getBalanceData } from '@/lib/balance/get-balance-data';
+import { getPercentageChange } from '@/helpers/get-percentage-change';
 
 type BalanceType = {
   tabName: string;
@@ -135,25 +137,6 @@ const Dashboard = async () => {
       <Bento className='grid-cols-1'>
         <Bento.Box>
           <Tabs defaultValue={balances[0].tabName} className='w-full'>
-            <ScrollArea className='bg-muted py-1'>
-              <TabsList className='w-full rounded-b-none'>
-                {balances.map(item => {
-                  return (
-                    <TabsTrigger
-                      value={item.tabName}
-                      className='min-w-[150px] grow'
-                    >
-                      {item.tabName}
-                    </TabsTrigger>
-                  );
-                })}
-              </TabsList>
-              <ScrollBar
-                orientation='horizontal'
-                thumbClassName='bg-background/80'
-                className=''
-              />
-            </ScrollArea>
             {balances.map(item => {
               return (
                 <TabsContent value={item.tabName}>
