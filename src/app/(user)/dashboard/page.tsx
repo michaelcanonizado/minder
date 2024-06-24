@@ -134,6 +134,7 @@ const Dashboard = async () => {
     <div className='px-8'>
       <DashboardContextProvider>
         <Bento className='grid-cols-1'>
+          <NetAmount />
           <Bento.Box className=''>
             <Bento.Box.Header>
               <p className='text-heading-100'>Expense Budget</p>
