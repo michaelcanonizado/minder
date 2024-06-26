@@ -6,6 +6,10 @@ export type LinkItem = {
 export type LinkItems = LinkItem[];
 
 export type Period = 'weekly' | 'monthly' | 'yearly';
+export type PeriodDates = {
+  startDate: Date;
+  endDate: Date;
+};
 
 export type ChartRow = {
   amount: number;
