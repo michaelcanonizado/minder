@@ -5,7 +5,7 @@ import Chart from '@/components/sections/chart';
 import { useDashboardContext } from '@/context/dashboard-context';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
 import { getIncomesChartData } from '@/lib/income/get-incomes-chart-data';
-import { ChartData } from '@/types';
+import { ChartData, ChartRow } from '@/types';
 import { useEffect, useState } from 'react';
 
 const Income = () => {
@@ -23,7 +23,11 @@ const Income = () => {
         userId,
         dashboard.period as 'weekly' | 'monthly'
       );
+
+      data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
+
       console.log(data);
+
       setData(data);
     };
     getData();
@@ -31,17 +35,22 @@ const Income = () => {
 
   console.log('Income component render');
 
+  const startDate = data ? data.rows[0].date : '';
+  const endDate = data ? data.rows[data.rows.length - 1].date : '';
+
   return (
     <Bento.Box>
-      <Bento.Box.Header>Income {dashboard.period}</Bento.Box.Header>
-      <Bento.Box.Content>
+      <Bento.Box.Header className='border-none'>
+        Income {dashboard.period}
+      </Bento.Box.Header>
+      <Bento.Box.Content className='p-0'>
         {data && (
-          <Chart.Area
-            data={formatChartDataDateProperties(data.rows)}
-            index='date'
-            categories={['amount']}
-          />
+          <Chart.Area data={data.rows} index='date' categories={['amount']} />
         )}
+        <div className='flex flex-row justify-between px-4 pb-4 pt-8'>
+          <Chart.Label>{startDate}</Chart.Label>
+          <Chart.Label>{endDate}</Chart.Label>
+        </div>
       </Bento.Box.Content>
     </Bento.Box>
   );
