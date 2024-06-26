@@ -31,8 +31,6 @@ const Income = () => {
 
       data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
 
-      console.log(data);
-
       setData(data);
     };
     getData();
