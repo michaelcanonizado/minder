@@ -1,3 +1,5 @@
+'use server';
+
 import { databaseConnect } from '@/helpers/database/database';
 
 import Expense, { ExpenseType } from '@/models/expense';

@@ -1,3 +1,5 @@
+'use server';
+
 import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start-and-end-dates';
 import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-start-and-end-dates';
 import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';

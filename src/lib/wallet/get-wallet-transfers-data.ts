@@ -1,3 +1,5 @@
+'use server';
+
 import mongoose from 'mongoose';
 import { databaseConnect } from '@/helpers/database/database';
 import BalanceTransfer, {

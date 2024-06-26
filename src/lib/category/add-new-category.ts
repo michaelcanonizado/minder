@@ -1,3 +1,5 @@
+'use server';
+
 import { databaseConnect } from '@/helpers/database/database';
 import User from '@/models/user';
 

@@ -1,3 +1,5 @@
+'use server';
+
 import { databaseConnect } from '@/helpers/database/database';
 
 import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start-and-end-dates';
