@@ -13,7 +13,7 @@ export type PeriodDates = {
 
 export type ChartRow = {
   amount: number;
-  date: Date;
+  date: Date & string;
 };
 export type ChartData = {
   balance: {
