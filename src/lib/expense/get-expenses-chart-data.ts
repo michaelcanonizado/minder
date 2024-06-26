@@ -8,11 +8,9 @@ import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start
 import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';
 import { getThisMonthStartAndEndDates } from '@/helpers/dates/get-this-month-start-and-end-dates';
 import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-start-and-end-dates';
+import { Period } from '@/types';
 
-export const getExpensesChartData = async (
-  userId: string,
-  period: 'weekly' | 'monthly'
-) => {
+export const getExpensesChartData = async (userId: string, period: Period) => {
   await databaseConnect();
 
   let startDate: Date | null = null;
