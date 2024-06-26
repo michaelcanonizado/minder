@@ -2,7 +2,7 @@
 
 import mongoose from 'mongoose';
 import { databaseConnect } from '@/helpers/database/database';
-import Income, { IncomeType } from '@/models/income';
+import Income from '@/models/income';
 
 import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start-and-end-dates';
 import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';
@@ -105,7 +105,6 @@ export const getIncomesChartData = async (userId: string, period: Period) => {
     },
     rows: JSON.parse(JSON.stringify(data)) as ChartRow[]
   };
-  console.log(result);
 
   return result;
 };
