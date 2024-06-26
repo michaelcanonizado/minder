@@ -8,7 +8,8 @@ import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start
 import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';
 import { getThisMonthStartAndEndDates } from '@/helpers/dates/get-this-month-start-and-end-dates';
 import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-start-and-end-dates';
-import { Period } from '@/types';
+import { ChartData, ChartRow, Period } from '@/types';
+import { getPercentageChange } from '@/helpers/get-percentage-change';
 
 export const getIncomesChartData = async (userId: string, period: Period) => {
   await databaseConnect();
@@ -30,7 +31,7 @@ export const getIncomesChartData = async (userId: string, period: Period) => {
     endDate = thisMonth.endDate;
   }
 
-  const data: unknown = await Income.aggregate([
+  const data = (await Income.aggregate([
     {
       $match: {
         user: new mongoose.Types.ObjectId(userId),
@@ -70,10 +71,26 @@ export const getIncomesChartData = async (userId: string, period: Period) => {
     {
       $sort: { date: 1 }
     }
-  ]).exec();
+  ]).exec()) as ChartRow[];
 
-  return JSON.parse(JSON.stringify(data)) as {
-    amount: number;
-    date: Date;
-  }[];
+  const totalAmount = data.reduce((sum: number, item) => {
+    return sum + item.amount;
+  }, 0);
+
+  const percentageChange = getPercentageChange(0, 0);
+
+  const result: ChartData = {
+    balance: {
+      amount: totalAmount,
+      percentageChange: {
+        difference: 0,
+        percentage: percentageChange,
+        isPositive: percentageChange >= 0 ? true : false
+      }
+    },
+    rows: JSON.parse(JSON.stringify(data)) as ChartRow[]
+  };
+  console.log(result.balance);
+
+  return result;
 };
