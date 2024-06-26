@@ -9,6 +9,7 @@ import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 
 import NetAmount from './net-amount';
+import Income from './income';
 
 import { getBalanceData } from '@/lib/balance/get-balance-data';
 import { getPercentageChange } from '@/helpers/get-percentage-change';
@@ -131,10 +132,11 @@ const Dashboard = async () => {
   // ];
 
   return (
-    <div className='px-8'>
-      <DashboardContextProvider>
+    <DashboardContextProvider>
+      <div className='px-8'>
         <Bento className='grid-cols-1'>
           <NetAmount />
+          <Income />
           <Bento.Box className=''>
             <Bento.Box.Header>
               <p className='text-heading-100'>Expense Budget</p>
@@ -147,8 +149,8 @@ const Dashboard = async () => {
             </Bento.Box.Content>
           </Bento.Box>
         </Bento>
-      </DashboardContextProvider>
-    </div>
+      </div>
+    </DashboardContextProvider>
   );
 };
 
