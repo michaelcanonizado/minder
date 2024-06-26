@@ -22,7 +22,7 @@ const NetAmount = () => {
 
   const { dashboard, changeDashboardPeriod } = useDashboardContext();
 
-  console.log(dashboard);
+  // console.log(dashboard);
 
   return (
     <Bento.Box className=''>
