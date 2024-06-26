@@ -1,4 +1,6 @@
-export const getThisWeekStartAndEndDates = () => {
+import { PeriodDates } from '@/types';
+
+export const getThisWeekStartAndEndDates = (): PeriodDates => {
   const now = new Date();
   // Get current day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
   const today = now.getDay();

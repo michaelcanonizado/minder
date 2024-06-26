@@ -1,4 +1,6 @@
-export const getLastMonthStartAndEndDates = () => {
+import { PeriodDates } from '@/types';
+
+export const getLastMonthStartAndEndDates = (): PeriodDates => {
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth();

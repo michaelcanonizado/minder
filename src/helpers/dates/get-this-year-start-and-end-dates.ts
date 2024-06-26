@@ -1,4 +1,6 @@
-export const getThisYearStartAndEndDates = () => {
+import { PeriodDates } from '@/types';
+
+export const getThisYearStartAndEndDates = (): PeriodDates => {
   const now = new Date();
   // Start will be @ January 1, 12:00:00AM
   const startDate = new Date(now.getFullYear(), 0, 1, 0, 0, 0, 0);
