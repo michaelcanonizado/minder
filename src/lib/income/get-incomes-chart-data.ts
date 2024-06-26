@@ -8,27 +8,25 @@ import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start
 import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';
 import { getThisMonthStartAndEndDates } from '@/helpers/dates/get-this-month-start-and-end-dates';
 import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-start-and-end-dates';
-import { ChartData, ChartRow, Period } from '@/types';
+import { ChartData, ChartRow, Period, PeriodDates } from '@/types';
 import { getPercentageChange } from '@/helpers/get-percentage-change';
 
 export const getIncomesChartData = async (userId: string, period: Period) => {
   await databaseConnect();
 
-  let startDate: Date | null = null;
-  let endDate: Date | null = null;
+  let firstHalfDates: PeriodDates | null = null;
+  let secondHalfDates: PeriodDates | null = null;
 
   if (period === 'weekly') {
-    const thisWeek = getThisWeekStartAndEndDates();
-    const lastWeek = getLastWeekStartAndEndDates();
-
-    startDate = lastWeek.startDate;
-    endDate = thisWeek.endDate;
+    firstHalfDates = getLastWeekStartAndEndDates();
+    secondHalfDates = getThisWeekStartAndEndDates();
   } else if (period === 'monthly') {
-    const thisMonth = getThisMonthStartAndEndDates();
-    const lastMonth = getLastMonthStartAndEndDates();
+    firstHalfDates = getLastMonthStartAndEndDates();
+    secondHalfDates = getThisMonthStartAndEndDates();
+  }
 
-    startDate = lastMonth.startDate;
-    endDate = thisMonth.endDate;
+  if (!firstHalfDates || !secondHalfDates) {
+    return {} as ChartData;
   }
 
   const data = (await Income.aggregate([
@@ -36,8 +34,8 @@ export const getIncomesChartData = async (userId: string, period: Period) => {
       $match: {
         user: new mongoose.Types.ObjectId(userId),
         transactionDate: {
-          $lte: endDate,
-          $gte: startDate
+          $lte: secondHalfDates.endDate,
+          $gte: firstHalfDates.startDate
         }
       }
     },
@@ -77,20 +75,37 @@ export const getIncomesChartData = async (userId: string, period: Period) => {
     return sum + item.amount;
   }, 0);
 
-  const percentageChange = getPercentageChange(0, 0);
+  const firstHalfTotalAmount = data.reduce((sum: number, item) => {
+    if (item.date.valueOf() <= firstHalfDates.endDate.valueOf()) {
+      return sum + item.amount;
+    }
+    return sum + 0;
+  }, 0);
+
+  const secondHalfTotalAmount = data.reduce((sum: number, item) => {
+    if (item.date.valueOf() >= secondHalfDates.startDate.valueOf()) {
+      return sum + item.amount;
+    }
+    return sum + 0;
+  }, 0);
+
+  const percentageChange = getPercentageChange(
+    firstHalfTotalAmount,
+    secondHalfTotalAmount
+  );
 
   const result: ChartData = {
     balance: {
       amount: totalAmount,
       percentageChange: {
-        difference: 0,
+        difference: secondHalfTotalAmount - firstHalfTotalAmount,
         percentage: percentageChange,
         isPositive: percentageChange >= 0 ? true : false
       }
     },
     rows: JSON.parse(JSON.stringify(data)) as ChartRow[]
   };
-  console.log(result.balance);
+  console.log(result);
 
   return result;
 };
