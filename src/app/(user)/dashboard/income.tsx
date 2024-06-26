@@ -1,14 +1,16 @@
 'use client';
 
-import Bento from '@/components/sections/bento';
-import Chart from '@/components/sections/chart';
-import { useDashboardContext } from '@/context/dashboard-context';
-import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
-import { getIncomesChartData } from '@/lib/income/get-incomes-chart-data';
-import { ChartData, ChartRow } from '@/types';
 import { useEffect, useState } from 'react';
 
+import { useDashboardContext } from '@/context/dashboard-context';
+import { ChartData, ChartRow } from '@/types';
+
+import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
+import { getIncomesChartData } from '@/lib/income/get-incomes-chart-data';
+
 import { ArrowDown, ArrowUp } from 'lucide-react';
+import Bento from '@/components/sections/bento';
+import Chart from '@/components/sections/chart';
 import Balance from '@/components/sections/balance';
 
 const Income = () => {
