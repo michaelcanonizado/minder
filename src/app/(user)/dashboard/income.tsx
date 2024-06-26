@@ -31,18 +31,7 @@ const Income = () => {
   return (
     <Bento.Box>
       <Bento.Box.Header>Income {dashboard.period}</Bento.Box.Header>
-      <Bento.Box.Content>
-        {data
-          ? data.map(item => {
-              return (
-                <div className='flex flex-row' key={item.date}>
-                  <h1>{item.amount}</h1>
-                  <p>{item.date}</p>
-                </div>
-              );
-            })
-          : ''}
-      </Bento.Box.Content>
+      <Bento.Box.Content></Bento.Box.Content>
     </Bento.Box>
   );
 };
