@@ -13,11 +13,11 @@ const Dashboard = async () => {
   return (
     <DashboardContextProvider>
       <div className='px-8'>
-        <Bento className='grid-cols-1'>
-          <NetAmount />
-          <Income />
-          <Expense />
-          <Bento.Box className=''>
+        <Bento className='grid-cols-4'>
+          <NetAmount className='col-span-4' />
+          <Income className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2' />
+          <Expense className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2' />
+          <Bento.Box className='col-span-4'>
             <Bento.Box.Header>
               <p className='text-heading-100'>Expense Budget</p>
             </Bento.Box.Header>

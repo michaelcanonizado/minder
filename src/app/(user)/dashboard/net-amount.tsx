@@ -16,8 +16,9 @@ import {
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
-
 import Balance from '@/components/sections/balance';
+
+import { cn } from '@/lib/utils';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
 import { getNetAmountChartData } from '@/lib/balance/get.net-amount-chart-data';
 
@@ -36,7 +37,7 @@ const periods: { name: string; key: Period }[] = [
   }
 ];
 
-const NetAmount = () => {
+const NetAmount = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
 
   const { dashboard, changeDashboardPeriod } = useDashboardContext();
@@ -131,7 +132,7 @@ const NetAmount = () => {
   const endDate = data ? data.rows[data.rows.length - 1].date : '';
 
   return (
-    <Bento.Box className=''>
+    <Bento.Box className={cn('', className)}>
       <Bento.Box.Header className='flex flex-row justify-between border-none'>
         {header}
         <div className=''>

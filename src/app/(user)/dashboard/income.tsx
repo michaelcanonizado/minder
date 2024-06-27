@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useDashboardContext } from '@/context/dashboard-context';
 import { ChartData, ChartRow } from '@/types';
 
+import { cn } from '@/lib/utils';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
 import { getIncomesChartData } from '@/lib/income/get-incomes-chart-data';
 
@@ -13,7 +14,7 @@ import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import Balance from '@/components/sections/balance';
 
-const Income = () => {
+const Income = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
 
   const { dashboard, changeDashboardPeriod } = useDashboardContext();
@@ -122,7 +123,7 @@ const Income = () => {
   );
 
   return (
-    <Bento.Box>
+    <Bento.Box className={cn('', className)}>
       <Bento.Box.Header className='border-none'>{header}</Bento.Box.Header>
       <Bento.Box.Content className='p-0'>
         {data && (
