@@ -99,7 +99,7 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
   const startingIncome = startingIncomeTotalRes[0]
     ? startingIncomeTotalRes[0].totalAmount
     : 0;
-  const startingNetAmount = startingIncome - startingExpense;
+  let startingNetAmount = startingIncome - startingExpense;
 
   //
   //
@@ -147,7 +147,6 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
   //
   // Find the user's net amount for each day within the period.
   const chartRows: ChartRow[] = [];
-  let netAmountIndex: number = startingNetAmount;
   const dateNow = new Date();
   let secondHalfLastRow = {
     amount: 0,
@@ -172,7 +171,7 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
       dateIndex.getDate() ===
         incomesWithinPeriod[incomeIndex].transactionDate.getDate()
     ) {
-      netAmountIndex += incomesWithinPeriod[incomeIndex].amount;
+      startingNetAmount += incomesWithinPeriod[incomeIndex].amount;
 
       incomeIndex++;
     }
@@ -186,14 +185,14 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
       dateIndex.getDate() ===
         expensesWithinPeriod[expenseIndex].transactionDate.getDate()
     ) {
-      netAmountIndex -= expensesWithinPeriod[expenseIndex].amount;
+      startingNetAmount -= expensesWithinPeriod[expenseIndex].amount;
 
       expenseIndex++;
     }
 
     // Once all incomes and expenses within the current day have been added/deducted, push the gathered data in the array
     chartRows.push({
-      amount: netAmountIndex,
+      amount: startingNetAmount,
       date: new Date(dateIndex) as Date & string
     });
 
