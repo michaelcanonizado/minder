@@ -99,7 +99,17 @@ const Income = () => {
   const header = (
     <Balance.Compact>
       <Balance.Compact.Header>{headerTitle}</Balance.Compact.Header>
-      <Balance.Compact.Amount> ${headerAmount}</Balance.Compact.Amount>
+
+      <div className='flex flex-row items-end gap-1'>
+        <Balance.Compact.Amount className=''>
+          {' '}
+          ${headerAmount}
+        </Balance.Compact.Amount>
+        <Balance.Compact.SubHeader className='mb-0.5'>
+          from 123451
+        </Balance.Compact.SubHeader>
+      </div>
+
       <Balance.Compact.SubHeader>
         <span
           className={`flex flex-row ${data.balance.percentageChange.isPositive ? 'text-accent-100' : 'text-accent-200'}`}
