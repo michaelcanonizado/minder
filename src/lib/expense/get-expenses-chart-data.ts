@@ -11,6 +11,8 @@ import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-sta
 import { getPercentageChange } from '@/helpers/get-percentage-change';
 
 import { ChartData, ChartRow, Period, PeriodDates } from '@/types';
+import { getLastYearStartAndEndDates } from '@/helpers/dates/get-last-year-start-and-end-dates';
+import { getThisYearStartAndEndDates } from '@/helpers/dates/get-this-year-start-and-end-dates';
 
 export const getExpensesChartData = async (userId: string, period: Period) => {
   await databaseConnect();
@@ -24,6 +26,9 @@ export const getExpensesChartData = async (userId: string, period: Period) => {
   } else if (period === 'monthly') {
     firstHalfDates = getLastMonthStartAndEndDates();
     secondHalfDates = getThisMonthStartAndEndDates();
+  } else if (period === 'yearly') {
+    firstHalfDates = getLastYearStartAndEndDates();
+    secondHalfDates = getThisYearStartAndEndDates();
   }
 
   if (!firstHalfDates || !secondHalfDates) {
