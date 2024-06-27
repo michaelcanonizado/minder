@@ -18,6 +18,12 @@ import { ChartData, ChartRow, Period, PeriodDates } from '@/types';
 export const getNetAmountChartData = async (userId: string, period: Period) => {
   await databaseConnect();
 
+  //
+  //
+  //
+  //
+  //
+  // Get the start and end dates of first half (last week/month/year) and second half (this week/month/year)
   let firstHalfDates: PeriodDates | null = null;
   let secondHalfDates: PeriodDates | null = null;
 
@@ -36,6 +42,12 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
     return {} as ChartData;
   }
 
+  //
+  //
+  //
+  //
+  //
+  // Get the starting net amount (The net amount before the first half). Add up all the income and expense logs before the first half and get the total
   const startingExpenseTotalRes = await Expense.aggregate([
     {
       $match: {
@@ -89,6 +101,12 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
     : 0;
   const startingNetAmount = startingIncome - startingExpense;
 
+  //
+  //
+  //
+  //
+  //
+  // Get the income and expense transactions within the first and second half, and sort them in ascending order
   const incomesWithinPeriod = await Income.aggregate([
     {
       $match: {
@@ -122,6 +140,12 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
     }
   ]);
 
+  //
+  //
+  //
+  //
+  //
+  // Find the user's net amount for each day within the period.
   const chartRows: ChartRow[] = [];
   let netAmountIndex: number = startingNetAmount;
   const dateNow = new Date();
@@ -130,11 +154,15 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
     date: new Date()
   };
 
+  // Loop through each day from the start of the first half up to the date right now, finding the net amount for each day.
   for (
     let dateIndex = firstHalfDates.startDate, incomeIndex = 0, expenseIndex = 0;
     dateIndex.valueOf() <= secondHalfDates.endDate.valueOf();
     dateIndex.setDate(dateIndex.getDate() + 1)
   ) {
+    // Since the net amount is the difference between the total income and total expenses, and we've previously gotten the income and expense transaction records within the period, we can now loop through the records and add/deduct from the starting net amount respectively.
+
+    // Loop through income until the current date in the for-loop doesn't match the index in the incomes transaction. (There could be multiple transactions in a day, so keep on adding/deducting until the next day)
     while (
       incomeIndex < incomesWithinPeriod.length &&
       dateIndex.getFullYear() ===
@@ -148,6 +176,7 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
 
       incomeIndex++;
     }
+    // Repeat for the expenses transactions
     while (
       expenseIndex < expensesWithinPeriod.length &&
       dateIndex.getFullYear() ===
@@ -162,22 +191,31 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
       expenseIndex++;
     }
 
+    // Once all incomes and expenses within the current day have been added/deducted, push the gathered data in the array
     chartRows.push({
       amount: netAmountIndex,
       date: new Date(dateIndex) as Date & string
     });
 
+    // Break the loop once current date is equal to the date right now
     if (
       dateIndex.getFullYear() === dateNow.getFullYear() &&
       dateIndex.getMonth() === dateNow.getMonth() &&
       dateIndex.getDate() === dateNow.getDate()
     ) {
+      // Before breaking out, store the latest pushed object in the array. This object is the user's current net amount for the day.
       secondHalfLastRow = chartRows[chartRows.length - 1];
 
       break;
     }
   }
 
+  //
+  //
+  //
+  //
+  //
+  // Get the net amount of the first half (last week/month/year)
   let firstHalfLastRow = chartRows.find(row => {
     if (
       row.date.getFullYear() === firstHalfDates.endDate.getFullYear() &&
@@ -187,16 +225,17 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
       return row;
     }
   });
-
   if (!firstHalfLastRow) {
     throw new Error('Something went wrong! Could not get Net Amount Data');
   }
 
+  // Get the percentage change between the net amount of the first and second half
   const percentageChange = getPercentageChange(
     firstHalfLastRow.amount,
     secondHalfLastRow.amount
   );
 
+  // Collect the data gathered
   const result: ChartData = {
     balance: {
       amount: secondHalfLastRow.amount,
