@@ -47,13 +47,78 @@ const NetAmount = () => {
     getData();
   }, [dashboard]);
 
+  let headerTitle = 'Net Amount';
+
+  const headerAmount = data.balance.amount.toLocaleString('en-US', {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2
+  });
+
+  const headerDifference =
+    data.balance.percentageChange.difference.toLocaleString('en-US', {
+      signDisplay: 'always'
+    });
+
+  const headerArrow =
+    data.balance.percentageChange.percentage > 0 ? (
+      <ArrowUp className='h-fit w-[14px]' />
+    ) : (
+      <ArrowDown className='h-fit w-[14px]' />
+    );
+
+  const headerPercentage =
+    data.balance.percentageChange.percentage !== Infinity ? (
+      <span className='flex flex-row'>
+        ({headerArrow}
+        {` ${data.balance.percentageChange.percentage}%`}){' '}
+      </span>
+    ) : (
+      ''
+    );
+
+  let headerLabel = '';
+  if (dashboard.period === 'weekly') {
+    headerLabel = 'vs last week';
+  } else if (dashboard.period === 'monthly') {
+    headerLabel = 'vs last month';
+  } else if (dashboard.period === 'yearly') {
+    headerLabel = 'vs last year';
+  }
+
+  const header = (
+    <Balance.Compact>
+      <Balance.Compact.Header>{headerTitle}</Balance.Compact.Header>
+
+      <div className='flex flex-row items-end gap-1'>
+        <Balance.Compact.Amount className=''>
+          {' '}
+          ${headerAmount}
+        </Balance.Compact.Amount>
+        <Balance.Compact.SubHeader className='mb-0.5'>
+          from 123451
+        </Balance.Compact.SubHeader>
+      </div>
+
+      <Balance.Compact.SubHeader>
+        <span
+          className={`flex flex-row ${data.balance.percentageChange.isPositive ? 'text-accent-100' : 'text-accent-200'}`}
+        >
+          {headerDifference}
+          &nbsp;{headerPercentage}
+        </span>
+        &nbsp;
+        {headerLabel}
+      </Balance.Compact.SubHeader>
+    </Balance.Compact>
+  );
+
   const startDate = data ? data.rows[0].date : '';
   const endDate = data ? data.rows[data.rows.length - 1].date : '';
 
   return (
     <Bento.Box className=''>
-      <Bento.Box.Header className='border-none'>
-        <div className=''></div>
+      <Bento.Box.Header className='flex flex-row justify-between border-none'>
+        {header}
         <div className=''>
           <Select
             defaultValue={dashboard.period}
