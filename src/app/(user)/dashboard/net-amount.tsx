@@ -47,6 +47,14 @@ const NetAmount = () => {
     getData();
   }, [dashboard]);
 
+  if (!data) {
+    return (
+      <Bento.Box>
+        <Bento.Box.Header>No Data</Bento.Box.Header>
+      </Bento.Box>
+    );
+  }
+
   let headerTitle = 'Net Amount';
 
   const headerAmount = data.balance.amount.toLocaleString('en-US', {
