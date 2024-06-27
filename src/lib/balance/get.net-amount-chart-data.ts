@@ -1,47 +1,39 @@
 'use server';
 
+import Income from '@/models/income';
+import Expense from '@/models/expense';
+import mongoose from 'mongoose';
 import { databaseConnect } from '@/helpers/database/database';
 
+import { getPercentageChange } from '@/helpers/get-percentage-change';
 import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start-and-end-dates';
 import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';
 import { getThisMonthStartAndEndDates } from '@/helpers/dates/get-this-month-start-and-end-dates';
 import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-start-and-end-dates';
-
-import Income from '@/models/income';
-import Expense from '@/models/expense';
-import mongoose from 'mongoose';
+import { getLastYearStartAndEndDates } from '@/helpers/dates/get-last-year-start-and-end-dates';
 import { getThisYearStartAndEndDates } from '@/helpers/dates/get-this-year-start-and-end-dates';
 
-export const getNetAmountChartData = async (
-  userId: string,
-  period: 'weekly' | 'monthly' | 'yearly'
-) => {
+import { ChartData, ChartRow, Period, PeriodDates } from '@/types';
+
+export const getNetAmountChartData = async (userId: string, period: Period) => {
   await databaseConnect();
 
-  let startDate: Date | null = null;
-  let endDate: Date | null = null;
+  let firstHalfDates: PeriodDates | null = null;
+  let secondHalfDates: PeriodDates | null = null;
 
   if (period === 'weekly') {
-    const thisWeek = getThisWeekStartAndEndDates();
-    const lastWeek = getLastWeekStartAndEndDates();
-
-    startDate = lastWeek.startDate;
-    endDate = thisWeek.endDate;
+    firstHalfDates = getLastWeekStartAndEndDates();
+    secondHalfDates = getThisWeekStartAndEndDates();
   } else if (period === 'monthly') {
-    const thisMonth = getThisMonthStartAndEndDates();
-    const lastMonth = getLastMonthStartAndEndDates();
-
-    startDate = lastMonth.startDate;
-    endDate = thisMonth.endDate;
+    firstHalfDates = getLastMonthStartAndEndDates();
+    secondHalfDates = getThisMonthStartAndEndDates();
   } else if (period === 'yearly') {
-    const thisYear = getThisYearStartAndEndDates();
-
-    startDate = thisYear.startDate;
-    endDate = thisYear.endDate;
+    firstHalfDates = getLastYearStartAndEndDates();
+    secondHalfDates = getThisYearStartAndEndDates();
   }
 
-  if (!startDate || !endDate) {
-    throw new Error('Date/s missing!');
+  if (!firstHalfDates || !secondHalfDates) {
+    return {} as ChartData;
   }
 
   const startingExpenseTotalRes = await Expense.aggregate([
@@ -49,7 +41,7 @@ export const getNetAmountChartData = async (
       $match: {
         user: new mongoose.Types.ObjectId(userId),
         transactionDate: {
-          $lte: startDate
+          $lte: firstHalfDates.startDate
         }
       }
     },
@@ -71,7 +63,7 @@ export const getNetAmountChartData = async (
       $match: {
         user: new mongoose.Types.ObjectId(userId),
         transactionDate: {
-          $lte: startDate
+          $lte: firstHalfDates.startDate
         }
       }
     },
@@ -102,8 +94,8 @@ export const getNetAmountChartData = async (
       $match: {
         user: new mongoose.Types.ObjectId(userId),
         transactionDate: {
-          $gte: startDate,
-          $lte: endDate
+          $lte: secondHalfDates.endDate,
+          $gte: firstHalfDates.startDate
         }
       }
     },
@@ -118,8 +110,8 @@ export const getNetAmountChartData = async (
       $match: {
         user: new mongoose.Types.ObjectId(userId),
         transactionDate: {
-          $gte: startDate,
-          $lte: endDate
+          $lte: secondHalfDates.endDate,
+          $gte: firstHalfDates.startDate
         }
       }
     },
@@ -130,16 +122,17 @@ export const getNetAmountChartData = async (
     }
   ]);
 
-  const result: {
-    amount: number;
-    date: Date;
-  }[] = [];
+  const chartRows: ChartRow[] = [];
   let netAmountIndex: number = startingNetAmount;
   const dateNow = new Date();
+  let secondHalfLastRow = {
+    amount: 0,
+    date: new Date()
+  };
 
   for (
-    let dateIndex = startDate, incomeIndex = 0, expenseIndex = 0;
-    dateIndex.valueOf() <= endDate.valueOf();
+    let dateIndex = firstHalfDates.startDate, incomeIndex = 0, expenseIndex = 0;
+    dateIndex.valueOf() <= secondHalfDates.endDate.valueOf();
     dateIndex.setDate(dateIndex.getDate() + 1)
   ) {
     while (
@@ -169,9 +162,9 @@ export const getNetAmountChartData = async (
       expenseIndex++;
     }
 
-    result.push({
+    chartRows.push({
       amount: netAmountIndex,
-      date: new Date(dateIndex)
+      date: new Date(dateIndex) as Date & string
     });
 
     if (
@@ -179,9 +172,50 @@ export const getNetAmountChartData = async (
       dateIndex.getMonth() === dateNow.getMonth() &&
       dateIndex.getDate() === dateNow.getDate()
     ) {
+      secondHalfLastRow = chartRows[chartRows.length - 1];
+
       break;
     }
   }
 
-  return JSON.parse(JSON.stringify(result)) as typeof result;
+  // console.log(firstHalfDates.startDate.toLocaleDateString());
+  // console.log(firstHalfDates.endDate.toLocaleDateString());
+  // console.log(secondHalfDates.startDate.toLocaleDateString());
+  // console.log(secondHalfDates.endDate.toLocaleDateString());
+
+  let firstHalfLastRow = chartRows.find(row => {
+    if (
+      row.date.getFullYear() === firstHalfDates.endDate.getFullYear() &&
+      row.date.getMonth() === firstHalfDates.endDate.getMonth() &&
+      row.date.getDate() === firstHalfDates.endDate.getDate()
+    ) {
+      return row;
+    }
+  });
+
+  if (!firstHalfLastRow) {
+    throw new Error('Something went wrong! Could not get Net Amount Data');
+  }
+
+  const percentageChange = getPercentageChange(
+    firstHalfLastRow.amount,
+    secondHalfLastRow.amount
+  );
+
+  const result: ChartData = {
+    balance: {
+      amount: secondHalfLastRow.amount,
+      percentageChange: {
+        difference: secondHalfLastRow.amount - firstHalfLastRow.amount,
+        percentage: percentageChange,
+        isPositive: percentageChange >= 0 ? true : false
+      }
+    },
+    rows: JSON.parse(JSON.stringify(chartRows)) as ChartRow[]
+  };
+
+  // console.log(result);
+  // console.log(firstHalfLastRow);
+
+  return result;
 };
