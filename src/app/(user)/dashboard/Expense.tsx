@@ -34,8 +34,6 @@ const Expense = () => {
     getData();
   }, [dashboard]);
 
-  console.log(data);
-
   if (!data) {
     return (
       <Bento.Box>
