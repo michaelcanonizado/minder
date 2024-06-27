@@ -23,7 +23,20 @@ import Chart from '@/components/sections/chart';
 import Balance from '@/components/sections/balance';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
 
-const periods: Period[] = ['weekly', 'monthly', 'yearly'];
+const periods: { name: string; key: Period }[] = [
+  {
+    name: 'Weekly',
+    key: 'weekly'
+  },
+  {
+    name: 'Monthly',
+    key: 'monthly'
+  },
+  {
+    name: 'Yearly',
+    key: 'yearly'
+  }
+];
 
 const NetAmount = () => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -130,21 +143,19 @@ const NetAmount = () => {
         <div className=''>
           <Select
             defaultValue={dashboard.period}
-            onValueChange={value => changeDashboardPeriod(value as Period)}
+            onValueChange={value => {
+              changeDashboardPeriod(value as Period);
+            }}
           >
-            <SelectTrigger className='w-[180px] capitalize'>
+            <SelectTrigger className='w-[100px]capitalize'>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 {periods.map(period => {
                   return (
-                    <SelectItem
-                      value={period}
-                      className='capitalize'
-                      key={period}
-                    >
-                      {period}
+                    <SelectItem value={period.key} key={period.key}>
+                      {period.name}
                     </SelectItem>
                   );
                 })}
