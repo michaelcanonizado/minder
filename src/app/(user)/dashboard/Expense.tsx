@@ -75,6 +75,16 @@ const Expense = () => {
       <ArrowDown className='h-fit w-[14px]' />
     );
 
+  const headerPercentage =
+    data.balance.percentageChange.percentage !== Infinity ? (
+      <span className='flex flex-row'>
+        ({headerArrow}
+        {` ${data.balance.percentageChange.percentage}%`}){' '}
+      </span>
+    ) : (
+      ''
+    );
+
   let headerLabel = '';
   if (dashboard.period === 'weekly') {
     headerLabel = 'vs last week';
@@ -93,8 +103,7 @@ const Expense = () => {
           className={`flex flex-row ${data.balance.percentageChange.isPositive ? 'text-accent-100' : 'text-accent-200'}`}
         >
           {headerDifference}
-          &nbsp; ({headerArrow}
-          {` ${data.balance.percentageChange.percentage}%`})
+          &nbsp;{headerPercentage}
         </span>
         &nbsp;
         {headerLabel}
