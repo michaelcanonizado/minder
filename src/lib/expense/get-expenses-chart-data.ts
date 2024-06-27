@@ -97,7 +97,7 @@ export const getExpensesChartData = async (userId: string, period: Period) => {
       percentageChange: {
         difference: secondHalfTotalAmount - firstHalfTotalAmount,
         percentage: percentageChange,
-        isPositive: percentageChange >= 0 ? true : false
+        isPositive: percentageChange <= 0 ? true : false
       }
     },
     rows: JSON.parse(JSON.stringify(data)) as ChartRow[]
