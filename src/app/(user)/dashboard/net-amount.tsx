@@ -147,7 +147,7 @@ const NetAmount = () => {
               changeDashboardPeriod(value as Period);
             }}
           >
-            <SelectTrigger className='w-[100px]capitalize'>
+            <SelectTrigger className='w-[100px]'>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
