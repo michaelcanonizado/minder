@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import {
   Select,
   SelectContent,
@@ -10,19 +12,40 @@ import {
   SelectValue
 } from '@/components/ui/select';
 
-import Bento from '@/components/sections/bento';
-
-import { Period } from '@/types';
 import { useDashboardContext } from '@/context/dashboard-context';
+import { ChartData, ChartRow, Period } from '@/types';
+
+import { getNetAmountChartData } from '@/lib/balance/get.net-amount-chart-data';
+
+import { ArrowDown, ArrowUp } from 'lucide-react';
+import Bento from '@/components/sections/bento';
+import Chart from '@/components/sections/chart';
+import Balance from '@/components/sections/balance';
+import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
 
 const periods: Period[] = ['weekly', 'monthly', 'yearly'];
 
 const NetAmount = () => {
-  const userId = process.env.TEMP_USER_ID!;
+  const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
 
   const { dashboard, changeDashboardPeriod } = useDashboardContext();
 
-  // console.log(dashboard);
+  const [data, setData] = useState<ChartData | null>(null);
+
+  console.log(userId);
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await getNetAmountChartData(userId, dashboard.period);
+
+      data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
+
+      console.log(data);
+
+      setData(data);
+    };
+    getData();
+  }, [dashboard]);
 
   return (
     <Bento.Box className=''>
