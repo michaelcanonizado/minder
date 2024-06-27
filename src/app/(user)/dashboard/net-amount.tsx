@@ -47,9 +47,12 @@ const NetAmount = () => {
     getData();
   }, [dashboard]);
 
+  const startDate = data ? data.rows[0].date : '';
+  const endDate = data ? data.rows[data.rows.length - 1].date : '';
+
   return (
     <Bento.Box className=''>
-      <Bento.Box.Header>
+      <Bento.Box.Header className='border-none'>
         <div className=''></div>
         <div className=''>
           <Select
@@ -77,7 +80,15 @@ const NetAmount = () => {
           </Select>
         </div>
       </Bento.Box.Header>
-      <Bento.Box.Content>Graph</Bento.Box.Content>
+      <Bento.Box.Content className='p-0'>
+        {data && (
+          <Chart.Area data={data.rows} index='date' categories={['amount']} />
+        )}
+        <div className='flex flex-row justify-between px-4 pb-4 pt-8'>
+          <Chart.Label>{startDate}</Chart.Label>
+          <Chart.Label>{endDate}</Chart.Label>
+        </div>
+      </Bento.Box.Content>
     </Bento.Box>
   );
 };
