@@ -71,10 +71,6 @@ export const getIncomesChartData = async (userId: string, period: Period) => {
     }
   ]).exec()) as ChartRow[];
 
-  const totalAmount = data.reduce((sum: number, item) => {
-    return sum + item.amount;
-  }, 0);
-
   const firstHalfTotalAmount = data.reduce((sum: number, item) => {
     if (item.date.valueOf() <= firstHalfDates.endDate.valueOf()) {
       return sum + item.amount;
@@ -96,7 +92,7 @@ export const getIncomesChartData = async (userId: string, period: Period) => {
 
   const result: ChartData = {
     balance: {
-      amount: totalAmount,
+      amount: secondHalfTotalAmount,
       percentageChange: {
         difference: secondHalfTotalAmount - firstHalfTotalAmount,
         percentage: percentageChange,
