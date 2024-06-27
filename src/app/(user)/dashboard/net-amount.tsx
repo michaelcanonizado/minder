@@ -43,8 +43,6 @@ const NetAmount = () => {
 
   const [data, setData] = useState<ChartData | null>(null);
 
-  console.log(userId);
-
   useEffect(() => {
     const getData = async () => {
       const data = await getNetAmountChartData(userId, dashboard.period);
