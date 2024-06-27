@@ -2,26 +2,24 @@
 
 import { useEffect, useState } from 'react';
 
+import { useDashboardContext } from '@/context/dashboard-context';
+import { ChartData, ChartRow, Period } from '@/types';
+
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-
-import { useDashboardContext } from '@/context/dashboard-context';
-import { ChartData, ChartRow, Period } from '@/types';
-
-import { getNetAmountChartData } from '@/lib/balance/get.net-amount-chart-data';
-
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
+
 import Balance from '@/components/sections/balance';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
+import { getNetAmountChartData } from '@/lib/balance/get.net-amount-chart-data';
 
 const periods: { name: string; key: Period }[] = [
   {
