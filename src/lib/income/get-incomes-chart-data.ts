@@ -4,12 +4,15 @@ import mongoose from 'mongoose';
 import { databaseConnect } from '@/helpers/database/database';
 import Income from '@/models/income';
 
+import { getPercentageChange } from '@/helpers/get-percentage-change';
 import { getLastWeekStartAndEndDates } from '@/helpers/dates/get-last-week-start-and-end-dates';
 import { getThisWeekStartAndEndDates } from '@/helpers/dates/get-this-week-start-and-end-dates';
 import { getThisMonthStartAndEndDates } from '@/helpers/dates/get-this-month-start-and-end-dates';
 import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-start-and-end-dates';
+import { getLastYearStartAndEndDates } from '@/helpers/dates/get-last-year-start-and-end-dates';
+import { getThisYearStartAndEndDates } from '@/helpers/dates/get-this-year-start-and-end-dates';
+
 import { ChartData, ChartRow, Period, PeriodDates } from '@/types';
-import { getPercentageChange } from '@/helpers/get-percentage-change';
 
 export const getIncomesChartData = async (userId: string, period: Period) => {
   await databaseConnect();
@@ -23,6 +26,9 @@ export const getIncomesChartData = async (userId: string, period: Period) => {
   } else if (period === 'monthly') {
     firstHalfDates = getLastMonthStartAndEndDates();
     secondHalfDates = getThisMonthStartAndEndDates();
+  } else if (period === 'yearly') {
+    firstHalfDates = getLastYearStartAndEndDates();
+    secondHalfDates = getThisYearStartAndEndDates();
   }
 
   if (!firstHalfDates || !secondHalfDates) {
