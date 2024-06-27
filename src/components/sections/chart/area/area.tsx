@@ -73,7 +73,7 @@ const Area = ({
       startEndOnly={true}
       showGradient={true}
       valueFormatter={showCurrency ? formatCurrency : undefined}
-      curveType='natural'
+      curveType='linear'
       {...props}
     />
   );
