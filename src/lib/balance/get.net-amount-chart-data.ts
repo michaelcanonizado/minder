@@ -178,11 +178,6 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
     }
   }
 
-  // console.log(firstHalfDates.startDate.toLocaleDateString());
-  // console.log(firstHalfDates.endDate.toLocaleDateString());
-  // console.log(secondHalfDates.startDate.toLocaleDateString());
-  // console.log(secondHalfDates.endDate.toLocaleDateString());
-
   let firstHalfLastRow = chartRows.find(row => {
     if (
       row.date.getFullYear() === firstHalfDates.endDate.getFullYear() &&
@@ -213,9 +208,6 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
     },
     rows: JSON.parse(JSON.stringify(chartRows)) as ChartRow[]
   };
-
-  // console.log(result);
-  // console.log(firstHalfLastRow);
 
   return result;
 };
