@@ -97,7 +97,7 @@ const Expense = ({ className }: { className?: string }) => {
         {` ${data.balance.percentageChange.percentage}%`}){' '}
       </span>
     ) : (
-      ''
+      <span className='flex flex-row'>({headerArrow})</span>
     );
 
   let headerLabel = '';
