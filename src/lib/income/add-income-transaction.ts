@@ -8,12 +8,13 @@ import mongoose from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
 /**
+ * Records an income of the user
  *
  * @param data data submitted from the form
  * @returns a response object about the success state
  */
 export const addIncomeTransaction = async (data: unknown) => {
-  // Validate data coming from the client
+  /* Validate data coming from the client */
   const result = trackIncomeSchema.safeParse(data);
   if (!result.success) {
     console.log(result.error);
