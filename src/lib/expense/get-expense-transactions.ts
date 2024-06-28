@@ -5,6 +5,15 @@ import { databaseConnect } from '@/helpers/database/database';
 import Expense, { ExpenseType } from '@/models/expense';
 import mongoose from 'mongoose';
 
+/**
+ * Gets the user's expense transactions with pagination
+ *
+ * @param userId _id of the user
+ * @param page current page
+ * @param limit how many to return
+ * @returns an array of the matched expenses using the
+ * userId and the maximum page number
+ */
 export const getExpenseTransactions = async ({
   page = 1,
   limit = 10,
@@ -18,6 +27,12 @@ export const getExpenseTransactions = async ({
 
   const skip = (page - 1) * limit;
 
+  /**
+   *
+   *
+   * Use aggregate to populate the wallet and category
+   * which is a sub document within the user document
+   */
   const data: unknown = await Expense.aggregate([
     {
       $match: {
@@ -36,7 +51,7 @@ export const getExpenseTransactions = async ({
       $limit: limit
     },
     {
-      //Populate the expenses document with user details
+      /* Populate the user property with user's details */
       $lookup: {
         from: 'users',
         localField: 'user',
@@ -45,11 +60,11 @@ export const getExpenseTransactions = async ({
       }
     },
     {
-      // Turn the new user array field into just an object
       $unwind: '$user'
     },
     {
-      // Filter the user.wallets array to just get the one that matches wallet
+      /* Filter the user.wallets[] to get the one that matches 
+      wallet of the expense */
       $set: {
         wallet: {
           $filter: {
@@ -63,11 +78,11 @@ export const getExpenseTransactions = async ({
       }
     },
     {
-      // Turn the new array into just an object
       $unwind: '$wallet'
     },
     {
-      // Filter the user.categories.expense array to just get the one that matches category
+      /* Filter the user.categories.expense[] to get the one that
+      matches category of the expense */
       $set: {
         category: {
           $filter: {
@@ -81,7 +96,6 @@ export const getExpenseTransactions = async ({
       }
     },
     {
-      // Turn the new array into just an object
       $unwind: '$category'
     }
   ]).exec();
