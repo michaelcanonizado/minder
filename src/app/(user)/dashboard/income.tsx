@@ -59,10 +59,26 @@ const Income = ({ className }: { className?: string }) => {
     headerTitle = 'Income this year';
   }
 
-  const headerAmount = data.balance.amount.current.toLocaleString('en-US', {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2
-  });
+  const headerCurrentAmount = (
+    <Balance.Compact.Amount className=''>
+      {' '}
+      $
+      {data.balance.amount.current.toLocaleString('en-US', {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2
+      })}
+    </Balance.Compact.Amount>
+  );
+
+  const headerPreviousAmount = (
+    <Balance.Compact.SubHeader className='mb-0.5'>
+      from $
+      {data.balance.amount.previous.toLocaleString('en-US', {
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 2
+      })}
+    </Balance.Compact.SubHeader>
+  );
 
   const headerDifference =
     data.balance.percentageChange.difference.toLocaleString('en-US', {
@@ -100,13 +116,8 @@ const Income = ({ className }: { className?: string }) => {
       <Balance.Compact.Header>{headerTitle}</Balance.Compact.Header>
 
       <div className='flex flex-row items-end gap-1'>
-        <Balance.Compact.Amount className=''>
-          {' '}
-          ${headerAmount}
-        </Balance.Compact.Amount>
-        <Balance.Compact.SubHeader className='mb-0.5'>
-          from 123451
-        </Balance.Compact.SubHeader>
+        {headerCurrentAmount}
+        {headerPreviousAmount}
       </div>
 
       <Balance.Compact.SubHeader>
