@@ -3,7 +3,7 @@
 import { databaseConnect } from '@/helpers/database/database';
 import User, { UserType } from '@/models/user';
 
-export interface WalletsDataType {
+export interface CategoriesType {
   data: Pick<UserType, 'categories'>['categories'];
 }
 
@@ -18,5 +18,5 @@ export const getCategoriesData = async (userId: string) => {
 
   return {
     data: JSON.parse(JSON.stringify(user.categories))
-  };
+  } as CategoriesType;
 };
