@@ -8,6 +8,7 @@ export interface CategoriesType {
 }
 
 /**
+ * Gets the categories of the user
  *
  * @param userId _id of user
  * @returns the categories object of the user
