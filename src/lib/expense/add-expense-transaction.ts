@@ -8,6 +8,7 @@ import trackExpenseSchema from '@/schemas/track-expense';
 import { revalidatePath } from 'next/cache';
 
 /**
+ * Records an expense of the user
  *
  * @param data data submitted from the form
  * @returns a response object about the success state
