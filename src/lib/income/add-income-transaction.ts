@@ -7,6 +7,11 @@ import trackIncomeSchema from '@/schemas/track-income';
 import mongoose from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
+/**
+ *
+ * @param data data submitted from the form
+ * @returns a response object about the success state
+ */
 export const addIncomeTransaction = async (data: unknown) => {
   // Validate data coming from the client
   const result = trackIncomeSchema.safeParse(data);
@@ -20,7 +25,7 @@ export const addIncomeTransaction = async (data: unknown) => {
 
   await databaseConnect();
 
-  // Get user document
+  /* Get user document */
   const user = await User.findById(result.data.userId);
   if (user === null) {
     return {
@@ -29,7 +34,7 @@ export const addIncomeTransaction = async (data: unknown) => {
     };
   }
 
-  // Create new income document
+  /* Create new income document */
   const income = new Income({
     user: new mongoose.Types.ObjectId(result.data.userId),
     wallet: new mongoose.Types.ObjectId(result.data.walletId),
@@ -39,23 +44,17 @@ export const addIncomeTransaction = async (data: unknown) => {
     transactionDate: result.data.date
   });
 
-  // Update user's corresponding wallet balance
+  /* Update user's corresponding wallet balance */
   for (const wallet of user.wallets) {
     if (wallet._id == result.data.walletId) {
       wallet.balance! += result.data.amount;
     }
   }
 
-  // Update user's total balance
+  /* Update user's balances */
   user.balance.netBalance += result.data.amount;
-
-  // Update user's income balance
   user.balance.totalIncome += result.data.amount;
 
-  console.log('User: ', user);
-  console.log('Income: ', income);
-
-  // Save user and income document
   await user.save();
   await income.save();
 
