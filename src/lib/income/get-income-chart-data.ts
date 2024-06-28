@@ -14,7 +14,7 @@ import { getThisYearStartAndEndDates } from '@/helpers/dates/get-this-year-start
 
 import { ChartData, ChartRow, Period, PeriodDates } from '@/types';
 
-export const getIncomesChartData = async (userId: string, period: Period) => {
+export const getIncomeChartData = async (userId: string, period: Period) => {
   await databaseConnect();
 
   let firstHalfDates: PeriodDates | null = null;

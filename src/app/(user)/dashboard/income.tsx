@@ -7,7 +7,7 @@ import { ChartData, ChartRow } from '@/types';
 
 import { cn } from '@/lib/utils';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
-import { getIncomesChartData } from '@/lib/income/get-incomes-chart-data';
+import { getIncomeChartData } from '@/lib/income/get-income-chart-data';
 
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import Bento from '@/components/sections/bento';
@@ -25,7 +25,7 @@ const Income = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getIncomesChartData(
+      const data = await getIncomeChartData(
         userId,
         dashboard.period as 'weekly' | 'monthly'
       );
