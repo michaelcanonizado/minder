@@ -136,7 +136,12 @@ const Expense = ({ className }: { className?: string }) => {
       <Bento.Box.Header className='border-none'>{header}</Bento.Box.Header>
       <Bento.Box.Content className='p-0'>
         {data && (
-          <Chart.Area data={data.rows} index='date' categories={['amount']} />
+          <Chart.Area
+            data={data.rows}
+            index='date'
+            categories={['amount']}
+            className='h-[100px]'
+          />
         )}
         <div className='flex flex-row justify-between px-4 pb-4 pt-8'>
           <Chart.Label>{startDate}</Chart.Label>
