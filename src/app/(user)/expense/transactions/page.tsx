@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getExpensesData } from '@/lib/expense/get-expenses-data';
+import { getExpenseTransactions } from '@/lib/expense/get-expense-transactions';
 import Bento from '@/components/sections/bento';
 import Table from '@/components/sections/table';
 import { columns } from './columns';
@@ -18,7 +18,7 @@ const expenseTransactions = async ({
 
   const userId = process.env.TEMP_USER_ID!;
 
-  const expenses = await getExpensesData({ page, limit, userId });
+  const expenses = await getExpenseTransactions({ page, limit, userId });
 
   console.log(expenses);
 

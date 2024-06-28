@@ -5,7 +5,7 @@ import { databaseConnect } from '@/helpers/database/database';
 import Expense, { ExpenseType } from '@/models/expense';
 import mongoose from 'mongoose';
 
-export const getExpensesData = async ({
+export const getExpenseTransactions = async ({
   page = 1,
   limit = 10,
   userId
