@@ -172,7 +172,16 @@ const NetAmount = ({ className }: { className?: string }) => {
       </Bento.Box.Header>
       <Bento.Box.Content className='p-0'>
         {data && (
-          <Chart.Area data={data.rows} index='date' categories={['amount']} />
+          <Chart.Area
+            data={data.rows}
+            index='date'
+            categories={['amount']}
+            colors={[
+              data.balance.percentageChange.isPositive
+                ? 'accent-100'
+                : 'accent-200'
+            ]}
+          />
         )}
         <div className='flex flex-row justify-between px-4 pb-4 pt-8'>
           <Chart.Label>{startDate}</Chart.Label>

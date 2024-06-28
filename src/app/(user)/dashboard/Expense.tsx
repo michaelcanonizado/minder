@@ -141,6 +141,11 @@ const Expense = ({ className }: { className?: string }) => {
             index='date'
             categories={['amount']}
             className='h-[100px]'
+            colors={[
+              data.balance.percentageChange.isPositive
+                ? 'accent-100'
+                : 'accent-200'
+            ]}
           />
         )}
         <div className='flex flex-row justify-between px-4 pb-4 pt-8'>
