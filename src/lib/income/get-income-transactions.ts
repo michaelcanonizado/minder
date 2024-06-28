@@ -4,6 +4,15 @@ import mongoose from 'mongoose';
 import { databaseConnect } from '@/helpers/database/database';
 import Income, { IncomeType } from '@/models/income';
 
+/**
+ * Gets the user's income transactions with pagination
+ *
+ * @param userId _id of the user
+ * @param page current page
+ * @param limit how many to return
+ * @returns an array of the matched incomes using the
+ * userId and the maximum page number
+ */
 export const getIncomeTransactions = async ({
   page = 1,
   limit = 10,
@@ -17,7 +26,12 @@ export const getIncomeTransactions = async ({
 
   const skip = (page - 1) * limit;
 
-  // Currently this doesn't match the userId, it fetches all documents in the collection!
+  /**
+   *
+   *
+   * Use aggregate to populate the wallet and category
+   * which is a sub document within the user document
+   */
   const data: unknown = await Income.aggregate([
     { $match: { user: new mongoose.Types.ObjectId(userId) } },
     {
@@ -32,6 +46,7 @@ export const getIncomeTransactions = async ({
       $limit: limit
     },
     {
+      /* Populate the user property with user's details */
       $lookup: {
         from: 'users',
         localField: 'user',
@@ -43,6 +58,8 @@ export const getIncomeTransactions = async ({
       $unwind: '$user'
     },
     {
+      /* Filter the user.wallets[] to get the one that matches 
+      wallet of the income */
       $set: {
         wallet: {
           $filter: {
@@ -59,6 +76,8 @@ export const getIncomeTransactions = async ({
       $unwind: '$wallet'
     },
     {
+      /* Filter the user.categories.income[] to get the one that
+      matches category of the income */
       $set: {
         category: {
           $filter: {
