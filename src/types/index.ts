@@ -17,7 +17,10 @@ export type ChartRow = {
 };
 export type ChartData = {
   balance: {
-    amount: number;
+    amount: {
+      current: number;
+      previous: number;
+    };
     percentageChange: {
       percentage: number;
       difference: number;
