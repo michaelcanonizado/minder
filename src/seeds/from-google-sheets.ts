@@ -1,11 +1,11 @@
 import { authenticateGoogleAPI } from '@/helpers/authenticate-google-api';
 import { databaseClose, databaseConnect } from '@/helpers/database/database';
-import Expense from '@/models/expense';
-import Income from '@/models/income';
 import User from '@/models/user';
+import Income from '@/models/income';
+import Expense from '@/models/expense';
+import BalanceTransfer from '@/models/balance-transfer';
 
 export const seedFromGoogleSheets = async () => {
-  // Authenticate Google API
   const [googleSheets, auth] = await authenticateGoogleAPI();
 
   await databaseConnect();
@@ -13,19 +13,23 @@ export const seedFromGoogleSheets = async () => {
   const spreadsheetId = process.env.GOOGLE_SHEET_ID;
   const userId = process.env.TEMP_USER_ID;
 
-  // Get User document
   const user = await User.findById(userId);
   if (!user) {
     console.log('User not found!');
     return;
   }
 
-  // Reset User's wallet balances
+  user.balance.netBalance = 0;
+  user.balance.totalIncome = 0;
+  user.balance.totalExpense = 0;
   for (const wallet of user.wallets) {
     wallet.balance = 0;
   }
 
-  // Get income sheet rows
+  await Income.deleteMany({});
+  await Expense.deleteMany({});
+  await BalanceTransfer.deleteMany({});
+
   const incomeRows = await googleSheets.spreadsheets.values.get({
     auth,
     spreadsheetId,
@@ -33,11 +37,7 @@ export const seedFromGoogleSheets = async () => {
   });
   const incomeSheetRows = incomeRows.data.values ? incomeRows.data.values : [];
 
-  // Delete all documents in the collection
-  await Income.deleteMany({});
-  // Format income sheet rows and add to the incomes collection
   for (let i = 1; i < incomeSheetRows.length; i++) {
-    // Find corresponding wallet
     const wallet = user.wallets.find(wallet => {
       if (
         wallet.name.toLowerCase().includes(incomeSheetRows[i][5].toLowerCase())
@@ -46,7 +46,6 @@ export const seedFromGoogleSheets = async () => {
       }
     });
 
-    // Find corresponding category
     const category = user.categories.income.find(category => {
       if (
         category.name
@@ -62,7 +61,6 @@ export const seedFromGoogleSheets = async () => {
       ? incomeSheetRows[i][4]
       : '-';
 
-    // Create income document
     const res = new Income({
       user: userId,
       wallet: wallet ? wallet._id : null,
@@ -74,9 +72,8 @@ export const seedFromGoogleSheets = async () => {
       updatedAt: new Date(incomeSheetRows[i][0])
     });
 
-    // Update User's balance
     if (wallet) {
-      wallet.balance += amount;
+      wallet.balance! += amount;
     }
     user.balance.netBalance += amount;
     user.balance.totalIncome += amount;
@@ -84,7 +81,6 @@ export const seedFromGoogleSheets = async () => {
     await res.save();
   }
 
-  // Get expense sheet rows
   const expenseRows = await googleSheets.spreadsheets.values.get({
     auth,
     spreadsheetId,
@@ -94,11 +90,7 @@ export const seedFromGoogleSheets = async () => {
     ? expenseRows.data.values
     : [];
 
-  // Delete all documents in the collection
-  await Expense.deleteMany({});
-  // Format expense sheet rows and add to the expenses collection
   for (let i = 1; i < expenseSheetRows.length; i++) {
-    // Find corresponding wallet
     const wallet = user.wallets.find(wallet => {
       if (
         wallet.name.toLowerCase().includes(expenseSheetRows[i][5].toLowerCase())
@@ -107,7 +99,6 @@ export const seedFromGoogleSheets = async () => {
       }
     });
 
-    // Find corresponding category
     const category = user.categories.expense.find(category => {
       if (
         category.name
@@ -123,7 +114,6 @@ export const seedFromGoogleSheets = async () => {
       ? expenseSheetRows[i][4]
       : '-';
 
-    // Create expense document
     const res = new Expense({
       user: userId,
       wallet: wallet ? wallet._id : null,
@@ -135,9 +125,8 @@ export const seedFromGoogleSheets = async () => {
       updatedAt: new Date(expenseSheetRows[i][0])
     });
 
-    // Update User's balance
     if (wallet) {
-      wallet.balance -= amount;
+      wallet.balance! -= amount;
     }
     user.balance.netBalance -= amount;
     user.balance.totalExpense += amount;
@@ -145,7 +134,6 @@ export const seedFromGoogleSheets = async () => {
     await res.save();
   }
 
-  // Save changes to User document
   await user.save();
   console.log(user);
 
