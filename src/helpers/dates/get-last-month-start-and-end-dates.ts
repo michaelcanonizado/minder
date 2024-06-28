@@ -1,9 +1,9 @@
 import { PeriodDates } from '@/types';
 
 /**
- * Gets the start and end date of last month
+ * Gets the start and end dates of last month
  *
- * @returns start and end date
+ * @returns start and end dates
  */
 export const getLastMonthStartAndEndDates = (): PeriodDates => {
   const now = new Date();
