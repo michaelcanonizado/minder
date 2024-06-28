@@ -7,7 +7,7 @@ import { ChartData, ChartRow } from '@/types';
 
 import { cn } from '@/lib/utils';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
-import { getExpensesChartData } from '@/lib/expense/get-expenses-chart-data';
+import { getExpenseChartData } from '@/lib/expense/get-expense-chart-data';
 
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import Bento from '@/components/sections/bento';
@@ -23,7 +23,7 @@ const Expense = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getExpensesChartData(
+      const data = await getExpenseChartData(
         userId,
         dashboard.period as 'weekly' | 'monthly'
       );
