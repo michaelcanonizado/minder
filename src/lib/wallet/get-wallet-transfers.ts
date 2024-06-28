@@ -6,6 +6,15 @@ import BalanceTransfer, {
   BalanceTransferType
 } from '@/models/balance-transfer';
 
+/**
+ * Gets the user's balance transfer records with pagination
+ *
+ * @param userId _id of the user
+ * @param page current page
+ * @param limit how many to return
+ * @returns an array of the matched incomes using the
+ * userId and the maximum page number
+ */
 export const getWalletTransfers = async ({
   page = 1,
   limit = 10,
@@ -19,6 +28,12 @@ export const getWalletTransfers = async ({
 
   const skip = (page - 1) * limit;
 
+  /**
+   *
+   *
+   * Use aggregate to populate the wallets which is a sub
+   * document within the user document
+   */
   const data: unknown = await BalanceTransfer.aggregate([
     { $match: { user: new mongoose.Types.ObjectId(userId) } },
     {
