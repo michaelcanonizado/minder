@@ -20,7 +20,7 @@ import Balance from '@/components/sections/balance';
 
 import { cn } from '@/lib/utils';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
-import { getNetAmountChartData } from '@/lib/balance/get.net-amount-chart-data';
+import { getNetAmountChartData } from '@/lib/net-amount/get-net-amount-chart-data';
 
 const periods: { name: string; key: Period }[] = [
   {
