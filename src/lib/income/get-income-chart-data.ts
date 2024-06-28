@@ -14,9 +14,28 @@ import { getThisYearStartAndEndDates } from '@/helpers/dates/get-this-year-start
 
 import { ChartData, ChartRow, Period, PeriodDates } from '@/types';
 
+/**
+ * Gets the income transactions within a time period.
+ * It fetches the incomes made during the current
+ * period(this week/month/year) as well as the previous
+ * period(last week/month/year), as data about the
+ * previous period is needed when determining the
+ * percentage change of the amount. The data from both
+ * periods will then be concatenated together
+ *
+ * @param userId _id of the user
+ * @param period time period of the data needed
+ * @returns an object containing the balance and the
+ * simplified incomes data within the time period
+ */
 export const getIncomeChartData = async (userId: string, period: Period) => {
   await databaseConnect();
 
+  /**
+   *
+   *
+   * Get period dates
+   */
   let firstHalfDates: PeriodDates | null = null;
   let secondHalfDates: PeriodDates | null = null;
 
@@ -35,6 +54,11 @@ export const getIncomeChartData = async (userId: string, period: Period) => {
     return {} as ChartData;
   }
 
+  /**
+   *
+   *
+   * Fetch incomes within the time period
+   */
   const data = (await Income.aggregate([
     {
       $match: {
@@ -77,6 +101,12 @@ export const getIncomeChartData = async (userId: string, period: Period) => {
     }
   ]).exec()) as ChartRow[];
 
+  /**
+   *
+   *
+   * Calculate the total amounts for the current and
+   * previous periods and calculate the percentage change
+   */
   const firstHalfTotalAmount = data.reduce((sum: number, item) => {
     if (item.date.valueOf() <= firstHalfDates.endDate.valueOf()) {
       return sum + item.amount;
@@ -96,6 +126,11 @@ export const getIncomeChartData = async (userId: string, period: Period) => {
     secondHalfTotalAmount
   );
 
+  /**
+   *
+   *
+   * Collect the results
+   */
   const result: ChartData = {
     balance: {
       amount: {
