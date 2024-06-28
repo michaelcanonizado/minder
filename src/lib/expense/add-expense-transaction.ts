@@ -1,12 +1,17 @@
 'use server';
 
+import mongoose from 'mongoose';
 import { databaseConnect } from '@/helpers/database/database';
 import Expense from '@/models/expense';
 import User from '@/models/user';
 import trackExpenseSchema from '@/schemas/track-expense';
-import mongoose from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
+/**
+ *
+ * @param data data submitted from the form
+ * @returns a response object about the success state
+ */
 export const addExpenseTransaction = async (data: unknown) => {
   // Validate data coming from the client
   const result = trackExpenseSchema.safeParse(data);
@@ -25,7 +30,7 @@ export const addExpenseTransaction = async (data: unknown) => {
   if (user === null) {
     return {
       isSuccessful: false,
-      message: 'Failed to add expense! Please try again'
+      message: 'Failed to add expense! Could not find the user'
     };
   }
 
