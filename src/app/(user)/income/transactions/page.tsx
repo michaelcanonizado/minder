@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getIncomesData } from '@/lib/income/get-incomes-data';
+import { getIncomeTransactions } from '@/lib/income/get-income-transactions';
 import Bento from '@/components/sections/bento';
 import Table from '@/components/sections/table';
 import { columns } from './columns';
@@ -18,7 +18,7 @@ const IncomeTransactions = async ({
 
   const userId = process.env.TEMP_USER_ID!;
 
-  const incomes = await getIncomesData({ page, limit, userId });
+  const incomes = await getIncomeTransactions({ page, limit, userId });
 
   console.log(incomes);
   console.log(`Data count: ${incomes.data.length}`);

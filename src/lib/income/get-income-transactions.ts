@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { databaseConnect } from '@/helpers/database/database';
 import Income, { IncomeType } from '@/models/income';
 
-export const getIncomesData = async ({
+export const getIncomeTransactions = async ({
   page = 1,
   limit = 10,
   userId
