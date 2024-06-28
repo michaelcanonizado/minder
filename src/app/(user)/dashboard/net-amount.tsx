@@ -65,7 +65,7 @@ const NetAmount = ({ className }: { className?: string }) => {
 
   let headerTitle = 'Net Amount';
 
-  const headerAmount = data.balance.amount.toLocaleString('en-US', {
+  const headerAmount = data.balance.amount.current.toLocaleString('en-US', {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2
   });

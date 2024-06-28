@@ -98,7 +98,10 @@ export const getExpensesChartData = async (userId: string, period: Period) => {
 
   const result: ChartData = {
     balance: {
-      amount: secondHalfTotalAmount,
+      amount: {
+        current: secondHalfTotalAmount,
+        previous: firstHalfTotalAmount
+      },
       percentageChange: {
         difference: secondHalfTotalAmount - firstHalfTotalAmount,
         percentage: percentageChange,

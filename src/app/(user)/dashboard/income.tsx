@@ -59,7 +59,7 @@ const Income = ({ className }: { className?: string }) => {
     headerTitle = 'Income this year';
   }
 
-  const headerAmount = data.balance.amount.toLocaleString('en-US', {
+  const headerAmount = data.balance.amount.current.toLocaleString('en-US', {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2
   });

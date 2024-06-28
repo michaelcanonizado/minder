@@ -237,7 +237,10 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
   // Collect the data gathered
   const result: ChartData = {
     balance: {
-      amount: secondHalfLastRow.amount,
+      amount: {
+        current: secondHalfLastRow.amount,
+        previous: firstHalfLastRow.amount
+      },
       percentageChange: {
         difference: secondHalfLastRow.amount - firstHalfLastRow.amount,
         percentage: percentageChange,

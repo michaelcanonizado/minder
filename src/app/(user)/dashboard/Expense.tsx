@@ -57,7 +57,7 @@ const Expense = ({ className }: { className?: string }) => {
     headerTitle = 'Expense this year';
   }
 
-  const headerAmount = data.balance.amount.toLocaleString('en-US', {
+  const headerAmount = data.balance.amount.current.toLocaleString('en-US', {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2
   });
