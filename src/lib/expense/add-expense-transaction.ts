@@ -13,7 +13,7 @@ import { revalidatePath } from 'next/cache';
  * @returns a response object about the success state
  */
 export const addExpenseTransaction = async (data: unknown) => {
-  // Validate data coming from the client
+  /* Validate data coming from the client */
   const result = trackExpenseSchema.safeParse(data);
   if (!result.success) {
     console.log(result.error);
@@ -25,7 +25,7 @@ export const addExpenseTransaction = async (data: unknown) => {
 
   await databaseConnect();
 
-  // Get user document
+  /* Get user document */
   const user = await User.findById(result.data.userId);
   if (user === null) {
     return {
@@ -34,7 +34,7 @@ export const addExpenseTransaction = async (data: unknown) => {
     };
   }
 
-  // Create new expense document
+  /* Create new expense document */
   const expense = new Expense({
     user: new mongoose.Types.ObjectId(result.data.userId),
     wallet: new mongoose.Types.ObjectId(result.data.walletId),
@@ -44,20 +44,17 @@ export const addExpenseTransaction = async (data: unknown) => {
     transactionDate: result.data.date
   });
 
-  // Update user's corresponding wallet balance
+  /* Update user's corresponding wallet balance */
   for (const wallet of user.wallets) {
     if (wallet._id == result.data.walletId) {
       wallet.balance! -= result.data.amount;
     }
   }
 
-  // Update user's total balance
+  /* Update user's balances */
   user.balance.netBalance -= result.data.amount;
-
-  // Update user's expense balance
   user.balance.totalExpense += result.data.amount;
 
-  // Save user and expense document
   await user.save();
   await expense.save();
 
