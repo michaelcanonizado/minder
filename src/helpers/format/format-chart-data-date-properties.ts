@@ -1,5 +1,12 @@
 import { format } from 'date-fns';
 
+/**
+ * Formats the Date object property of an array
+ * of objects.
+ *
+ * @param data array of objects with a date:Date property
+ * @returns the array but with formatted dates
+ */
 export const formatChartDataDateProperties = <
   T extends {
     [key: string]: any;
