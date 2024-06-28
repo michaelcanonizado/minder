@@ -1,24 +1,26 @@
 import { PeriodDates } from '@/types';
 
+/**
+ * Gets the start and end date of last week
+ *
+ * @returns start(Monday, 12:00:000AM) and end(Sunday,
+ * 11:59:999PM) dates
+ */
 export const getLastWeekStartAndEndDates = (): PeriodDates => {
-  // Function will get the start and end dates of last week. Start of the week will be: Monday, 12:00AM, and the end of the week will be: Sunday, 11:59PM
-
   const now = new Date();
-
-  // Get the current day of the week (0 for Sunday, 1 for Monday, etc.)
   const currentDayOfWeek = now.getDay();
 
-  // Calculate the start date of last week
+  /* Calculate the start date of last week */
   const startDate = new Date(now);
   startDate.setDate(now.getDate() - currentDayOfWeek - 6);
-  startDate.setHours(0, 0, 0, 0); // Set time to 12:00AM
+  startDate.setHours(0, 0, 0, 0);
 
-  // Calculate the end date of last week
+  /* Calculate the end date of last week */
   const endDate = new Date(now);
   endDate.setDate(now.getDate() - currentDayOfWeek);
-  endDate.setHours(23, 59, 59, 999); // Set time to 11:59PM
+  endDate.setHours(23, 59, 59, 999);
 
-  // If today is Sunday (currentDayOfWeek === 0), offset the dates
+  /* If today is Sunday, offset the dates */
   if (currentDayOfWeek === 0) {
     startDate.setDate(startDate.getDate() - 7);
     endDate.setDate(endDate.getDate() - 7);
