@@ -63,7 +63,7 @@ const transactionsLinks: LinkItems = [
   },
   {
     name: 'Transfers',
-    href: '/wallet/breakdown',
+    href: '/wallet/transfers',
     icon: <Shuffle />
   }
 ];
