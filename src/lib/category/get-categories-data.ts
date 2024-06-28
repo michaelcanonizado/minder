@@ -7,6 +7,11 @@ export interface CategoriesType {
   data: Pick<UserType, 'categories'>['categories'];
 }
 
+/**
+ *
+ * @param userId _id of user
+ * @returns the categories object of the user
+ */
 export const getCategoriesData = async (userId: string) => {
   await databaseConnect();
 
