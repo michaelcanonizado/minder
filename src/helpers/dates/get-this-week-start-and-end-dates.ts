@@ -1,22 +1,26 @@
 import { PeriodDates } from '@/types';
 
+/**
+ * Gets the start and end date of this week
+ *
+ * @returns start(Monday, 12:00:000AM) and end(Sunday,
+ * 11:59:999PM) dates
+ */
 export const getThisWeekStartAndEndDates = (): PeriodDates => {
   const now = new Date();
-  // Get current day of the week (0 for Sunday, 1 for Monday, ..., 6 for Saturday)
   const today = now.getDay();
 
-  // Calculate the start date of the current week (Monday)
+  /* Calculate the start date of this week */
   const startDate = new Date(now);
-  // Adjust when today is Sunday
+  /* Offset when today is Sunday */
   startDate.setDate(now.getDate() - today + (today === 0 ? -6 : 1));
-  // Set time to 12:00 AM
   startDate.setHours(0, 0, 0, 0);
 
-  // Calculate the end date of the current week (Sunday)
+  /* Calculate the end date */
   const endDate = new Date(startDate);
-  // Add 6 days to get to Sunday of the current week
+  /* Add 6 days to the start date(monday) to get
+  Sunday*/
   endDate.setDate(startDate.getDate() + 6);
-  // Set time to 11:59 PM
   endDate.setHours(23, 59, 59, 999);
 
   return {
