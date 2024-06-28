@@ -1,5 +1,10 @@
 import mongoose from 'mongoose';
 
+/**
+ * Establishes a connection to mongoDB
+ *
+ * @returns void
+ */
 export const databaseConnect = async () => {
   if (mongoose.connection.readyState) {
     console.log('Databse already connected...');
@@ -17,6 +22,11 @@ export const databaseConnect = async () => {
   return;
 };
 
+/**
+ * Closes the connection to mongoDB
+ *
+ * @returns void
+ */
 export const databaseClose = async () => {
   try {
     await mongoose.connection.close();
