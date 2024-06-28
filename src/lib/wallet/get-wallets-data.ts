@@ -8,6 +8,13 @@ export interface WalletsDataType {
   currency: Pick<UserType, 'currency'>['currency'];
 }
 
+/**
+ * Gets the wallets of the user
+ *
+ * @param userId _id of user
+ * @returns the wallets array of the user and
+ * currency
+ */
 export const getWalletsData = async (userId: string) => {
   await databaseConnect();
 
