@@ -3,6 +3,12 @@ import User from '@/models/user';
 
 // WARNING
 // This function deletes all the users in the Users collection and generates a new one. Therefore, after executing this function(npm run seed-user), you must change all code that depends on the properties of the user such as in .env.local
+
+/**
+ * Seeds a user document
+ *
+ * @returns void
+ */
 const seedUser = async () => {
   databaseConnect();
 
@@ -89,5 +95,7 @@ const seedUser = async () => {
   console.log('User generated:');
   console.log(user);
   databaseClose();
+
+  return;
 };
 seedUser();
