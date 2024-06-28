@@ -1,14 +1,21 @@
 'use server';
 
+import mongoose from 'mongoose';
 import { databaseConnect } from '@/helpers/database/database';
 import BalanceTransfer from '@/models/balance-transfer';
 import User from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
-import mongoose from 'mongoose';
+
 import { revalidatePath } from 'next/cache';
 
+/**
+ * Transfers balance between the user's wallets
+ *
+ * @param data data submitted from the form
+ * @returns a response object about the success state
+ */
 export const addWalletTransfer = async (data: unknown) => {
-  // Validate data coming from the client
+  /* Validate data coming from the client */
   const result = trackBalanceTransferSchema.safeParse(data);
   if (!result.success) {
     console.log(result.error);
@@ -20,7 +27,7 @@ export const addWalletTransfer = async (data: unknown) => {
 
   await databaseConnect();
 
-  // Get user document
+  /* Get user document */
   const user = await User.findById(result.data.userId);
   if (user === null) {
     return {
@@ -29,7 +36,7 @@ export const addWalletTransfer = async (data: unknown) => {
     };
   }
 
-  // Create new balance transfer document
+  /* Create new balance transfer document */
   const balanceTransfer = new BalanceTransfer({
     user: new mongoose.Types.ObjectId(result.data.userId),
     sourceWallet: new mongoose.Types.ObjectId(result.data.sourceWalletId),
@@ -41,16 +48,14 @@ export const addWalletTransfer = async (data: unknown) => {
     transactionDate: result.data.date
   });
 
-  // Find wallets in user's wallets
+  /* Find wallets in user's wallets */
   const sourceWallet = user.wallets.id(result.data.sourceWalletId);
   const destinationWallet = user.wallets.id(result.data.destinationWalletId);
 
-  // Update user's wallets (transfer the balance)
+  /* Transfer balance */
   sourceWallet.balance -= result.data.amount;
   destinationWallet.balance += result.data.amount;
 
-  // Save documents
-  // NOTE: add error catch here incase documents fail to save, as well as in other places that use document.save()
   await balanceTransfer.save();
   await user.save();
 
