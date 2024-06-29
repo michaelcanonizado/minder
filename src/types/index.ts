@@ -4,6 +4,10 @@ export type LinkItem = {
   icon?: React.ReactNode;
 };
 export type LinkItems = LinkItem[];
+export type LinkGroup = {
+  name: string;
+  links: LinkItems;
+};
 
 export type Period = 'weekly' | 'monthly' | 'yearly';
 export type PeriodDates = {
