@@ -21,8 +21,6 @@ const Income = ({ className }: { className?: string }) => {
 
   const [data, setData] = useState<ChartData | null>(null);
 
-  console.log(userId);
-
   useEffect(() => {
     const getData = async () => {
       const data = await getIncomeChartData(
@@ -44,8 +42,6 @@ const Income = ({ className }: { className?: string }) => {
       </Bento.Box>
     );
   }
-
-  console.log('Income component render');
 
   const startDate = data ? data.rows[0].date : '';
   const endDate = data ? data.rows[data.rows.length - 1].date : '';

@@ -43,8 +43,6 @@ const Expense = ({ className }: { className?: string }) => {
     );
   }
 
-  console.log('Expense component render');
-
   const startDate = data ? data.rows[0].date : '';
   const endDate = data ? data.rows[data.rows.length - 1].date : '';
 
