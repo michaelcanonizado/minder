@@ -22,10 +22,7 @@ const Dashboard = async () => {
               <p className='text-heading-100'>Expense Budget</p>
             </Bento.Box.Header>
             <Bento.Box.Content className='flex flex-col gap-2'>
-              <Chart.Progress />
-              <Chart.Progress />
-              <Chart.Progress />
-              <Chart.Progress />
+              <Chart.Progress.Stacked />
             </Bento.Box.Content>
           </Bento.Box>
         </Bento>

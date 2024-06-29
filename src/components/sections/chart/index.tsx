@@ -1,7 +1,7 @@
 import Area from './area/area';
 import Label from './label/label';
 import Line from './line';
-import Progress from './progress/progress';
+import Progress from './progress';
 
 const Chart = {
   Line: Line,
