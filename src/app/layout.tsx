@@ -19,11 +19,11 @@ export default function RootLayout({
     <html lang='en'>
       <body
         className={cn(
-          'text-body-100 dark min-h-screen bg-background font-sans text-foreground antialiased',
+          'dark min-h-screen bg-background font-sans text-foreground antialiased',
           fontSans.variable
         )}
       >
-        <div className='container'>{children}</div>
+        <div className='text-body-100 container'>{children}</div>
       </body>
     </html>
   );

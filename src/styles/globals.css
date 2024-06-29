@@ -122,7 +122,7 @@ If any changes are to be done to the typography, do them here.
     @apply text-xl font-medium leading-snug tracking-normal;
   }
   .text-body-100 {
-    @apply text-base font-normal leading-normal tracking-wide;
+    @apply text-sm font-normal leading-normal tracking-wide;
   }
   .text-body-200 {
     @apply text-xs font-normal leading-tight tracking-wider;

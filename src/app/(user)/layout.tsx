@@ -10,7 +10,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <div className='max-w-screen flex w-full flex-row'>
       <Navbar.User.Vertical className='hidden min-w-[300px] md:flex'>
         <div className='flex flex-col gap-2'>
-          <p className='text-muted-foreground'>Wallets</p>
+          <p className='text-body-200 text-muted-foreground'>Wallets</p>
           <div className='space-y-4 pl-4'>
             <Modal>
               <Modal.Trigger className='transition-color flex w-full flex-row gap-2 rounded-lg border p-2 duration-200 ease-in hover:bg-accent'>
