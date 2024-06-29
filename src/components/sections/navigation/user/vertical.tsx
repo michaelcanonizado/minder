@@ -21,18 +21,19 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
+const linkClassNames = 'h-[16px] w-[16px]';
 const mainMenuGroup: LinkGroup = {
   name: 'Main Menu',
   links: [
     {
       name: 'Dashboard',
       href: '/dashboard',
-      icon: <Layout />
+      icon: <Layout className={linkClassNames} />
     },
     {
       name: 'Analytics',
       href: '/analytics',
-      icon: <BarChart4 />
+      icon: <BarChart4 className={linkClassNames} />
     }
   ]
 };
@@ -42,17 +43,17 @@ const trackGroup: LinkGroup = {
     {
       name: 'Income',
       href: '/income/track',
-      icon: <PiggyBank />
+      icon: <PiggyBank className={linkClassNames} />
     },
     {
       name: 'Expense',
       href: '/expense/track',
-      icon: <DollarSign />
+      icon: <DollarSign className={linkClassNames} />
     },
     {
       name: 'Transfer Balance',
       href: '/wallet/transfer',
-      icon: <Wallet />
+      icon: <Wallet className={linkClassNames} />
     }
   ]
 };
@@ -62,17 +63,17 @@ const transactionsGroup: LinkGroup = {
     {
       name: 'Income',
       href: '/income/transactions',
-      icon: <TrendingUp />
+      icon: <TrendingUp className={linkClassNames} />
     },
     {
       name: 'Expense',
       href: '/expense/transactions',
-      icon: <TrendingDown />
+      icon: <TrendingDown className={linkClassNames} />
     },
     {
       name: 'Transfers',
       href: '/wallet/transfers',
-      icon: <Shuffle />
+      icon: <Shuffle className={linkClassNames} />
     }
   ]
 };
@@ -102,14 +103,16 @@ const Vertical = ({
         </Link>
         <UserProfilePicture className='hidden sm:block' />
       </div>
-      <div className='flex flex-col gap-4'>
+      <div className='flex flex-col gap-8'>
         {linkGroups.map(group => {
           return (
             <div className='flex flex-col gap-2'>
               <div className=''>
-                <p className='text-muted-foreground'>{group.name}</p>
+                <p className='text-body-200 text-muted-foreground'>
+                  {group.name}
+                </p>
               </div>
-              <ul className='flex flex-col gap-2 pl-4'>
+              <ul className='flex flex-col gap-1 pl-4'>
                 {group.links.map(link => {
                   return (
                     <NavbarLink
@@ -155,7 +158,7 @@ const NavbarLink = ({
   return (
     <li
       key={link.href}
-      className={`transition-color rounded-lg p-2 duration-200 ease-in  ${currentPathname == link.href ? 'bg-accent' : 'hover:bg-accent'}`}
+      className={`transition-color rounded-lg px-2 py-1 duration-200 ease-in  ${currentPathname == link.href ? 'bg-accent' : 'hover:bg-accent/50'}`}
       {...props}
     >
       <Link
@@ -163,7 +166,7 @@ const NavbarLink = ({
         href={link.href}
         onClick={setOpen ? () => setOpen(false) : () => {}}
       >
-        <div className='w-[24px]'>{link.icon}</div>
+        <div className=''>{link.icon}</div>
         <span className=''>{link.name}</span>
       </Link>
     </li>
