@@ -12,7 +12,7 @@ const Dashboard = async () => {
 
   return (
     <DashboardContextProvider>
-      <div className='px-8'>
+      <div className=''>
         <Bento className='grid-cols-4'>
           <NetAmount className='col-span-4' />
           <Income className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2' />

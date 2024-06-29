@@ -28,7 +28,7 @@ const WalletBreakdown = async ({
   console.log(balanceTransfers);
 
   return (
-    <div className='px-8'>
+    <div className=''>
       <div className=''>
         <Bento className='grid-cols-1'>
           <Bento.Box>

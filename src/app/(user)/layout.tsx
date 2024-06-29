@@ -31,7 +31,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </Navbar.User.Vertical>
       <main className='w-full max-w-full overflow-x-hidden'>
         <Navbar.User.Horizontal />
-        {children}
+        <div className='px-8 pb-20'>{children}</div>
       </main>
     </div>
   );

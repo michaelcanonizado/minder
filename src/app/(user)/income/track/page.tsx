@@ -11,7 +11,7 @@ const IncomeTrack = async () => {
   const categories = await getCategoriesData(userId);
 
   return (
-    <div className='px-8'>
+    <div className=''>
       <div className=''></div>
       <Bento className='grid-cols-1 lg:grid-cols-2'>
         <Bento.Box>

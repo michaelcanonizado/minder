@@ -23,7 +23,7 @@ const expenseTransactions = async ({
   console.log(expenses);
 
   return (
-    <div className='px-8'>
+    <div className=''>
       <div className=''>
         <Bento className='grid-cols-1'>
           <Bento.Box>

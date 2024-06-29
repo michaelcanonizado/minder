@@ -24,7 +24,7 @@ const IncomeTransactions = async ({
   console.log(`Data count: ${incomes.data.length}`);
 
   return (
-    <div className='px-8'>
+    <div className=''>
       <div className=''>
         <Bento className='grid-cols-1'>
           <Bento.Box>
