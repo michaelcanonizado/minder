@@ -3,7 +3,7 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
-import { LinkItem, LinkItems } from '@/types';
+import { LinkItem, LinkItems, LinkGroup } from '@/types';
 import { cn } from '@/lib/utils';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -21,52 +21,62 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-const mainMenuLinks: LinkItems = [
-  {
-    name: 'Dashboard',
-    href: '/dashboard',
-    icon: <Layout />
-  },
-  {
-    name: 'Analytics',
-    href: '/analytics',
-    icon: <BarChart4 />
-  }
-];
-const trackLinks: LinkItems = [
-  {
-    name: 'Income',
-    href: '/income/track',
-    icon: <PiggyBank />
-  },
-  {
-    name: 'Expense',
-    href: '/expense/track',
-    icon: <DollarSign />
-  },
-  {
-    name: 'Transfer Balance',
-    href: '/wallet/transfer',
-    icon: <Wallet />
-  }
-];
-const transactionsLinks: LinkItems = [
-  {
-    name: 'Income',
-    href: '/income/transactions',
-    icon: <TrendingUp />
-  },
-  {
-    name: 'Expense',
-    href: '/expense/transactions',
-    icon: <TrendingDown />
-  },
-  {
-    name: 'Transfers',
-    href: '/wallet/transfers',
-    icon: <Shuffle />
-  }
-];
+const mainMenuGroup: LinkGroup = {
+  name: 'Main Menu',
+  links: [
+    {
+      name: 'Dashboard',
+      href: '/dashboard',
+      icon: <Layout />
+    },
+    {
+      name: 'Analytics',
+      href: '/analytics',
+      icon: <BarChart4 />
+    }
+  ]
+};
+const trackGroup: LinkGroup = {
+  name: 'Track',
+  links: [
+    {
+      name: 'Income',
+      href: '/income/track',
+      icon: <PiggyBank />
+    },
+    {
+      name: 'Expense',
+      href: '/expense/track',
+      icon: <DollarSign />
+    },
+    {
+      name: 'Transfer Balance',
+      href: '/wallet/transfer',
+      icon: <Wallet />
+    }
+  ]
+};
+const transactionsGroup: LinkGroup = {
+  name: 'Transactions',
+  links: [
+    {
+      name: 'Income',
+      href: '/income/transactions',
+      icon: <TrendingUp />
+    },
+    {
+      name: 'Expense',
+      href: '/expense/transactions',
+      icon: <TrendingDown />
+    },
+    {
+      name: 'Transfers',
+      href: '/wallet/transfers',
+      icon: <Shuffle />
+    }
+  ]
+};
+const linkGroups = [mainMenuGroup, trackGroup, transactionsGroup];
 
 const Vertical = ({
   className,
@@ -93,57 +103,28 @@ const Vertical = ({
         <UserProfilePicture className='hidden sm:block' />
       </div>
       <div className='flex flex-col gap-4'>
-        <div className='flex flex-col gap-2'>
-          <div className=''>
-            <p className='text-muted-foreground'>Main Menu</p>
-          </div>
-          <ul className='flex flex-col gap-2 pl-4'>
-            {mainMenuLinks.map(link => {
-              return (
-                <NavbarLink
-                  key={link.href}
-                  link={link}
-                  currentPathname={currentPathname}
-                  setOpen={setOpen}
-                />
-              );
-            })}
-          </ul>
-        </div>
-        <div className='flex flex-col gap-2'>
-          <div className=''>
-            <p className='text-muted-foreground'>Track</p>
-          </div>
-          <ul className='flex flex-col gap-2 pl-4'>
-            {trackLinks.map(link => {
-              return (
-                <NavbarLink
-                  key={link.href}
-                  link={link}
-                  currentPathname={currentPathname}
-                  setOpen={setOpen}
-                />
-              );
-            })}
-          </ul>
-        </div>
-        <div className='flex flex-col gap-2'>
-          <div className=''>
-            <p className='text-muted-foreground'>Transactions</p>
-          </div>
-          <ul className='flex flex-col gap-2 pl-4'>
-            {transactionsLinks.map(link => {
-              return (
-                <NavbarLink
-                  key={link.href}
-                  link={link}
-                  currentPathname={currentPathname}
-                  setOpen={setOpen}
-                />
-              );
-            })}
-          </ul>
-        </div>
+        {linkGroups.map(group => {
+          return (
+            <div className='flex flex-col gap-2'>
+              <div className=''>
+                <p className='text-muted-foreground'>{group.name}</p>
+              </div>
+              <ul className='flex flex-col gap-2 pl-4'>
+                {group.links.map(link => {
+                  return (
+                    <NavbarLink
+                      key={link.href}
+                      link={link}
+                      currentPathname={currentPathname}
+                      setOpen={setOpen}
+                    />
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        })}
+
         {children}
       </div>
     </nav>
