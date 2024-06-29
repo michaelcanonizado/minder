@@ -23,7 +23,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <div className='container'>{children}</div>
       </body>
     </html>
   );
