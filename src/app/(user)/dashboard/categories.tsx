@@ -12,6 +12,7 @@ const Categories = ({ className }: { className?: string }) => {
 
   const { dashboard, changeDashboardPeriod } = useDashboardContext();
 
+  //
   console.log('Categories: ', dashboard);
 
   return (
