@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
+import { getCategoriesChartData } from '@/lib/category/get-categories-chart-data';
 
 const Categories = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -19,7 +20,7 @@ const Categories = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     const getData = async () => {
-      console.log();
+      await getCategoriesChartData(userId, dashboard.period);
     };
     getData();
   }, [dashboard]);
