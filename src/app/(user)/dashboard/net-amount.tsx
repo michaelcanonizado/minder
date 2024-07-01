@@ -20,6 +20,7 @@ import Balance from '@/components/sections/balance';
 
 import { cn } from '@/lib/utils';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
+import { formatDate } from '@/helpers/format/formatDate';
 import { getNetAmountChartData } from '@/lib/net-amount/get-net-amount-chart-data';
 
 const periods: { name: string; key: Period }[] = [
@@ -57,11 +58,14 @@ const NetAmount = ({ className }: { className?: string }) => {
 
   if (!data) {
     return (
-      <Bento.Box>
+      <Bento.Box className={cn('', className)}>
         <Bento.Box.Header>No Data</Bento.Box.Header>
       </Bento.Box>
     );
   }
+
+  const startDate = data ? formatDate(data.dates.start) : '';
+  const endDate = data ? formatDate(data.dates.end) : '';
 
   let headerTitle = 'Net Amount';
 
@@ -138,9 +142,6 @@ const NetAmount = ({ className }: { className?: string }) => {
       </Balance.Compact.SubHeader>
     </Balance.Compact>
   );
-
-  const startDate = data ? data.rows[0].date : '';
-  const endDate = data ? data.rows[data.rows.length - 1].date : '';
 
   return (
     <Bento.Box className={cn('', className)}>
