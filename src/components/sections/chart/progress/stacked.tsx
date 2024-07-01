@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/lib/utils';
 
 type StackedType = {
@@ -20,7 +22,7 @@ const Stacked = ({ items, className }: StackedType) => {
         className
       )}
     >
-      {items.map(item => {
+      {items.map((item, index) => {
         return (
           <div
             className={cn('h-[8px]')}
@@ -28,6 +30,7 @@ const Stacked = ({ items, className }: StackedType) => {
               width: `${(item.amount / totalAmount) * 100}%`,
               backgroundColor: item.color
             }}
+            key={index}
           ></div>
         );
       })}
