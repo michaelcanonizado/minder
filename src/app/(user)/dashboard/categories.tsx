@@ -1,6 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { useDashboardContext } from '@/context/dashboard-context';
+import { ChartData, ChartRow } from '@/types';
 
 import { cn } from '@/lib/utils';
 
@@ -12,8 +15,14 @@ const Categories = ({ className }: { className?: string }) => {
 
   const { dashboard, changeDashboardPeriod } = useDashboardContext();
 
-  //
-  console.log('Categories: ', dashboard);
+  const [data, setData] = useState<ChartData | null>(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      console.log();
+    };
+    getData();
+  }, [dashboard]);
 
   const categories = [
     {
