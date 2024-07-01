@@ -143,6 +143,10 @@ export const getExpenseChartData = async (userId: string, period: Period) => {
         isPositive: percentageChange <= 0 ? true : false
       }
     },
+    dates: {
+      start: firstHalfDates.startDate,
+      end: secondHalfDates.endDate
+    },
     rows: JSON.parse(JSON.stringify(data)) as ChartRow[]
   };
 
