@@ -15,13 +15,28 @@ const Categories = ({ className }: { className?: string }) => {
   //
   console.log('Categories: ', dashboard);
 
+  const categories = [
+    {
+      amount: 13,
+      color: '#32a852'
+    },
+    {
+      amount: 5,
+      color: '#1e4096'
+    },
+    {
+      amount: 9,
+      color: '#700c11'
+    }
+  ];
+
   return (
     <Bento.Box className={cn('', className)}>
       <Bento.Box.Header>
         <p className='text-heading-100'>Categories</p>
       </Bento.Box.Header>
       <Bento.Box.Content className='flex flex-col gap-2'>
-        <Chart.Progress.Stacked />
+        <Chart.Progress.Stacked items={categories} />
       </Bento.Box.Content>
     </Bento.Box>
   );

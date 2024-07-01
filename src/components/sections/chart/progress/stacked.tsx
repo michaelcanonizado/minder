@@ -1,20 +1,36 @@
-import { CategoryBar } from '@tremor/react';
+import { cn } from '@/lib/utils';
 
-const Stacked = () => {
-  const toolTip = () => {
-    return <div className=''>Category</div>;
-  };
+type StackedType = {
+  items: {
+    amount: number;
+    color: string;
+  }[];
+  className?: string;
+};
+
+const Stacked = ({ items, className }: StackedType) => {
+  const totalAmount = items.reduce((sum, item) => {
+    return sum + item.amount;
+  }, 0);
 
   return (
-    <div>
-      <CategoryBar
-        values={[40, 30, 20, 10]}
-        colors={['emerald', 'yellow', 'orange', 'rose']}
-        showLabels={false}
-        showAnimation={true}
-        tooltip='asdsd'
-        className='mt-3'
-      />
+    <div
+      className={cn(
+        'flex w-full flex-row overflow-hidden rounded-full',
+        className
+      )}
+    >
+      {items.map(item => {
+        return (
+          <div
+            className={cn('h-[8px]')}
+            style={{
+              width: `${(item.amount / totalAmount) * 100}%`,
+              backgroundColor: item.color
+            }}
+          ></div>
+        );
+      })}
     </div>
   );
 };
