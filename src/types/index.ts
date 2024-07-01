@@ -31,5 +31,9 @@ export type ChartData = {
       isPositive: boolean;
     };
   };
+  dates: {
+    start: Date;
+    end: Date;
+  };
   rows: ChartRow[];
 };
