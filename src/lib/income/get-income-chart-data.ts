@@ -145,8 +145,9 @@ export const getIncomeChartData = async (userId: string, period: Period) => {
       }
     },
     dates: {
-      start: firstHalfDates.startDate,
-      end: secondHalfDates.endDate
+      start: data.length < 2 ? firstHalfDates.startDate : data[0].date,
+      end:
+        data.length < 2 ? secondHalfDates.endDate : data[data.length - 1].date
     },
     rows: JSON.parse(JSON.stringify(data)) as ChartRow[]
   };
