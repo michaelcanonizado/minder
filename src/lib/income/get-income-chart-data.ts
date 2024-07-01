@@ -12,7 +12,7 @@ import { getLastMonthStartAndEndDates } from '@/helpers/dates/get-last-month-sta
 import { getLastYearStartAndEndDates } from '@/helpers/dates/get-last-year-start-and-end-dates';
 import { getThisYearStartAndEndDates } from '@/helpers/dates/get-this-year-start-and-end-dates';
 
-import { ChartData, ChartRow, Period, PeriodDates } from '@/types';
+import { ChartRow, Period, PeriodDates, ChartData } from '@/types';
 
 /**
  * Gets the income transactions within a time period.
@@ -121,10 +121,11 @@ export const getIncomeChartData = async (userId: string, period: Period) => {
     return sum + 0;
   }, 0);
 
-  const percentageChange = getPercentageChange(
+  let percentageChange = getPercentageChange(
     firstHalfTotalAmount,
     secondHalfTotalAmount
   );
+  percentageChange = percentageChange ? percentageChange : 0;
 
   /**
    *
@@ -142,6 +143,10 @@ export const getIncomeChartData = async (userId: string, period: Period) => {
         percentage: percentageChange,
         isPositive: percentageChange >= 0 ? true : false
       }
+    },
+    dates: {
+      start: firstHalfDates.startDate,
+      end: secondHalfDates.endDate
     },
     rows: JSON.parse(JSON.stringify(data)) as ChartRow[]
   };
