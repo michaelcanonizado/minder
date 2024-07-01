@@ -104,9 +104,9 @@ const Vertical = ({
         <UserProfilePicture className='hidden sm:block' />
       </div>
       <div className='flex flex-col gap-8'>
-        {linkGroups.map(group => {
+        {linkGroups.map((group, index) => {
           return (
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2' key={index}>
               <div className=''>
                 <p className='text-body-200 text-muted-foreground'>
                   {group.name}
