@@ -23,6 +23,7 @@ export interface UserBalanceType {
 export interface UserCategoryType {
   name: string;
   _id?: Types.ObjectId & string;
+  color: string;
   createdAt?: Date;
   updatedAt?: Date;
   isDeleted?: {
@@ -105,6 +106,10 @@ const currencySchema = new Schema<UserCurrencyType>(
 const categorySchema = new Schema<UserCategoryType>(
   {
     name: {
+      type: String,
+      required: true
+    },
+    color: {
       type: String,
       required: true
     },
