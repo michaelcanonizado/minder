@@ -29,13 +29,14 @@ const Expense = ({ className }: { className?: string }) => {
       );
 
       data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
+      console.log('Expenses: ', data);
 
       setData(data);
     };
     getData();
   }, [dashboard]);
 
-  if (!data) {
+  if (!data || data.rows.length === 0) {
     return (
       <Bento.Box>
         <Bento.Box.Header>No Data</Bento.Box.Header>
