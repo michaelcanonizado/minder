@@ -7,6 +7,7 @@ import { ChartData, ChartRow } from '@/types';
 
 import { cn } from '@/lib/utils';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
+import { formatDate } from '@/helpers/format/formatDate';
 import { getExpenseChartData } from '@/lib/expense/get-expense-chart-data';
 
 import { ArrowDown, ArrowUp } from 'lucide-react';
@@ -36,16 +37,16 @@ const Expense = ({ className }: { className?: string }) => {
     getData();
   }, [dashboard]);
 
-  if (!data || data.rows.length === 0) {
+  if (!data) {
     return (
-      <Bento.Box>
+      <Bento.Box className={cn('', className)}>
         <Bento.Box.Header>No Data</Bento.Box.Header>
       </Bento.Box>
     );
   }
 
-  const startDate = data ? data.rows[0].date : '';
-  const endDate = data ? data.rows[data.rows.length - 1].date : '';
+  const startDate = data ? formatDate(data.dates.start) : '';
+  const endDate = data ? formatDate(data.dates.end) : '';
 
   let headerTitle = 'Expense';
   if (dashboard.period === 'weekly') {
