@@ -274,8 +274,12 @@ export const getNetAmountChartData = async (userId: string, period: Period) => {
       }
     },
     dates: {
-      start: firstHalfDates.startDate,
-      end: secondHalfDates.endDate
+      start:
+        chartRows.length < 2 ? firstHalfDates.startDate : chartRows[0].date,
+      end:
+        chartRows.length < 2
+          ? secondHalfDates.endDate
+          : chartRows[chartRows.length - 1].date
     },
     rows: JSON.parse(JSON.stringify(chartRows)) as ChartRow[]
   };
