@@ -1,3 +1,6 @@
+import { ExpenseType } from '@/models/expense';
+import { IncomeType } from '@/models/income';
+
 export type LinkItem = {
   name: string;
   href: string;
@@ -36,4 +39,12 @@ export type ChartData = {
     end: Date;
   };
   rows: ChartRow[];
+};
+
+export type CategoryChartData = {
+  _id: string;
+  name: string;
+  color: string;
+  amount: number;
+  rows: ExpenseType[] | IncomeType[];
 };
