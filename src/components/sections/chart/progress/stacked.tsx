@@ -18,14 +18,14 @@ const Stacked = ({ items, className }: StackedType) => {
   return (
     <div
       className={cn(
-        'flex w-full flex-row overflow-hidden rounded-full',
+        'flex h-[8px] w-full flex-row overflow-hidden rounded-full bg-muted',
         className
       )}
     >
       {items.map((item, index) => {
         return (
           <div
-            className={cn('h-[8px]')}
+            className={cn('')}
             style={{
               width: `${(item.amount / totalAmount) * 100}%`,
               backgroundColor: item.color
