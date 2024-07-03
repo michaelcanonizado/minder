@@ -1,9 +1,9 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { IncomeType } from '@/models/income';
+import { CategoryChartData } from '@/types';
 
-export const columns: ColumnDef<IncomeType>[] = [
+export const columns: ColumnDef<CategoryChartData>[] = [
   {
     accessorKey: 'name',
     header: () => <div className=''>Category</div>,
