@@ -101,10 +101,19 @@ export const getCategoriesChartData = async (
       name: category.name,
       color: category.color,
       amount: totalAmount,
-      rows: filteredTransactions
+      rows: filteredTransactions,
+      percentage: 0
     };
 
     incomeCategoriesResult.push(result);
+  }
+  const totalIncomeCount = incomeCategoriesResult.reduce((sum, item) => {
+    return sum + item.rows.length;
+  }, 0);
+  if (totalIncomeCount !== 0) {
+    for (const category of incomeCategoriesResult) {
+      category.percentage = (category.rows.length / totalIncomeCount) * 100;
+    }
   }
 
   for (let category of expenseCategories) {
@@ -125,11 +134,22 @@ export const getCategoriesChartData = async (
       name: category.name,
       color: category.color,
       amount: totalAmount,
-      rows: filteredTransactions
+      rows: filteredTransactions,
+      percentage: 0
     };
 
     expenseCategoriesResult.push(result);
   }
+  const totalExpenseCount = expenseCategoriesResult.reduce((sum, item) => {
+    return sum + item.rows.length;
+  }, 0);
+  if (totalExpenseCount !== 0) {
+    for (const category of expenseCategoriesResult) {
+      category.percentage = (category.rows.length / totalExpenseCount) * 100;
+    }
+  }
+
+  console.log(expenseCategoriesResult);
 
   return {
     expense: expenseCategoriesResult as CategoryChartData[],
