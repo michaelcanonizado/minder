@@ -58,6 +58,7 @@ const Income = ({
     if (data.userId !== userId) {
       data.userId = userId;
     }
+    console.log(data);
 
     const response = await addIncomeTransaction(data);
 
@@ -76,7 +77,6 @@ const Income = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        // onSubmit={form.handleSubmit(onSubmit)}
         action={addIncomeTransaction}
         className='mt-4 flex flex-col gap-4'
       >

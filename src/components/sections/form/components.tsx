@@ -163,6 +163,7 @@ export const FormRadioCardGroup = ({
           className={`flex ${orientation == 'vertical' ? 'flex-col' : 'flex-row'} gap-2 pr-2`}
         >
           {data.map(item => {
+            console.log(field.value);
             return (
               <FormRadioCard
                 title={item.name}
@@ -170,6 +171,7 @@ export const FormRadioCardGroup = ({
                 value={item._id}
                 id={item._id}
                 key={item._id}
+                checked={item._id === field.value}
               />
             );
           })}
@@ -184,6 +186,7 @@ const FormRadioCard = ({
   subtitle,
   value,
   id,
+  checked,
   className,
   ...props
 }: {
@@ -191,6 +194,7 @@ const FormRadioCard = ({
   subtitle?: number;
   value: string;
   id: string;
+  checked?: boolean;
   className?: string;
 }) => {
   const detail = (
@@ -210,7 +214,12 @@ const FormRadioCard = ({
       {...props}
     >
       <FormControl>
-        <RadioGroupItem value={value} id={id} className='peer sr-only' />
+        <RadioGroupItem
+          value={value}
+          id={id}
+          className='peer sr-only'
+          checked={checked ? checked : false}
+        />
       </FormControl>
       <Label
         htmlFor={id}
