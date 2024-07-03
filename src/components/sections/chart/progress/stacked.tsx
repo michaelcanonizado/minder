@@ -15,6 +15,8 @@ const Stacked = ({ items, className }: StackedType) => {
     return sum + item.amount;
   }, 0);
 
+  console.log('Rerendering stacked progress bar!!!: ', items);
+
   return (
     <div
       className={cn(
@@ -22,18 +24,20 @@ const Stacked = ({ items, className }: StackedType) => {
         className
       )}
     >
-      {items.map((item, index) => {
-        return (
-          <div
-            className={cn('')}
-            style={{
-              width: `${(item.amount / totalAmount) * 100}%`,
-              backgroundColor: item.color
-            }}
-            key={index}
-          ></div>
-        );
-      })}
+      {totalAmount !== 0
+        ? items.map((item, index) => {
+            return (
+              <div
+                className={cn('')}
+                style={{
+                  width: `${(item.amount / totalAmount) * 100}%`,
+                  backgroundColor: item.color
+                }}
+                key={index}
+              ></div>
+            );
+          })
+        : ''}
     </div>
   );
 };
