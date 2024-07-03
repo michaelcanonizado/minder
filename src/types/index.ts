@@ -47,4 +47,5 @@ export type CategoryChartData = {
   color: string;
   amount: number;
   rows: ExpenseType[] | IncomeType[];
+  percentage: number;
 };
