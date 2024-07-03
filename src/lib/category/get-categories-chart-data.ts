@@ -30,7 +30,7 @@ export const getCategoriesChartData = async (
   }
 
   if (!periodDates) {
-    return {};
+    throw new Error('Something went wrong!');
   }
 
   const user = await User.findById(userId);
