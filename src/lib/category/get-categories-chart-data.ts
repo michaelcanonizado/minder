@@ -149,8 +149,6 @@ export const getCategoriesChartData = async (
     }
   }
 
-  console.log(expenseCategoriesResult);
-
   return {
     expense: expenseCategoriesResult as CategoryChartData[],
     income: incomeCategoriesResult as CategoryChartData[]
