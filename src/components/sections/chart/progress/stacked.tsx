@@ -15,8 +15,6 @@ const Stacked = ({ items, className }: StackedType) => {
     return sum + item.amount;
   }, 0);
 
-  console.log('Rerendering stacked progress bar!!!: ', items);
-
   return (
     <div
       className={cn(
