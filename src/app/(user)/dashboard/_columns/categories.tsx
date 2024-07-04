@@ -3,6 +3,9 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { CategoryChartData } from '@/types';
 
+import { Button } from '@/components/ui/button';
+import { ArrowUpDown } from 'lucide-react';
+
 export const columns: ColumnDef<CategoryChartData>[] = [
   {
     accessorKey: 'name',
@@ -21,7 +24,20 @@ export const columns: ColumnDef<CategoryChartData>[] = [
   },
   {
     accessorKey: 'amount',
-    header: () => <div className='text-right'>Amount</div>,
+    header: ({ column }) => {
+      return (
+        <div className='flex flex-row justify-end'>
+          <Button
+            variant='ghost'
+            onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+            className=''
+          >
+            <div className='text-right'>Amount</div>
+            <ArrowUpDown className='ml-2 h-4 w-4' />
+          </Button>
+        </div>
+      );
+    },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue('amount'));
       const formatted = new Intl.NumberFormat('en-US', {
