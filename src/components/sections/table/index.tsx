@@ -20,6 +20,8 @@ import {
   TableRow as ShadcnTableRow
 } from '@/components/ui/table';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import Modal from '@/components/sections/modal';
+import { Trash2 } from 'lucide-react';
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -34,6 +36,19 @@ const DataTable = <TData, TValue>({
 
   const [rowSelection, setRowSelection] = useState({});
 
+  const [isRowSelectionActionsVisible, setIsRowSelectionActionsVisible] =
+    useState(false);
+
+  useEffect(() => {
+    console.log(table.getFilteredSelectedRowModel().rows);
+
+    if (table.getFilteredSelectedRowModel().rows.length !== 0) {
+      setIsRowSelectionActionsVisible(true);
+    } else {
+      setIsRowSelectionActionsVisible(false);
+    }
+  }, [rowSelection]);
+
   const table = useReactTable({
     data,
     columns,
@@ -47,8 +62,31 @@ const DataTable = <TData, TValue>({
     }
   });
 
+  const rowsSelectedCount = table.getFilteredSelectedRowModel().rows.length;
+
+  const RowActions = (
+    <div className='mb-2 flex flex-row divide-x rounded-lg border border-muted'>
+      <div className='flex w-[50%] items-center justify-center px-4 pb-3 pt-4'>
+        <p className='w-fit'>{rowsSelectedCount} selected</p>
+      </div>
+      <div className='w-[50%]'>
+        <Modal>
+          <Modal.Trigger className='transition-color flex w-full items-center justify-center border border-none p-4 duration-200 ease-in hover:bg-accent'>
+            <Trash2 className='w-[16px]' />
+          </Modal.Trigger>
+          <Modal.Content>
+            <Modal.Content.Title>Delete Categories</Modal.Content.Title>
+            <Modal.Content.Description>Delete</Modal.Content.Description>
+          </Modal.Content>
+        </Modal>
+      </div>
+    </div>
+  );
+
   return (
     <div className=''>
+      {isRowSelectionActionsVisible && RowActions}
+
       <ShadcnTable>
         <ShadcnTableHeader>
           {table.getHeaderGroups().map(headerGroup => (
