@@ -10,7 +10,7 @@ import { columns } from './_columns/categories';
 
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
-import { default as DataTable } from '@/components/sections/table';
+import Table from '@/components/sections/table';
 
 const Categories = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -60,7 +60,7 @@ const Categories = ({ className }: { className?: string }) => {
 
         <Chart.Progress.Stacked items={incomeCategoriesChartData} />
 
-        <DataTable.DataTable.Scroll columns={columns} data={data.income} />
+        <Table columns={columns} data={data.income} />
       </Bento.Box.Content>
 
       <Bento.Box.Content className='flex flex-col space-y-4'>
@@ -70,7 +70,7 @@ const Categories = ({ className }: { className?: string }) => {
 
         <Chart.Progress.Stacked items={expenseCategoriesChartData} />
 
-        <DataTable.DataTable.Scroll columns={columns} data={data.expense} />
+        <Table columns={columns} data={data.expense} />
       </Bento.Box.Content>
     </Bento.Box>
   );

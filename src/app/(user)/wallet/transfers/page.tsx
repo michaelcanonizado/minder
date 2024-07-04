@@ -36,10 +36,7 @@ const WalletBreakdown = async ({
               Balance Transfers
             </Bento.Box.Header>
             <Bento.Box.Content className='space-y-4 p-0 pb-4'>
-              <Table.DataTable.Scroll
-                columns={columns}
-                data={balanceTransfers.data}
-              />
+              <Table columns={columns} data={balanceTransfers.data} />
               <Pagination
                 pathname='/wallet/breakdown'
                 currentPage={page}

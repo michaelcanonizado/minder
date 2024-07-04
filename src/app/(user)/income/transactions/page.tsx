@@ -32,7 +32,7 @@ const IncomeTransactions = async ({
               Income Transactions
             </Bento.Box.Header>
             <Bento.Box.Content className='space-y-4 p-0 pb-4'>
-              <Table.DataTable.Scroll columns={columns} data={incomes.data} />
+              <Table columns={columns} data={incomes.data} />
               <Pagination
                 pathname='/income/transactions'
                 currentPage={page}
