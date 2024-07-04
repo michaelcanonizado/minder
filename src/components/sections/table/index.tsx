@@ -22,6 +22,7 @@ import {
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import Modal from '@/components/sections/modal';
 import { Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -62,7 +63,40 @@ const DataTable = <TData, TValue>({
     }
   });
 
-  const rowsSelectedCount = table.getFilteredSelectedRowModel().rows.length;
+  const rowsSelected = table.getFilteredSelectedRowModel().rows;
+  const rowsSelectedCount = rowsSelected.length;
+
+  const DeleteModal = (
+    <Modal.Content>
+      <Modal.Content.Title>Delete Categories</Modal.Content.Title>
+      <Modal.Content.Description className=''>
+        This will delete the categories from your account allong with the
+        connected transactions!
+      </Modal.Content.Description>
+      <div className='space-y-2 pt-4'>
+        <div className=''>
+          <p className='text-body-100'>Selected Categories:</p>
+        </div>
+        <div className='ml-4 space-y-2'>
+          {rowsSelected.map(item => {
+            return (
+              <div className='text-body-200 flex flex-row space-x-1'>
+                <p className=''>- {item.getValue('name')}</p>
+                <p className='text-muted-foreground'>
+                  (123 transactions | $12345.00)
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className='pt-4'>
+        <Button className='w-full' variant='destructive'>
+          Delete
+        </Button>
+      </div>
+    </Modal.Content>
+  );
 
   const RowActions = (
     <div className='mb-2 flex flex-row divide-x rounded-lg border border-muted'>
@@ -74,10 +108,7 @@ const DataTable = <TData, TValue>({
           <Modal.Trigger className='transition-color flex w-full items-center justify-center border border-none p-4 duration-200 ease-in hover:bg-accent'>
             <Trash2 className='w-[16px]' />
           </Modal.Trigger>
-          <Modal.Content>
-            <Modal.Content.Title>Delete Categories</Modal.Content.Title>
-            <Modal.Content.Description>Delete</Modal.Content.Description>
-          </Modal.Content>
+          {DeleteModal}
         </Modal>
       </div>
     </div>
