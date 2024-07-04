@@ -53,8 +53,8 @@ const Categories = ({ className }: { className?: string }) => {
         <p className='text-heading-100'>Categories</p>
       </Bento.Box.Header>
 
-      <Bento.Box.Content className='mt-4 flex flex-col'>
-        <div className='mb-4'>
+      <Bento.Box.Content className='mt-4 flex flex-col space-y-4'>
+        <div className='mb-2'>
           <p className='text-heading-200'>Income</p>
         </div>
 
@@ -63,8 +63,8 @@ const Categories = ({ className }: { className?: string }) => {
         <DataTable.DataTable.Scroll columns={columns} data={data.income} />
       </Bento.Box.Content>
 
-      <Bento.Box.Content className='flex flex-col'>
-        <div className='mb-4'>
+      <Bento.Box.Content className='flex flex-col space-y-4'>
+        <div className='mb-2'>
           <p className='text-heading-200'>Expense</p>
         </div>
 
