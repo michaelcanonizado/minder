@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button';
 import deleteCategoriesSchema from '@/schemas/delete-categories';
 import { useDashboardContext } from '@/context/dashboard';
 import { CategoryType } from '@/types';
+import { deleteCateogries } from '@/lib/category/delete-categories';
 
 const Categories = ({
   className,
@@ -49,9 +50,11 @@ const Categories = ({
   });
 
   const onSubmit = async (data: z.infer<typeof deleteCategoriesSchema>) => {
-    console.log('Deleting category...');
-    console.log(data);
-    console.log(dashboard);
+    // console.log('Deleting category...');
+    // console.log(data);
+    // console.log(dashboard);
+
+    const response = await deleteCateogries(data);
   };
   //   const onSubmit = async (data: z.infer<typeof deleteCategoriesSchema>) => {
   //     console.log('Deleting category...');
