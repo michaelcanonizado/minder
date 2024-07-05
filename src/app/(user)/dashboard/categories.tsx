@@ -54,12 +54,20 @@ const Categories = ({ className }: { className?: string }) => {
 
   const incomeCategoriesDeleteCTA = (
     <div className='pt-4'>
-      <Form.Delete.Categories />
+      <Form.Delete.Categories type='income' />
     </div>
   );
-
   const incomeOnSubmit = (data: CategoryChartData[]) => {
     changeDashboardSelectedCategories(data, 'income');
+  };
+
+  const expenseCategoriesDeleteCTA = (
+    <div className='pt-4'>
+      <Form.Delete.Categories type='expense' />
+    </div>
+  );
+  const expenseOnSubmit = (data: CategoryChartData[]) => {
+    changeDashboardSelectedCategories(data, 'expense');
   };
 
   return (
@@ -90,7 +98,12 @@ const Categories = ({ className }: { className?: string }) => {
 
         <Chart.Progress.Stacked items={expenseCategoriesChartData} />
 
-        <Table columns={columns} data={data.expense} />
+        <Table
+          columns={columns}
+          data={data.expense}
+          deleteCTA={expenseCategoriesDeleteCTA}
+          passSelectedRowsToParent={expenseOnSubmit}
+        />
       </Bento.Box.Content>
     </Bento.Box>
   );

@@ -19,14 +19,30 @@ import {
 import { DialogClose, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import deleteCategoriesSchema from '@/schemas/delete-categories';
+import { useDashboardContext } from '@/context/dashboard';
+import { CategoryType } from '@/types';
 
-const Categories = ({ className }: { className?: string }) => {
+const Categories = ({
+  className,
+  type
+}: {
+  className?: string;
+  type: CategoryType;
+}) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
+
+  const { dashboard } = useDashboardContext();
+
+  const selectedCategories =
+    type === 'income'
+      ? dashboard.selectedCategories.income
+      : dashboard.selectedCategories.expense;
 
   const form = useForm<z.infer<typeof deleteCategoriesSchema>>({
     resolver: zodResolver(deleteCategoriesSchema),
     defaultValues: {
+      categories: selectedCategories,
       userId: userId,
       formPath: currentPathname
     }
@@ -35,6 +51,7 @@ const Categories = ({ className }: { className?: string }) => {
   const onSubmit = async (data: z.infer<typeof deleteCategoriesSchema>) => {
     console.log('Deleting category...');
     console.log(data);
+    console.log(dashboard);
   };
   //   const onSubmit = async (data: z.infer<typeof deleteCategoriesSchema>) => {
   //     console.log('Deleting category...');
