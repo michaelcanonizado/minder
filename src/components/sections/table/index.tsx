@@ -9,8 +9,7 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
-  Table as TanstackTable,
-  RowData
+  Table as TanstackTable
 } from '@tanstack/react-table';
 
 import {
@@ -25,20 +24,19 @@ import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import Modal from '@/components/sections/modal';
 import { Trash2 } from 'lucide-react';
 
-export interface DataTableProps<TData, TValue> {
+export interface DataTableProps<TData, TValue, TRows> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   deleteCTA?: React.ReactNode;
-  /* Temporary parameter type. TanstackTable<TData> is giving an error */
-  passTableObjectToParent?: (table: TanstackTable<any>) => void;
+  passSelectedRowsToParent?: (data: TRows) => void;
 }
 
-export const DataTable = <TData, TValue>({
+export const DataTable = <TData, TValue, TRows>({
   columns,
   data,
   deleteCTA,
-  passTableObjectToParent
-}: DataTableProps<TData, TValue>) => {
+  passSelectedRowsToParent
+}: DataTableProps<TData, TValue, TRows>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const [rowSelection, setRowSelection] = useState({});
@@ -60,16 +58,20 @@ export const DataTable = <TData, TValue>({
   });
 
   useEffect(() => {
-    console.log(table.getFilteredSelectedRowModel().rows);
-
     if (table.getFilteredSelectedRowModel().rows.length !== 0) {
       setIsRowSelectionActionsVisible(true);
     } else {
       setIsRowSelectionActionsVisible(false);
     }
 
-    if (passTableObjectToParent) {
-      passTableObjectToParent(table);
+    const originalRowsData = table
+      .getFilteredSelectedRowModel()
+      .rows.map(row => {
+        return row.original;
+      }) as TRows;
+
+    if (passSelectedRowsToParent) {
+      passSelectedRowsToParent(originalRowsData);
     }
   }, [rowSelection]);
 
@@ -174,11 +176,11 @@ export const DataTable = <TData, TValue>({
   );
 };
 
-const Table = <TData, TValue>({
+const Table = <TData, TValue, TRows>({
   columns,
   data,
   ...props
-}: DataTableProps<TData, TValue>) => {
+}: DataTableProps<TData, TValue, TRows>) => {
   return (
     <ScrollArea className='overflow-hidden whitespace-nowrap'>
       <DataTable columns={columns} data={data} {...props} />
