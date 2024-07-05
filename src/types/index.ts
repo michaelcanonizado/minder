@@ -41,6 +41,8 @@ export type ChartData = {
   rows: ChartRow[];
 };
 
+export type CategoryType = 'income' | 'expense';
+
 export type CategoryChartData = {
   _id: string;
   name: string;
