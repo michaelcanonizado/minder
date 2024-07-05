@@ -12,6 +12,7 @@ import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import Table from '@/components/sections/table';
 import { Button } from '@/components/ui/button';
+import Form from '@/components/sections/form';
 
 const Categories = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -50,9 +51,7 @@ const Categories = ({ className }: { className?: string }) => {
 
   const incomeCategoriesDeleteCTA = (
     <div className='pt-4'>
-      <Button className='w-full' variant='destructive'>
-        Delete
-      </Button>
+      <Form.Delete.Categories />
     </div>
   );
 
