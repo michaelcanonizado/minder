@@ -14,11 +14,13 @@ import Table, { DataTable } from '@/components/sections/table';
 import { Button } from '@/components/ui/button';
 import Form from '@/components/sections/form';
 import { Table as TanstackTable } from '@tanstack/react-table';
+import { CategoryChartData } from '@/types';
 
 const Categories = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
 
-  const { dashboard } = useDashboardContext();
+  const { dashboard, changeDashboardSelectedCategories } =
+    useDashboardContext();
 
   const [data, setData] = useState<Awaited<
     ReturnType<typeof getCategoriesChartData>
@@ -56,11 +58,8 @@ const Categories = ({ className }: { className?: string }) => {
     </div>
   );
 
-  const incomeOnSubmit = (table: TanstackTable<typeof data.income>) => {
-    console.log(
-      'Income On Submit: ',
-      table.getFilteredSelectedRowModel().rows[0]?.original.name
-    );
+  const incomeOnSubmit = (data: CategoryChartData[]) => {
+    changeDashboardSelectedCategories(data, 'income');
   };
 
   return (
@@ -76,17 +75,11 @@ const Categories = ({ className }: { className?: string }) => {
 
         <Chart.Progress.Stacked items={incomeCategoriesChartData} />
 
-        {/* <Table
+        <Table
           columns={columns}
           data={data.income}
           deleteCTA={incomeCategoriesDeleteCTA}
-          passTableObjectToParent={incomeOnSubmit}
-        /> */}
-        <DataTable
-          columns={columns}
-          data={data.income}
-          deleteCTA={incomeCategoriesDeleteCTA}
-          passTableObjectToParent={incomeOnSubmit}
+          passSelectedRowsToParent={incomeOnSubmit}
         />
       </Bento.Box.Content>
 
