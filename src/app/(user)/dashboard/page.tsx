@@ -4,7 +4,7 @@ import NetAmount from './net-amount';
 import Income from './income';
 import Expense from './expense';
 
-import { DashboardContextProvider } from '@/context/dashboard-context';
+import { DashboardContextProvider } from '@/context/dashboard';
 import Categories from './categories';
 
 const Dashboard = async () => {

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useDashboardContext } from '@/context/dashboard-context';
+import { useDashboardContext } from '@/context/dashboard';
 import { ChartData, ChartRow } from '@/types';
 
 import { cn } from '@/lib/utils';

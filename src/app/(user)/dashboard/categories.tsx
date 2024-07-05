@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useDashboardContext } from '@/context/dashboard-context';
+import { useDashboardContext } from '@/context/dashboard';
 
 import { cn } from '@/lib/utils';
 import { getCategoriesChartData } from '@/lib/category/get-categories-chart-data';
