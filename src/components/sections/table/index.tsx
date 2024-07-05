@@ -8,7 +8,9 @@ import {
   getSortedRowModel,
   flexRender,
   getCoreRowModel,
-  useReactTable
+  useReactTable,
+  Table as TanstackTable,
+  RowData
 } from '@tanstack/react-table';
 
 import {
@@ -27,12 +29,15 @@ export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   deleteCTA?: React.ReactNode;
+  /* Temporary parameter type. TanstackTable<TData> is giving an error */
+  passTableObjectToParent?: (table: TanstackTable<any>) => void;
 }
 
-const DataTable = <TData, TValue>({
+export const DataTable = <TData, TValue>({
   columns,
   data,
-  deleteCTA
+  deleteCTA,
+  passTableObjectToParent
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -40,16 +45,6 @@ const DataTable = <TData, TValue>({
 
   const [isRowSelectionActionsVisible, setIsRowSelectionActionsVisible] =
     useState(false);
-
-  useEffect(() => {
-    console.log(table.getFilteredSelectedRowModel().rows);
-
-    if (table.getFilteredSelectedRowModel().rows.length !== 0) {
-      setIsRowSelectionActionsVisible(true);
-    } else {
-      setIsRowSelectionActionsVisible(false);
-    }
-  }, [rowSelection]);
 
   const table = useReactTable({
     data,
@@ -63,6 +58,20 @@ const DataTable = <TData, TValue>({
       rowSelection
     }
   });
+
+  useEffect(() => {
+    console.log(table.getFilteredSelectedRowModel().rows);
+
+    if (table.getFilteredSelectedRowModel().rows.length !== 0) {
+      setIsRowSelectionActionsVisible(true);
+    } else {
+      setIsRowSelectionActionsVisible(false);
+    }
+
+    if (passTableObjectToParent) {
+      passTableObjectToParent(table);
+    }
+  }, [rowSelection]);
 
   const rowsSelected = table.getFilteredSelectedRowModel().rows;
   const rowsSelectedCount = rowsSelected.length;
@@ -83,9 +92,12 @@ const DataTable = <TData, TValue>({
             <p className='text-body-100'>Selected Categories:</p>
           </div>
           <div className='ml-4 space-y-2'>
-            {rowsSelected.map(item => {
+            {rowsSelected.map((item, index) => {
               return (
-                <div className='text-body-200 flex flex-row space-x-1'>
+                <div
+                  className='text-body-200 flex flex-row space-x-1'
+                  key={index}
+                >
                   <p className=''>- {item.getValue('name')}</p>
                   <p className='text-muted-foreground'>
                     (123 transactions | $12345.00)
