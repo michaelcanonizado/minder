@@ -1,9 +1,16 @@
 import { z } from 'zod';
 
+const categorySchema = z.object({
+  _id: z
+    .string({ message: 'Error! Please try again' })
+    .min(1, { message: 'Error! Please try again' }),
+  name: z
+    .string({ message: 'Error! Please try again' })
+    .min(1, { message: 'Error! Please try again' })
+});
+
 const deleteCategoriesSchema = z.object({
-  // categoryId: z
-  //   .string({ message: 'Please name the wallet' })
-  //   .min(1, { message: 'Please name the wallet' }),
+  categories: z.array(categorySchema),
 
   userId: z
     .string({ message: 'Error! Please try again.' })
