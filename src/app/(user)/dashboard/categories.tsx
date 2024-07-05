@@ -11,6 +11,7 @@ import { columns } from './_columns/categories';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import Table from '@/components/sections/table';
+import { Button } from '@/components/ui/button';
 
 const Categories = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -47,6 +48,14 @@ const Categories = ({ className }: { className?: string }) => {
     };
   });
 
+  const incomeCategoriesDeleteCTA = (
+    <div className='pt-4'>
+      <Button className='w-full' variant='destructive'>
+        Delete
+      </Button>
+    </div>
+  );
+
   return (
     <Bento.Box className={cn('', className)}>
       <Bento.Box.Header>
@@ -60,7 +69,11 @@ const Categories = ({ className }: { className?: string }) => {
 
         <Chart.Progress.Stacked items={incomeCategoriesChartData} />
 
-        <Table columns={columns} data={data.income} />
+        <Table
+          columns={columns}
+          data={data.income}
+          deleteCTA={incomeCategoriesDeleteCTA}
+        />
       </Bento.Box.Content>
 
       <Bento.Box.Content className='flex flex-col space-y-4'>

@@ -22,16 +22,17 @@ import {
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import Modal from '@/components/sections/modal';
 import { Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  deleteCTA?: React.ReactNode;
 }
 
 const DataTable = <TData, TValue>({
   columns,
-  data
+  data,
+  deleteCTA
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -67,50 +68,44 @@ const DataTable = <TData, TValue>({
   const rowsSelectedCount = rowsSelected.length;
 
   const DeleteModal = (
-    <Modal.Content>
-      <Modal.Content.Title>Delete Categories</Modal.Content.Title>
-      <Modal.Content.Description className=''>
-        This will delete the categories from your account allong with the
-        connected transactions!
-      </Modal.Content.Description>
-      <div className='space-y-2 pt-4'>
-        <div className=''>
-          <p className='text-body-100'>Selected Categories:</p>
+    <Modal>
+      <Modal.Trigger className='transition-color flex w-full items-center justify-center border border-none p-4 duration-200 ease-in hover:bg-accent'>
+        <Trash2 className='w-[16px]' />
+      </Modal.Trigger>
+      <Modal.Content>
+        <Modal.Content.Title>Delete Categories</Modal.Content.Title>
+        <Modal.Content.Description className=''>
+          This will delete the categories from your account allong with the
+          connected transactions!
+        </Modal.Content.Description>
+        <div className='space-y-2 pt-4'>
+          <div className=''>
+            <p className='text-body-100'>Selected Categories:</p>
+          </div>
+          <div className='ml-4 space-y-2'>
+            {rowsSelected.map(item => {
+              return (
+                <div className='text-body-200 flex flex-row space-x-1'>
+                  <p className=''>- {item.getValue('name')}</p>
+                  <p className='text-muted-foreground'>
+                    (123 transactions | $12345.00)
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <div className='ml-4 space-y-2'>
-          {rowsSelected.map(item => {
-            return (
-              <div className='text-body-200 flex flex-row space-x-1'>
-                <p className=''>- {item.getValue('name')}</p>
-                <p className='text-muted-foreground'>
-                  (123 transactions | $12345.00)
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className='pt-4'>
-        <Button className='w-full' variant='destructive'>
-          Delete
-        </Button>
-      </div>
-    </Modal.Content>
+        {deleteCTA}
+      </Modal.Content>
+    </Modal>
   );
 
   const RowActions = (
-    <div className='mb-2 flex flex-row divide-x rounded-lg border border-muted'>
-      <div className='flex w-[50%] items-center justify-center px-4 pb-3 pt-4'>
+    <div className='mb-2 flex flex-row divide-x rounded-lg border border-muted [&>*]:grow'>
+      <div className='flex items-center justify-center px-4 pb-3 pt-4'>
         <p className='w-fit'>{rowsSelectedCount} selected</p>
       </div>
-      <div className='w-[50%]'>
-        <Modal>
-          <Modal.Trigger className='transition-color flex w-full items-center justify-center border border-none p-4 duration-200 ease-in hover:bg-accent'>
-            <Trash2 className='w-[16px]' />
-          </Modal.Trigger>
-          {DeleteModal}
-        </Modal>
-      </div>
+      {deleteCTA ? DeleteModal : ''}
     </div>
   );
 
@@ -169,11 +164,12 @@ const DataTable = <TData, TValue>({
 
 const Table = <TData, TValue>({
   columns,
-  data
+  data,
+  ...props
 }: DataTableProps<TData, TValue>) => {
   return (
     <ScrollArea className='overflow-hidden whitespace-nowrap'>
-      <DataTable columns={columns} data={data} />
+      <DataTable columns={columns} data={data} {...props} />
       <ScrollBar orientation='horizontal' className='mt-10' />
     </ScrollArea>
   );
