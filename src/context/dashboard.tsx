@@ -1,6 +1,6 @@
 'use client';
 
-import { CategoryChartData, Period } from '@/types';
+import { CategoryChartData, CategoryType, Period } from '@/types';
 import { createContext, useState, useContext, SetStateAction } from 'react';
 
 type Dashboard = {
@@ -16,7 +16,7 @@ type DashboardContext = {
   changeDashboardPeriod: (period: Period) => void;
   changeDashboardSelectedCategories: (
     data: CategoryChartData[],
-    type: 'income' | 'expense'
+    type: CategoryType
   ) => void;
 };
 
@@ -45,7 +45,7 @@ export const DashboardContextProvider = ({
 
   const changeDashboardSelectedCategories = (
     data: CategoryChartData[],
-    type: 'income' | 'expense'
+    type: CategoryType
   ) => {
     if (type === 'income') {
       setDashboard(prevState => {
