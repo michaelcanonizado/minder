@@ -5,6 +5,7 @@ import User from '@/models/user';
 
 import deleteCategoriesSchema from '@/schemas/delete-categories';
 import { CategoryType } from '@/types';
+import { revalidatePath } from 'next/cache';
 
 export const deleteCateogries = async (data: unknown, type: CategoryType) => {
   const result = deleteCategoriesSchema.safeParse(data);
@@ -34,9 +35,12 @@ export const deleteCateogries = async (data: unknown, type: CategoryType) => {
     }
   });
 
-  console.log(userCategories);
+  await user.save();
 
-  //   console.log(result);
+  revalidatePath(result.data.formPath);
 
-  return;
+  return {
+    isSuccessful: true,
+    message: 'Successfully deleted categories'
+  };
 };

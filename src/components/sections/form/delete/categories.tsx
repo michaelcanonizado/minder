@@ -51,16 +51,11 @@ const Categories = ({
   });
 
   const onSubmit = async (data: z.infer<typeof deleteCategoriesSchema>) => {
-    // console.log('Deleting category...');
-    // console.log(data);
-    // console.log(dashboard);
-
     const response = await deleteCateogries(data, type);
+    console.log(response);
+
+    form.reset();
   };
-  //   const onSubmit = async (data: z.infer<typeof deleteCategoriesSchema>) => {
-  //     console.log('Deleting category...');
-  //     console.log(data);
-  //   };
 
   return (
     <Form {...form}>
