@@ -64,11 +64,11 @@ const Categories = ({
         className={cn('flex flex-col', className)}
       >
         <DialogFooter className='flex flex-row justify-end gap-2'>
-          {/* <DialogClose asChild> */}
-          <Button className='w-full' variant='destructive' type='submit'>
-            Delete
-          </Button>
-          {/* </DialogClose> */}
+          <DialogClose asChild>
+            <Button className='w-full' variant='destructive' type='submit'>
+              Delete
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </form>
     </Form>
