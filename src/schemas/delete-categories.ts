@@ -11,6 +11,7 @@ const categorySchema = z.object({
 
 const deleteCategoriesSchema = z.object({
   categories: z.array(categorySchema),
+  type: z.enum(['income', 'expense']),
 
   userId: z
     .string({ message: 'Error! Please try again.' })

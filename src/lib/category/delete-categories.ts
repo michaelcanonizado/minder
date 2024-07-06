@@ -4,8 +4,9 @@ import { databaseConnect } from '@/helpers/database/database';
 import User from '@/models/user';
 
 import deleteCategoriesSchema from '@/schemas/delete-categories';
+import { CategoryType } from '@/types';
 
-export const deleteCateogries = async (data: unknown) => {
+export const deleteCateogries = async (data: unknown, type: CategoryType) => {
   const result = deleteCategoriesSchema.safeParse(data);
   if (!result.success) {
     console.log(result.error);
@@ -22,15 +23,18 @@ export const deleteCateogries = async (data: unknown) => {
     throw new Error('User not found!');
   }
 
+  const userCategories =
+    type === 'income' ? user.categories.income : user.categories.expense;
+
   result.data.categories.forEach(category => {
-    const matchCategory = user.categories.income.id(category._id);
+    const matchCategory = userCategories.id(category._id);
     if (matchCategory) {
       matchCategory.isDeleted.status = true;
       matchCategory.isDeleted.deletedAt = new Date();
     }
   });
 
-  console.log(user.categories.income);
+  console.log(userCategories);
 
   //   console.log(result);
 
