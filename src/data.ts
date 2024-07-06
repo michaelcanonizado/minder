@@ -69,4 +69,5 @@ export const categoryColors = [
       secondary: 'rgba(2, 195, 154, 0.1)'
     }
   }
-];
+] as const;
+export type CategoryColors = typeof categoryColors;
