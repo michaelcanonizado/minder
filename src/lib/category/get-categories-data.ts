@@ -16,7 +16,9 @@ export interface CategoriesType {
  */
 export const getCategoriesData = async (
   userId: string,
-  showDeleted = false
+  options = {
+    showDeleted: false
+  }
 ) => {
   await databaseConnect();
 
@@ -29,7 +31,7 @@ export const getCategoriesData = async (
     JSON.stringify(user.categories)
   ) as typeof user.categories;
 
-  if (!showDeleted) {
+  if (!options.showDeleted) {
     const filteredIncomeCategories = data.income.filter(category => {
       if (category.isDeleted?.status !== true) {
         return category;
