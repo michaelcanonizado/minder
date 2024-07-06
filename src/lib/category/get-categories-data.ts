@@ -13,16 +13,41 @@ export interface CategoriesType {
  * @param userId _id of user
  * @returns the categories object of the user
  */
-export const getCategoriesData = async (userId: string) => {
+export const getCategoriesData = async (
+  userId: string,
+  showDeleted = false
+) => {
   await databaseConnect();
 
   const user = await User.findById(userId);
-
   if (!user) {
     throw new Error('User not found!');
   }
 
+  let data = JSON.parse(
+    JSON.stringify(user.categories)
+  ) as typeof user.categories;
+
+  if (!showDeleted) {
+    const filteredIncomeCategories = data.income.filter(category => {
+      if (category.isDeleted?.status !== true) {
+        return category;
+      }
+    }) as typeof data.income;
+
+    const filteredExpenseCategories = data.expense.filter(category => {
+      if (category.isDeleted?.status !== true) {
+        return category;
+      }
+    }) as typeof data.expense;
+
+    data = {
+      income: filteredIncomeCategories,
+      expense: filteredExpenseCategories
+    };
+  }
+
   return {
-    data: JSON.parse(JSON.stringify(user.categories))
+    data: data
   } as CategoriesType;
 };
