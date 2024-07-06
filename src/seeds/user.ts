@@ -1,6 +1,8 @@
 import { databaseConnect, databaseClose } from '@/helpers/database/database';
 import User from '@/models/user';
 
+import { categoryColors } from '@/data';
+
 // WARNING
 // This function deletes all the users in the Users collection and generates a new one. Therefore, after executing this function(npm run seed-user), you must change all code that depends on the properties of the user such as in .env.local
 
@@ -9,76 +11,65 @@ import User from '@/models/user';
  *
  * @returns void
  */
-const colors = [
-  '#ff0000',
-  '#ff8700',
-  '#ffd300',
-  '#deff0a',
-  '#a1ff0a',
-  '#0aff99',
-  '#147df5',
-  '#580aff',
-  '#be0aff',
-  '#0aefff'
-];
+
 const expenses = [
   {
     name: 'Food',
-    color: '#ff0000'
+    color: categoryColors[0]
   },
   {
     name: 'Transportation',
-    color: '#ff8700'
+    color: categoryColors[1]
   },
   {
     name: 'Shopping',
-    color: '#ffd300'
+    color: categoryColors[2]
   },
   {
     name: 'Phone',
-    color: '#deff0a'
+    color: categoryColors[3]
   },
   {
     name: 'Housing',
-    color: '#a1ff0a'
+    color: categoryColors[4]
   },
   {
     name: 'Education',
-    color: '#0aff99'
+    color: categoryColors[5]
   },
   {
     name: 'Entertainment',
-    color: '#580aff'
+    color: categoryColors[6]
   },
   {
     name: 'Other',
-    color: '#be0aff'
+    color: categoryColors[7]
   },
   {
     name: 'None',
-    color: '#0aefff'
+    color: categoryColors[8]
   }
 ];
 const incomes = [
   {
     name: 'Salary',
-    color: '#ff0000'
+    color: categoryColors[0]
   },
   {
     name: 'Allowance',
-    color: '#ff8700'
+    color: categoryColors[1]
   },
   {
     name: 'Investments',
-    color: '#0aefff'
+    color: categoryColors[2]
   },
   {
     name: 'Business',
-    color: '#a1ff0a'
+    color: categoryColors[3]
   },
   {
     name: 'Other',
-    color: '#580aff'
+    color: categoryColors[4]
   }
 ];
 
