@@ -34,7 +34,25 @@ export const columns: ColumnDef<CategoryChartData>[] = [
     accessorKey: 'name',
     header: () => <div className=''>Category</div>,
     cell: ({ row }) => {
-      return <div className='Capitalize'>{row.getValue('name')}</div>;
+      const colors = row.original.color.code;
+
+      return (
+        <div
+          className='w-fit rounded-full px-3 py-1'
+          style={{
+            backgroundColor: colors.secondary
+          }}
+        >
+          <p
+            className='Capitalize'
+            style={{
+              color: colors.primary
+            }}
+          >
+            {row.getValue('name')}
+          </p>
+        </div>
+      );
     }
   },
   {

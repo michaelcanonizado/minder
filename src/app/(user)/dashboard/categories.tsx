@@ -51,8 +51,6 @@ const Categories = ({ className }: { className?: string }) => {
       color: category.color.code.primary
     };
   });
-  console.log('Colors I: ', incomeCategoriesChartData);
-  console.log('Colors E: ', expenseCategoriesChartData);
 
   const incomeCategoriesDeleteCTA = (
     <div className='pt-4'>
@@ -74,27 +72,6 @@ const Categories = ({ className }: { className?: string }) => {
 
   return (
     <Bento.Box className={cn('', className)}>
-      <div className='m-4 flex flex-row flex-wrap gap-2 '>
-        {categoryColors.map(color => {
-          return (
-            <div
-              className={cn('w-[100px] rounded-full py-1')}
-              style={{
-                backgroundColor: color.code.secondary
-              }}
-            >
-              <p
-                className='text-center'
-                style={{
-                  color: color.code.primary
-                }}
-              >
-                {color.name}
-              </p>
-            </div>
-          );
-        })}
-      </div>
       <Bento.Box.Header>
         <p className='text-heading-100'>Categories</p>
       </Bento.Box.Header>
