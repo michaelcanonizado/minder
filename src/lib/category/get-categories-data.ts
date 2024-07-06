@@ -8,9 +8,10 @@ export interface CategoriesType {
 }
 
 /**
- * Gets the categories of the user
+ * Gets the income and expense categories of the user
  *
  * @param userId _id of user
+ * @param showDeleted (optional) show deleted categories
  * @returns the categories object of the user
  */
 export const getCategoriesData = async (
