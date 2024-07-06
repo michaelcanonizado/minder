@@ -84,6 +84,11 @@ export const getCategoriesChartData = async (
   const incomeCategoriesResult = [];
 
   for (let category of incomeCategories) {
+    /* Used continue; here to avoid wrapping the whole code below in an if-condition. More readable in my opinion */
+    if (category.isDeleted?.status === true) {
+      continue;
+    }
+
     let totalAmount = 0;
 
     const filteredTransactions = incomeData.filter(income => {
@@ -117,6 +122,11 @@ export const getCategoriesChartData = async (
   }
 
   for (let category of expenseCategories) {
+    /* Used continue; here to avoid wrapping the whole code below in an if-condition. More readable in my opinion */
+    if (category.isDeleted?.status === true) {
+      continue;
+    }
+
     let totalAmount = 0;
 
     const filteredTransactions = expenseData.filter(expense => {
