@@ -15,7 +15,10 @@ import { CategoryChartData, Period, PeriodDates } from '@/types';
 
 export const getCategoriesChartData = async (
   userId: string,
-  period: Period
+  period: Period,
+  options = {
+    showDeleted: false
+  }
 ) => {
   await databaseConnect();
 
@@ -85,7 +88,7 @@ export const getCategoriesChartData = async (
 
   for (let category of incomeCategories) {
     /* Used continue; here to avoid wrapping the whole code below in an if-condition. More readable in my opinion */
-    if (category.isDeleted?.status === true) {
+    if (options.showDeleted === false && category.isDeleted?.status === true) {
       continue;
     }
 
@@ -123,7 +126,7 @@ export const getCategoriesChartData = async (
 
   for (let category of expenseCategories) {
     /* Used continue; here to avoid wrapping the whole code below in an if-condition. More readable in my opinion */
-    if (category.isDeleted?.status === true) {
+    if (options.showDeleted === false && category.isDeleted?.status === true) {
       continue;
     }
 
