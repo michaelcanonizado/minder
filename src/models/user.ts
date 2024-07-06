@@ -20,10 +20,17 @@ export interface UserBalanceType {
   totalIncome: number;
   totalExpense: number;
 }
+export interface UserColorType {
+  name: string;
+  code: {
+    primary: string;
+    secondary: string;
+  };
+}
 export interface UserCategoryType {
   name: string;
   _id?: Types.ObjectId & string;
-  color: string;
+  color: UserColorType;
   createdAt?: Date;
   updatedAt?: Date;
   isDeleted?: {
@@ -103,6 +110,23 @@ const currencySchema = new Schema<UserCurrencyType>(
   { _id: false }
 );
 
+const colorSchema = new Schema<UserColorType>({
+  name: {
+    type: String,
+    required: true
+  },
+  code: {
+    primary: {
+      type: String,
+      required: true
+    },
+    secondary: {
+      type: String,
+      required: true
+    }
+  }
+});
+
 const categorySchema = new Schema<UserCategoryType>(
   {
     name: {
@@ -110,7 +134,7 @@ const categorySchema = new Schema<UserCategoryType>(
       required: true
     },
     color: {
-      type: String,
+      type: colorSchema,
       required: true
     },
     isDeleted: {
