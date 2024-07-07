@@ -125,7 +125,7 @@ const Category = ({
               />
             </div>
 
-            <DialogFooter className='flex flex-row justify-end gap-2'>
+            <DialogFooter className='mt-4 flex flex-row justify-end gap-2'>
               <DialogClose asChild>
                 <Button type='button' variant='outline'>
                   Cancel
