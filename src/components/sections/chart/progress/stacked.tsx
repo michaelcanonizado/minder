@@ -15,18 +15,38 @@ const Stacked = ({ items, className }: StackedType) => {
     return sum + item.amount;
   }, 0);
 
+  const itemsToShow = items.filter(item => {
+    if (item.amount !== 0) {
+      return item;
+    }
+  });
+
   return (
     <div
       className={cn(
-        'flex h-[20px] w-full flex-row rounded-full bg-muted',
+        'flex h-[8px] w-full flex-row rounded-full bg-muted',
         className
       )}
     >
-      {totalAmount !== 0
-        ? items.map((item, index) => {
+      {itemsToShow.length !== 0
+        ? itemsToShow.map((item, index) => {
+            /* Manually add border radius to the start and end of
+            the progress bar as putting overflow-hidden in
+            the parent container will hide the tooltip*/
+            let borderRadius = 'rounded-none';
+            if (index === 0) {
+              borderRadius = 'rounded-l-full';
+            }
+            if (index === itemsToShow.length - 1) {
+              borderRadius = 'rounded-r-full';
+            }
+            if (itemsToShow.length === 1) {
+              borderRadius = 'rounded-full';
+            }
+
             return (
               <div
-                className={cn('group relative cursor-pointer')}
+                className={cn('group relative cursor-pointer', borderRadius)}
                 style={{
                   width: `${(item.amount / totalAmount) * 100}%`,
                   backgroundColor: item.color
