@@ -75,10 +75,6 @@ export const FormSelect = ({
   data: {
     _id: string;
     name: string;
-    isDeleted: {
-      status: boolean;
-      [key: string]: any;
-    };
     [key: string]: any;
   }[];
   field: any;

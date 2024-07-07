@@ -89,6 +89,7 @@ const Income = ({
                 <FormLabel>Add to:</FormLabel>
                 <FormControl className='mt-[-6px]'>
                   <FormRadioCardGroup
+                    /* ts-ignore */
                     data={wallets}
                     orientation='horizontal'
                     field={field}
@@ -121,6 +122,7 @@ const Income = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Category</FormLabel>
+                  {/* @ts-ignore */}
                   <FormSelect data={categories} field={field} />
                   <FormMessage />
                 </FormItem>

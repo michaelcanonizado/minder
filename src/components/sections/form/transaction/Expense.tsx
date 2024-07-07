@@ -85,6 +85,7 @@ const Expense = ({
                 <FormLabel>Deduct from:</FormLabel>
                 <FormControl className='mt-[-6px]'>
                   <FormRadioCardGroup
+                    /* @ts-ignore */
                     data={wallets}
                     orientation='horizontal'
                     field={field}
@@ -117,6 +118,7 @@ const Expense = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Category</FormLabel>
+                  {/* @ts-ignore */}
                   <FormSelect data={categories} field={field} />
                   <FormMessage />
                 </FormItem>
