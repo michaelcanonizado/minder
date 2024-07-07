@@ -89,6 +89,8 @@ const Categories = ({ className }: { className?: string }) => {
           deleteCTA={incomeCategoriesDeleteCTA}
           passSelectedRowsToParent={incomeOnSubmit}
         />
+
+        <Form.Add.Category type='income' />
       </Bento.Box.Content>
 
       <Bento.Box.Content className='flex flex-col space-y-4'>
@@ -104,6 +106,8 @@ const Categories = ({ className }: { className?: string }) => {
           deleteCTA={expenseCategoriesDeleteCTA}
           passSelectedRowsToParent={expenseOnSubmit}
         />
+
+        <Form.Add.Category type='expense' />
       </Bento.Box.Content>
     </Bento.Box>
   );
