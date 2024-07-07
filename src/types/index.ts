@@ -42,6 +42,7 @@ export type ChartData = {
 };
 
 export type CategoryColor = {
+  _id: string;
   name: string;
   code: {
     primary: string;
@@ -50,6 +51,7 @@ export type CategoryColor = {
 };
 export const categoryColors: CategoryColor[] = [
   {
+    _id: '668a5c05f068446619fc56e1',
     name: 'Red',
     code: {
       primary: '#d90429',
@@ -57,6 +59,7 @@ export const categoryColors: CategoryColor[] = [
     }
   },
   {
+    _id: '668a5c3751cbabd9759cea8f',
     name: 'Orange',
     code: {
       primary: '#faa307',
@@ -64,6 +67,7 @@ export const categoryColors: CategoryColor[] = [
     }
   },
   {
+    _id: '668a5c3ce78fa2b3918c44bb',
     name: 'Yellow',
     code: {
       primary: '#ffe600',
@@ -71,6 +75,7 @@ export const categoryColors: CategoryColor[] = [
     }
   },
   {
+    _id: '668a5c41429830d9349e972f',
     name: 'Green',
     code: {
       primary: '#38b000',
@@ -78,6 +83,7 @@ export const categoryColors: CategoryColor[] = [
     }
   },
   {
+    _id: '668a5c459f7752dccb2ddf54',
     name: 'Blue',
     code: {
       primary: '#00a6fb',
@@ -85,6 +91,7 @@ export const categoryColors: CategoryColor[] = [
     }
   },
   {
+    _id: '668a5c4952ffe2a3434ef1e7',
     name: 'Purple',
     code: {
       primary: '#8900f2',
@@ -92,6 +99,7 @@ export const categoryColors: CategoryColor[] = [
     }
   },
   {
+    _id: '668a5c4bc42bed6e994a6b09',
     name: 'Brown',
     code: {
       primary: '#b76935',
@@ -99,6 +107,7 @@ export const categoryColors: CategoryColor[] = [
     }
   },
   {
+    _id: '668a5c4e923f1fd00ccb40c5',
     name: 'Pink',
     code: {
       primary: '#ff5d8f',
@@ -106,6 +115,7 @@ export const categoryColors: CategoryColor[] = [
     }
   },
   {
+    _id: '668a5c52bb2a6da584792972',
     name: 'Gray',
     code: {
       primary: '#adb5bd',
@@ -113,6 +123,7 @@ export const categoryColors: CategoryColor[] = [
     }
   },
   {
+    _id: '668a5c557dae2b411b1800b5',
     name: 'Turquoise',
     code: {
       primary: '#02c39a',
