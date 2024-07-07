@@ -27,8 +27,6 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { FormInput, FormSelect } from '../components';
-import { useEffect, useState } from 'react';
-import { getCategoriesData } from '@/lib/category/get-categories-data';
 
 const Category = ({
   className,
@@ -40,15 +38,11 @@ const Category = ({
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
 
-  const [categories, setCategories] = useState<Awaited<
-    ReturnType<typeof getCategoriesData>
-  > | null>(null);
-
   const form = useForm<z.infer<typeof addCategorySchema>>({
     resolver: zodResolver(addCategorySchema),
     defaultValues: {
       name: '',
-      color: categoryColors[0]._id,
+      color: '',
       userId: userId,
       formPath: currentPathname
     }
@@ -57,6 +51,26 @@ const Category = ({
   const onSubmit = async (data: z.infer<typeof addCategorySchema>) => {
     console.log(data);
   };
+
+  const selectedColor = categoryColors.find(color => {
+    if (color._id === form.watch('color')) {
+      return color;
+    }
+  });
+  let inputStyles = {
+    backgroundColor: '',
+    color: '',
+    outlineColor: '',
+    borderColor: ''
+  };
+  if (selectedColor) {
+    inputStyles = {
+      backgroundColor: selectedColor.code.secondary,
+      color: selectedColor.code.primary,
+      outlineColor: selectedColor.code.primary,
+      borderColor: selectedColor.code.primary
+    };
+  }
 
   return (
     <Dialog>
@@ -77,7 +91,13 @@ const Category = ({
                   <FormItem className='w-full'>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <FormInput type='text' placeholder='Cash' {...field} />
+                      <FormInput
+                        className=''
+                        type='text'
+                        placeholder='Cash'
+                        style={inputStyles}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,9 +109,13 @@ const Category = ({
                 name='color'
                 render={({ field }) => (
                   <FormItem className='w-full'>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>Color</FormLabel>
                     <FormControl>
-                      <FormSelect field={field} data={categoryColors} />
+                      <FormSelect
+                        field={field}
+                        data={categoryColors}
+                        showColor={true}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
