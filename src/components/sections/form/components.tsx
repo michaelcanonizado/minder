@@ -104,7 +104,7 @@ export const FormSelect = ({
 
     return (
       <SelectTrigger className='text-foreground'>
-        <SelectValue>{selectedItem?.name}</SelectValue>
+        <SelectValue placeholder='Choose'>{selectedItem?.name}</SelectValue>
       </SelectTrigger>
     );
   };
