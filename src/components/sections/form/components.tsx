@@ -255,6 +255,8 @@ const FormRadioCard = ({
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 export const FormInput = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
-    return <Input type={type} ref={ref} {...props} />;
+    return (
+      <Input type={type} ref={ref} {...props} className={cn('', className)} />
+    );
   }
 );
