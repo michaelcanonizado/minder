@@ -1,9 +1,6 @@
 import Form from '@/components/sections/form';
-import Modal from '@/components/sections/modal';
 import Navbar from '@/components/sections/navigation';
 import Wallet from '@/components/sections/wallet';
-
-import { Plus } from 'lucide-react';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -12,19 +9,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className='flex flex-col gap-2'>
           <p className='text-body-200 text-muted-foreground'>Wallets</p>
           <div className='space-y-4 pl-4'>
-            <Modal>
-              <Modal.Trigger className='transition-color flex w-full flex-row gap-2 rounded-lg border p-2 duration-200 ease-in hover:bg-accent'>
-                <Plus className='min-w-[24px]' />
-                <p className=''>Add Wallet</p>
-              </Modal.Trigger>
-              <Modal.Content>
-                <Modal.Content.Title>Add Wallet</Modal.Content.Title>
-                <Modal.Content.Description>
-                  Add new wallet to your account
-                </Modal.Content.Description>
-                <Form.Add.Wallet />
-              </Modal.Content>
-            </Modal>
+            <Form.Add.Wallet />
             <Wallet.Group className='gap-4' />
           </div>
         </div>

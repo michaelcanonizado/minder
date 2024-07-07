@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 
 import { usePathname } from 'next/navigation';
 import addWalletSchema from '@/schemas/add-wallet';
+import { addNewWallet } from '@/lib/wallet/add-new-wallet';
 
 import {
   Form,
@@ -17,10 +18,19 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import { DialogClose, DialogFooter } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogClose,
+  DialogFooter,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+  DialogDescription,
+  DialogTitle
+} from '@/components/ui/dialog';
+import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { FormInput } from '../components';
-import { addNewWallet } from '@/lib/wallet/add-new-wallet';
+import { FormInput } from '@/components/sections/form/components';
 
 const Wallet = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -50,67 +60,77 @@ const Wallet = ({ className }: { className?: string }) => {
       return;
     }
 
-    console.log(response);
-
     form.reset();
   };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className={cn('flex flex-col', className)}
-      >
-        <div className='mt-8 flex flex-row gap-4'>
-          <FormField
-            control={form.control}
-            name='name'
-            render={({ field }) => (
-              <FormItem className='w-full'>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <FormInput type='text' placeholder='Paypal' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    <Dialog>
+      <DialogTrigger className='transition-color flex w-full flex-row gap-2 rounded-lg border p-2 duration-200 ease-in hover:bg-accent'>
+        <Plus className='min-w-[24px]' />
+        <p className=''>Add Wallet</p>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Add Wallet</DialogTitle>
+          <DialogDescription>Add new wallet to your account</DialogDescription>
+        </DialogHeader>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={cn('flex flex-col', className)}
+          >
+            <div className='mt-8 flex flex-row gap-4'>
+              <FormField
+                control={form.control}
+                name='name'
+                render={({ field }) => (
+                  <FormItem className='w-full'>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <FormInput type='text' placeholder='Paypal' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-          <FormField
-            control={form.control}
-            name='balance'
-            render={({ field }) => (
-              <FormItem className='w-full'>
-                <FormLabel>
-                  Initial Balance{' '}
-                  <span className='text-body-200 text-muted-foreground'>
-                    {' '}
-                    (optional)
-                  </span>
-                </FormLabel>
-                <FormControl>
-                  <FormInput type='text' placeholder='0' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+              <FormField
+                control={form.control}
+                name='balance'
+                render={({ field }) => (
+                  <FormItem className='w-full'>
+                    <FormLabel>
+                      Initial Balance{' '}
+                      <span className='text-body-200 text-muted-foreground'>
+                        {' '}
+                        (optional)
+                      </span>
+                    </FormLabel>
+                    <FormControl>
+                      <FormInput type='text' placeholder='0' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
-        <DialogFooter className='flex flex-row justify-end gap-2'>
-          <DialogClose asChild>
-            <Button type='button' variant='outline'>
-              Cancel
-            </Button>
-          </DialogClose>
-          <DialogClose asChild>
-            <Button type='submit' className='w-fit px-8'>
-              Submit
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      </form>
-    </Form>
+            <DialogFooter className='flex flex-row justify-end gap-2'>
+              <DialogClose asChild>
+                <Button type='button' variant='outline'>
+                  Cancel
+                </Button>
+              </DialogClose>
+              <DialogClose asChild>
+                <Button type='submit' className='w-fit px-8'>
+                  Submit
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 };
 
