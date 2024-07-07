@@ -4,7 +4,7 @@ const addCategorySchema = z.object({
   name: z
     .string({ message: 'Please name the category' })
     .min(1, { message: 'Please name the category' }),
-  color: z
+  colorId: z
     .string({ message: 'Please choose a color' })
     .min(1, { message: 'Please choose a color' }),
 

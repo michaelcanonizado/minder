@@ -42,7 +42,7 @@ const Category = ({
     resolver: zodResolver(addCategorySchema),
     defaultValues: {
       name: '',
-      color: '',
+      colorId: '',
       userId: userId,
       formPath: currentPathname
     }
@@ -50,10 +50,12 @@ const Category = ({
 
   const onSubmit = async (data: z.infer<typeof addCategorySchema>) => {
     console.log(data);
+
+    form.reset();
   };
 
   const selectedColor = categoryColors.find(color => {
-    if (color._id === form.watch('color')) {
+    if (color._id === form.watch('colorId')) {
       return color;
     }
   });
@@ -106,7 +108,7 @@ const Category = ({
 
               <FormField
                 control={form.control}
-                name='color'
+                name='colorId'
                 render={({ field }) => (
                   <FormItem className='w-full'>
                     <FormLabel>Color</FormLabel>
