@@ -3,6 +3,8 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogFooter,
+  DialogClose,
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
@@ -10,13 +12,14 @@ import { cn } from '@/lib/utils';
 
 const Modal = ({
   children,
-  className
+  className,
+  ...props
 }: {
   children?: React.ReactNode;
   className?: string;
 }) => {
   return (
-    <Dialog>
+    <Dialog {...props}>
       <div className={cn('', className)}>{children}</div>
     </Dialog>
   );
@@ -24,49 +27,101 @@ const Modal = ({
 
 const Trigger = ({
   children,
-  className
+  className,
+  ...props
 }: {
   children?: React.ReactNode;
   className?: string;
 }) => {
   return (
-    <DialogTrigger className={cn('', className)}>{children}</DialogTrigger>
+    <DialogTrigger {...props} className={cn('', className)}>
+      {children}
+    </DialogTrigger>
   );
 };
 
-const Content = ({
+const Header = ({
   children,
-  className
+  className,
+  ...props
 }: {
   children?: React.ReactNode;
   className?: string;
 }) => {
   return (
-    <DialogContent className={cn('space-y-1', className)}>
+    <DialogHeader {...props} className={cn('space-y-1', className)}>
+      {children}
+    </DialogHeader>
+  );
+};
+const Content = ({
+  children,
+  className,
+  ...props
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <DialogContent {...props} className={cn('space-y-1', className)}>
       {children}
     </DialogContent>
   );
 };
 const Title = ({
   children,
-  className
-}: {
-  children?: React.ReactNode;
-  className?: string;
-}) => {
-  return <DialogTitle className={cn('', className)}>{children}</DialogTitle>;
-};
-const Description = ({
-  children,
-  className
+  className,
+  ...props
 }: {
   children?: React.ReactNode;
   className?: string;
 }) => {
   return (
-    <DialogDescription className={cn('', className)}>
+    <DialogTitle {...props} className={cn('', className)}>
+      {children}
+    </DialogTitle>
+  );
+};
+const Description = ({
+  children,
+  className,
+  ...props
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <DialogDescription {...props} className={cn('', className)}>
       {children}
     </DialogDescription>
+  );
+};
+const Footer = ({
+  children,
+  className,
+  ...props
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <DialogFooter {...props} className={cn('', className)}>
+      {children}
+    </DialogFooter>
+  );
+};
+const Close = ({
+  children,
+  className,
+  ...props
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <DialogClose {...props} className={cn('', className)}>
+      {children}
+    </DialogClose>
   );
 };
 
@@ -75,5 +130,8 @@ Content.Description = Description;
 
 Modal.Trigger = Trigger;
 Modal.Content = Content;
+Modal.Header = Header;
+Modal.Footer = Footer;
+Modal.Close = Close;
 
 export default Modal;
