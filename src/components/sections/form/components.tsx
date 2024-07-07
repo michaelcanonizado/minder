@@ -27,6 +27,7 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { Item } from '@radix-ui/react-select';
 
 export const FormDatePicker = ({
   className,
@@ -70,7 +71,8 @@ export const FormDatePicker = ({
 
 export const FormSelect = ({
   data,
-  field
+  field,
+  showColor = false
 }: {
   data: {
     _id: string;
@@ -78,9 +80,15 @@ export const FormSelect = ({
     [key: string]: any;
   }[];
   field: any;
+  showColor?: boolean;
 }) => {
   // Manually set the selected value as the component doesn't reset back to the placeholder even when form.reset() is called and field.value is == ''
   // As of the moment, shadcn doesn't provide a way to have the select placeholder to be text-muted-foreground. So this function is also used to set the text color to text-muted-foreground when no item is selected.
+  let selectContainerClasses = '';
+  if (data[0].code && showColor) {
+    selectContainerClasses = 'space-y-1';
+  }
+
   const getSelectedItem = () => {
     // If no item is selected
     if (field.value.length === 0) {
@@ -93,7 +101,7 @@ export const FormSelect = ({
 
     // Find the selected item in the passed data prop and render the <SelectValue/>
     const selectedItem = data.find(item => {
-      if (item._id == field.value) {
+      if (item._id === field.value) {
         return field.value;
       }
     });
@@ -109,10 +117,21 @@ export const FormSelect = ({
     <Select onValueChange={field.onChange} defaultValue={field.defaultValue}>
       <FormControl>{getSelectedItem()}</FormControl>
       <SelectContent className='max-h-[300px]'>
-        <SelectGroup>
+        <SelectGroup className={cn('', selectContainerClasses)}>
           {data.map(item => {
+            let buttonStyles = {
+              backgroundColor: '',
+              color: ''
+            };
+            if (item.code && showColor) {
+              buttonStyles = {
+                backgroundColor: item.code.secondary,
+                color: item.code.primary
+              };
+            }
+
             return (
-              <SelectItem value={item._id} key={item._id}>
+              <SelectItem value={item._id} key={item._id} style={buttonStyles}>
                 {item.name}
               </SelectItem>
             );
