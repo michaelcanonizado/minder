@@ -31,8 +31,6 @@ const Income = ({ className }: { className?: string }) => {
 
       data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
 
-      console.log('Incomes: ', data);
-
       setData(data);
     };
     getData();

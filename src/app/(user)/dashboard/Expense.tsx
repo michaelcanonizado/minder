@@ -30,7 +30,6 @@ const Expense = ({ className }: { className?: string }) => {
       );
 
       data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
-      console.log('Expenses: ', data);
 
       setData(data);
     };

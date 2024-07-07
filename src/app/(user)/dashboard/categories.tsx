@@ -30,7 +30,6 @@ const Categories = ({ className }: { className?: string }) => {
     const getData = async () => {
       const result = await getCategoriesChartData(userId, dashboard.period);
       setData(result);
-      console.log(result);
     };
     getData();
   }, [dashboard]);
