@@ -8,8 +8,7 @@ import {
   getSortedRowModel,
   flexRender,
   getCoreRowModel,
-  useReactTable,
-  Table as TanstackTable
+  useReactTable
 } from '@tanstack/react-table';
 
 import {
@@ -21,8 +20,16 @@ import {
   TableRow as ShadcnTableRow
 } from '@/components/ui/table';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import Modal from '@/components/sections/modal';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+  DialogDescription,
+  DialogTitle
+} from '@/components/ui/dialog';
 import { Trash2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export interface DataTableProps<TData, TValue, TRows> {
   columns: ColumnDef<TData, TValue>[];
@@ -79,16 +86,20 @@ export const DataTable = <TData, TValue, TRows>({
   const rowsSelectedCount = rowsSelected.length;
 
   const DeleteModal = (
-    <Modal>
-      <Modal.Trigger className='transition-color flex w-full items-center justify-center border border-none p-4 duration-200 ease-in hover:bg-accent'>
-        <Trash2 className='w-[16px]' />
-      </Modal.Trigger>
-      <Modal.Content>
-        <Modal.Content.Title>Delete Categories</Modal.Content.Title>
-        <Modal.Content.Description className=''>
-          This will delete the categories from your account allong with the
-          connected transactions!
-        </Modal.Content.Description>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className='transition-color flex h-full w-full items-center justify-center rounded-none border border-none bg-inherit p-4 duration-200 ease-in hover:bg-accent'>
+          <Trash2 className='w-[16px] stroke-foreground' />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete Categories</DialogTitle>
+          <DialogDescription className=''>
+            This will delete the categories from your account allong with the
+            connected transactions!
+          </DialogDescription>
+        </DialogHeader>
         <div className='space-y-2 pt-4'>
           <div className=''>
             <p className='text-body-100'>Selected Categories:</p>
@@ -110,16 +121,16 @@ export const DataTable = <TData, TValue, TRows>({
           </div>
         </div>
         {deleteCTA}
-      </Modal.Content>
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 
   const RowActions = (
     <div className='mb-2 flex flex-row divide-x rounded-lg border border-muted [&>*]:grow'>
-      <div className='flex items-center justify-center px-4 pb-3 pt-4'>
+      <div className='flex items-center justify-center px-4 pb-4 pt-4'>
         <p className='w-fit'>{rowsSelectedCount} selected</p>
       </div>
-      {deleteCTA ? DeleteModal : ''}
+      <div className=''>{deleteCTA ? DeleteModal : ''}</div>
     </div>
   );
 
