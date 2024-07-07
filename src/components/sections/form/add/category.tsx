@@ -22,11 +22,15 @@ import {
   Dialog,
   DialogTrigger,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
   DialogClose,
   DialogFooter
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { FormInput, FormSelect } from '../components';
+import Modal from '@/components/sections/modal';
 
 const Category = ({
   className,
@@ -74,12 +78,22 @@ const Category = ({
     };
   }
 
+  const formHeader = `Add New ${type === 'income' ? 'Expense' : 'Expense'} Category`;
+
+  const formDescription = `Create a new category to organize your ${type === 'income' ? 'income' : 'expense'}. Provide a name and a color for better clarity.`;
+
   return (
     <Dialog>
       <DialogTrigger asChild style={{ margin: '0' }}>
-        <Button variant='outline'>Add Category</Button>
+        <Button variant='outline' className='w-full'>
+          Add Category
+        </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
+        <DialogHeader className=''>
+          <DialogTitle>{formHeader}</DialogTitle>
+          <DialogDescription>{formDescription}</DialogDescription>
+        </DialogHeader>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
