@@ -20,34 +20,22 @@ import {
   TableRow as ShadcnTableRow
 } from '@/components/ui/table';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-  DialogDescription,
-  DialogTitle
-} from '@/components/ui/dialog';
-import { Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 export interface DataTableProps<TData, TValue, TRows> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  deleteCTA?: React.ReactNode;
+  rowActions?: React.ReactNode[];
   passSelectedRowsToParent?: (data: TRows) => void;
 }
 
 export const DataTable = <TData, TValue, TRows>({
   columns,
   data,
-  deleteCTA,
+  rowActions,
   passSelectedRowsToParent
 }: DataTableProps<TData, TValue, TRows>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
-
   const [rowSelection, setRowSelection] = useState({});
-
   const [isRowSelectionActionsVisible, setIsRowSelectionActionsVisible] =
     useState(false);
 
@@ -84,53 +72,22 @@ export const DataTable = <TData, TValue, TRows>({
 
   const rowsSelected = table.getFilteredSelectedRowModel().rows;
   const rowsSelectedCount = rowsSelected.length;
-
-  const DeleteModal = (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className='transition-color flex h-full w-full items-center justify-center rounded-none border border-none bg-inherit p-4 duration-200 ease-in hover:bg-accent'>
-          <Trash2 className='w-[16px] stroke-foreground' />
-        </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Delete Categories</DialogTitle>
-          <DialogDescription className=''>
-            This will delete the categories from your account allong with the
-            connected transactions!
-          </DialogDescription>
-        </DialogHeader>
-        <div className='space-y-2 pt-4'>
-          <div className=''>
-            <p className='text-body-100'>Selected Categories:</p>
-          </div>
-          <div className='ml-4 space-y-2'>
-            {rowsSelected.map((item, index) => {
-              return (
-                <div
-                  className='text-body-200 flex flex-row space-x-1'
-                  key={index}
-                >
-                  <p className=''>- {item.getValue('name')}</p>
-                  <p className='text-muted-foreground'>
-                    (123 transactions | $12345.00)
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        {deleteCTA}
-      </DialogContent>
-    </Dialog>
-  );
+  const rowActionsCount = rowActions ? rowActions.length + 1 : 1;
 
   const RowActions = (
-    <div className='mb-2 flex flex-row divide-x rounded-lg border border-muted [&>*]:grow'>
-      <div className='flex items-center justify-center px-4 pb-4 pt-4'>
+    <div
+      className='mb-2 divide-x rounded-lg border border-muted'
+      style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${rowActionsCount},minmax(0,1fr))`
+      }}
+    >
+      <div className='grid place-items-center p-4'>
         <p className='w-fit'>{rowsSelectedCount} selected</p>
       </div>
-      <div className=''>{deleteCTA ? DeleteModal : ''}</div>
+      {rowActions?.map(action => {
+        return <div className=''>{action}</div>;
+      })}
     </div>
   );
 

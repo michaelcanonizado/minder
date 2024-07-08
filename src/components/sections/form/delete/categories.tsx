@@ -7,6 +7,9 @@ import { cn } from '@/lib/utils';
 
 import { usePathname } from 'next/navigation';
 import addWalletSchema from '@/schemas/add-wallet';
+import { deleteCateogries } from '@/lib/category/delete-categories';
+import { CategoryType } from '@/types';
+import deleteCategoriesSchema from '@/schemas/delete-categories';
 
 import {
   Form,
@@ -16,12 +19,19 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import { DialogClose, DialogFooter } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+  DialogFooter
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import deleteCategoriesSchema from '@/schemas/delete-categories';
 import { useDashboardContext } from '@/context/dashboard';
-import { CategoryType } from '@/types';
-import { deleteCateogries } from '@/lib/category/delete-categories';
+import { Trash2 } from 'lucide-react';
 
 const Categories = ({
   className,
@@ -58,20 +68,56 @@ const Categories = ({
   };
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className={cn('flex flex-col', className)}
-      >
-        <DialogFooter className='flex flex-row justify-end gap-2'>
-          <DialogClose asChild>
-            <Button className='w-full' variant='destructive' type='submit'>
-              Delete
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      </form>
-    </Form>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button className='transition-color flex h-full w-full items-center justify-center rounded-none border border-none bg-inherit p-4 duration-200 ease-in hover:bg-accent'>
+          <Trash2 className='w-[16px] stroke-foreground' />
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Delete Categories</DialogTitle>
+          <DialogDescription className=''>
+            This will delete the categories from your account allong with the
+            connected transactions!
+          </DialogDescription>
+        </DialogHeader>
+        <div className='space-y-2 pt-4'>
+          <div className=''>
+            <p className='text-body-100'>Selected Categories:</p>
+          </div>
+          <div className='ml-4 space-y-2'>
+            {/* {rowsSelected.map((item, index) => {
+              return (
+                <div
+                  className='text-body-200 flex flex-row space-x-1'
+                  key={index}
+                >
+                  <p className=''>- {item.getValue('name')}</p>
+                  <p className='text-muted-foreground'>
+                    (123 transactions | $12345.00)
+                  </p>
+                </div>
+              );
+            })} */}
+          </div>
+        </div>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className={cn('flex flex-col', className)}
+          >
+            <DialogFooter className='flex flex-row justify-end gap-2'>
+              <DialogClose asChild>
+                <Button className='w-full' variant='destructive' type='submit'>
+                  Delete
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
   );
 };
 

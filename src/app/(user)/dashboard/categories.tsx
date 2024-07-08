@@ -51,20 +51,9 @@ const Categories = ({ className }: { className?: string }) => {
     };
   });
 
-  const incomeCategoriesDeleteCTA = (
-    <div className='pt-4'>
-      <Form.Delete.Categories type='income' />
-    </div>
-  );
   const incomeOnSubmit = (data: CategoryChartData[]) => {
     changeDashboardSelectedCategories(data, 'income');
   };
-
-  const expenseCategoriesDeleteCTA = (
-    <div className='pt-4'>
-      <Form.Delete.Categories type='expense' />
-    </div>
-  );
   const expenseOnSubmit = (data: CategoryChartData[]) => {
     changeDashboardSelectedCategories(data, 'expense');
   };
@@ -85,7 +74,7 @@ const Categories = ({ className }: { className?: string }) => {
         <Table
           columns={columns}
           data={data.income}
-          deleteCTA={incomeCategoriesDeleteCTA}
+          rowActions={[<Form.Delete.Categories type='income' />]}
           passSelectedRowsToParent={incomeOnSubmit}
         />
 
@@ -102,7 +91,7 @@ const Categories = ({ className }: { className?: string }) => {
         <Table
           columns={columns}
           data={data.expense}
-          deleteCTA={expenseCategoriesDeleteCTA}
+          rowActions={[<Form.Delete.Categories type='expense' />]}
           passSelectedRowsToParent={expenseOnSubmit}
         />
 
