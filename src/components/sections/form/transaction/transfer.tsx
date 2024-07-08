@@ -61,7 +61,6 @@ const Transfer = ({
       userId: userId,
       sourceWalletId: wallets[0]._id,
       destinationWalletId: walletsModified[1]._id,
-      // destinationWalletId: wallets[0].id,
       categoryId: '',
       date: undefined,
       description: '',
@@ -70,11 +69,6 @@ const Transfer = ({
   });
 
   const onSubmit = async (data: z.infer<typeof trackBalanceTransferSchema>) => {
-    // Coerce the data.userId to match the passed userId incase it was changed
-    if (data.userId !== userId) {
-      data.userId = userId;
-    }
-
     data.destinationWalletId = decodeModifiedWalletId(data.destinationWalletId);
 
     const response = await addWalletTransfer(data);
