@@ -59,7 +59,6 @@ const Transfer = ({
       userId: userId,
       sourceWalletId: wallets[0]._id,
       destinationWalletId: walletsModified[1]._id,
-      categoryId: '',
       date: undefined,
       description: '',
       formPath: currentPathname
