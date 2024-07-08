@@ -6,19 +6,11 @@ import { useForm } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 
 import { usePathname } from 'next/navigation';
-import addWalletSchema from '@/schemas/add-wallet';
 import { deleteCateogries } from '@/lib/category/delete-categories';
-import { CategoryType } from '@/types';
+import { CategoryChartData, CategoryType } from '@/types';
 import deleteCategoriesSchema from '@/schemas/delete-categories';
 
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormControl,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import {
   Dialog,
   DialogTrigger,
@@ -30,25 +22,19 @@ import {
   DialogFooter
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { useDashboardContext } from '@/context/dashboard';
 import { Trash2 } from 'lucide-react';
 
 const Categories = ({
   className,
-  type
+  type,
+  selectedCategories = []
 }: {
   className?: string;
   type: CategoryType;
+  selectedCategories?: CategoryChartData[];
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
-
-  const { dashboard } = useDashboardContext();
-
-  const selectedCategories =
-    type === 'income'
-      ? dashboard.selectedCategories.income
-      : dashboard.selectedCategories.expense;
 
   const form = useForm<z.infer<typeof deleteCategoriesSchema>>({
     resolver: zodResolver(deleteCategoriesSchema),
@@ -67,6 +53,29 @@ const Categories = ({
     form.reset();
   };
 
+  const selectedCategoriesList = (
+    <div className='space-y-2 pt-4'>
+      <div className=''>
+        <p className='text-body-100'>Selected Categories:</p>
+      </div>
+      <div className='ml-4 space-y-2'>
+        {selectedCategories.map(item => {
+          return (
+            <div
+              className='text-body-200 flex flex-row space-x-1'
+              key={item._id}
+            >
+              <p className=''>- {item.name}</p>
+              <p className='text-muted-foreground'>
+                (123 transactions | $12345.00)
+              </p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -82,40 +91,29 @@ const Categories = ({
             connected transactions!
           </DialogDescription>
         </DialogHeader>
-        <div className='space-y-2 pt-4'>
-          <div className=''>
-            <p className='text-body-100'>Selected Categories:</p>
-          </div>
-          <div className='ml-4 space-y-2'>
-            {/* {rowsSelected.map((item, index) => {
-              return (
-                <div
-                  className='text-body-200 flex flex-row space-x-1'
-                  key={index}
-                >
-                  <p className=''>- {item.getValue('name')}</p>
-                  <p className='text-muted-foreground'>
-                    (123 transactions | $12345.00)
-                  </p>
-                </div>
-              );
-            })} */}
-          </div>
+
+        {selectedCategoriesList}
+
+        <div className='mt-8'>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className={cn('flex flex-col', className)}
+            >
+              <DialogFooter className='flex flex-row justify-end gap-2'>
+                <DialogClose asChild>
+                  <Button
+                    className='w-full'
+                    variant='destructive'
+                    type='submit'
+                  >
+                    Delete
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </form>
+          </Form>
         </div>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className={cn('flex flex-col', className)}
-          >
-            <DialogFooter className='flex flex-row justify-end gap-2'>
-              <DialogClose asChild>
-                <Button className='w-full' variant='destructive' type='submit'>
-                  Delete
-                </Button>
-              </DialogClose>
-            </DialogFooter>
-          </form>
-        </Form>
       </DialogContent>
     </Dialog>
   );

@@ -1,20 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
 import { useDashboardContext } from '@/context/dashboard';
 
 import { cn } from '@/lib/utils';
 import { getCategoriesChartData } from '@/lib/category/get-categories-chart-data';
+import { CategoryChartData } from '@/types';
 import { columns } from './_columns/categories';
 
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
-import Table, { DataTable } from '@/components/sections/table';
-import { Button } from '@/components/ui/button';
+import Table from '@/components/sections/table';
 import Form from '@/components/sections/form';
-import { Table as TanstackTable } from '@tanstack/react-table';
-import { CategoryChartData, categoryColors } from '@/types';
 
 const Categories = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -74,7 +71,12 @@ const Categories = ({ className }: { className?: string }) => {
         <Table
           columns={columns}
           data={data.income}
-          rowActions={[<Form.Delete.Categories type='income' />]}
+          rowActions={[
+            <Form.Delete.Categories
+              type='income'
+              selectedCategories={dashboard.selectedCategories.income}
+            />
+          ]}
           passSelectedRowsToParent={incomeOnRowsSelected}
         />
 
@@ -91,7 +93,12 @@ const Categories = ({ className }: { className?: string }) => {
         <Table
           columns={columns}
           data={data.expense}
-          rowActions={[<Form.Delete.Categories type='expense' />]}
+          rowActions={[
+            <Form.Delete.Categories
+              type='expense'
+              selectedCategories={dashboard.selectedCategories.income}
+            />
+          ]}
           passSelectedRowsToParent={expenseOnRowsSelected}
         />
 
