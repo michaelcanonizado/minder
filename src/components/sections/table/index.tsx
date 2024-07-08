@@ -98,8 +98,8 @@ export const DataTable = <TData, TValue, TRows>({
       <div className='grid place-items-center p-4'>
         <p className='w-fit'>{rowsSelectedCount} selected</p>
       </div>
-      {rowActions?.map(action => {
-        return <div className=''>{action}</div>;
+      {rowActions?.map((action, index) => {
+        return <div key={index}>{action}</div>;
       })}
     </div>
   );
