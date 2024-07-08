@@ -54,11 +54,6 @@ const Expense = ({
   });
 
   const onSubmit = async (data: z.infer<typeof trackExpenseSchema>) => {
-    // Coerce the data.userId to match the passed userId incase it was changed
-    if (data.userId !== userId) {
-      data.userId = userId;
-    }
-
     const response = await addExpenseTransaction(data);
 
     if (!response.isSuccessful) {
