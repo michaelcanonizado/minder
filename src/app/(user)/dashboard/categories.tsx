@@ -51,10 +51,10 @@ const Categories = ({ className }: { className?: string }) => {
     };
   });
 
-  const incomeOnSubmit = (data: CategoryChartData[]) => {
+  const incomeOnRowsSelected = (data: CategoryChartData[]) => {
     changeDashboardSelectedCategories(data, 'income');
   };
-  const expenseOnSubmit = (data: CategoryChartData[]) => {
+  const expenseOnRowsSelected = (data: CategoryChartData[]) => {
     changeDashboardSelectedCategories(data, 'expense');
   };
 
@@ -75,7 +75,7 @@ const Categories = ({ className }: { className?: string }) => {
           columns={columns}
           data={data.income}
           rowActions={[<Form.Delete.Categories type='income' />]}
-          passSelectedRowsToParent={incomeOnSubmit}
+          passSelectedRowsToParent={incomeOnRowsSelected}
         />
 
         <Form.Add.Category type='income' />
@@ -92,7 +92,7 @@ const Categories = ({ className }: { className?: string }) => {
           columns={columns}
           data={data.expense}
           rowActions={[<Form.Delete.Categories type='expense' />]}
-          passSelectedRowsToParent={expenseOnSubmit}
+          passSelectedRowsToParent={expenseOnRowsSelected}
         />
 
         <Form.Add.Category type='expense' />
