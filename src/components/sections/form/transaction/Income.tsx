@@ -54,12 +54,6 @@ const Income = ({
   });
 
   const onSubmit = async (data: z.infer<typeof trackIncomeSchema>) => {
-    // Coerce the data.userId to match the passed userId incase it was changed
-    if (data.userId !== userId) {
-      data.userId = userId;
-    }
-    console.log(data);
-
     const response = await addIncomeTransaction(data);
 
     if (!response.isSuccessful) {
