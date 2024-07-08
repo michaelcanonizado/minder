@@ -25,6 +25,19 @@ export interface DataTableProps<TData, TValue, TRows> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   rowActions?: React.ReactNode[];
+  /* This component is used in many places that have no 
+  relation to one another (I.e: showing transactions and 
+  showing categories), therefore to access the state of 
+  the selected rows, we need to pass it to the parent and 
+  perform the logic there. Doing the logic here, such as 
+  updating a context or submiting the form will not make 
+  this component reusable and tie it to that specific 
+  purpose. 
+  
+  So to access the selected rows, pass a function that 
+  accepts a parameter 'data' of the type of the original 
+  object to this component, and it will pass the data to
+   that function.*/
   passSelectedRowsToParent?: (data: TRows) => void;
 }
 
