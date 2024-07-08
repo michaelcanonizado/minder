@@ -30,7 +30,6 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { FormInput, FormSelect } from '../components';
-import Modal from '@/components/sections/modal';
 
 const Category = ({
   className,
