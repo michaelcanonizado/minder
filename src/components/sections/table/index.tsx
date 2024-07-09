@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import {
   ColumnDef,
@@ -52,6 +53,10 @@ export const DataTable = <TData, TValue, TRows>({
   const [isRowSelectionActionsVisible, setIsRowSelectionActionsVisible] =
     useState(false);
 
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const table = useReactTable({
     data,
     columns,
@@ -66,7 +71,10 @@ export const DataTable = <TData, TValue, TRows>({
   });
 
   useEffect(() => {
-    if (table.getFilteredSelectedRowModel().rows.length !== 0) {
+    const areRowsSelected =
+      table.getFilteredSelectedRowModel().rows.length !== 0;
+
+    if (areRowsSelected) {
       setIsRowSelectionActionsVisible(true);
     } else {
       setIsRowSelectionActionsVisible(false);
@@ -81,6 +89,26 @@ export const DataTable = <TData, TValue, TRows>({
     if (passSelectedRowsToParent) {
       passSelectedRowsToParent(originalRowsData);
     }
+
+    console.log(table.getFilteredSelectedRowModel().rows[0]?.original);
+
+    const currentUrl = new URLSearchParams(searchParams);
+    const joinedRowIds = table
+      .getFilteredSelectedRowModel()
+      /* @ts-ignore */
+      .rows.map(row => row.original._id)
+      .join(',');
+
+    if (areRowsSelected) {
+      currentUrl.set('selected', joinedRowIds);
+    } else {
+      currentUrl.delete('selected');
+    }
+
+    const search = currentUrl.toString();
+    const query = search ? `?${search}` : '';
+
+    router.push(`${pathname}${query}`, { scroll: false });
   }, [rowSelection]);
 
   const rowsSelected = table.getFilteredSelectedRowModel().rows;
