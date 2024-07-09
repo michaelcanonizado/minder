@@ -1,11 +1,6 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { useDashboardContext } from '@/context/dashboard';
-
 import { cn } from '@/lib/utils';
 import { getCategoriesChartData } from '@/lib/category/get-categories-chart-data';
-import { CategoryChartData } from '@/types';
+import { CategoryChartData, Period } from '@/types';
 import { columns } from './_columns/categories';
 
 import Bento from '@/components/sections/bento';
@@ -13,27 +8,16 @@ import Chart from '@/components/sections/chart';
 import Table from '@/components/sections/table';
 import Form from '@/components/sections/form';
 
-const Categories = ({ className }: { className?: string }) => {
+const Categories = async ({
+  className,
+  selectedCategories
+}: {
+  className?: string;
+  selectedCategories: string[];
+}) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
 
-  const { dashboard, changeDashboardSelectedCategories } =
-    useDashboardContext();
-
-  const [data, setData] = useState<Awaited<
-    ReturnType<typeof getCategoriesChartData>
-  > | null>(null);
-
-  useEffect(() => {
-    const getData = async () => {
-      const result = await getCategoriesChartData(userId, dashboard.period);
-      setData(result);
-    };
-    getData();
-  }, [dashboard]);
-
-  if (!data) {
-    return <div className=''>No categories data</div>;
-  }
+  const data = await getCategoriesChartData(userId, 'weekly');
 
   const expenseCategoriesChartData = data.expense!.map(category => {
     return {
@@ -47,13 +31,6 @@ const Categories = ({ className }: { className?: string }) => {
       color: category.color.code.primary
     };
   });
-
-  const incomeOnRowsSelected = (data: CategoryChartData[]) => {
-    changeDashboardSelectedCategories(data, 'income');
-  };
-  const expenseOnRowsSelected = (data: CategoryChartData[]) => {
-    changeDashboardSelectedCategories(data, 'expense');
-  };
 
   return (
     <Bento.Box className={cn('', className)}>
@@ -74,16 +51,15 @@ const Categories = ({ className }: { className?: string }) => {
           rowActions={[
             <Form.Delete.Categories
               type='income'
-              selectedCategories={dashboard.selectedCategories.income}
+              // selectedCategories={dashboard.selectedCategories.income}
             />
           ]}
-          passSelectedRowsToParent={incomeOnRowsSelected}
         />
 
         <Form.Add.Category type='income' />
       </Bento.Box.Content>
 
-      <Bento.Box.Content className='flex flex-col space-y-4'>
+      {/* <Bento.Box.Content className='flex flex-col space-y-4'>
         <div className='mb-2'>
           <p className='text-heading-200'>Expense</p>
         </div>
@@ -103,7 +79,7 @@ const Categories = ({ className }: { className?: string }) => {
         />
 
         <Form.Add.Category type='expense' />
-      </Bento.Box.Content>
+      </Bento.Box.Content> */}
     </Bento.Box>
   );
 };
