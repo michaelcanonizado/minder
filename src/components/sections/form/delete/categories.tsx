@@ -39,7 +39,7 @@ const Categories = ({
   const form = useForm<z.infer<typeof deleteCategoriesSchema>>({
     resolver: zodResolver(deleteCategoriesSchema),
     defaultValues: {
-      categories: selectedCategories,
+      categories: [],
       type: type,
       userId: userId,
       formPath: currentPathname
@@ -47,9 +47,8 @@ const Categories = ({
   });
 
   const onSubmit = async (data: z.infer<typeof deleteCategoriesSchema>) => {
+    data.categories = selectedCategories;
     const response = await deleteCateogries(data, type);
-    console.log(response);
-
     form.reset();
   };
 

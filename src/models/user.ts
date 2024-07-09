@@ -34,7 +34,7 @@ export interface UserCategoryType {
   color: UserColorType;
   createdAt?: Date;
   updatedAt?: Date;
-  isDeleted?: {
+  isDeleted: {
     status: boolean;
     deletedAt: Date | null;
   };

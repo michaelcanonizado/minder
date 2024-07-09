@@ -27,8 +27,8 @@ export const deleteCateogries = async (data: unknown, type: CategoryType) => {
   const userCategories =
     type === 'income' ? user.categories.income : user.categories.expense;
 
-  result.data.categories.forEach(category => {
-    const matchCategory = userCategories.id(category._id);
+  result.data.categories.forEach(selectedCategory => {
+    const matchCategory = userCategories.id(selectedCategory._id);
     if (matchCategory) {
       matchCategory.isDeleted.status = true;
       matchCategory.isDeleted.deletedAt = new Date();
