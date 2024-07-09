@@ -30,6 +30,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { FormInput, FormSelect } from '../components';
+import { addNewCategory } from '@/lib/category/add-new-category';
 
 const Category = ({
   className,
@@ -52,7 +53,7 @@ const Category = ({
   });
 
   const onSubmit = async (data: z.infer<typeof addCategorySchema>) => {
-    console.log(data);
+    const response = await addNewCategory(data, type);
 
     form.reset();
   };
