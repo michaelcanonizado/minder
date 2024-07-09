@@ -1,7 +1,7 @@
 import { databaseConnect, databaseClose } from '@/helpers/database/database';
 import User from '@/models/user';
 
-import { categoryColors } from '@/data';
+import { categoryColors } from '@/types';
 
 // WARNING
 // This function deletes all the users in the Users collection and generates a new one. Therefore, after executing this function(npm run seed-user), you must change all code that depends on the properties of the user such as in .env.local
