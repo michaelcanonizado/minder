@@ -54,5 +54,8 @@ export const addNewCategory = async (data: unknown, type: CategoryType) => {
 
   revalidatePath(result.data.formPath);
 
-  return;
+  return {
+    isSuccessful: true,
+    message: 'Successfully added category!'
+  };
 };
