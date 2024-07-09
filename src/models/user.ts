@@ -21,6 +21,7 @@ export interface UserBalanceType {
   totalExpense: number;
 }
 export interface UserColorType {
+  _id: string;
   name: string;
   code: {
     primary: string;
@@ -40,7 +41,7 @@ export interface UserCategoryType {
   __v?: number;
 }
 export interface UserWalletType {
-  _id?: Types.ObjectId & string;
+  _id: string;
   name: string;
   balance?: number;
   transactionCount?: number;
@@ -124,6 +125,9 @@ const colorSchema = new Schema<UserColorType>({
       type: String,
       required: true
     }
+  },
+  _id: {
+    type: Types.ObjectId
   }
 });
 
