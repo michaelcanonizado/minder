@@ -7,14 +7,18 @@ import Expense from './expense';
 import Categories from './categories';
 import { Period } from '@/types';
 
+const isValidPeriod = (period: string | string[] | undefined) => {
+  return period === 'weekly' || period === 'monthly' || period === 'yearly';
+};
+
 const Dashboard = async ({
   searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const period = searchParams.period
-    ? (searchParams.period as Period)
-    : ('weekly' as Period);
+  const period = (
+    isValidPeriod(searchParams.period) ? searchParams.period : 'weekly'
+  ) as Period;
 
   const selectedIncomeCategoriesRowsRaw = searchParams.selectedIncomeCategories
     ? (searchParams.selectedIncomeCategories as string)
