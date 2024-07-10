@@ -1,8 +1,4 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-
-import { ChartData, ChartRow, Period } from '@/types';
+import { ChartRow, Period } from '@/types';
 import { cn } from '@/lib/utils';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
 import { formatDate } from '@/helpers/format/formatDate';
@@ -14,7 +10,7 @@ import Chart from '@/components/sections/chart';
 import Balance from '@/components/sections/balance';
 import PeriodSelect from './period-select';
 
-const NetAmount = ({
+const NetAmount = async ({
   className,
   period
 }: {
@@ -23,18 +19,9 @@ const NetAmount = ({
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
 
-  const [data, setData] = useState<ChartData | null>(null);
+  const data = await getNetAmountChartData(userId, period);
 
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getNetAmountChartData(userId, period);
-
-      data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
-
-      setData(data);
-    };
-    getData();
-  }, [period]);
+  data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
 
   if (!data) {
     return (
