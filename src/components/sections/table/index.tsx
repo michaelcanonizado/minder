@@ -90,10 +90,20 @@ export const DataTable = <TData extends RequiredProperties, TValue>({
       setIsRowSelectionActionsVisible(false);
     }
 
+    /* On row select, push the selected rows' _id in the URL 
+    as queries. The selected rows state are stored in the URL
+    instead of in context or any other state to keep the 
+    components using this table a server component. This also
+    allows the state of the selected rows to be shareable with
+    other people/devices as any selected rows in the URL will
+    be preselected on the initial table render
+    
+    The downside to this is that _id's are now required
+    properties of the passed object as they are the properties\
+    being pushed to the URL*/
     const currentUrl = new URLSearchParams(searchParams);
     const joinedRowIds = table
       .getFilteredSelectedRowModel()
-      /* @ts-ignore */
       .rows.map(row => row.original._id)
       .join(',');
 
@@ -105,7 +115,6 @@ export const DataTable = <TData extends RequiredProperties, TValue>({
 
     const search = currentUrl.toString();
     const query = search ? `?${search}` : '';
-
     router.push(`${pathname}${query}`, { scroll: false });
   }, [rowSelection]);
 
