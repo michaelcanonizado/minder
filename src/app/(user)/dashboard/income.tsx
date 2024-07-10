@@ -1,7 +1,3 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-
 import { ChartData, ChartRow, Period } from '@/types';
 
 import { cn } from '@/lib/utils';
@@ -14,7 +10,7 @@ import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import Balance from '@/components/sections/balance';
 
-const Income = ({
+const Income = async ({
   className,
   period
 }: {
@@ -23,18 +19,10 @@ const Income = ({
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
 
-  const [data, setData] = useState<ChartData | null>(null);
+  const data = await getIncomeChartData(userId, period);
+  data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
 
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getIncomeChartData(userId, period);
-
-      data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
-
-      setData(data);
-    };
-    getData();
-  }, [period]);
+  console.log(data);
 
   if (!data) {
     return (
