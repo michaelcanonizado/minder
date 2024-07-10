@@ -7,6 +7,7 @@ import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import Table from '@/components/sections/table';
 import Form from '@/components/sections/form';
+import { match } from 'assert';
 
 const Categories = async ({
   className,
@@ -21,18 +22,37 @@ const Categories = async ({
 
   const data = await getCategoriesChartData(userId, period);
 
-  const expenseCategoriesChartData = data.expense!.map(category => {
+  const expenseCategoriesChartData = data.expense.map(category => {
     return {
       amount: category.rows.length,
       color: category.color.code.primary
     };
   });
-  const incomeCategoriesChartData = data.income!.map(category => {
+  const incomeCategoriesChartData = data.income.map(category => {
     return {
       amount: category.rows.length,
       color: category.color.code.primary
     };
   });
+
+  const selectedIncomeCategories = selectedCategories
+    .map(selectedCategoryId => {
+      const matchedCategory = data.income.find(category => {
+        if (category._id === selectedCategoryId) {
+          return category;
+        }
+      });
+      if (matchedCategory) {
+        return matchedCategory;
+      }
+    })
+    .filter(item => {
+      if (item) {
+        return item;
+      }
+    }) as CategoryChartData[];
+
+  console.log(selectedIncomeCategories);
 
   return (
     <Bento.Box className={cn('', className)}>
@@ -54,7 +74,7 @@ const Categories = async ({
           rowActions={[
             <Form.Delete.Categories
               type='income'
-              // selectedCategories={dashboard.selectedCategories.income}
+              selectedCategories={selectedIncomeCategories}
             />
           ]}
         />
