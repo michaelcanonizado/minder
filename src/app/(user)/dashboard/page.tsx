@@ -6,6 +6,7 @@ import Expense from './expense';
 
 import { DashboardContextProvider } from '@/context/dashboard';
 import Categories from './categories';
+import { Period } from '@/types';
 
 const Dashboard = async ({
   searchParams
@@ -13,6 +14,10 @@ const Dashboard = async ({
   searchParams: { [key: string]: string | string[] | undefined };
 }) => {
   const userId = process.env.TEMP_USER_ID!;
+
+  const period = searchParams.period
+    ? (searchParams.period as Period)
+    : ('weekly' as Period);
 
   const selectedIncomeCategoriesRowsRaw = searchParams.selectedIncomeCategories
     ? (searchParams.selectedIncomeCategories as string)
@@ -26,7 +31,7 @@ const Dashboard = async ({
     <DashboardContextProvider>
       <div className=''>
         <Bento className='grid-cols-4'>
-          <NetAmount className='col-span-4' />
+          <NetAmount className='col-span-4' period={period} />
           <Income className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2' />
           <Expense className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2' />
           <Categories

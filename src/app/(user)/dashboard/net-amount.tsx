@@ -37,11 +37,16 @@ const periods: { name: string; key: Period }[] = [
   }
 ];
 
-const NetAmount = ({ className }: { className?: string }) => {
+const NetAmount = ({
+  className,
+  period
+}: {
+  className?: string;
+  period: Period;
+}) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
 
   const [data, setData] = useState<ChartData | null>(null);
-  const [period, setPeriod] = useState<Period>('weekly');
 
   useEffect(() => {
     const getData = async () => {
@@ -59,7 +64,6 @@ const NetAmount = ({ className }: { className?: string }) => {
   const pathname = usePathname();
 
   const onChangePeriod = (value: Period) => {
-    setPeriod(value);
     const currentUrl = new URLSearchParams(searchParams);
     currentUrl.set('period', value);
     const search = currentUrl.toString();
