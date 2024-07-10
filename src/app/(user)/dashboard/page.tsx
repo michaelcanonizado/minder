@@ -36,7 +36,10 @@ const Dashboard = async ({
             className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2'
             period={period}
           />
-          <Expense className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2' />
+          <Expense
+            className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2'
+            period={period}
+          />
           <Categories
             className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2'
             selectedCategories={selectedIncomeCategoriesRowsArray}
