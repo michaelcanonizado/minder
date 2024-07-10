@@ -1,4 +1,4 @@
-import { ChartData, ChartRow, Period } from '@/types';
+import { ChartRow, Period } from '@/types';
 
 import { cn } from '@/lib/utils';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
@@ -21,8 +21,6 @@ const Income = async ({
 
   const data = await getIncomeChartData(userId, period);
   data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
-
-  console.log(data);
 
   if (!data) {
     return (
