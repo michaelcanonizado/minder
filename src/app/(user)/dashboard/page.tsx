@@ -38,6 +38,7 @@ const Dashboard = async ({
       <Categories
         className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2'
         selectedCategories={selectedIncomeCategoriesRowsArray}
+        period={period}
       />
     </Bento>
   );

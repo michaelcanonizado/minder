@@ -10,14 +10,16 @@ import Form from '@/components/sections/form';
 
 const Categories = async ({
   className,
-  selectedCategories
+  selectedCategories,
+  period
 }: {
   className?: string;
   selectedCategories: string[];
+  period: Period;
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
 
-  const data = await getCategoriesChartData(userId, 'weekly');
+  const data = await getCategoriesChartData(userId, period);
 
   const expenseCategoriesChartData = data.expense!.map(category => {
     return {
