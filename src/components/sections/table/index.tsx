@@ -22,7 +22,11 @@ import {
 } from '@/components/ui/table';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
-export interface DataTableProps<TData, TValue> {
+interface RequiredProperties {
+  _id: string;
+}
+
+export interface DataTableProps<TData extends RequiredProperties, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   rowActions?: React.ReactNode[];
@@ -30,7 +34,7 @@ export interface DataTableProps<TData, TValue> {
   selectedRows?: TData[];
 }
 
-export const DataTable = <TData, TValue>({
+export const DataTable = <TData extends RequiredProperties, TValue>({
   columns,
   data,
   rowActions,
@@ -59,6 +63,8 @@ export const DataTable = <TData, TValue>({
     }
   });
 
+  /* On intial load: if there are any selected rows in the URL,
+  preselect the corresponding rows*/
   useEffect(() => {
     const selected: { [key: string]: boolean } = {};
     selectedRows.forEach(IRow => {
@@ -177,7 +183,9 @@ export const DataTable = <TData, TValue>({
   );
 };
 
-const Table = <TData, TValue>({ ...props }: DataTableProps<TData, TValue>) => {
+const Table = <TData extends RequiredProperties, TValue>({
+  ...props
+}: DataTableProps<TData, TValue>) => {
   return (
     <ScrollArea className='overflow-hidden whitespace-nowrap'>
       <DataTable {...props} />
