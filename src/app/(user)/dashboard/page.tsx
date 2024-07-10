@@ -32,7 +32,10 @@ const Dashboard = async ({
       <div className=''>
         <Bento className='grid-cols-4'>
           <NetAmount className='col-span-4' period={period} />
-          <Income className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2' />
+          <Income
+            className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2'
+            period={period}
+          />
           <Expense className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2' />
           <Categories
             className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2'

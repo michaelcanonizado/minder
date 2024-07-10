@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useDashboardContext } from '@/context/dashboard';
-import { ChartData, ChartRow } from '@/types';
+import { ChartData, ChartRow, Period } from '@/types';
 
 import { cn } from '@/lib/utils';
 import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
@@ -15,26 +14,27 @@ import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import Balance from '@/components/sections/balance';
 
-const Income = ({ className }: { className?: string }) => {
+const Income = ({
+  className,
+  period
+}: {
+  className?: string;
+  period: Period;
+}) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
-
-  const { dashboard, changeDashboardPeriod } = useDashboardContext();
 
   const [data, setData] = useState<ChartData | null>(null);
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getIncomeChartData(
-        userId,
-        dashboard.period as 'weekly' | 'monthly'
-      );
+      const data = await getIncomeChartData(userId, period);
 
       data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
 
       setData(data);
     };
     getData();
-  }, [dashboard]);
+  }, [period]);
 
   if (!data) {
     return (
@@ -48,11 +48,11 @@ const Income = ({ className }: { className?: string }) => {
   const endDate = data ? formatDate(data.dates.end) : '';
 
   let headerTitle = 'Income';
-  if (dashboard.period === 'weekly') {
+  if (period === 'weekly') {
     headerTitle = 'Income this week';
-  } else if (dashboard.period === 'monthly') {
+  } else if (period === 'monthly') {
     headerTitle = 'Income this month';
-  } else if (dashboard.period === 'yearly') {
+  } else if (period === 'yearly') {
     headerTitle = 'Income this year';
   }
 
@@ -100,11 +100,11 @@ const Income = ({ className }: { className?: string }) => {
     );
 
   let headerLabel = '';
-  if (dashboard.period === 'weekly') {
+  if (period === 'weekly') {
     headerLabel = 'vs last week';
-  } else if (dashboard.period === 'monthly') {
+  } else if (period === 'monthly') {
     headerLabel = 'vs last month';
-  } else if (dashboard.period === 'yearly') {
+  } else if (period === 'yearly') {
     headerLabel = 'vs last year';
   }
 
