@@ -71,6 +71,7 @@ const Categories = async ({
           columns={columns}
           data={data.income}
           queryString='selectedIncomeCategories'
+          selectedRows={selectedIncomeCategories}
           rowActions={[
             <Form.Delete.Categories
               type='income'

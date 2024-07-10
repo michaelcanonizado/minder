@@ -27,13 +27,15 @@ export interface DataTableProps<TData, TValue> {
   data: TData[];
   rowActions?: React.ReactNode[];
   queryString?: string;
+  selectedRows?: TData[];
 }
 
 export const DataTable = <TData, TValue>({
   columns,
   data,
   rowActions,
-  queryString = 'selected'
+  queryString = 'selected',
+  selectedRows = []
 }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
@@ -56,6 +58,21 @@ export const DataTable = <TData, TValue>({
       rowSelection
     }
   });
+
+  useEffect(() => {
+    const selected: { [key: string]: boolean } = {};
+    selectedRows.forEach(IRow => {
+      const matchedRow = table
+        .getRowModel()
+        .rows.find(JRow => JRow.original._id === IRow._id);
+
+      if (matchedRow) {
+        selected[matchedRow.index] = true;
+      }
+    });
+
+    setRowSelection(selected);
+  }, []);
 
   useEffect(() => {
     const areRowsSelected =
