@@ -1,9 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { useDashboardContext } from '@/context/dashboard';
 import { ChartData, ChartRow, Period } from '@/types';
+import { cn } from '@/lib/utils';
+import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
+import { formatDate } from '@/helpers/format/formatDate';
+import { getNetAmountChartData } from '@/lib/net-amount/get-net-amount-chart-data';
 
 import {
   Select,
@@ -17,11 +21,6 @@ import { ArrowDown, ArrowUp } from 'lucide-react';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import Balance from '@/components/sections/balance';
-
-import { cn } from '@/lib/utils';
-import { formatChartDataDateProperties } from '@/helpers/format/format-chart-data-date-properties';
-import { formatDate } from '@/helpers/format/formatDate';
-import { getNetAmountChartData } from '@/lib/net-amount/get-net-amount-chart-data';
 
 const periods: { name: string; key: Period }[] = [
   {
@@ -41,20 +40,32 @@ const periods: { name: string; key: Period }[] = [
 const NetAmount = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
 
-  const { dashboard, changeDashboardPeriod } = useDashboardContext();
-
   const [data, setData] = useState<ChartData | null>(null);
+  const [period, setPeriod] = useState<Period>('weekly');
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getNetAmountChartData(userId, dashboard.period);
+      const data = await getNetAmountChartData(userId, period);
 
       data.rows = formatChartDataDateProperties(data.rows) as ChartRow[];
 
       setData(data);
     };
     getData();
-  }, [dashboard]);
+  }, [period]);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  const onChangePeriod = (value: Period) => {
+    setPeriod(value);
+    const currentUrl = new URLSearchParams(searchParams);
+    currentUrl.set('period', value);
+    const search = currentUrl.toString();
+    const query = search ? `?${search}` : '';
+    router.push(`${pathname}${query}`, { scroll: false });
+  };
 
   if (!data) {
     return (
@@ -113,11 +124,11 @@ const NetAmount = ({ className }: { className?: string }) => {
     );
 
   let headerLabel = '';
-  if (dashboard.period === 'weekly') {
+  if (period === 'weekly') {
     headerLabel = 'vs last week';
-  } else if (dashboard.period === 'monthly') {
+  } else if (period === 'monthly') {
     headerLabel = 'vs last month';
-  } else if (dashboard.period === 'yearly') {
+  } else if (period === 'yearly') {
     headerLabel = 'vs last year';
   }
 
@@ -147,11 +158,11 @@ const NetAmount = ({ className }: { className?: string }) => {
     <Bento.Box className={cn('', className)}>
       <Bento.Box.Header className='flex flex-row justify-between border-none'>
         {header}
-        <div className=''>
+        <div>
           <Select
-            defaultValue={dashboard.period}
+            defaultValue={period}
             onValueChange={value => {
-              changeDashboardPeriod(value as Period);
+              onChangePeriod(value as Period);
             }}
           >
             <SelectTrigger className='w-[100px]'>
