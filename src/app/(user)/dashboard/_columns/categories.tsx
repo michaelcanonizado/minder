@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import Form from '@/components/sections/form';
 
 export const columns: ColumnDef<CategoryChartData>[] = [
   {
@@ -110,9 +111,7 @@ export const columns: ColumnDef<CategoryChartData>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => console.log(row.original)}>
-              Edit
-            </DropdownMenuItem>
+            <Form.Edit.Category />
           </DropdownMenuContent>
         </DropdownMenu>
       );
