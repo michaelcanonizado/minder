@@ -11,11 +11,13 @@ import { match } from 'assert';
 
 const Categories = async ({
   className,
-  selectedCategories,
+  selectedIncomeCategoriesId,
+  selectedExpenseCategoriesId,
   period
 }: {
   className?: string;
-  selectedCategories: string[];
+  selectedIncomeCategoriesId: string[];
+  selectedExpenseCategoriesId: string[];
   period: Period;
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -35,7 +37,7 @@ const Categories = async ({
     };
   });
 
-  const selectedIncomeCategories = selectedCategories
+  const selectedIncomeCategories = selectedIncomeCategoriesId
     .map(selectedCategoryId => {
       const matchedCategory = data.income.find(category => {
         if (category._id === selectedCategoryId) {
@@ -51,8 +53,22 @@ const Categories = async ({
         return item;
       }
     }) as CategoryChartData[];
-
-  console.log(selectedIncomeCategories);
+  const selectedExpenseCategories = selectedExpenseCategoriesId
+    .map(selectedCategoryId => {
+      const matchedCategory = data.expense.find(category => {
+        if (category._id === selectedCategoryId) {
+          return category;
+        }
+      });
+      if (matchedCategory) {
+        return matchedCategory;
+      }
+    })
+    .filter(item => {
+      if (item) {
+        return item;
+      }
+    }) as CategoryChartData[];
 
   return (
     <Bento.Box className={cn('', className)}>
@@ -83,7 +99,7 @@ const Categories = async ({
         <Form.Add.Category type='income' />
       </Bento.Box.Content>
 
-      {/* <Bento.Box.Content className='flex flex-col space-y-4'>
+      <Bento.Box.Content className='flex flex-col space-y-4'>
         <div className='mb-2'>
           <p className='text-heading-200'>Expense</p>
         </div>
@@ -93,17 +109,18 @@ const Categories = async ({
         <Table
           columns={columns}
           data={data.expense}
+          queryString='selectedExpenseCategories'
+          selectedRows={selectedExpenseCategories}
           rowActions={[
             <Form.Delete.Categories
               type='expense'
-              selectedCategories={dashboard.selectedCategories.income}
+              selectedCategories={selectedExpenseCategories}
             />
           ]}
-          passSelectedRowsToParent={expenseOnRowsSelected}
         />
 
         <Form.Add.Category type='expense' />
-      </Bento.Box.Content> */}
+      </Bento.Box.Content>
     </Bento.Box>
   );
 };

@@ -26,7 +26,12 @@ const Dashboard = async ({
   const selectedIncomeCategoriesRowsArray =
     selectedIncomeCategoriesRowsRaw.split(',');
 
-  console.log(selectedIncomeCategoriesRowsArray);
+  const selectedExpenseCategoriesRowsRaw =
+    searchParams.selectedExpenseCategories
+      ? (searchParams.selectedExpenseCategories as string)
+      : '';
+  const selectedExpenseCategoriesRowsArray =
+    selectedExpenseCategoriesRowsRaw.split(',');
 
   return (
     <Bento className='grid-cols-4'>
@@ -41,7 +46,8 @@ const Dashboard = async ({
       />
       <Categories
         className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2'
-        selectedCategories={selectedIncomeCategoriesRowsArray}
+        selectedIncomeCategoriesId={selectedIncomeCategoriesRowsArray}
+        selectedExpenseCategoriesId={selectedExpenseCategoriesRowsArray}
         period={period}
       />
     </Bento>
