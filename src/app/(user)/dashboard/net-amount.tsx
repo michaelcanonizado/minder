@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { ChartData, ChartRow, Period } from '@/types';
 import { cn } from '@/lib/utils';
@@ -9,33 +8,11 @@ import { formatChartDataDateProperties } from '@/helpers/format/format-chart-dat
 import { formatDate } from '@/helpers/format/formatDate';
 import { getNetAmountChartData } from '@/lib/net-amount/get-net-amount-chart-data';
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
 import { ArrowDown, ArrowUp } from 'lucide-react';
 import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import Balance from '@/components/sections/balance';
-
-const periods: { name: string; key: Period }[] = [
-  {
-    name: 'Weekly',
-    key: 'weekly'
-  },
-  {
-    name: 'Monthly',
-    key: 'monthly'
-  },
-  {
-    name: 'Yearly',
-    key: 'yearly'
-  }
-];
+import PeriodSelect from './period-select';
 
 const NetAmount = ({
   className,
@@ -58,18 +35,6 @@ const NetAmount = ({
     };
     getData();
   }, [period]);
-
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
-  const onChangePeriod = (value: Period) => {
-    const currentUrl = new URLSearchParams(searchParams);
-    currentUrl.set('period', value);
-    const search = currentUrl.toString();
-    const query = search ? `?${search}` : '';
-    router.push(`${pathname}${query}`, { scroll: false });
-  };
 
   if (!data) {
     return (
@@ -162,29 +127,7 @@ const NetAmount = ({
     <Bento.Box className={cn('', className)}>
       <Bento.Box.Header className='flex flex-row justify-between border-none'>
         {header}
-        <div>
-          <Select
-            defaultValue={period}
-            onValueChange={value => {
-              onChangePeriod(value as Period);
-            }}
-          >
-            <SelectTrigger className='w-[100px]'>
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {periods.map(period => {
-                  return (
-                    <SelectItem value={period.key} key={period.key}>
-                      {period.name}
-                    </SelectItem>
-                  );
-                })}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+        <PeriodSelect defaultValue={period} />
       </Bento.Box.Header>
       <Bento.Box.Content className='p-0'>
         {data && (
