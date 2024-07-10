@@ -22,17 +22,19 @@ import {
 } from '@/components/ui/table';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
-export interface DataTableProps<TData, TValue, TRows> {
+export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   rowActions?: React.ReactNode[];
+  queryString?: string;
 }
 
-export const DataTable = <TData, TValue, TRows>({
+export const DataTable = <TData, TValue>({
   columns,
   data,
-  rowActions
-}: DataTableProps<TData, TValue, TRows>) => {
+  rowActions,
+  queryString = 'selected'
+}: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
   const [isRowSelectionActionsVisible, setIsRowSelectionActionsVisible] =
@@ -65,8 +67,6 @@ export const DataTable = <TData, TValue, TRows>({
       setIsRowSelectionActionsVisible(false);
     }
 
-    console.log(table.getFilteredSelectedRowModel().rows[0]?.original);
-
     const currentUrl = new URLSearchParams(searchParams);
     const joinedRowIds = table
       .getFilteredSelectedRowModel()
@@ -75,9 +75,9 @@ export const DataTable = <TData, TValue, TRows>({
       .join(',');
 
     if (areRowsSelected) {
-      currentUrl.set('selected', joinedRowIds);
+      currentUrl.set(queryString, joinedRowIds);
     } else {
-      currentUrl.delete('selected');
+      currentUrl.delete(queryString);
     }
 
     const search = currentUrl.toString();
@@ -160,14 +160,10 @@ export const DataTable = <TData, TValue, TRows>({
   );
 };
 
-const Table = <TData, TValue, TRows>({
-  columns,
-  data,
-  ...props
-}: DataTableProps<TData, TValue, TRows>) => {
+const Table = <TData, TValue>({ ...props }: DataTableProps<TData, TValue>) => {
   return (
     <ScrollArea className='overflow-hidden whitespace-nowrap'>
-      <DataTable columns={columns} data={data} {...props} />
+      <DataTable {...props} />
       <ScrollBar orientation='horizontal' className='mt-10' />
     </ScrollArea>
   );

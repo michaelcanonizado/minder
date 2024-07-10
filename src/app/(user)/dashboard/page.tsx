@@ -14,10 +14,13 @@ const Dashboard = async ({
 }) => {
   const userId = process.env.TEMP_USER_ID!;
 
-  const selectedRowsRaw = searchParams.selected
-    ? (searchParams.selected as string)
+  const selectedIncomeCategoriesRowsRaw = searchParams.selectedIncomeCategories
+    ? (searchParams.selectedIncomeCategories as string)
     : '';
-  const selectedRowsArray = selectedRowsRaw.split(',');
+  const selectedIncomeCategoriesRowsArray =
+    selectedIncomeCategoriesRowsRaw.split(',');
+
+  console.log(selectedIncomeCategoriesRowsArray);
 
   return (
     <DashboardContextProvider>
@@ -28,7 +31,7 @@ const Dashboard = async ({
           <Expense className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2' />
           <Categories
             className='col-span-4 sm:col-span-2 md:col-span-4 lg:col-span-2'
-            selectedCategories={selectedRowsArray}
+            selectedCategories={selectedIncomeCategoriesRowsArray}
           />
         </Bento>
       </div>
