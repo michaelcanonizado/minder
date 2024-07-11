@@ -40,7 +40,8 @@ const IncomeTransactions = async ({
                 data={incomes.data}
                 rowActions={[
                   <Form.Delete.Incomes
-                    selectedIncomes={selectedIncomeRowsArray}
+                    selectedIncomeIds={selectedIncomeRowsArray}
+                    tableData={incomes.data}
                   />
                 ]}
               />
