@@ -27,13 +27,15 @@ const Categories = async ({
   const expenseCategoriesChartData = data.expense.map(category => {
     return {
       amount: category.rows.length,
-      color: category.color.code.primary
+      color: category.color.code.primary,
+      name: category.name
     };
   });
   const incomeCategoriesChartData = data.income.map(category => {
     return {
       amount: category.rows.length,
-      color: category.color.code.primary
+      color: category.color.code.primary,
+      name: category.name
     };
   });
 
