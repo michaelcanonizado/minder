@@ -5,6 +5,7 @@ import Bento from '@/components/sections/bento';
 import Table from '@/components/sections/table';
 import { columns } from './columns';
 import Pagination from '@/components/sections/pagination';
+import Form from '@/components/sections/form';
 
 const IncomeTransactions = async ({
   searchParams
@@ -32,7 +33,11 @@ const IncomeTransactions = async ({
               Income Transactions
             </Bento.Box.Header>
             <Bento.Box.Content className='space-y-4 p-0 pb-4'>
-              <Table columns={columns} data={incomes.data} />
+              <Table
+                columns={columns}
+                data={incomes.data}
+                rowActions={[<Form.Delete.Incomes />]}
+              />
               <Pagination
                 pathname='/income/transactions'
                 currentPage={page}
