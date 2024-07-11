@@ -34,7 +34,7 @@ export interface DataTableProps<TData extends RequiredProperties, TValue> {
   selectedRows?: TData[];
 }
 
-export const DataTable = <TData extends RequiredProperties, TValue>({
+export const Table = <TData extends RequiredProperties, TValue>({
   columns,
   data,
   rowActions,
@@ -142,64 +142,60 @@ export const DataTable = <TData extends RequiredProperties, TValue>({
   return (
     <div className=''>
       {isRowSelectionActionsVisible && RowActions}
-
-      <ShadcnTable>
-        <ShadcnTableHeader>
-          {table.getHeaderGroups().map(headerGroup => (
-            <ShadcnTableRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => {
-                return (
-                  <ShadcnTableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
+      <ScrollArea className='overflow-hidden whitespace-nowrap'>
+        <div className=''>
+          <ShadcnTable>
+            <ShadcnTableHeader>
+              {table.getHeaderGroups().map(headerGroup => (
+                <ShadcnTableRow key={headerGroup.id}>
+                  {headerGroup.headers.map(header => {
+                    return (
+                      <ShadcnTableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </ShadcnTableHead>
+                    );
+                  })}
+                </ShadcnTableRow>
+              ))}
+            </ShadcnTableHeader>
+            <ShadcnTableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map(row => (
+                  <ShadcnTableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
+                    {row.getVisibleCells().map(cell => (
+                      <ShadcnTableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
                         )}
-                  </ShadcnTableHead>
-                );
-              })}
-            </ShadcnTableRow>
-          ))}
-        </ShadcnTableHeader>
-        <ShadcnTableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map(row => (
-              <ShadcnTableRow
-                key={row.id}
-                data-state={row.getIsSelected() && 'selected'}
-              >
-                {row.getVisibleCells().map(cell => (
-                  <ShadcnTableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </ShadcnTableCell>
+                    ))}
+                  </ShadcnTableRow>
+                ))
+              ) : (
+                <ShadcnTableRow>
+                  <ShadcnTableCell
+                    colSpan={columns.length}
+                    className='h-24 text-center'
+                  >
+                    No results.
                   </ShadcnTableCell>
-                ))}
-              </ShadcnTableRow>
-            ))
-          ) : (
-            <ShadcnTableRow>
-              <ShadcnTableCell
-                colSpan={columns.length}
-                className='h-24 text-center'
-              >
-                No results.
-              </ShadcnTableCell>
-            </ShadcnTableRow>
-          )}
-        </ShadcnTableBody>
-      </ShadcnTable>
+                </ShadcnTableRow>
+              )}
+            </ShadcnTableBody>
+          </ShadcnTable>
+        </div>
+        <ScrollBar orientation='horizontal' className='mt-10' />
+      </ScrollArea>
     </div>
-  );
-};
-
-const Table = <TData extends RequiredProperties, TValue>({
-  ...props
-}: DataTableProps<TData, TValue>) => {
-  return (
-    <ScrollArea className='overflow-hidden whitespace-nowrap'>
-      <DataTable {...props} />
-      <ScrollBar orientation='horizontal' className='mt-10' />
-    </ScrollArea>
   );
 };
 
