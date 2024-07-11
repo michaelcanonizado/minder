@@ -21,6 +21,7 @@ import {
   TableRow as ShadcnTableRow
 } from '@/components/ui/table';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { cn } from '@/lib/utils';
 
 interface RequiredProperties {
   _id: string;
@@ -124,7 +125,7 @@ export const Table = <TData extends RequiredProperties, TValue>({
 
   const RowActions = (
     <div
-      className='mb-2 divide-x rounded-lg border border-muted'
+      className={cn('m-4 mb-2 divide-x rounded-lg border border-muted')}
       style={{
         display: 'grid',
         gridTemplateColumns: `repeat(${rowActionsCount},minmax(0,1fr))`

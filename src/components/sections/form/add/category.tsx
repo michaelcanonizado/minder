@@ -85,7 +85,7 @@ const Category = ({
   return (
     <Dialog>
       <DialogTrigger asChild style={{ margin: '0' }}>
-        <Button variant='outline' className='w-full'>
+        <Button variant='outline' className={cn('', className)}>
           Add Category
         </Button>
       </DialogTrigger>
@@ -97,7 +97,7 @@ const Category = ({
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className={cn('flex flex-col', className)}
+            className='flex flex-col'
           >
             <div className='mt-8 flex flex-row gap-4'>
               <FormField

@@ -73,17 +73,19 @@ const Categories = async ({
     }) as CategoryChartData[];
 
   return (
-    <Bento.Box className={cn('', className)}>
+    <Bento.Box className={cn('space-y-4 !pb-4', className)}>
       <Bento.Box.Header>
         <p className='text-heading-100'>Categories</p>
       </Bento.Box.Header>
 
-      <Bento.Box.Content className='mt-4 flex flex-col space-y-4'>
-        <div className='mb-2'>
-          <p className='text-heading-200'>Income</p>
-        </div>
+      <Bento.Box.Content className='flex flex-col space-y-4 px-0'>
+        <div className='px-4'>
+          <div className='mb-2'>
+            <p className='text-heading-200'>Income</p>
+          </div>
 
-        <Chart.Progress.Stacked items={incomeCategoriesChartData} />
+          <Chart.Progress.Stacked items={incomeCategoriesChartData} />
+        </div>
 
         <Table
           columns={columns}
@@ -98,15 +100,17 @@ const Categories = async ({
           ]}
         />
 
-        <Form.Add.Category type='income' />
+        <Form.Add.Category type='income' className='!mx-4 !mt-2' />
       </Bento.Box.Content>
 
-      <Bento.Box.Content className='flex flex-col space-y-4'>
-        <div className='mb-2'>
-          <p className='text-heading-200'>Expense</p>
-        </div>
+      <Bento.Box.Content className='flex flex-col space-y-4 p-0'>
+        <div className='px-4'>
+          <div className='mb-2'>
+            <p className='text-heading-200'>Expense</p>
+          </div>
 
-        <Chart.Progress.Stacked items={expenseCategoriesChartData} />
+          <Chart.Progress.Stacked items={expenseCategoriesChartData} />
+        </div>
 
         <Table
           columns={columns}
@@ -121,7 +125,7 @@ const Categories = async ({
           ]}
         />
 
-        <Form.Add.Category type='expense' />
+        <Form.Add.Category type='expense' className='!mx-4 !mt-2' />
       </Bento.Box.Content>
     </Bento.Box>
   );
