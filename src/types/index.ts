@@ -139,4 +139,5 @@ export type CategoryChartData = {
   amount: number;
   rows: ExpenseType[] | IncomeType[];
   percentage: number;
+  type: CategoryType;
 };
