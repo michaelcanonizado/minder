@@ -41,12 +41,20 @@ export const addNewCategory = async (data: unknown, type: CategoryType) => {
   if (type === 'income') {
     user.categories.income.push({
       name: result.data.name,
-      color: selectedColor
+      color: selectedColor,
+      isDeleted: {
+        status: false,
+        deletedAt: null
+      }
     });
   } else if (type === 'expense') {
     user.categories.expense.push({
       name: result.data.name,
-      color: selectedColor
+      color: selectedColor,
+      isDeleted: {
+        status: false,
+        deletedAt: null
+      }
     });
   }
 
