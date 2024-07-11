@@ -1,4 +1,13 @@
-import React from 'react';
+'use client';
+
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import editCategorySchema from '@/schemas/edit-category';
+
+import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
+import { CategoryChartData, categoryColors } from '@/types';
 
 import {
   Form,
@@ -8,20 +17,11 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogClose,
-  DialogFooter
-} from '@/components/ui/dialog';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Button } from '@/components/ui/button';
-import { FormInput, FormSelect } from '../components';
-import { cn } from '@/lib/utils';
-import { CategoryChartData } from '@/types';
+import { FormInput } from '../components';
+import { Check } from 'lucide-react';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 const Category = ({
   className,
@@ -30,28 +30,106 @@ const Category = ({
   className?: string;
   category: CategoryChartData;
 }) => {
+  const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
+  const currentPathname = usePathname();
+
+  const form = useForm<z.infer<typeof editCategorySchema>>({
+    resolver: zodResolver(editCategorySchema),
+    defaultValues: {
+      name: category.name,
+      colorId: category.color._id,
+      userId: userId,
+      formPath: currentPathname
+    }
+  });
+
+  const onSubmit = async (data: z.infer<typeof editCategorySchema>) => {
+    console.log(data);
+
+    form.reset();
+  };
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <div
-          className={cn(
-            'justift-start flex h-fit w-full py-4 transition-colors hover:bg-muted',
-            className
-          )}
+    <div className={cn('p-2', className)}>
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={cn('flex flex-col p-0')}
         >
-          <p className=''>Edit</p>
-        </div>
-      </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader className=''>
-          <DialogTitle>Edit Category</DialogTitle>
-          <DialogDescription>Edit</DialogDescription>
-          <div className=''>
-            {category._id} - {category.name} - {category.color.name}
+          <div className='flex flex-col'>
+            <FormField
+              control={form.control}
+              name='name'
+              render={({ field }) => (
+                <FormItem className='w-full'>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <FormInput
+                      className=''
+                      type='text'
+                      placeholder=''
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name='colorId'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Color</FormLabel>
+                  <FormControl>
+                    <ScrollArea>
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className='flex max-h-[200px] flex-col space-y-1'
+                      >
+                        {categoryColors.map(color => {
+                          return (
+                            <FormItem className='mr-4 flex items-center space-x-3 space-y-0'>
+                              <FormControl>
+                                <RadioGroupItem
+                                  value={color._id}
+                                  className='sr-only'
+                                />
+                              </FormControl>
+                              <FormLabel className='!m-0 flex w-full flex-row justify-between font-normal'>
+                                <div className='flex flex-row gap-2'>
+                                  <div
+                                    className='size-[16px] rounded-sm'
+                                    style={{
+                                      backgroundColor: color.code.primary
+                                    }}
+                                  />
+                                  <p className=''>{color.name}</p>
+                                </div>
+                                {field.value === color._id && (
+                                  <Check className='size-[16px]' />
+                                )}
+                              </FormLabel>
+                            </FormItem>
+                          );
+                        })}
+                        <ScrollBar orientation='vertical' />
+                      </RadioGroup>
+                    </ScrollArea>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+
+          <Button type='submit' className='mt-4 w-full px-8'>
+            Confirm
+          </Button>
+        </form>
+      </Form>
+    </div>
   );
 };
 
