@@ -110,7 +110,8 @@ export const getCategoriesChartData = async (
       color: category.color,
       amount: totalAmount,
       rows: filteredTransactions,
-      percentage: 0
+      percentage: 0,
+      type: 'income'
     };
 
     incomeCategoriesResult.push(result);
@@ -148,7 +149,8 @@ export const getCategoriesChartData = async (
       color: category.color,
       amount: totalAmount,
       rows: filteredTransactions,
-      percentage: 0
+      percentage: 0,
+      type: 'expense'
     };
 
     expenseCategoriesResult.push(result);
@@ -163,7 +165,7 @@ export const getCategoriesChartData = async (
   }
 
   return {
-    expense: expenseCategoriesResult as CategoryChartData[],
-    income: incomeCategoriesResult as CategoryChartData[]
+    income: incomeCategoriesResult as CategoryChartData[],
+    expense: expenseCategoriesResult as CategoryChartData[]
   };
 };

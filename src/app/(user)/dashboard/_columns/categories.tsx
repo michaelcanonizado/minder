@@ -112,7 +112,10 @@ export const columns: ColumnDef<CategoryChartData>[] = [
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
-              <Form.Edit.Category category={row.original} />
+              <Form.Edit.Category
+                category={row.original}
+                type={row.original.type}
+              />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

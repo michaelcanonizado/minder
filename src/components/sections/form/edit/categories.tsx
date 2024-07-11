@@ -26,10 +26,12 @@ import { editCategory } from '@/lib/category/edit-category';
 
 const Category = ({
   className,
-  category
+  category,
+  type
 }: {
   className?: string;
   category: CategoryChartData;
+  type: CategoryType;
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
@@ -47,7 +49,7 @@ const Category = ({
 
   const onSubmit = async (data: z.infer<typeof editCategorySchema>) => {
     console.log(data);
-    const response = await editCategory(data, 'income' as CategoryType);
+    const response = await editCategory(data, type);
 
     form.reset();
   };
