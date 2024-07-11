@@ -23,6 +23,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { IncomeType } from '@/models/income';
+import { useEffect } from 'react';
 
 const Incomes = ({
   className,
@@ -51,11 +52,15 @@ const Incomes = ({
   const form = useForm<z.infer<typeof deleteIncomeTransactionSchema>>({
     resolver: zodResolver(deleteIncomeTransactionSchema),
     defaultValues: {
-      incomes: selectedIncomes,
+      incomes: selectedIncomeIds,
       userId: userId,
       formPath: currentPathname
     }
   });
+
+  useEffect(() => {
+    form.setValue('incomes', selectedIncomeIds);
+  }, [selectedIncomeIds]);
 
   const onSubmit = async (
     data: z.infer<typeof deleteIncomeTransactionSchema>
@@ -114,6 +119,27 @@ const Incomes = ({
         </DialogHeader>
 
         {selectedIncomesList}
+
+        <div className='mt-8'>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className={cn('flex flex-col', className)}
+            >
+              <DialogFooter className='flex flex-row justify-end gap-2'>
+                <DialogClose asChild>
+                  <Button
+                    className='w-full'
+                    variant='destructive'
+                    type='submit'
+                  >
+                    Delete
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );
