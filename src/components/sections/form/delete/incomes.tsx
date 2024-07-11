@@ -28,7 +28,7 @@ const Incomes = ({
   selectedIncomes = []
 }: {
   className?: string;
-  selectedIncomes?: any[];
+  selectedIncomes?: string[];
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();

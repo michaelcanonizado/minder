@@ -17,12 +17,14 @@ const IncomeTransactions = async ({
   page = page < 1 ? 1 : page;
   const limit = 10;
 
+  const selectedIncomeRowsRaw = searchParams.selected
+    ? (searchParams.selected as string)
+    : '';
+  const selectedIncomeRowsArray = selectedIncomeRowsRaw.split(',');
+
   const userId = process.env.TEMP_USER_ID!;
 
   const incomes = await getIncomeTransactions({ page, limit, userId });
-
-  console.log(incomes);
-  console.log(`Data count: ${incomes.data.length}`);
 
   return (
     <div className=''>
@@ -36,7 +38,11 @@ const IncomeTransactions = async ({
               <Table
                 columns={columns}
                 data={incomes.data}
-                rowActions={[<Form.Delete.Incomes />]}
+                rowActions={[
+                  <Form.Delete.Incomes
+                    selectedIncomes={selectedIncomeRowsArray}
+                  />
+                ]}
               />
               <Pagination
                 pathname='/income/transactions'
