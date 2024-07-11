@@ -34,9 +34,18 @@ export const columns: ColumnDef<IncomeType>[] = [
     accessorKey: 'category',
     header: () => <div className=''>Category</div>,
     cell: ({ row }) => {
-      const category: UserCategoryType = row.getValue('category');
+      const category = row.original.category;
 
-      return <div className=''>{category.name}</div>;
+      const styles = {
+        backgroundColor: category.color.code.secondary,
+        color: category.color.code.primary
+      };
+
+      return (
+        <div className='w-fit rounded-full px-3 py-1' style={styles}>
+          <p className=''>{category.name}</p>
+        </div>
+      );
     }
   },
   {
