@@ -36,6 +36,7 @@ const Category = ({
   const form = useForm<z.infer<typeof editCategorySchema>>({
     resolver: zodResolver(editCategorySchema),
     defaultValues: {
+      _id: category._id,
       name: category.name,
       colorId: category.color._id,
       userId: userId,
