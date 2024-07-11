@@ -55,9 +55,7 @@ export const editCategory = async (data: unknown, type: CategoryType) => {
   category.name = result.data.name;
   category.color = selectedColor;
 
-  //   await user.save();
-
-  console.log('Result: ', category);
+  await user.save();
 
   revalidatePath(result.data.formPath);
 

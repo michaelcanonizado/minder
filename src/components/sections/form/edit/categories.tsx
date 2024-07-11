@@ -48,10 +48,7 @@ const Category = ({
   });
 
   const onSubmit = async (data: z.infer<typeof editCategorySchema>) => {
-    console.log(data);
     const response = await editCategory(data, type);
-
-    form.reset();
   };
 
   return (
