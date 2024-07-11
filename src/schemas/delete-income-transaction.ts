@@ -1,8 +1,7 @@
 import { z } from 'zod';
-import trackIncomeSchema from './track-income';
 
 const deleteIncomeTransactionSchema = z.object({
-  incomes: z.array(trackIncomeSchema),
+  incomes: z.array(z.string()),
 
   userId: z
     .string({ message: 'Error! Please try again.' })
