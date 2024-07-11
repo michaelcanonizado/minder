@@ -7,7 +7,7 @@ import editCategorySchema from '@/schemas/edit-category';
 
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
-import { CategoryChartData, categoryColors } from '@/types';
+import { CategoryChartData, categoryColors, CategoryType } from '@/types';
 
 import {
   Form,
@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import { FormInput } from '../components';
 import { Check } from 'lucide-react';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { editCategory } from '@/lib/category/edit-category';
 
 const Category = ({
   className,
@@ -46,6 +47,7 @@ const Category = ({
 
   const onSubmit = async (data: z.infer<typeof editCategorySchema>) => {
     console.log(data);
+    const response = await editCategory(data, 'income' as CategoryType);
 
     form.reset();
   };
