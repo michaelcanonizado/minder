@@ -43,7 +43,7 @@ export interface UserCategoryType {
 export interface UserWalletType {
   _id?: string;
   name: string;
-  balance?: number;
+  balance: number;
   transactionCount?: number;
   createdAt?: Date;
   updatedAt?: Date;
