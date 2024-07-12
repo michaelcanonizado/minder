@@ -21,7 +21,7 @@ export interface UserBalanceType {
   totalExpense: number;
 }
 export interface UserColorType {
-  _id: string;
+  _id?: string;
   name: string;
   code: {
     primary: string;
@@ -41,7 +41,7 @@ export interface UserCategoryType {
   __v?: number;
 }
 export interface UserWalletType {
-  _id: string;
+  _id?: string;
   name: string;
   balance?: number;
   transactionCount?: number;
