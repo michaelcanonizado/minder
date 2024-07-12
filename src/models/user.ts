@@ -184,24 +184,6 @@ const walletSchema = new Schema<UserWalletType>(
   { timestamps: true }
 );
 
-const balanceSchema = new Schema<UserBalanceType>(
-  {
-    netBalance: {
-      type: Number,
-      default: 0
-    },
-    totalIncome: {
-      type: Number,
-      default: 0
-    },
-    totalExpense: {
-      type: Number,
-      default: 0
-    }
-  },
-  { _id: false }
-);
-
 const userSchema = new Schema<UserType>(
   {
     profile: {
@@ -213,10 +195,6 @@ const userSchema = new Schema<UserType>(
     },
     currency: {
       type: currencySchema
-    },
-    balance: {
-      type: balanceSchema,
-      default: {}
     },
     categories: {
       expense: {

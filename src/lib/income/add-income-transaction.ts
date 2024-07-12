@@ -52,10 +52,6 @@ export const addIncomeTransaction = async (data: unknown) => {
     }
   }
 
-  /* Update user's balances */
-  user.balance.netBalance += result.data.amount;
-  user.balance.totalIncome += result.data.amount;
-
   await user.save();
   await income.save();
 

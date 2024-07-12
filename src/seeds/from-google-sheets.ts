@@ -28,9 +28,6 @@ export const seedFromGoogleSheets = async () => {
   }
 
   /* Reset balances */
-  user.balance.netBalance = 0;
-  user.balance.totalIncome = 0;
-  user.balance.totalExpense = 0;
   for (const wallet of user.wallets) {
     wallet.balance = 0;
   }
@@ -92,8 +89,6 @@ export const seedFromGoogleSheets = async () => {
     if (wallet) {
       wallet.balance! += amount;
     }
-    user.balance.netBalance += amount;
-    user.balance.totalIncome += amount;
 
     await res.save();
   }
@@ -151,8 +146,6 @@ export const seedFromGoogleSheets = async () => {
     if (wallet) {
       wallet.balance! -= amount;
     }
-    user.balance.netBalance -= amount;
-    user.balance.totalExpense += amount;
 
     await res.save();
   }

@@ -52,10 +52,6 @@ export const addExpenseTransaction = async (data: unknown) => {
     }
   }
 
-  /* Update user's balances */
-  user.balance.netBalance -= result.data.amount;
-  user.balance.totalExpense += result.data.amount;
-
   await user.save();
   await expense.save();
 

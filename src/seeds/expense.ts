@@ -87,11 +87,7 @@ const seedExpense = async () => {
   console.log('Expenses generated:');
   console.log(expenses);
 
-  /* Update user's balances */
-  user.balance.netBalance -= totalAmount;
-  user.balance.totalExpense = totalAmount;
   await user.save();
-  console.log(`User's total balance: ${user.balance.netBalance}`);
 
   databaseClose();
 };
