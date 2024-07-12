@@ -70,7 +70,8 @@ const NetAmount = async ({
     );
 
   const headerPercentage =
-    data.balance.percentageChange.percentage !== Infinity ? (
+    data.balance.percentageChange.percentage !== Infinity &&
+    data.balance.percentageChange.percentage !== -Infinity ? (
       <span className='flex flex-row'>
         ({headerArrow}
         {` ${data.balance.percentageChange.percentage}%`}){' '}
@@ -78,6 +79,8 @@ const NetAmount = async ({
     ) : (
       <span className='flex flex-row'>({headerArrow})</span>
     );
+
+  console.log('Percentage: ', data.balance.percentageChange.percentage);
 
   let headerLabel = '';
   if (period === 'weekly') {

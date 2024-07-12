@@ -76,7 +76,8 @@ const Expense = async ({
     );
 
   const headerPercentage =
-    data.balance.percentageChange.percentage !== Infinity ? (
+    data.balance.percentageChange.percentage !== Infinity &&
+    data.balance.percentageChange.percentage !== -Infinity ? (
       <span className='flex flex-row'>
         ({headerArrow}
         {` ${data.balance.percentageChange.percentage}%`}){' '}
