@@ -13,7 +13,7 @@ export const deleteCateogries = async (data: unknown, type: CategoryType) => {
     console.log(result.error);
     return {
       isSuccessful: false,
-      message: 'Failed to add income! Please try again'
+      message: 'Failed to delete cetegory! Please try again'
     };
   }
 
