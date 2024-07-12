@@ -3,9 +3,33 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { IncomeType } from '@/models/income';
-import { UserCategoryType, UserWalletType } from '@/models/user';
+import { UserWalletType } from '@/models/user';
+
+import { Checkbox } from '@/components/ui/checkbox';
 
 export const columns: ColumnDef<IncomeType>[] = [
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && 'indeterminate')
+        }
+        onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+        aria-label='Select all'
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={value => row.toggleSelected(!!value)}
+        aria-label='Select row'
+      />
+    ),
+    enableSorting: true,
+    enableHiding: false
+  },
   {
     accessorKey: 'transactionDate',
     header: () => <div className=''>Date</div>,
