@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
+import { deleteExpenseTransactions } from '@/lib/expense/delete-expense-transactions';
 
 const Expenses = ({
   className,
@@ -66,7 +67,9 @@ const Expenses = ({
   const onSubmit = async (
     data: z.infer<typeof deleteExpenseTransactionSchema>
   ) => {
-    console.log(data);
+    const response = await deleteExpenseTransactions(data);
+
+    console.log(response);
   };
 
   const selectedExpensesList = (
