@@ -127,7 +127,8 @@ const colorSchema = new Schema<UserColorType>({
     }
   },
   _id: {
-    type: Types.ObjectId
+    type: Types.ObjectId,
+    required: true
   }
 });
 
