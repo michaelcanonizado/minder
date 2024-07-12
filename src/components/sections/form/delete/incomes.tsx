@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { IncomeType } from '@/models/income';
 import { useEffect } from 'react';
+import { deleteIncomeTransactions } from '@/lib/income/delete-income-transactions';
 
 const Incomes = ({
   className,
@@ -65,7 +66,9 @@ const Incomes = ({
   const onSubmit = async (
     data: z.infer<typeof deleteIncomeTransactionSchema>
   ) => {
-    console.log(data);
+    const response = await deleteIncomeTransactions(data);
+
+    console.log(response);
   };
 
   const selectedIncomesList = (
