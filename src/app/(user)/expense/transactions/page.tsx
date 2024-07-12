@@ -16,11 +16,14 @@ const expenseTransactions = async ({
   page = page < 1 ? 1 : page;
   const limit = 10;
 
+  const selectedExpenseRowsRaw = searchParams.selected
+    ? (searchParams.selected as string)
+    : '';
+  const selectedExpenseRowsArray = selectedExpenseRowsRaw.split(',');
+
   const userId = process.env.TEMP_USER_ID!;
 
   const expenses = await getExpenseTransactions({ page, limit, userId });
-
-  console.log(expenses);
 
   return (
     <div className=''>
