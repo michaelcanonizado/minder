@@ -5,14 +5,20 @@ import Income from '@/models/income';
 import User from '@/models/user';
 
 import deleteIncomeTransactionSchema from '@/schemas/delete-income-transaction';
+import { ServerResponse } from '@/types';
 import { revalidatePath } from 'next/cache';
 
-export const deleteIncomeTransactions = async (data: unknown) => {
+export const deleteIncomeTransactions = async (
+  data: unknown
+): Promise<ServerResponse> => {
   const result = deleteIncomeTransactionSchema.safeParse(data);
   if (!result.success) {
     return {
       isSuccessful: false,
-      message: 'Failed to delete income! Please try again'
+      message: {
+        title: 'Error!',
+        description: 'Failed to delete income! Please try again'
+      }
     };
   }
 
@@ -20,12 +26,18 @@ export const deleteIncomeTransactions = async (data: unknown) => {
 
   const incomeTransactionIds = result.data.incomes;
   const userId = result.data.userId;
-
   const user = await User.findById(userId);
   if (!user) {
-    throw new Error('Error deleting income! Failed to get user document.');
+    return {
+      isSuccessful: false,
+      message: {
+        title: 'Error!',
+        description: 'Failed to delete income! Please try again'
+      }
+    };
   }
 
+  let isErrorDeleting: boolean = false;
   const responses = await Promise.all(
     incomeTransactionIds.map(async transactionId => {
       try {
@@ -34,20 +46,15 @@ export const deleteIncomeTransactions = async (data: unknown) => {
           user: userId
         });
         if (!income) {
-          return {
-            isSuccessful: false,
-            message: 'Error deleting income! Could not find income.'
-          };
+          throw new Error('Could not find income in database!');
         }
 
         const incomeAmount = income.amount;
         const transactionWallet = user.wallets.id(income.wallet);
         if (!transactionWallet) {
-          return {
-            isSuccessful: false,
-            message:
-              'Error deleting income! Could not find corresponding wallet.'
-          };
+          throw new Error(
+            'Could not find corresponding wallet used in income!'
+          );
         }
 
         const response = await income.deleteOne();
@@ -59,13 +66,20 @@ export const deleteIncomeTransactions = async (data: unknown) => {
         return response;
       } catch (error) {
         console.log(error);
-        return {
-          isSuccessful: false,
-          message: 'Error deleting income! Failed to find income.'
-        };
+        isErrorDeleting = true;
       }
     })
   );
+
+  if (isErrorDeleting) {
+    return {
+      isSuccessful: false,
+      message: {
+        title: 'Error!',
+        description: 'Failed to delete income! Please try again'
+      }
+    };
+  }
 
   await user.save();
 
@@ -73,6 +87,9 @@ export const deleteIncomeTransactions = async (data: unknown) => {
 
   return {
     isSuccessful: true,
-    message: 'Successfully deleted incomes'
+    message: {
+      title: 'Success!',
+      description: 'Successfully deleted incomes'
+    }
   };
 };
