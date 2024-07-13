@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 
+import { useToast } from '@/components/ui/use-toast';
 import { usePathname } from 'next/navigation';
 import addWalletSchema from '@/schemas/add-wallet';
 import { addNewWallet } from '@/lib/wallet/add-new-wallet';
@@ -35,6 +36,7 @@ import { FormInput } from '@/components/sections/form/components';
 const Wallet = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof addWalletSchema>>({
     resolver: zodResolver(addWalletSchema),
@@ -49,11 +51,11 @@ const Wallet = ({ className }: { className?: string }) => {
   const onSubmit = async (data: z.infer<typeof addWalletSchema>) => {
     const response = await addNewWallet(data);
 
-    if (!response!.isSuccessful) {
-      console.log('Error adding income!');
-      console.log(response);
-      return;
-    }
+    toast({
+      title: response.message.title,
+      description: response.message.description,
+      variant: response.isSuccessful ? 'success' : 'destructive'
+    });
 
     form.reset();
   };
