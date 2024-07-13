@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 import deleteIncomeTransactionSchema from '@/schemas/delete-income-transaction';
 
@@ -30,14 +30,18 @@ import { deleteIncomeTransactions } from '@/lib/income/delete-income-transaction
 const Incomes = ({
   className,
   selectedIncomeIds = [],
-  tableData
+  tableData,
+  queryToRemove = 'selected'
 }: {
   className?: string;
   selectedIncomeIds?: string[];
   tableData: IncomeType[];
+  queryToRemove?: string;
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const { toast } = useToast();
 
   const selectedIncomes = selectedIncomeIds.map(id => {
@@ -75,6 +79,12 @@ const Incomes = ({
       description: response.message.description,
       variant: response.isSuccessful ? 'success' : 'destructive'
     });
+
+    const currentUrl = new URLSearchParams(searchParams);
+    currentUrl.delete(queryToRemove);
+    const search = currentUrl.toString();
+    const query = search ? `?${search}` : '';
+    router.replace(`${currentPathname}${query}`, { scroll: false });
 
     form.reset();
   };
