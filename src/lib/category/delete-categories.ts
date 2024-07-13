@@ -2,18 +2,22 @@
 
 import { databaseConnect } from '@/helpers/database/database';
 import User from '@/models/user';
-
 import deleteCategoriesSchema from '@/schemas/delete-categories';
-import { CategoryType } from '@/types';
+import { CategoryType, ServerResponse } from '@/types';
 import { revalidatePath } from 'next/cache';
 
-export const deleteCateogries = async (data: unknown, type: CategoryType) => {
+export const deleteCateogries = async (
+  data: unknown,
+  type: CategoryType
+): Promise<ServerResponse> => {
   const result = deleteCategoriesSchema.safeParse(data);
   if (!result.success) {
-    console.log(result.error);
     return {
       isSuccessful: false,
-      message: 'Failed to delete cetegory! Please try again'
+      message: {
+        title: 'Error!',
+        description: 'Failed to delete category! Please try again'
+      }
     };
   }
 
@@ -21,7 +25,13 @@ export const deleteCateogries = async (data: unknown, type: CategoryType) => {
 
   const user = await User.findById(result.data.userId);
   if (!user) {
-    throw new Error('User not found!');
+    return {
+      isSuccessful: false,
+      message: {
+        title: 'Error!',
+        description: 'Failed to delete category! Please try again'
+      }
+    };
   }
 
   const userCategories =
@@ -41,6 +51,9 @@ export const deleteCateogries = async (data: unknown, type: CategoryType) => {
 
   return {
     isSuccessful: true,
-    message: 'Successfully deleted categories'
+    message: {
+      title: 'Success!',
+      description: 'Successfully deleted categories'
+    }
   };
 };
