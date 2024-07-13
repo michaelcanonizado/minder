@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -31,14 +31,18 @@ import { useToast } from '@/components/ui/use-toast';
 const Expenses = ({
   className,
   selectedExpenseIds = [],
-  tableData
+  tableData,
+  queryToRemove = 'selected'
 }: {
   className?: string;
   selectedExpenseIds?: string[];
   tableData: ExpenseType[];
+  queryToRemove?: string;
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
+  const searchParams = useSearchParams();
+  const router = useRouter();
   const { toast } = useToast();
 
   const selectedExpenses = selectedExpenseIds.map(id => {
@@ -76,6 +80,12 @@ const Expenses = ({
       description: response.message.description,
       variant: response.isSuccessful ? 'success' : 'destructive'
     });
+
+    const currentUrl = new URLSearchParams(searchParams);
+    currentUrl.delete(queryToRemove);
+    const search = currentUrl.toString();
+    const query = search ? `?${search}` : '';
+    router.replace(`${currentPathname}${query}`, { scroll: false });
 
     form.reset();
   };
