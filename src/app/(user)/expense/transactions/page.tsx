@@ -38,6 +38,7 @@ const expenseTransactions = async ({
               <Table
                 columns={columns}
                 data={expenses.data}
+                selectedRows={selectedExpenseRowsArray}
                 rowActions={[
                   <Form.Delete.Expenses
                     selectedExpenseIds={selectedExpenseRowsArray}
