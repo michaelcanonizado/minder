@@ -10,15 +10,17 @@ import { revalidatePath } from 'next/cache';
 export const deleteExpenseTransactions = async (
   data: unknown
 ): Promise<ServerResponse> => {
+  const errorResponse = {
+    isSuccessful: false,
+    message: {
+      title: 'Error!',
+      description: 'Failed to delete expense! Please try again'
+    }
+  };
+
   const result = deleteExpenseTransactionSchema.safeParse(data);
   if (!result.success) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to delete expense! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   await databaseConnect();
@@ -28,13 +30,7 @@ export const deleteExpenseTransactions = async (
 
   const user = await User.findById(userId);
   if (!user) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to delete expense! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   let isErrorDeleting: boolean = false;
@@ -58,37 +54,19 @@ export const deleteExpenseTransactions = async (
   );
 
   if (isErrorDeleting) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to delete expense! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   for (const expense of expenses) {
     const expenseAmount = expense?.amount;
     const transactionWallet = user.wallets.id(expense?.wallet);
     if (!transactionWallet) {
-      return {
-        isSuccessful: false,
-        message: {
-          title: 'Error!',
-          description: 'Failed to delete expense! Please try again'
-        }
-      };
+      return errorResponse;
     }
 
     const response = await expense?.deleteOne();
     if (response?.deletedCount === 0) {
-      return {
-        isSuccessful: false,
-        message: {
-          title: 'Error!',
-          description: 'Failed to delete expense! Please try again'
-        }
-      };
+      return errorResponse;
     }
     transactionWallet.balance += expenseAmount;
   }
