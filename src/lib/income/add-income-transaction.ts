@@ -4,6 +4,7 @@ import { databaseConnect } from '@/helpers/database/database';
 import Income from '@/models/income';
 import User from '@/models/user';
 import trackIncomeSchema from '@/schemas/track-income';
+import { ServerResponse } from '@/types';
 import mongoose from 'mongoose';
 import { revalidatePath } from 'next/cache';
 
@@ -13,14 +14,18 @@ import { revalidatePath } from 'next/cache';
  * @param data data submitted from the form
  * @returns a response object about the success state
  */
-export const addIncomeTransaction = async (data: unknown) => {
+export const addIncomeTransaction = async (
+  data: unknown
+): Promise<ServerResponse> => {
   /* Validate data coming from the client */
   const result = trackIncomeSchema.safeParse(data);
   if (!result.success) {
-    console.log(result.error);
     return {
       isSuccessful: false,
-      message: 'Failed to add income! Please try again'
+      message: {
+        title: 'Error!',
+        description: 'Failed to add income! Please try again'
+      }
     };
   }
 
@@ -31,7 +36,10 @@ export const addIncomeTransaction = async (data: unknown) => {
   if (user === null) {
     return {
       isSuccessful: false,
-      message: 'Failed to add income! Please try again'
+      message: {
+        title: 'Error',
+        description: 'Failed to add income! Please try again'
+      }
     };
   }
 
@@ -59,6 +67,9 @@ export const addIncomeTransaction = async (data: unknown) => {
 
   return {
     isSuccessful: true,
-    message: 'Successfully added income'
+    message: {
+      title: 'Success!',
+      description: 'Successfully added income'
+    }
   };
 };
