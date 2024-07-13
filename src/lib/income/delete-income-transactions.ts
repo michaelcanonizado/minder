@@ -38,7 +38,7 @@ export const deleteIncomeTransactions = async (
   }
 
   let isErrorDeleting: boolean = false;
-  const responses = await Promise.all(
+  const incomes = await Promise.all(
     incomeTransactionIds.map(async transactionId => {
       try {
         const income = await Income.findOne({
@@ -49,21 +49,7 @@ export const deleteIncomeTransactions = async (
           throw new Error('Could not find income in database!');
         }
 
-        const incomeAmount = income.amount;
-        const transactionWallet = user.wallets.id(income.wallet);
-        if (!transactionWallet) {
-          throw new Error(
-            'Could not find corresponding wallet used in income!'
-          );
-        }
-
-        const response = await income.deleteOne();
-        if (response.deletedCount === 0) {
-          return response;
-        }
-        transactionWallet.balance -= incomeAmount;
-
-        return response;
+        return income;
       } catch (error) {
         console.log(error);
         isErrorDeleting = true;
@@ -79,6 +65,32 @@ export const deleteIncomeTransactions = async (
         description: 'Failed to delete income! Please try again'
       }
     };
+  }
+
+  for (const income of incomes) {
+    const incomeAmount = income!.amount;
+    const transactionWallet = user.wallets.id(income!.wallet);
+    if (!transactionWallet) {
+      return {
+        isSuccessful: false,
+        message: {
+          title: 'Error!',
+          description: 'Failed to delete income! Please try again'
+        }
+      };
+    }
+
+    const response = await income?.deleteOne();
+    if (response?.deletedCount === 0) {
+      return {
+        isSuccessful: false,
+        message: {
+          title: 'Error!',
+          description: 'Failed to delete income! Please try again'
+        }
+      };
+    }
+    transactionWallet.balance -= incomeAmount;
   }
 
   await user.save();
