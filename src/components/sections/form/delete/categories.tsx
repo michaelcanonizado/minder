@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 const Categories = ({
   className,
@@ -35,6 +36,7 @@ const Categories = ({
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof deleteCategoriesSchema>>({
     resolver: zodResolver(deleteCategoriesSchema),
@@ -49,6 +51,13 @@ const Categories = ({
   const onSubmit = async (data: z.infer<typeof deleteCategoriesSchema>) => {
     data.categories = selectedCategories;
     const response = await deleteCateogries(data, type);
+
+    toast({
+      title: response.message.title,
+      description: response.message.description,
+      variant: response.isSuccessful ? 'success' : 'destructive'
+    });
+
     form.reset();
   };
 
