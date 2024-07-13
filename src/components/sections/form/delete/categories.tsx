@@ -24,19 +24,39 @@ import {
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
+import { useEffect } from 'react';
 
 const Categories = ({
   className,
   type,
-  selectedCategories = []
+  selectedCategoryIds = [],
+  tableData
 }: {
   className?: string;
   type: CategoryType;
-  selectedCategories?: CategoryChartData[];
+  selectedCategoryIds: string[];
+  tableData: CategoryChartData[];
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
   const { toast } = useToast();
+
+  const selectedCategories = selectedCategoryIds
+    .map(id => {
+      const matchedCategory = tableData.find(category => {
+        if (category._id === id) {
+          return category;
+        }
+      });
+      if (matchedCategory) {
+        return matchedCategory;
+      }
+    })
+    .filter(item => {
+      if (item) {
+        return item;
+      }
+    });
 
   const form = useForm<z.infer<typeof deleteCategoriesSchema>>({
     resolver: zodResolver(deleteCategoriesSchema),
@@ -48,8 +68,11 @@ const Categories = ({
     }
   });
 
+  useEffect(() => {
+    form.setValue('categories', selectedCategoryIds);
+  }, [selectedCategoryIds]);
+
   const onSubmit = async (data: z.infer<typeof deleteCategoriesSchema>) => {
-    data.categories = selectedCategories;
     const response = await deleteCateogries(data, type);
 
     toast({
@@ -71,9 +94,9 @@ const Categories = ({
           return (
             <div
               className='text-body-200 flex flex-row space-x-1'
-              key={item._id}
+              key={item?._id}
             >
-              <p className=''>- {item.name}</p>
+              <p className=''>- {item?.name}</p>
               <p className='text-muted-foreground'>
                 (123 transactions | $12345.00)
               </p>

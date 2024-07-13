@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import { getCategoriesChartData } from '@/lib/category/get-categories-chart-data';
-import { CategoryChartData, Period } from '@/types';
+import { Period } from '@/types';
 import { columns } from './_columns/categories';
 
 import Bento from '@/components/sections/bento';
@@ -38,39 +38,6 @@ const Categories = async ({
     };
   });
 
-  const selectedIncomeCategories = selectedIncomeCategoryIds
-    .map(selectedCategoryId => {
-      const matchedCategory = data.income.find(category => {
-        if (category._id === selectedCategoryId) {
-          return category;
-        }
-      });
-      if (matchedCategory) {
-        return matchedCategory;
-      }
-    })
-    .filter(item => {
-      if (item) {
-        return item;
-      }
-    }) as CategoryChartData[];
-  const selectedExpenseCategories = selectedExpenseCategoryIds
-    .map(selectedCategoryId => {
-      const matchedCategory = data.expense.find(category => {
-        if (category._id === selectedCategoryId) {
-          return category;
-        }
-      });
-      if (matchedCategory) {
-        return matchedCategory;
-      }
-    })
-    .filter(item => {
-      if (item) {
-        return item;
-      }
-    }) as CategoryChartData[];
-
   return (
     <Bento.Box className={cn('space-y-4 !pb-4', className)}>
       <Bento.Box.Header>
@@ -94,7 +61,8 @@ const Categories = async ({
           rowActions={[
             <Form.Delete.Categories
               type='income'
-              selectedCategories={selectedIncomeCategories}
+              selectedCategoryIds={selectedIncomeCategoryIds}
+              tableData={data.income}
             />
           ]}
         />
@@ -119,7 +87,8 @@ const Categories = async ({
           rowActions={[
             <Form.Delete.Categories
               type='expense'
-              selectedCategories={selectedExpenseCategories}
+              selectedCategoryIds={selectedExpenseCategoryIds}
+              tableData={data.expense}
             />
           ]}
         />
