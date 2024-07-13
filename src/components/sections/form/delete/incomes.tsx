@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 
 import { usePathname } from 'next/navigation';
+import { useToast } from '@/components/ui/use-toast';
 import deleteIncomeTransactionSchema from '@/schemas/delete-income-transaction';
 
 import { Form } from '@/components/ui/form';
@@ -37,6 +38,7 @@ const Incomes = ({
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
+  const { toast } = useToast();
 
   const selectedIncomes = selectedIncomeIds.map(id => {
     const selectedRow = tableData.find(row => {
@@ -68,7 +70,13 @@ const Incomes = ({
   ) => {
     const response = await deleteIncomeTransactions(data);
 
-    console.log(response);
+    toast({
+      title: response.message.title,
+      description: response.message.description,
+      variant: response.isSuccessful ? 'success' : 'destructive'
+    });
+
+    form.reset();
   };
 
   const selectedIncomesList = (
