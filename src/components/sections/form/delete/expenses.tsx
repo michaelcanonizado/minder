@@ -26,6 +26,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 import { deleteExpenseTransactions } from '@/lib/expense/delete-expense-transactions';
+import { useToast } from '@/components/ui/use-toast';
 
 const Expenses = ({
   className,
@@ -38,6 +39,7 @@ const Expenses = ({
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
+  const { toast } = useToast();
 
   const selectedExpenses = selectedExpenseIds.map(id => {
     const selectedRow = tableData.find(row => {
@@ -69,7 +71,13 @@ const Expenses = ({
   ) => {
     const response = await deleteExpenseTransactions(data);
 
-    console.log(response);
+    toast({
+      title: response.message.title,
+      description: response.message.description,
+      variant: response.isSuccessful ? 'success' : 'destructive'
+    });
+
+    form.reset();
   };
 
   const selectedExpensesList = (
