@@ -28,6 +28,7 @@ import { UserWalletType } from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
 import { usePathname } from 'next/navigation';
 import { addWalletTransfer } from '@/lib/wallet/add-wallet-transfer';
+import { useToast } from '@/components/ui/use-toast';
 
 const decodeModifiedWalletId = (_id: string) => {
   return _id.slice(0, -1);
@@ -51,6 +52,7 @@ const Transfer = ({
   });
 
   const currentPathname = usePathname();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof trackBalanceTransferSchema>>({
     resolver: zodResolver(trackBalanceTransferSchema),
@@ -70,10 +72,11 @@ const Transfer = ({
 
     const response = await addWalletTransfer(data);
 
-    if (!response.isSuccessful) {
-      console.log(response);
-      return;
-    }
+    toast({
+      title: response.message.title,
+      description: response.message.description,
+      variant: response.isSuccessful ? 'success' : 'destructive'
+    });
 
     form.reset();
   };
