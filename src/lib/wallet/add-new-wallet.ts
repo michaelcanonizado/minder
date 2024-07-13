@@ -3,6 +3,7 @@
 import { databaseConnect } from '@/helpers/database/database';
 import User from '@/models/user';
 import addWalletSchema from '@/schemas/add-wallet';
+import { ServerResponse } from '@/types';
 
 import { revalidatePath } from 'next/cache';
 
@@ -12,14 +13,16 @@ import { revalidatePath } from 'next/cache';
  * @param data data submitted from the form
  * @returns a response object about the success state
  */
-export const addNewWallet = async (data: unknown) => {
+export const addNewWallet = async (data: unknown): Promise<ServerResponse> => {
   /* Validate data coming from the client */
   const result = addWalletSchema.safeParse(data);
   if (!result.success) {
-    console.log(result.error);
     return {
       isSuccessful: false,
-      message: 'Failed to add income! Please try again'
+      message: {
+        title: 'Error!',
+        description: 'Failed to add income! Please try again'
+      }
     };
   }
 
@@ -28,7 +31,13 @@ export const addNewWallet = async (data: unknown) => {
   /* Get user document */
   const user = await User.findById(result.data.userId);
   if (!user) {
-    throw new Error('User not found!');
+    return {
+      isSuccessful: false,
+      message: {
+        title: 'Error!',
+        description: 'Failed to add income! Please try again'
+      }
+    };
   }
 
   /* Add wallet */
@@ -43,6 +52,9 @@ export const addNewWallet = async (data: unknown) => {
 
   return {
     isSuccessful: true,
-    message: 'Successfully added wallet'
+    message: {
+      title: 'Success!',
+      description: 'Successfully added wallet'
+    }
   };
 };
