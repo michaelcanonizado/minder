@@ -80,7 +80,7 @@ export const Table = <TData extends RequiredProperties, TValue>({
     });
 
     setRowSelection(selected);
-  }, []);
+  }, [selectedRows]);
 
   useEffect(() => {
     const areRowsSelected =
