@@ -12,6 +12,14 @@ export type LinkGroup = {
   links: LinkItems;
 };
 
+export type ServerResponse = {
+  isSuccessful: boolean;
+  message: {
+    title: string;
+    description?: string;
+  };
+};
+
 export type Period = 'weekly' | 'monthly' | 'yearly';
 export type PeriodDates = {
   startDate: Date;
