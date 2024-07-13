@@ -38,7 +38,7 @@ export const deleteExpenseTransactions = async (
   }
 
   let isErrorDeleting: boolean = false;
-  const responses = await Promise.all(
+  const expenses = await Promise.all(
     expenseTransactionIds.map(async transactionId => {
       try {
         const expense = await Expense.findOne({
@@ -49,21 +49,7 @@ export const deleteExpenseTransactions = async (
           throw new Error('Error deleting expense! Could not find expense.');
         }
 
-        const expenseAmount = expense.amount;
-        const transactionWallet = user.wallets.id(expense.wallet);
-        if (!transactionWallet) {
-          throw new Error(
-            'Error deleting expense! Could not find corresponding wallet.'
-          );
-        }
-
-        const response = await expense.deleteOne();
-        if (response.deletedCount === 0) {
-          return response;
-        }
-        transactionWallet.balance += expenseAmount;
-
-        return response;
+        return expense;
       } catch (error) {
         console.log(error);
         isErrorDeleting = true;
@@ -79,6 +65,32 @@ export const deleteExpenseTransactions = async (
         description: 'Failed to delete expense! Please try again'
       }
     };
+  }
+
+  for (const expense of expenses) {
+    const expenseAmount = expense?.amount;
+    const transactionWallet = user.wallets.id(expense?.wallet);
+    if (!transactionWallet) {
+      return {
+        isSuccessful: false,
+        message: {
+          title: 'Error!',
+          description: 'Failed to delete expense! Please try again'
+        }
+      };
+    }
+
+    const response = await expense?.deleteOne();
+    if (response?.deletedCount === 0) {
+      return {
+        isSuccessful: false,
+        message: {
+          title: 'Error!',
+          description: 'Failed to delete expense! Please try again'
+        }
+      };
+    }
+    transactionWallet.balance += expenseAmount;
   }
 
   await user.save();
