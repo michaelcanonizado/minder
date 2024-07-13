@@ -32,7 +32,7 @@ export interface DataTableProps<TData extends RequiredProperties, TValue> {
   data: TData[];
   rowActions?: React.ReactNode[];
   queryString?: string;
-  selectedRows?: TData[];
+  selectedRows?: string[];
 }
 
 export const Table = <TData extends RequiredProperties, TValue>({
@@ -68,10 +68,11 @@ export const Table = <TData extends RequiredProperties, TValue>({
   preselect the corresponding rows*/
   useEffect(() => {
     const selected: { [key: string]: boolean } = {};
-    selectedRows.forEach(IRow => {
+
+    selectedRows.forEach(id => {
       const matchedRow = table
         .getRowModel()
-        .rows.find(JRow => JRow.original._id === IRow._id);
+        .rows.find(JRow => JRow.original._id === id);
 
       if (matchedRow) {
         selected[matchedRow.index] = true;

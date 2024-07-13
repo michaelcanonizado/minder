@@ -10,13 +10,13 @@ import Form from '@/components/sections/form';
 
 const Categories = async ({
   className,
-  selectedIncomeCategoriesId,
-  selectedExpenseCategoriesId,
+  selectedIncomeCategoryIds,
+  selectedExpenseCategoryIds,
   period
 }: {
   className?: string;
-  selectedIncomeCategoriesId: string[];
-  selectedExpenseCategoriesId: string[];
+  selectedIncomeCategoryIds: string[];
+  selectedExpenseCategoryIds: string[];
   period: Period;
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -38,7 +38,7 @@ const Categories = async ({
     };
   });
 
-  const selectedIncomeCategories = selectedIncomeCategoriesId
+  const selectedIncomeCategories = selectedIncomeCategoryIds
     .map(selectedCategoryId => {
       const matchedCategory = data.income.find(category => {
         if (category._id === selectedCategoryId) {
@@ -54,7 +54,7 @@ const Categories = async ({
         return item;
       }
     }) as CategoryChartData[];
-  const selectedExpenseCategories = selectedExpenseCategoriesId
+  const selectedExpenseCategories = selectedExpenseCategoryIds
     .map(selectedCategoryId => {
       const matchedCategory = data.expense.find(category => {
         if (category._id === selectedCategoryId) {
@@ -90,7 +90,7 @@ const Categories = async ({
           columns={columns}
           data={data.income}
           queryString='selectedIncomeCategories'
-          selectedRows={selectedIncomeCategories}
+          selectedRows={selectedIncomeCategoryIds}
           rowActions={[
             <Form.Delete.Categories
               type='income'
@@ -115,7 +115,7 @@ const Categories = async ({
           columns={columns}
           data={data.expense}
           queryString='selectedExpenseCategories'
-          selectedRows={selectedExpenseCategories}
+          selectedRows={selectedExpenseCategoryIds}
           rowActions={[
             <Form.Delete.Categories
               type='expense'
