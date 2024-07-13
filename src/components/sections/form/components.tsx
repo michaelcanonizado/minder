@@ -43,17 +43,17 @@ export const FormDatePicker = ({
           <Button
             variant='outline'
             className={cn(
-              'w-full pl-3 text-left font-normal hover:bg-background hover:text-muted-foreground ',
+              'w-full  pl-3 pr-2 !text-left font-normal hover:bg-background hover:text-muted-foreground',
               !field.value && 'text-muted-foreground ',
               className
             )}
           >
-            {field.value ? (
-              format(field.value, 'PPPP')
-            ) : (
-              <span>Pick a date</span>
-            )}
-            <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+            <p className='flex w-full flex-row justify-between'>
+              <span className='shrink overflow-hidden'>
+                {field.value ? format(field.value, 'PPPP') : 'Pick a date'}
+              </span>
+              <CalendarIcon className='h-4 min-h-3 w-4 min-w-3 opacity-50' />
+            </p>
           </Button>
         </FormControl>
       </PopoverTrigger>
