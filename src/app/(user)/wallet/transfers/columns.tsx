@@ -4,8 +4,31 @@ import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { BalanceTransferType } from '@/models/balance-transfer';
 import { UserWalletType } from '@/models/user';
+import { Checkbox } from '@/components/ui/checkbox';
 
 export const columns: ColumnDef<BalanceTransferType>[] = [
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && 'indeterminate')
+        }
+        onCheckedChange={value => table.toggleAllPageRowsSelected(!!value)}
+        aria-label='Select all'
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={value => row.toggleSelected(!!value)}
+        aria-label='Select row'
+      />
+    ),
+    enableSorting: true,
+    enableHiding: false
+  },
   {
     accessorKey: 'transactionDate',
     header: () => <div className=''>Date</div>,
