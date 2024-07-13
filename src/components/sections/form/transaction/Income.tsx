@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { usePathname } from 'next/navigation';
 import { useForm } from 'react-hook-form';
+import { useToast } from '@/components/ui/use-toast';
 
 import {
   Form,
@@ -25,7 +26,6 @@ import {
 import trackIncomeSchema from '@/schemas/track-income';
 import { UserCategoryType, UserWalletType } from '@/models/user';
 import { addIncomeTransaction } from '@/lib/income/add-income-transaction';
-import { usePathname } from 'next/navigation';
 
 const Income = ({
   wallets,
@@ -37,6 +37,7 @@ const Income = ({
   userId: string;
 }) => {
   const currentPathname = usePathname();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof trackIncomeSchema>>({
     resolver: zodResolver(trackIncomeSchema),
@@ -54,16 +55,14 @@ const Income = ({
   const onSubmit = async (data: z.infer<typeof trackIncomeSchema>) => {
     const response = await addIncomeTransaction(data);
 
-    if (!response.isSuccessful) {
-      console.log('Error adding income!');
-      console.log(response);
-      return;
-    }
+    toast({
+      title: response.message.title,
+      description: response.message.description,
+      variant: response.isSuccessful ? 'success' : 'destructive'
+    });
 
     form.reset();
   };
-
-  console.log(form);
 
   return (
     <Form {...form}>
