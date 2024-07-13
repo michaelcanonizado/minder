@@ -7,7 +7,6 @@ import Bento from '@/components/sections/bento';
 import Chart from '@/components/sections/chart';
 import Table from '@/components/sections/table';
 import Form from '@/components/sections/form';
-import { match } from 'assert';
 
 const Categories = async ({
   className,
