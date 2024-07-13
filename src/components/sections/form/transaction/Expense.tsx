@@ -26,6 +26,7 @@ import trackExpenseSchema from '@/schemas/track-expense';
 import { UserCategoryType, UserWalletType } from '@/models/user';
 import { usePathname } from 'next/navigation';
 import { addExpenseTransaction } from '@/lib/expense/add-expense-transaction';
+import { useToast } from '@/components/ui/use-toast';
 
 const Expense = ({
   wallets,
@@ -37,6 +38,7 @@ const Expense = ({
   userId: string;
 }) => {
   const currentPathname = usePathname();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof trackExpenseSchema>>({
     resolver: zodResolver(trackExpenseSchema),
@@ -54,11 +56,11 @@ const Expense = ({
   const onSubmit = async (data: z.infer<typeof trackExpenseSchema>) => {
     const response = await addExpenseTransaction(data);
 
-    if (!response.isSuccessful) {
-      console.log('Error adding income!');
-      console.log(response);
-      return;
-    }
+    toast({
+      title: response.message.title,
+      description: response.message.description,
+      variant: response.isSuccessful ? 'success' : 'destructive'
+    });
 
     form.reset();
   };
