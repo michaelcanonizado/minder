@@ -3,7 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import { IncomeType } from '@/models/income';
-import { UserCategoryType, UserWalletType } from '@/models/user';
+import { UserWalletType } from '@/models/user';
 
 import { Checkbox } from '@/components/ui/checkbox';
 
