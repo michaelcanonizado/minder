@@ -31,6 +31,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { FormInput, FormSelect } from '../components';
 import { addNewCategory } from '@/lib/category/add-new-category';
+import { useToast } from '@/components/ui/use-toast';
 
 const Category = ({
   className,
@@ -41,6 +42,7 @@ const Category = ({
 }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof addCategorySchema>>({
     resolver: zodResolver(addCategorySchema),
@@ -54,6 +56,12 @@ const Category = ({
 
   const onSubmit = async (data: z.infer<typeof addCategorySchema>) => {
     const response = await addNewCategory(data, type);
+
+    toast({
+      title: response.message.title,
+      description: response.message.description,
+      variant: response.isSuccessful ? 'success' : 'destructive'
+    });
 
     form.reset();
   };
