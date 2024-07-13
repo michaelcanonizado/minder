@@ -5,8 +5,8 @@ import { databaseConnect } from '@/helpers/database/database';
 import BalanceTransfer from '@/models/balance-transfer';
 import User from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
-
 import { revalidatePath } from 'next/cache';
+import { ServerResponse } from '@/types';
 
 /**
  * Transfers balance between the user's wallets
@@ -14,14 +14,18 @@ import { revalidatePath } from 'next/cache';
  * @param data data submitted from the form
  * @returns a response object about the success state
  */
-export const addWalletTransfer = async (data: unknown) => {
+export const addWalletTransfer = async (
+  data: unknown
+): Promise<ServerResponse> => {
   /* Validate data coming from the client */
   const result = trackBalanceTransferSchema.safeParse(data);
   if (!result.success) {
-    console.log(result.error);
     return {
       isSuccessful: false,
-      message: 'Failed to add expense! Please try again'
+      message: {
+        title: 'Error!',
+        description: 'Failed to transfer balance! Please try again'
+      }
     };
   }
 
@@ -32,7 +36,10 @@ export const addWalletTransfer = async (data: unknown) => {
   if (user === null) {
     return {
       isSuccessful: false,
-      message: 'Failed to transfer balance! Please try again'
+      message: {
+        title: 'Error!',
+        description: 'Failed to transfer balance! Please try again'
+      }
     };
   }
 
@@ -63,6 +70,9 @@ export const addWalletTransfer = async (data: unknown) => {
 
   return {
     isSuccessful: true,
-    message: 'Successfully transferred balance'
+    message: {
+      title: 'Successful!',
+      description: 'Successfully transferred balance'
+    }
   };
 };
