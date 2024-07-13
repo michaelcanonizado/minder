@@ -67,6 +67,10 @@ export const Table = <TData extends RequiredProperties, TValue>({
   /* On intial load: if there are any selected rows in the URL,
   preselect the corresponding rows*/
   useEffect(() => {
+    if (selectedRows.length === 0) {
+      return () => {};
+    }
+
     const selected: { [key: string]: boolean } = {};
 
     selectedRows.forEach(id => {
