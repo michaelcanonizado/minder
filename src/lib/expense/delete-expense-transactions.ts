@@ -3,16 +3,21 @@
 import { databaseConnect } from '@/helpers/database/database';
 import Expense from '@/models/expense';
 import User from '@/models/user';
-
 import deleteExpenseTransactionSchema from '@/schemas/delete-expense-transaction';
+import { ServerResponse } from '@/types';
 import { revalidatePath } from 'next/cache';
 
-export const deleteExpenseTransactions = async (data: unknown) => {
+export const deleteExpenseTransactions = async (
+  data: unknown
+): Promise<ServerResponse> => {
   const result = deleteExpenseTransactionSchema.safeParse(data);
   if (!result.success) {
     return {
       isSuccessful: false,
-      message: 'Failed to delete expense! Please try again'
+      message: {
+        title: 'Error!',
+        description: 'Failed to delete expense! Please try again'
+      }
     };
   }
 
@@ -25,10 +30,14 @@ export const deleteExpenseTransactions = async (data: unknown) => {
   if (!user) {
     return {
       isSuccessful: false,
-      message: 'Error deleting expense! Failed to get user document.'
+      message: {
+        title: 'Error!',
+        description: 'Failed to delete expense! Please try again'
+      }
     };
   }
 
+  let isErrorDeleting: boolean = false;
   const responses = await Promise.all(
     expenseTransactionIds.map(async transactionId => {
       try {
@@ -37,20 +46,15 @@ export const deleteExpenseTransactions = async (data: unknown) => {
           user: userId
         });
         if (!expense) {
-          return {
-            isSuccessful: false,
-            message: 'Error deleting expense! Could not find expense.'
-          };
+          throw new Error('Error deleting expense! Could not find expense.');
         }
 
         const expenseAmount = expense.amount;
         const transactionWallet = user.wallets.id(expense.wallet);
         if (!transactionWallet) {
-          return {
-            isSuccessful: false,
-            message:
-              'Error deleting expense! Could not find corresponding wallet.'
-          };
+          throw new Error(
+            'Error deleting expense! Could not find corresponding wallet.'
+          );
         }
 
         const response = await expense.deleteOne();
@@ -62,13 +66,20 @@ export const deleteExpenseTransactions = async (data: unknown) => {
         return response;
       } catch (error) {
         console.log(error);
-        return {
-          isSuccessful: false,
-          message: 'Error deleting expense! Failed to find expense.'
-        };
+        isErrorDeleting = true;
       }
     })
   );
+
+  if (isErrorDeleting) {
+    return {
+      isSuccessful: false,
+      message: {
+        title: 'Error!',
+        description: 'Failed to delete expense! Please try again'
+      }
+    };
+  }
 
   await user.save();
 
@@ -76,6 +87,9 @@ export const deleteExpenseTransactions = async (data: unknown) => {
 
   return {
     isSuccessful: true,
-    message: 'Successfully deleted expenses'
+    message: {
+      title: 'Success!',
+      description: 'Successfully deleted expenses'
+    }
   };
 };
