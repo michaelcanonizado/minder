@@ -11,15 +11,17 @@ import { revalidatePath } from 'next/cache';
 export const deleteIncomeTransactions = async (
   data: unknown
 ): Promise<ServerResponse> => {
+  const errorResponse = {
+    isSuccessful: false,
+    message: {
+      title: 'Error!',
+      description: 'Failed to delete income! Please try again'
+    }
+  };
+
   const result = deleteIncomeTransactionSchema.safeParse(data);
   if (!result.success) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to delete income! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   await databaseConnect();
@@ -28,13 +30,7 @@ export const deleteIncomeTransactions = async (
   const userId = result.data.userId;
   const user = await User.findById(userId);
   if (!user) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to delete income! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   let isErrorDeleting: boolean = false;
@@ -58,37 +54,19 @@ export const deleteIncomeTransactions = async (
   );
 
   if (isErrorDeleting) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to delete income! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   for (const income of incomes) {
     const incomeAmount = income!.amount;
     const transactionWallet = user.wallets.id(income!.wallet);
     if (!transactionWallet) {
-      return {
-        isSuccessful: false,
-        message: {
-          title: 'Error!',
-          description: 'Failed to delete income! Please try again'
-        }
-      };
+      return errorResponse;
     }
 
     const response = await income?.deleteOne();
     if (response?.deletedCount === 0) {
-      return {
-        isSuccessful: false,
-        message: {
-          title: 'Error!',
-          description: 'Failed to delete income! Please try again'
-        }
-      };
+      return errorResponse;
     }
     transactionWallet.balance -= incomeAmount;
   }
