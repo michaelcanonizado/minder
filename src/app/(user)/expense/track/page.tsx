@@ -19,7 +19,7 @@ const ExpenseTrack = async () => {
             <p className='text-display'>Track Expense</p>
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Form.Transaction.Expense
+            <Form.Add.Expense
               wallets={wallets.data}
               categories={categories.data.expense}
               userId={userId}

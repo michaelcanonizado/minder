@@ -17,7 +17,7 @@ const WalletTransfer = async () => {
             <p className='text-display'>Transfer Balance</p>
           </Bento.Box.Header>
           <Bento.Box.Content>
-            <Form.Transaction.Transfer wallets={wallets.data} userId={userId} />
+            <Form.Add.Transfer wallets={wallets.data} userId={userId} />
           </Bento.Box.Content>
         </Bento.Box>
         <Bento.Box>
