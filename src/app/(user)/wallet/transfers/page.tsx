@@ -18,6 +18,11 @@ const WalletBreakdown = async ({
   page = page < 1 ? 1 : page;
   const limit = 10;
 
+  const selectedTransferRowsRaw = searchParams.selected
+    ? (searchParams.selected as string)
+    : '';
+  const selectedTransferRowsArray = selectedTransferRowsRaw.split(',');
+
   const userId = process.env.TEMP_USER_ID!;
 
   const balanceTransfers = await getWalletTransfers({
@@ -41,7 +46,10 @@ const WalletBreakdown = async ({
                 columns={columns}
                 data={balanceTransfers.data}
                 rowActions={[
-                  <Form.Delete.Transfer tableData={balanceTransfers.data} />
+                  <Form.Delete.Transfer
+                    tableData={balanceTransfers.data}
+                    selectedTransferIds={selectedTransferRowsArray}
+                  />
                 ]}
               />
               <Pagination
