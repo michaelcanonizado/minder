@@ -6,6 +6,7 @@ import { columns } from './columns';
 import Pagination from '@/components/sections/pagination';
 
 import { getWalletTransfers } from '@/lib/wallet/get-wallet-transfers';
+import Form from '@/components/sections/form';
 
 const WalletBreakdown = async ({
   searchParams
@@ -36,7 +37,13 @@ const WalletBreakdown = async ({
               Balance Transfers
             </Bento.Box.Header>
             <Bento.Box.Content className='space-y-4 p-0 pb-4'>
-              <Table columns={columns} data={balanceTransfers.data} />
+              <Table
+                columns={columns}
+                data={balanceTransfers.data}
+                rowActions={[
+                  <Form.Delete.Transfer tableData={balanceTransfers.data} />
+                ]}
+              />
               <Pagination
                 pathname='/wallet/breakdown'
                 currentPage={page}
