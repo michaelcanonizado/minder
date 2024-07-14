@@ -24,7 +24,7 @@ import {
   DialogFooter
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Trash2 } from 'lucide-react';
+import { MoveRight, Trash2 } from 'lucide-react';
 
 const Transfer = ({
   className,
@@ -99,10 +99,10 @@ const Transfer = ({
                 key={item._id}
               >
                 <p className=''>- ${item.amount}</p>
-                <p className='text-muted-foreground'>
-                  ( {transactionDate} | {sourceWallet}
-                  {' -> '}
-                  {destinationWallet} )
+                <p className='flew-row flex items-center text-muted-foreground'>
+                  ( {sourceWallet}
+                  <MoveRight className='mx-1 h-[16px]' />
+                  {destinationWallet} | {transactionDate} )
                 </p>
               </div>
             );
