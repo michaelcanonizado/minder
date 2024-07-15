@@ -5,10 +5,10 @@ import Table from '@/components/sections/table';
 import { columns } from './columns';
 import Pagination from '@/components/sections/pagination';
 
-import { getWalletTransfers } from '@/lib/wallet/get-wallet-transfers';
+import { getBalanceTransfers } from '@/lib/wallet/get-balance-transfers';
 import Form from '@/components/sections/form';
 
-const WalletBreakdown = async ({
+const WalletTransfers = async ({
   searchParams
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
@@ -25,7 +25,7 @@ const WalletBreakdown = async ({
 
   const userId = process.env.TEMP_USER_ID!;
 
-  const balanceTransfers = await getWalletTransfers({
+  const balanceTransfers = await getBalanceTransfers({
     page,
     limit,
     userId
@@ -65,4 +65,4 @@ const WalletBreakdown = async ({
   );
 };
 
-export default WalletBreakdown;
+export default WalletTransfers;

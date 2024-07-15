@@ -15,7 +15,7 @@ import BalanceTransfer, {
  * @returns an array of the matched incomes using the
  * userId and the maximum page number
  */
-export const getWalletTransfers = async ({
+export const getBalanceTransfers = async ({
   page = 1,
   limit = 10,
   userId
