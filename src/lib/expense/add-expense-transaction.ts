@@ -17,16 +17,19 @@ import { ServerResponse } from '@/types';
 export const addExpenseTransaction = async (
   data: unknown
 ): Promise<ServerResponse> => {
+  const errorResponse = {
+    isSuccessful: false,
+    resetForm: true,
+    message: {
+      title: 'Error!',
+      description: 'Failed to add expense! Please try again'
+    }
+  };
+
   /* Validate data coming from the client */
   const result = trackExpenseSchema.safeParse(data);
   if (!result.success) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to add expense! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   await databaseConnect();
@@ -34,13 +37,7 @@ export const addExpenseTransaction = async (
   /* Get user document */
   const user = await User.findById(result.data.userId);
   if (user === null) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to add expense! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   /* Create new expense document */
@@ -67,6 +64,7 @@ export const addExpenseTransaction = async (
 
   return {
     isSuccessful: true,
+    resetForm: true,
     message: {
       title: 'Success!',
       description: 'Successfully added expense'
