@@ -87,7 +87,9 @@ const Expenses = ({
     const query = search ? `?${search}` : '';
     router.replace(`${currentPathname}${query}`, { scroll: false });
 
-    form.reset();
+    if (response.resetForm) {
+      form.reset();
+    }
   };
 
   const selectedExpensesList = (
