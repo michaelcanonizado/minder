@@ -13,6 +13,7 @@ export const deleteIncomeTransactions = async (
 ): Promise<ServerResponse> => {
   const errorResponse = {
     isSuccessful: false,
+    resetForm: true,
     message: {
       title: 'Error!',
       description: 'Failed to delete income! Please try again'
@@ -77,6 +78,7 @@ export const deleteIncomeTransactions = async (
 
   return {
     isSuccessful: true,
+    resetForm: true,
     message: {
       title: 'Success!',
       description: 'Successfully deleted incomes'
