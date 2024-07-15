@@ -40,6 +40,23 @@ export const addBalanceTransfer = async (
     return errorResponse;
   }
 
+  /* Find wallets in user's wallets */
+  const sourceWallet = user.wallets.id(result.data.sourceWalletId);
+  const destinationWallet = user.wallets.id(result.data.destinationWalletId);
+
+  /* Check if the user has sufficient balance in the source 
+  wallet to transfer */
+  if (result.data.amount > sourceWallet.balance) {
+    return {
+      isSuccessful: false,
+      resetForm: false,
+      message: {
+        title: 'Insufficient Balance!',
+        description: `You don't have enough balance in ${sourceWallet.name} to transfer`
+      }
+    };
+  }
+
   /* Create new balance transfer document */
   const balanceTransfer = new BalanceTransfer({
     user: new mongoose.Types.ObjectId(result.data.userId),
@@ -51,10 +68,6 @@ export const addBalanceTransfer = async (
     description: result.data.description,
     transactionDate: result.data.date
   });
-
-  /* Find wallets in user's wallets */
-  const sourceWallet = user.wallets.id(result.data.sourceWalletId);
-  const destinationWallet = user.wallets.id(result.data.destinationWalletId);
 
   /* Transfer balance */
   sourceWallet.balance -= result.data.amount;
