@@ -14,7 +14,7 @@ import { ServerResponse } from '@/types';
  * @param data data submitted from the form
  * @returns a response object about the success state
  */
-export const addWalletTransfer = async (
+export const addBalanceTransfer = async (
   data: unknown
 ): Promise<ServerResponse> => {
   /* Validate data coming from the client */

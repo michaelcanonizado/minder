@@ -17,17 +17,12 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 
-import {
-  FormDatePicker,
-  FormSelect,
-  FormRadioCardGroup,
-  FormInput
-} from '../components';
+import { FormDatePicker, FormRadioCardGroup, FormInput } from '../components';
 
 import { UserWalletType } from '@/models/user';
 import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
 import { usePathname } from 'next/navigation';
-import { addWalletTransfer } from '@/lib/wallet/add-wallet-transfer';
+import { addBalanceTransfer } from '@/lib/wallet/add-balance-transfer';
 import { useToast } from '@/components/ui/use-toast';
 
 const decodeModifiedWalletId = (_id: string) => {
@@ -70,7 +65,7 @@ const Transfer = ({
   const onSubmit = async (data: z.infer<typeof trackBalanceTransferSchema>) => {
     data.destinationWalletId = decodeModifiedWalletId(data.destinationWalletId);
 
-    const response = await addWalletTransfer(data);
+    const response = await addBalanceTransfer(data);
 
     toast({
       title: response.message.title,
