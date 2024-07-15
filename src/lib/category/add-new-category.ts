@@ -10,15 +10,18 @@ export const addNewCategory = async (
   data: unknown,
   type: CategoryType
 ): Promise<ServerResponse> => {
+  const errorResponse = {
+    isSuccessful: false,
+    resetForm: true,
+    message: {
+      title: 'Error!',
+      description: 'Failed to add category! Please try again'
+    }
+  };
+
   const result = addCategorySchema.safeParse(data);
   if (!result.success) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to add category! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   const selectedColor = categoryColors.find(color => {
@@ -27,13 +30,7 @@ export const addNewCategory = async (
     }
   });
   if (!selectedColor) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to add category! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   await databaseConnect();
@@ -41,13 +38,7 @@ export const addNewCategory = async (
   const userId = process.env.TEMP_USER_ID;
   const user = await User.findById(userId);
   if (!user) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to add category! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   if (type === 'income') {
@@ -76,6 +67,7 @@ export const addNewCategory = async (
 
   return {
     isSuccessful: true,
+    resetForm: true,
     message: {
       title: 'Success!',
       description: 'Successfully added category'
