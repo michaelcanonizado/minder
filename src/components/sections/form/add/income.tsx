@@ -61,7 +61,9 @@ const Income = ({
       variant: response.isSuccessful ? 'success' : 'destructive'
     });
 
-    form.reset();
+    if (response.resetForm) {
+      form.reset();
+    }
   };
 
   return (
