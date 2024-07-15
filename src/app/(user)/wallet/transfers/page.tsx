@@ -31,8 +31,6 @@ const WalletTransfers = async ({
     userId
   });
 
-  console.log(balanceTransfers);
-
   return (
     <div className=''>
       <div className=''>

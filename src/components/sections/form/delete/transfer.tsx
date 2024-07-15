@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { MoveRight, Trash2 } from 'lucide-react';
+import { deleteBalanceTransfers } from '@/lib/wallet/delete-balance-transfers';
 
 const Transfer = ({
   className,
@@ -71,7 +72,21 @@ const Transfer = ({
   const onSubmit = async (
     data: z.infer<typeof deleteBalanceTransfersSchema>
   ) => {
-    console.log(data);
+    const response = await deleteBalanceTransfers(data);
+
+    toast({
+      title: response.message.title,
+      description: response.message.description,
+      variant: response.isSuccessful ? 'success' : 'destructive'
+    });
+
+    const currentUrl = new URLSearchParams(searchParams);
+    currentUrl.delete(queryToRemove);
+    const search = currentUrl.toString();
+    const query = search ? `?${search}` : '';
+    router.replace(`${currentPathname}${query}`, { scroll: false });
+
+    form.reset();
   };
 
   const selectedTransfersList = (
