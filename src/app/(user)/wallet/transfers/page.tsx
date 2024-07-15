@@ -43,6 +43,7 @@ const WalletTransfers = async ({
               <Table
                 columns={columns}
                 data={balanceTransfers.data}
+                selectedRows={selectedTransferRowsArray}
                 rowActions={[
                   <Form.Delete.Transfer
                     tableData={balanceTransfers.data}
