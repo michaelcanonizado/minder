@@ -12,6 +12,7 @@ export const deleteBalanceTransfers = async (
 ): Promise<ServerResponse> => {
   const errorResponse = {
     isSuccessful: false,
+    resetForm: true,
     message: {
       title: 'Error!',
       description: 'Failed to delete balance transfer! Please try again'
@@ -89,6 +90,7 @@ export const deleteBalanceTransfers = async (
 
   return {
     isSuccessful: true,
+    resetForm: true,
     message: {
       title: 'Success!',
       description: 'Successfully deleted balance transfers'
