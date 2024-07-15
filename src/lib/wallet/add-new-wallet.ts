@@ -14,16 +14,19 @@ import { revalidatePath } from 'next/cache';
  * @returns a response object about the success state
  */
 export const addNewWallet = async (data: unknown): Promise<ServerResponse> => {
+  const errorResponse = {
+    isSuccessful: false,
+    resetForm: true,
+    message: {
+      title: 'Error!',
+      description: 'Failed to add income! Please try again'
+    }
+  };
+
   /* Validate data coming from the client */
   const result = addWalletSchema.safeParse(data);
   if (!result.success) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to add income! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   await databaseConnect();
@@ -31,13 +34,7 @@ export const addNewWallet = async (data: unknown): Promise<ServerResponse> => {
   /* Get user document */
   const user = await User.findById(result.data.userId);
   if (!user) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to add income! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   /* Add wallet */
@@ -52,6 +49,7 @@ export const addNewWallet = async (data: unknown): Promise<ServerResponse> => {
 
   return {
     isSuccessful: true,
+    resetForm: true,
     message: {
       title: 'Success!',
       description: 'Successfully added wallet'
