@@ -57,7 +57,9 @@ const Wallet = ({ className }: { className?: string }) => {
       variant: response.isSuccessful ? 'success' : 'destructive'
     });
 
-    form.reset();
+    if (response.resetForm) {
+      form.reset();
+    }
   };
 
   return (
