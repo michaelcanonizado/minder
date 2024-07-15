@@ -10,28 +10,25 @@ export const deleteCateogries = async (
   data: unknown,
   type: CategoryType
 ): Promise<ServerResponse> => {
+  const errorResponse = {
+    isSuccessful: false,
+    resetForm: true,
+    message: {
+      title: 'Error!',
+      description: 'Failed to delete category! Please try again'
+    }
+  };
+
   const result = deleteCategoriesSchema.safeParse(data);
   if (!result.success) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to delete category! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   await databaseConnect();
 
   const user = await User.findById(result.data.userId);
   if (!user) {
-    return {
-      isSuccessful: false,
-      message: {
-        title: 'Error!',
-        description: 'Failed to delete category! Please try again'
-      }
-    };
+    return errorResponse;
   }
 
   const userCategories =
@@ -51,6 +48,7 @@ export const deleteCateogries = async (
 
   return {
     isSuccessful: true,
+    resetForm: true,
     message: {
       title: 'Success!',
       description: 'Successfully deleted categories'
