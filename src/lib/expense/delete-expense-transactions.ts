@@ -12,6 +12,7 @@ export const deleteExpenseTransactions = async (
 ): Promise<ServerResponse> => {
   const errorResponse = {
     isSuccessful: false,
+    resetForm: true,
     message: {
       title: 'Error!',
       description: 'Failed to delete expense! Please try again'
@@ -77,6 +78,7 @@ export const deleteExpenseTransactions = async (
 
   return {
     isSuccessful: true,
+    resetForm: true,
     message: {
       title: 'Success!',
       description: 'Successfully deleted expenses'
