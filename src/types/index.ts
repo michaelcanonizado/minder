@@ -14,6 +14,7 @@ export type LinkGroup = {
 
 export type ServerResponse = {
   isSuccessful: boolean;
+  resetForm: boolean;
   message: {
     title: string;
     description?: string;
