@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -37,6 +37,7 @@ const Wallet = ({ className }: { className?: string }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
   const { toast } = useToast();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const form = useForm<z.infer<typeof addWalletSchema>>({
     resolver: zodResolver(addWalletSchema),
@@ -57,13 +58,15 @@ const Wallet = ({ className }: { className?: string }) => {
       variant: response.isSuccessful ? 'success' : 'destructive'
     });
 
+    setIsDialogOpen(false);
+
     if (response.resetForm) {
       form.reset();
     }
   };
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger className='transition-color flex w-full flex-row gap-2 rounded-lg border p-2 duration-200 ease-in hover:bg-accent'>
         <Plus className='min-w-[24px]' />
         <p className=''>Add Wallet</p>
@@ -120,11 +123,10 @@ const Wallet = ({ className }: { className?: string }) => {
                   Cancel
                 </Button>
               </DialogClose>
-              <DialogClose asChild>
-                <Button type='submit' className='w-fit px-8'>
-                  Submit
-                </Button>
-              </DialogClose>
+
+              <Button type='submit' className='w-fit px-8'>
+                Submit
+              </Button>
             </DialogFooter>
           </form>
         </Form>

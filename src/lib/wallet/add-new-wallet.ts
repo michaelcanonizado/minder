@@ -16,10 +16,10 @@ import { revalidatePath } from 'next/cache';
 export const addNewWallet = async (data: unknown): Promise<ServerResponse> => {
   const errorResponse = {
     isSuccessful: false,
-    resetForm: true,
+    resetForm: false,
     message: {
       title: 'Error!',
-      description: 'Failed to add income! Please try again'
+      description: 'Failed to add wallet! Please try again'
     }
   };
 
