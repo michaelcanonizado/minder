@@ -65,8 +65,13 @@ const Wallet = ({ className }: { className?: string }) => {
     }
   };
 
+  const onOpenChange = (open: boolean) => {
+    form.reset();
+    setIsDialogOpen(open);
+  };
+
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <Dialog open={isDialogOpen} onOpenChange={onOpenChange}>
       <DialogTrigger className='transition-color flex w-full flex-row gap-2 rounded-lg border p-2 duration-200 ease-in hover:bg-accent'>
         <Plus className='min-w-[24px]' />
         <p className=''>Add Wallet</p>
