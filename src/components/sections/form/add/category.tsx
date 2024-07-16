@@ -1,12 +1,15 @@
 'use client';
 
+import { useState } from 'react';
+import { useToast } from '@/components/ui/use-toast';
+import { usePathname } from 'next/navigation';
+
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import addCategorySchema from '@/schemas/add-cetegory';
-
+import { addNewCategory } from '@/lib/category/add-new-category';
 import { cn } from '@/lib/utils';
-import { usePathname } from 'next/navigation';
 import { CategoryType } from '@/types';
 import { categoryColors } from '@/types';
 
@@ -30,8 +33,6 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { FormInput, FormSelect } from '../components';
-import { addNewCategory } from '@/lib/category/add-new-category';
-import { useToast } from '@/components/ui/use-toast';
 
 const Category = ({
   className,
@@ -43,6 +44,7 @@ const Category = ({
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
   const { toast } = useToast();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const form = useForm<z.infer<typeof addCategorySchema>>({
     resolver: zodResolver(addCategorySchema),
@@ -62,6 +64,8 @@ const Category = ({
       description: response.message.description,
       variant: response.isSuccessful ? 'success' : 'destructive'
     });
+
+    setIsDialogOpen(false);
 
     if (response.resetForm) {
       form.reset();
@@ -93,7 +97,7 @@ const Category = ({
   const formDescription = `Create a new category to organize your ${type === 'income' ? 'income' : 'expense'}. Provide a name and a color for better clarity.`;
 
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild style={{ margin: '0' }}>
         <Button variant='outline' className={cn('', className)}>
           Add Category
@@ -155,11 +159,10 @@ const Category = ({
                   Cancel
                 </Button>
               </DialogClose>
-              <DialogClose asChild>
-                <Button type='submit' className='w-fit px-8'>
-                  Submit
-                </Button>
-              </DialogClose>
+
+              <Button type='submit' className='w-fit px-8'>
+                Submit
+              </Button>
             </DialogFooter>
           </form>
         </Form>
