@@ -72,6 +72,11 @@ const Category = ({
     }
   };
 
+  const onOpenChange = (open: boolean) => {
+    form.reset();
+    setIsDialogOpen(open);
+  };
+
   const selectedColor = categoryColors.find(color => {
     if (color._id === form.watch('colorId')) {
       return color;
@@ -97,7 +102,7 @@ const Category = ({
   const formDescription = `Create a new category to organize your ${type === 'income' ? 'income' : 'expense'}. Provide a name and a color for better clarity.`;
 
   return (
-    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+    <Dialog open={isDialogOpen} onOpenChange={onOpenChange}>
       <DialogTrigger asChild style={{ margin: '0' }}>
         <Button variant='outline' className={cn('', className)}>
           Add Category
