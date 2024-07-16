@@ -16,6 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import Form from '@/components/sections/form';
 
 export const columns: ColumnDef<IncomeType>[] = [
   {
@@ -107,7 +108,7 @@ export const columns: ColumnDef<IncomeType>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      const payment = row.original;
+      const rowData = row.original;
 
       return (
         <DropdownMenu>
@@ -120,7 +121,9 @@ export const columns: ColumnDef<IncomeType>[] = [
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Form.Edit.Income defaultValues={rowData} />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
