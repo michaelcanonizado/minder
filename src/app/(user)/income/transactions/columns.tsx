@@ -93,7 +93,16 @@ export const columns: ColumnDef<IncomeType>[] = [
   },
   {
     accessorKey: 'description',
-    header: 'Description'
+    header: 'Description',
+    cell: ({ row }) => {
+      const description: string = row.getValue('description');
+
+      return (
+        <div className='min-w-[400px] max-w-[600px]'>
+          <p className='text-wrap'>{description}</p>
+        </div>
+      );
+    }
   },
   {
     id: 'actions',
