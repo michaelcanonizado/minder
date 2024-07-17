@@ -4,13 +4,14 @@ import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 
+import { cn } from '@/lib/utils';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { cn } from '@/lib/utils';
 import { IncomeType } from '@/models/income';
-import addWalletSchema from '@/schemas/add-wallet';
-import { addNewWallet } from '@/lib/wallet/add-new-wallet';
+import addIncomeTransactionSchema from '@/schemas/add-income-transaction';
+import { UserCategoryType, UserWalletType } from '@/models/user';
+import { addIncomeTransaction } from '@/lib/income/add-income-transaction';
 
 import {
   Form,
@@ -21,6 +22,12 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import {
+  FormDatePicker,
+  FormSelect,
+  FormRadioCardGroup,
+  FormInput
+} from '../components';
+import {
   Dialog,
   DialogClose,
   DialogFooter,
@@ -30,12 +37,32 @@ import {
   DialogDescription,
   DialogTitle
 } from '@/components/ui/dialog';
-import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { FormInput } from '@/components/sections/form/components';
 
 const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
+  const currentPathname = usePathname();
+  const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID;
+  const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [wallets, setWallets] = useState(null);
+  const [categories, setCategories] = useState(null);
+
+  const form = useForm<z.infer<typeof addIncomeTransactionSchema>>({
+    resolver: zodResolver(addIncomeTransactionSchema),
+    defaultValues: {
+      amount: defaultValues.amount,
+      userId: userId,
+      walletId: defaultValues.wallet._id,
+      categoryId: defaultValues.category._id,
+      date: defaultValues.transactionDate,
+      description: defaultValues.description,
+      formPath: currentPathname
+    }
+  });
+
+  const onSubmit = async (data: z.infer<typeof addIncomeTransactionSchema>) => {
+    console.log(data);
+  };
 
   const onOpenChange = (open: boolean) => {
     console.log('Dialog state:', open);
@@ -53,17 +80,109 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
           <DialogDescription>Edit income details</DialogDescription>
         </DialogHeader>
 
-        <DialogFooter className='mt-4 flex flex-row justify-end gap-2'>
-          <DialogClose asChild>
-            <Button type='button' variant='outline'>
-              Cancel
-            </Button>
-          </DialogClose>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            action={addIncomeTransaction}
+            className='mt-4 flex flex-col gap-4'
+          >
+            <div className='flex flex-col gap-1'>
+              {wallets && (
+                <FormField
+                  control={form.control}
+                  name='walletId'
+                  render={({ field }) => (
+                    <FormItem className=''>
+                      <FormLabel>Add to:</FormLabel>
+                      <FormControl className='mt-[-6px]'>
+                        <FormRadioCardGroup
+                          /* ts-ignore */
+                          data={wallets}
+                          orientation='horizontal'
+                          field={field}
+                          name='wallets'
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
 
-          <Button type='submit' className='w-fit px-8'>
-            Submit
-          </Button>
-        </DialogFooter>
+              <FormField
+                control={form.control}
+                name='amount'
+                render={({ field }) => (
+                  <FormItem className=''>
+                    <FormLabel>Amount</FormLabel>
+                    <FormControl>
+                      <FormInput type='text' placeholder='125' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className='grid grid-cols-2 gap-4'>
+                {categories && (
+                  <FormField
+                    control={form.control}
+                    name='categoryId'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        {/* @ts-ignore */}
+                        <FormSelect data={categories} field={field} />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
+
+                <FormField
+                  control={form.control}
+                  name='date'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Date</FormLabel>
+                      <FormDatePicker field={field} />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <FormField
+                control={form.control}
+                name='description'
+                render={({ field }) => (
+                  <FormItem className=''>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <FormInput
+                        type='text'
+                        placeholder='Monthly salary'
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <DialogFooter className='mt-4 flex flex-row justify-end gap-2'>
+              <DialogClose asChild>
+                <Button type='button' variant='outline'>
+                  Cancel
+                </Button>
+              </DialogClose>
+
+              <Button type='submit' className='w-fit px-8'>
+                Submit
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
