@@ -23,7 +23,7 @@ import {
   FormInput
 } from '../components';
 
-import trackIncomeSchema from '@/schemas/track-income';
+import addIncomeTransactionSchema from '@/schemas/add-income-transaction';
 import { UserCategoryType, UserWalletType } from '@/models/user';
 import { addIncomeTransaction } from '@/lib/income/add-income-transaction';
 
@@ -39,8 +39,8 @@ const Income = ({
   const currentPathname = usePathname();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof trackIncomeSchema>>({
-    resolver: zodResolver(trackIncomeSchema),
+  const form = useForm<z.infer<typeof addIncomeTransactionSchema>>({
+    resolver: zodResolver(addIncomeTransactionSchema),
     defaultValues: {
       amount: '' as unknown as number,
       userId: userId,
@@ -52,7 +52,7 @@ const Income = ({
     }
   });
 
-  const onSubmit = async (data: z.infer<typeof trackIncomeSchema>) => {
+  const onSubmit = async (data: z.infer<typeof addIncomeTransactionSchema>) => {
     const response = await addIncomeTransaction(data);
 
     toast({

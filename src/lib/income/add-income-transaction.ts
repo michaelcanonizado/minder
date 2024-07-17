@@ -3,7 +3,7 @@
 import { databaseConnect } from '@/helpers/database/database';
 import Income from '@/models/income';
 import User from '@/models/user';
-import trackIncomeSchema from '@/schemas/track-income';
+import addIncomeTransactionSchema from '@/schemas/add-income-transaction';
 import { ServerResponse } from '@/types';
 import mongoose from 'mongoose';
 import { revalidatePath } from 'next/cache';
@@ -27,7 +27,7 @@ export const addIncomeTransaction = async (
   };
 
   /* Validate data coming from the client */
-  const result = trackIncomeSchema.safeParse(data);
+  const result = addIncomeTransactionSchema.safeParse(data);
   if (!result.success) {
     return errorResponse;
   }

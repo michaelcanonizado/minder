@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const trackIncomeSchema = z.object({
+const addIncomeTransactionSchema = z.object({
   amount: z.coerce.number({ message: 'Please enter a valid amount' }).min(1, {
     message: 'Please enter the amount'
   }),
@@ -25,4 +25,4 @@ const trackIncomeSchema = z.object({
     .min(1, { message: 'Error! Please try again.' })
 });
 
-export default trackIncomeSchema;
+export default addIncomeTransactionSchema;
