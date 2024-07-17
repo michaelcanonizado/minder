@@ -20,7 +20,7 @@ import { Button } from '@/components/ui/button';
 import { FormDatePicker, FormRadioCardGroup, FormInput } from '../components';
 
 import { UserWalletType } from '@/models/user';
-import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
+import addBalanceTransferSchema from '@/schemas/add-balance-transfer';
 import { usePathname } from 'next/navigation';
 import { addBalanceTransfer } from '@/lib/wallet/add-balance-transfer';
 import { useToast } from '@/components/ui/use-toast';
@@ -49,8 +49,8 @@ const Transfer = ({
   const currentPathname = usePathname();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof trackBalanceTransferSchema>>({
-    resolver: zodResolver(trackBalanceTransferSchema),
+  const form = useForm<z.infer<typeof addBalanceTransferSchema>>({
+    resolver: zodResolver(addBalanceTransferSchema),
     defaultValues: {
       amount: '' as unknown as number,
       userId: userId,
@@ -62,7 +62,7 @@ const Transfer = ({
     }
   });
 
-  const onSubmit = async (data: z.infer<typeof trackBalanceTransferSchema>) => {
+  const onSubmit = async (data: z.infer<typeof addBalanceTransferSchema>) => {
     data.destinationWalletId = decodeModifiedWalletId(data.destinationWalletId);
 
     const response = await addBalanceTransfer(data);

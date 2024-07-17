@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { databaseConnect } from '@/helpers/database/database';
 import BalanceTransfer from '@/models/balance-transfer';
 import User from '@/models/user';
-import trackBalanceTransferSchema from '@/schemas/track-balance-transfer';
+import addBalanceTransferSchema from '@/schemas/add-balance-transfer';
 import { revalidatePath } from 'next/cache';
 import { ServerResponse } from '@/types';
 
@@ -27,7 +27,7 @@ export const addBalanceTransfer = async (
   };
 
   /* Validate data coming from the client */
-  const result = trackBalanceTransferSchema.safeParse(data);
+  const result = addBalanceTransferSchema.safeParse(data);
   if (!result.success) {
     return errorResponse;
   }
