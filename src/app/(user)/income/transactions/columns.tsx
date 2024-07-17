@@ -121,9 +121,7 @@ export const columns: ColumnDef<IncomeType>[] = [
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Form.Edit.Income defaultValues={rowData} />
-            </DropdownMenuItem>
+            <Form.Edit.Income defaultValues={rowData} />
           </DropdownMenuContent>
         </DropdownMenu>
       );
