@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -10,8 +10,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { IncomeType } from '@/models/income';
 import addIncomeTransactionSchema from '@/schemas/add-income-transaction';
-import { UserCategoryType, UserWalletType } from '@/models/user';
-import { addIncomeTransaction } from '@/lib/income/add-income-transaction';
+import { getWalletsData } from '@/lib/wallet/get-wallets-data';
+import { getCategoriesData } from '@/lib/category/get-categories-data';
 
 import {
   Form,
@@ -38,14 +38,34 @@ import {
   DialogTitle
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { MoreHorizontal } from 'lucide-react';
 
 const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
+  const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
-  const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID;
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [wallets, setWallets] = useState(null);
-  const [categories, setCategories] = useState(null);
+  const [wallets, setWallets] = useState<Awaited<
+    ReturnType<typeof getWalletsData>
+  > | null>(null);
+  const [categories, setCategories] = useState<Awaited<
+    ReturnType<typeof getCategoriesData>
+  > | null>(null);
+
+  useEffect(() => {
+    const getWallets = async () => {
+      const wallets = await getWalletsData(userId);
+      setWallets(wallets);
+      console.log('WALLETS: ', wallets);
+    };
+    const getCategories = async () => {
+      const categories = await getCategoriesData(userId);
+      setCategories(categories);
+      console.log('CATEGORIES: ', categories);
+    };
+    getWallets();
+    getCategories();
+  }, []);
 
   const form = useForm<z.infer<typeof addIncomeTransactionSchema>>({
     resolver: zodResolver(addIncomeTransactionSchema),
@@ -60,19 +80,20 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
     }
   });
 
+  console.log('DEFAULT VALUES: ', defaultValues);
+
   const onSubmit = async (data: z.infer<typeof addIncomeTransactionSchema>) => {
     console.log(data);
   };
 
   const onOpenChange = (open: boolean) => {
-    console.log('Dialog state:', open);
     setIsDialogOpen(open);
   };
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={onOpenChange}>
       <DialogTrigger className='text-body-100 w-full rounded px-2 py-1 transition-colors hover:bg-muted'>
-        <p className='w-fit'>Edit</p>
+        <MoreHorizontal />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -83,7 +104,6 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            action={addIncomeTransaction}
             className='mt-4 flex flex-col gap-4'
           >
             <div className='flex flex-col gap-1'>
@@ -97,10 +117,10 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
                       <FormControl className='mt-[-6px]'>
                         <FormRadioCardGroup
                           /* ts-ignore */
-                          data={wallets}
+                          data={wallets.data}
                           orientation='horizontal'
                           field={field}
-                          name='wallets'
+                          name='walletId'
                         />
                       </FormControl>
                       <FormMessage />
@@ -124,21 +144,6 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
               />
 
               <div className='grid grid-cols-2 gap-4'>
-                {categories && (
-                  <FormField
-                    control={form.control}
-                    name='categoryId'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Category</FormLabel>
-                        {/* @ts-ignore */}
-                        <FormSelect data={categories} field={field} />
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
-
                 <FormField
                   control={form.control}
                   name='date'
@@ -150,6 +155,23 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
                     </FormItem>
                   )}
                 />
+
+                {categories && (
+                  <FormField
+                    control={form.control}
+                    name='categoryId'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Category</FormLabel>
+                        <FormSelect
+                          data={categories.data.income}
+                          field={field}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
               </div>
 
               <FormField
@@ -170,17 +192,9 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
                 )}
               />
             </div>
-            <DialogFooter className='mt-4 flex flex-row justify-end gap-2'>
-              <DialogClose asChild>
-                <Button type='button' variant='outline'>
-                  Cancel
-                </Button>
-              </DialogClose>
-
-              <Button type='submit' className='w-fit px-8'>
-                Submit
-              </Button>
-            </DialogFooter>
+            <Button type='submit' className='w-full'>
+              Submit
+            </Button>
           </form>
         </Form>
       </DialogContent>
