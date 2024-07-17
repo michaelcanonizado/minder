@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import { databaseConnect } from '@/helpers/database/database';
 import Expense from '@/models/expense';
 import User from '@/models/user';
-import trackExpenseSchema from '@/schemas/track-expense';
+import addExpenseTransactionSchema from '@/schemas/add-expense-transaction';
 import { revalidatePath } from 'next/cache';
 import { ServerResponse } from '@/types';
 
@@ -27,7 +27,7 @@ export const addExpenseTransaction = async (
   };
 
   /* Validate data coming from the client */
-  const result = trackExpenseSchema.safeParse(data);
+  const result = addExpenseTransactionSchema.safeParse(data);
   if (!result.success) {
     return errorResponse;
   }

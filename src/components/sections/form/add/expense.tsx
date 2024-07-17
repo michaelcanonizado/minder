@@ -22,7 +22,7 @@ import {
   FormInput
 } from '../components';
 
-import trackExpenseSchema from '@/schemas/track-expense';
+import addExpenseTransactionSchema from '@/schemas/add-expense-transaction';
 import { UserCategoryType, UserWalletType } from '@/models/user';
 import { usePathname } from 'next/navigation';
 import { addExpenseTransaction } from '@/lib/expense/add-expense-transaction';
@@ -40,8 +40,8 @@ const Expense = ({
   const currentPathname = usePathname();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof trackExpenseSchema>>({
-    resolver: zodResolver(trackExpenseSchema),
+  const form = useForm<z.infer<typeof addExpenseTransactionSchema>>({
+    resolver: zodResolver(addExpenseTransactionSchema),
     defaultValues: {
       amount: '' as unknown as number,
       userId: userId,
@@ -53,7 +53,9 @@ const Expense = ({
     }
   });
 
-  const onSubmit = async (data: z.infer<typeof trackExpenseSchema>) => {
+  const onSubmit = async (
+    data: z.infer<typeof addExpenseTransactionSchema>
+  ) => {
     const response = await addExpenseTransaction(data);
 
     toast({
