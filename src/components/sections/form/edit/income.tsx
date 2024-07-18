@@ -56,12 +56,12 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
     const getWallets = async () => {
       const wallets = await getWalletsData(userId);
       setWallets(wallets);
-      console.log('WALLETS: ', wallets);
+      // console.log('WALLETS: ', wallets);
     };
     const getCategories = async () => {
       const categories = await getCategoriesData(userId);
       setCategories(categories);
-      console.log('CATEGORIES: ', categories);
+      // console.log('CATEGORIES: ', categories);
     };
     getWallets();
     getCategories();
