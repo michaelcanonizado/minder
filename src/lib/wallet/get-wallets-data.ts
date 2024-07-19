@@ -23,9 +23,12 @@ export const getWalletsData = async (userId: string) => {
   if (!user) {
     throw new Error('User not found!');
   }
-
-  return {
+  const result = {
     data: JSON.parse(JSON.stringify(user.wallets)),
     currency: JSON.parse(JSON.stringify(user.currency))
   } as WalletsDataType;
+
+  console.log('RESULT: ', result);
+
+  return result;
 };

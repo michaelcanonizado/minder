@@ -39,6 +39,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { MoreHorizontal } from 'lucide-react';
+import { useUserContext } from '@/context/user';
 
 const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
@@ -52,6 +53,8 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
     ReturnType<typeof getCategoriesData>
   > | null>(null);
 
+  const { user } = useUserContext();
+
   useEffect(() => {
     const getWallets = async () => {
       const wallets = await getWalletsData(userId);
@@ -63,6 +66,8 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
     };
     getWallets();
     getCategories();
+
+    console.log('USER: ', user);
   }, [isDialogOpen]);
 
   const form = useForm<z.infer<typeof addIncomeTransactionSchema>>({
