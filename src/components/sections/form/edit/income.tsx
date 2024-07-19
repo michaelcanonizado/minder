@@ -56,16 +56,14 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
     const getWallets = async () => {
       const wallets = await getWalletsData(userId);
       setWallets(wallets);
-      // console.log('WALLETS: ', wallets);
     };
     const getCategories = async () => {
       const categories = await getCategoriesData(userId);
       setCategories(categories);
-      // console.log('CATEGORIES: ', categories);
     };
     getWallets();
     getCategories();
-  }, []);
+  }, [isDialogOpen]);
 
   const form = useForm<z.infer<typeof addIncomeTransactionSchema>>({
     resolver: zodResolver(addIncomeTransactionSchema),
@@ -80,13 +78,15 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
     }
   });
 
-  console.log('DEFAULT VALUES: ', defaultValues);
+  console.log('Component render! ');
 
   const onSubmit = async (data: z.infer<typeof addIncomeTransactionSchema>) => {
     console.log(data);
   };
 
   const onOpenChange = (open: boolean) => {
+    console.log('Wallets: ', wallets?.data);
+    console.log('Categories: ', categories?.data?.income);
     setIsDialogOpen(open);
   };
 
