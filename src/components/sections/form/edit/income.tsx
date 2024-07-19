@@ -78,15 +78,11 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
     }
   });
 
-  console.log('Component render! ');
-
   const onSubmit = async (data: z.infer<typeof addIncomeTransactionSchema>) => {
     console.log(data);
   };
 
   const onOpenChange = (open: boolean) => {
-    console.log('Wallets: ', wallets?.data);
-    console.log('Categories: ', categories?.data?.income);
     setIsDialogOpen(open);
   };
 
