@@ -63,6 +63,9 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
   };
 
   const onOpenChange = (open: boolean) => {
+    if (open === false) {
+      form.reset();
+    }
     setIsDialogOpen(open);
   };
 
