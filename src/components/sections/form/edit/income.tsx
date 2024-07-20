@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useToast } from '@/components/ui/use-toast';
 
@@ -9,9 +9,8 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { IncomeType } from '@/models/income';
+import { useUserContext } from '@/context/user';
 import addIncomeTransactionSchema from '@/schemas/add-income-transaction';
-import { getWalletsData } from '@/lib/wallet/get-wallets-data';
-import { getCategoriesData } from '@/lib/category/get-categories-data';
 
 import {
   Form,
@@ -29,8 +28,6 @@ import {
 } from '../components';
 import {
   Dialog,
-  DialogClose,
-  DialogFooter,
   DialogContent,
   DialogHeader,
   DialogTrigger,
@@ -39,34 +36,14 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { MoreHorizontal } from 'lucide-react';
-import { useUserContext } from '@/context/user';
 
 const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
   const userId = process.env.NEXT_PUBLIC_TEMP_USER_ID!;
   const currentPathname = usePathname();
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [wallets, setWallets] = useState<Awaited<
-    ReturnType<typeof getWalletsData>
-  > | null>(null);
-  const [categories, setCategories] = useState<Awaited<
-    ReturnType<typeof getCategoriesData>
-  > | null>(null);
 
   const { user } = useUserContext();
-
-  useEffect(() => {
-    const getWallets = async () => {
-      const wallets = await getWalletsData(userId);
-      setWallets(wallets);
-    };
-    const getCategories = async () => {
-      const categories = await getCategoriesData(userId);
-      setCategories(categories);
-    };
-    getWallets();
-    getCategories();
-  }, [isDialogOpen]);
 
   const form = useForm<z.infer<typeof addIncomeTransactionSchema>>({
     resolver: zodResolver(addIncomeTransactionSchema),
@@ -106,27 +83,25 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
             className='mt-4 flex flex-col gap-4'
           >
             <div className='flex flex-col gap-1'>
-              {wallets && (
-                <FormField
-                  control={form.control}
-                  name='walletId'
-                  render={({ field }) => (
-                    <FormItem className=''>
-                      <FormLabel>Add to:</FormLabel>
-                      <FormControl className='mt-[-6px]'>
-                        <FormRadioCardGroup
-                          /* ts-ignore */
-                          data={wallets.data}
-                          orientation='horizontal'
-                          field={field}
-                          name='walletId'
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              )}
+              <FormField
+                control={form.control}
+                name='walletId'
+                render={({ field }) => (
+                  <FormItem className=''>
+                    <FormLabel>Add to:</FormLabel>
+                    <FormControl className='mt-[-6px]'>
+                      <FormRadioCardGroup
+                        /* ts-ignore */
+                        data={user.wallets}
+                        orientation='horizontal'
+                        field={field}
+                        name='walletId'
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
               <FormField
                 control={form.control}
@@ -155,22 +130,17 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
                   )}
                 />
 
-                {categories && (
-                  <FormField
-                    control={form.control}
-                    name='categoryId'
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Category</FormLabel>
-                        <FormSelect
-                          data={categories.data.income}
-                          field={field}
-                        />
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                )}
+                <FormField
+                  control={form.control}
+                  name='categoryId'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Category</FormLabel>
+                      <FormSelect data={user.categories.income} field={field} />
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </div>
 
               <FormField
