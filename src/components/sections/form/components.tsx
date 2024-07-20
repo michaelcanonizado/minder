@@ -178,7 +178,6 @@ export const FormRadioCardGroup = ({
           className={`flex ${orientation == 'vertical' ? 'flex-col' : 'flex-row'} gap-2 pr-2`}
         >
           {data.map(item => {
-            console.log(field.value);
             return (
               <FormRadioCard
                 title={item.name}
