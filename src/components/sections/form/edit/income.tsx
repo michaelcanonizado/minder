@@ -66,8 +66,6 @@ const Income = ({ defaultValues }: { defaultValues: IncomeType }) => {
     };
     getWallets();
     getCategories();
-
-    console.log('USER: ', user);
   }, [isDialogOpen]);
 
   const form = useForm<z.infer<typeof addIncomeTransactionSchema>>({

@@ -28,7 +28,5 @@ export const getWalletsData = async (userId: string) => {
     currency: JSON.parse(JSON.stringify(user.currency))
   } as WalletsDataType;
 
-  console.log('RESULT: ', result);
-
   return result;
 };

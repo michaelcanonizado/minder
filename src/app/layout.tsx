@@ -5,7 +5,6 @@ import { cn } from '@/lib/utils';
 import { fontSans } from '@/styles/fonts';
 import '@/styles/globals.css';
 import { Toaster } from '@/components/ui/toaster';
-import UserContextProvider from '@/context/user';
 
 export const metadata: Metadata = {
   title: 'Minder',
@@ -25,9 +24,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <UserContextProvider>
-          <div className='text-body-100 container'>{children}</div>
-        </UserContextProvider>
+        <div className='text-body-100 container'>{children}</div>
         <Toaster />
       </body>
     </html>
